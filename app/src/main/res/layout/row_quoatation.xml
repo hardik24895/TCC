@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/_5sdp"
+    android:elevation="5dp"
+    app:cardCornerRadius="8dp"
+    app:cardUseCompatPadding="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_5sdp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgProfile"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:src="@mipmap/ic_launcher"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.tcc.app.customview.TextviewSemiBold
+            android:id="@+id/txtCompanyName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="Saggi Software Solutions, Santorini"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imgProfile"
+            app:layout_constraintTop_toTopOf="@+id/imgProfile" />
+
+        <com.tcc.app.customview.TextviewBold
+            android:id="@+id/txtIcon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="A"
+            android:textAllCaps="true"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_extra_large"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/imgProfile"
+            app:layout_constraintEnd_toEndOf="@+id/imgProfile"
+            app:layout_constraintStart_toStartOf="@+id/imgProfile"
+            app:layout_constraintTop_toTopOf="@+id/imgProfile" />
+
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtSiteName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:text="Saggi Software Solutions"
+            app:layout_constraintStart_toStartOf="@+id/txtCompanyName"
+            app:layout_constraintTop_toBottomOf="@+id/txtCompanyName" />
+
+        <com.tcc.app.customview.TextviewSemiBold
+            android:id="@+id/txtEstinationNotitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="Estimation No"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="@+id/imgProfile"
+            app:layout_constraintTop_toBottomOf="@+id/imgProfile" />
+
+
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtEstinationNo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:text="1001"
+            android:textColor="@color/txtgray"
+            app:layout_constraintStart_toStartOf="@+id/imgProfile"
+            app:layout_constraintTop_toBottomOf="@+id/txtEstinationNotitle" />
+
+
+        <com.tcc.app.customview.TextviewSemiBold
+            android:id="@+id/txtWorkingHrstitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/service"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/txtEstinationNotitle" />
+
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtHRS"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="House keeping"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/txtEstinationNo"
+            app:layout_constraintTop_toTopOf="@id/txtEstinationNo" />
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:background="@color/light_grey"
+            android:scaleY="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtHRS" />
+
+        <com.tcc.app.customview.TextviewSemiBold
+            android:id="@+id/txtNameTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:text="@string/name"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="@+id/imgProfile"
+            app:layout_constraintTop_toBottomOf="@+id/view1" />
+
+
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:text="Saggi Software Solution"
+            android:textColor="@color/txtgray"
+            app:layout_constraintEnd_toStartOf="@+id/txtStatus"
+            app:layout_constraintStart_toStartOf="@+id/imgProfile"
+            app:layout_constraintTop_toBottomOf="@+id/txtNameTitle" />
+
+
+        <com.tcc.app.customview.TextviewSemiBold
+            android:id="@+id/txtStatusTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/status"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txtNameTitle" />
+
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtStatus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:text="Pending"
+            android:textColor="@color/txtgray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtStatusTitle" />
+
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:background="@color/light_grey"
+            android:scaleY="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtStatus" />
+
+
+        <com.tcc.app.customview.TextviewSemiBold
+            android:id="@+id/txtTotalTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:text="@string/total"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view3" />
+
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtTotal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp"
+
+            android:text="118"
+            android:textColor="@color/txtgray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtTotalTitle" />
+
+
+        <com.tcc.app.customview.TextviewSemiBold
+            android:id="@+id/txtCGSTtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:text="@string/cgst"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="@+id/imgProfile"
+            app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtCGST"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:text="9"
+            android:textColor="@color/txtgray"
+            app:layout_constraintStart_toStartOf="@+id/imgProfile"
+            app:layout_constraintTop_toBottomOf="@+id/txtCGSTtitle" />
+
+
+        <com.tcc.app.customview.TextviewSemiBold
+            android:id="@+id/txtSGSTTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/sgst"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txtCGSTtitle" />
+
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtSGST"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:text="9"
+            android:textColor="@color/txtgray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtSGSTTitle" />
+
+
+        <com.tcc.app.customview.TextviewSemiBold
+            android:id="@+id/txtIGSTtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:text="@string/igst"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="@+id/imgProfile"
+            app:layout_constraintTop_toBottomOf="@id/view3" />
+
+
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtIGST"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:text="0"
+            android:textColor="@color/txtgray"
+            app:layout_constraintStart_toStartOf="@+id/imgProfile"
+            app:layout_constraintTop_toBottomOf="@+id/txtIGSTtitle" />
+
+
+        <View
+            android:id="@+id/view4"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/light_grey"
+            android:scaleY="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtIGST" />
+
+        <View
+            android:id="@+id/view3"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:background="@color/light_grey"
+            android:scaleY="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtCGST" />
+
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtAddress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:drawableStart="@drawable/ic_location"
+            android:drawablePadding="@dimen/_4sdp"
+            android:text="508, Sontorini squre, jodhpur, Ahmedabad, 380015"
+            android:textColor="@color/txtgray"
+            app:layout_constraintStart_toStartOf="@+id/imgProfile"
+            app:layout_constraintTop_toBottomOf="@+id/view4" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constrain"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/txtStatus"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtAddress">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/btnPayment"
+                style="@style/CustomPressButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btnDocument"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.tcc.app.customview.TextviewReguler
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_8sdp"
+                    android:drawableStart="@drawable/ic_payment"
+                    android:drawablePadding="@dimen/_4sdp"
+                    android:gravity="center"
+                    android:paddingVertical="@dimen/_6sdp"
+                    android:text="@string/payment"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorWhite"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/btnDocument"
+                style="@style/CustomPressButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/btnPayment"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.tcc.app.customview.TextviewReguler
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_document"
+                    android:drawablePadding="@dimen/_4sdp"
+                    android:gravity="center"
+                    android:paddingVertical="@dimen/_6sdp"
+                    android:text="@string/document"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorWhite"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

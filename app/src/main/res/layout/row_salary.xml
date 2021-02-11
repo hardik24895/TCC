@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/_5sdp"
+    android:layout_marginTop="@dimen/_4ssp"
+    android:elevation="5dp"
+    app:cardCornerRadius="4dp"
+    app:cardUseCompatPadding="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_8sdp"
+        android:paddingVertical="@dimen/_8sdp">
+
+
+        <com.tcc.app.customview.TextviewSemiBold
+            android:id="@+id/txtName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="Jan, 2021"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintBottom_toBottomOf="@+id/txtAmount"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txtAmount" />
+
+
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtAmount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/ic_arrow_next"
+            android:drawablePadding="@dimen/_8sdp"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="\u20b9 10000"
+            android:textColor="@color/colorGreen"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

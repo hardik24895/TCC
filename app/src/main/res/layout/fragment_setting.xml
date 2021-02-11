@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.SettingsFragment">
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardCornerRadius="@dimen/card_padding"
+        app:cardElevation="5dp"
+        app:cardUseCompatPadding="true"
+        app:contentPadding="@dimen/common_padding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorWhite"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp">
+
+                <com.tcc.app.customview.TextviewMedium
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="0dp"
+                    android:drawableLeft="@drawable/ic_push_notification"
+                    android:drawablePadding="@dimen/scale_10dp"
+                    android:text="Push notifications"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_large" />
+
+                <Switch
+                    android:id="@+id/switchPushNoti"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:checked="true" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/scale_1dp"
+                android:layout_marginStart="@dimen/scale_10dp"
+                android:layout_marginEnd="@dimen/scale_10dp"
+                android:background="@color/light_grey" />
+
+            <RelativeLayout
+                android:id="@+id/relayNotification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.tcc.app.customview.TextviewMedium
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_margin="8dp"
+                    android:drawableLeft="@drawable/ic_notification"
+                    android:drawablePadding="@dimen/scale_10dp"
+
+                    android:text="Notification list"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_large" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/scale_10dp"
+                    android:layout_marginRight="@dimen/scale_10dp"
+                    app:srcCompat="@drawable/ic_forword" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/scale_1dp"
+                android:layout_marginStart="@dimen/scale_10dp"
+                android:layout_marginEnd="@dimen/scale_10dp"
+                android:background="@color/light_grey" />
+
+            <RelativeLayout
+                android:id="@+id/relayAboutus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.tcc.app.customview.TextviewMedium
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_margin="8dp"
+
+                    android:drawableLeft="@drawable/ic_aboutus"
+                    android:drawablePadding="@dimen/scale_10dp"
+                    android:text="About us"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_large" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/scale_10dp"
+                    android:layout_marginRight="@dimen/scale_10dp"
+                    app:srcCompat="@drawable/ic_forword" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/scale_1dp"
+                android:layout_marginStart="@dimen/scale_10dp"
+                android:layout_marginEnd="@dimen/scale_10dp"
+                android:background="@color/light_grey" />
+
+
+            <RelativeLayout
+                android:id="@+id/relayPrivacy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.tcc.app.customview.TextviewMedium
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_margin="8dp"
+                    android:drawableLeft="@drawable/ic_terms"
+                    android:drawablePadding="@dimen/scale_10dp"
+                    android:text="Privacy policy"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_large" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/scale_10dp"
+                    android:layout_marginRight="@dimen/scale_10dp"
+                    app:srcCompat="@drawable/ic_forword" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/scale_1dp"
+                android:layout_marginStart="@dimen/scale_10dp"
+                android:layout_marginEnd="@dimen/scale_10dp"
+                android:background="@color/light_grey" />
+
+            <RelativeLayout
+                android:id="@+id/relayTerms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.tcc.app.customview.TextviewMedium
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_margin="8dp"
+                    android:drawableLeft="@drawable/ic_terms"
+                    android:drawablePadding="@dimen/scale_10dp"
+
+                    android:text="Terms and condition"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_large" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/scale_10dp"
+                    android:layout_marginRight="@dimen/scale_10dp"
+                    app:srcCompat="@drawable/ic_forword" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/scale_1dp"
+                android:layout_marginStart="@dimen/scale_10dp"
+                android:layout_marginEnd="@dimen/scale_10dp"
+                android:background="@color/light_grey" />
+
+            <RelativeLayout
+                android:id="@+id/relayPwd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.tcc.app.customview.TextviewMedium
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_margin="8dp"
+                    android:drawableLeft="@drawable/ic_changepassword"
+                    android:drawablePadding="@dimen/scale_10dp"
+
+                    android:text="Change Password"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_large" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/scale_10dp"
+                    android:layout_marginRight="@dimen/scale_10dp"
+                    app:srcCompat="@drawable/ic_forword" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/scale_1dp"
+                android:layout_marginStart="@dimen/scale_10dp"
+                android:layout_marginEnd="@dimen/scale_10dp"
+                android:background="@color/light_grey" />
+
+
+            <RelativeLayout
+                android:id="@+id/relayLogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.tcc.app.customview.TextviewMedium
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_margin="8dp"
+                    android:drawableLeft="@drawable/ic_logout"
+                    android:drawablePadding="@dimen/scale_10dp"
+                    android:text="Logout"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_large" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/scale_10dp"
+                    android:layout_marginRight="@dimen/scale_10dp"
+                    app:srcCompat="@drawable/ic_forword" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/scale_1dp"
+                android:layout_marginStart="@dimen/scale_10dp"
+                android:layout_marginEnd="@dimen/scale_10dp"
+                android:background="@color/light_grey" />
+
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:background="@android:color/transparent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        android:orientation="vertical">
+
+        <com.tcc.app.customview.TextviewSemiBold
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:paddingVertical="@dimen/_10sdp"
+            android:text="@string/overtime"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/light_grey" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inpnumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:hint="@string/Amount"
+            app:hintTextColor="@color/black">
+
+            <EditText
+                android:id="@+id/edtAmount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorWhite"
+                android:digits="1234567890."
+                android:fontFamily="@font/montserrat_regular"
+                android:inputType="numberDecimal"
+                android:maxLength="10"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:orientation="horizontal">
+
+            <com.tcc.app.customview.TextviewReguler
+                android:id="@+id/txtHalfDay"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:layout_weight="1"
+                android:background="@drawable/button_present"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingVertical="@dimen/_10sdp"
+                android:text="@string/half_day"
+                android:textColor="@drawable/selector_attendance_textview" />
+
+            <com.tcc.app.customview.TextviewReguler
+                android:id="@+id/txtFullDay"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:layout_weight="1"
+                android:background="@drawable/button_present"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingVertical="@dimen/_10sdp"
+                android:text="@string/fullday"
+                android:textColor="@drawable/selector_attendance_textview" />
+        </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:hint="@string/overtime"
+            app:hintTextColor="@color/black">
+
+            <EditText
+                android:id="@+id/edtOverTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorWhite"
+                android:editable="false"
+                android:focusable="false"
+                android:fontFamily="@font/montserrat_regular"
+                android:inputType="none"
+                android:maxLength="50"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.tcc.app.customview.TextviewSemiBold
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:paddingVertical="@dimen/_10sdp"
+            android:text="$2000"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp" />
+
+        <com.tcc.app.customview.TextviewReguler
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:paddingVertical="@dimen/_10sdp"
+            android:text="$ 600 * 3:57"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_10ssp" />
+
+
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:background="@drawable/button_present"
+            android:gravity="center"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:paddingVertical="@dimen/_10sdp"
+            android:text="@string/submit"
+            android:textColor="@drawable/selector_attendance_textview" />
+
+
+    </LinearLayout>
+</FrameLayout>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:background="@android:color/transparent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        android:orientation="vertical">
+
+        <com.tcc.app.customview.TextviewSemiBold
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:text="Ankit"
+            android:textSize="@dimen/_14ssp" />
+
+        <com.tcc.app.customview.TextviewReguler
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:text="09 Feb 2021 - Paid Chhuti"
+            android:textSize="@dimen/_10ssp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:orientation="horizontal">
+
+            <com.tcc.app.customview.TextviewReguler
+                android:id="@+id/txtOvertime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:layout_weight="1"
+                android:background="@drawable/button_present"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingVertical="@dimen/_10sdp"
+                android:text="@string/overtime"
+                android:textColor="@drawable/selector_attendance_textview" />
+
+            <com.tcc.app.customview.TextviewReguler
+                android:id="@+id/txtLatefine"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:layout_weight="1"
+                android:background="@drawable/button_present"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingVertical="@dimen/_10sdp"
+                android:text="@string/late_fine"
+                android:textColor="@drawable/selector_attendance_textview" />
+        </LinearLayout>
+
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtPaidLeave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:background="@drawable/button_present"
+            android:gravity="center"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:paddingVertical="@dimen/_10sdp"
+            android:text="@string/pead_leave"
+            android:textColor="@drawable/selector_attendance_textview" />
+
+
+    </LinearLayout>
+</FrameLayout>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/_5sdp"
+    android:elevation="5dp"
+    app:cardCornerRadius="8dp"
+    app:cardUseCompatPadding="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_5sdp">
+
+
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_start_date"
+            android:drawablePadding="@dimen/_10sdp"
+            android:paddingTop="@dimen/_10sdp"
+            android:text="Date"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtCheckIn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_clock"
+            android:drawablePadding="@dimen/_10sdp"
+            android:paddingTop="@dimen/_5sdp"
+            android:text="Check In Time"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtDate" />
+
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtCheckOut"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_end_date"
+            android:drawablePadding="@dimen/_10sdp"
+            android:paddingTop="@dimen/_5sdp"
+            android:text="Check Out Time"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtCheckIn" />
+
+
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtLocation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_location"
+            android:drawablePadding="@dimen/_10sdp"
+            android:paddingTop="@dimen/_5sdp"
+            android:text="@string/loremupsome"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtCheckOut" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
