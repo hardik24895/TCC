@@ -6,14 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tcc.app.R
+import com.tcc.app.extention.callPhone
 import com.tcc.app.extention.getRandomMaterialColor
+import com.tcc.app.extention.sendEmail
 import com.tcc.app.extention.visible
 import com.tcc.app.modal.LeadItem
 import com.tcc.app.utils.SessionManager
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.row_invoice.imgProfile
-import kotlinx.android.synthetic.main.row_invoice.txtIcon
 import kotlinx.android.synthetic.main.row_visitor.*
+
 
 class LeadAdapter(
     private val mContext: Context,
@@ -28,35 +29,15 @@ class LeadAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         return ItemHolder(
-                LayoutInflater.from(mContext).inflate(
-                        R.layout.row_visitor,
-                        parent, false
-                )
+            LayoutInflater.from(mContext).inflate(
+                R.layout.row_visitor,
+                parent, false
+            )
         )
     }
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         val data = list[position]
-
-        holder.linbtnCall.setOnClickListener {
-            holder.linbtnCall.isSelected = true
-            holder.linbtnSMS.isSelected = false
-            holder.linbtnEmail.isSelected = false
-
-        }
-        holder.linbtnSMS.setOnClickListener {
-            holder.linbtnCall.isSelected = false
-            holder.linbtnSMS.isSelected = true
-            holder.linbtnEmail.isSelected = false
-
-        }
-        holder.linbtnEmail.setOnClickListener {
-            holder.linbtnCall.isSelected = false
-            holder.linbtnSMS.isSelected = false
-            holder.linbtnEmail.isSelected = true
-
-        }
-
         holder.bindData(mContext, data, listener)
     }
 
@@ -65,14 +46,14 @@ class LeadAdapter(
     }
 
     class ItemHolder(override val containerView: View) :
-            RecyclerView.ViewHolder(containerView),
-            LayoutContainer {
+        RecyclerView.ViewHolder(containerView),
+        LayoutContainer {
 
 
         fun bindData(
-                context: Context,
-                data: LeadItem,
-                listener: LeadAdapter.OnItemSelected
+            context: Context,
+            data: LeadItem,
+            listener: LeadAdapter.OnItemSelected
         ) {
             /* var txtName = containerView.findViewById<TextView>(R.id.txtName)
              txtName.text= data*/
@@ -95,6 +76,29 @@ class LeadAdapter(
             txtIcon.visible()
 
             itemView.setOnClickListener { listener.onItemSelect(adapterPosition, data) }
+
+            linbtnCall.setOnClickListener {
+                linbtnCall.isSelected = true
+                linbtnSMS.isSelected = false
+                linbtnEmail.isSelected = false
+                callPhone(context, data.mobileNo.toString())
+
+            }
+            linbtnSMS.setOnClickListener {
+                linbtnCall.isSelected = false
+                linbtnSMS.isSelected = true
+                linbtnEmail.isSelected = false
+
+            }
+            linbtnEmail.setOnClickListener {
+                linbtnCall.isSelected = false
+                linbtnSMS.isSelected = false
+                linbtnEmail.isSelected = true
+
+                sendEmail(context, data.emailID.toString())
+            }
+
+
         }
 
 

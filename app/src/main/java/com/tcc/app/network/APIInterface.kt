@@ -44,4 +44,7 @@ interface APIInterface {
 
     @POST("service/")
     fun getCityList(@Body body: RequestBody): Observable<Response<CityListModel>>
+
+    @POST("service/")
+    fun changePassword(@Body body: RequestBody): Observable<Response<ChangePasswordModal>>
 }

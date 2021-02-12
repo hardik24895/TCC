@@ -1,14 +1,13 @@
 package com.tcc.app.Adapter
 
 import android.content.Context
-import android.content.Intent
-import android.graphics.Color
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tcc.app.R
+import com.tcc.app.extention.callPhone
+import com.tcc.app.extention.getRandomMaterialColor
 import com.tcc.app.extention.visible
 import com.tcc.app.modal.CustomerDataItem
 import kotlinx.android.extensions.LayoutContainer
@@ -36,7 +35,6 @@ class CustomerListAdapter(
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         val data = list[position]
-
         holder.bindData(mContext, data, listener)
     }
 
@@ -60,35 +58,15 @@ class CustomerListAdapter(
             txtAddress.text = data.address
             txtSiteCount.text = "2"
             imgProfile.setImageResource(R.drawable.bg_circle)
-            imgProfile.setColorFilter(getRandomMaterialColor("400"))
+            imgProfile.setColorFilter(getRandomMaterialColor("400", context))
             txtIcon.text = data.name.toString().substring(0, 1)
             txtIcon.visible()
             itemView.setOnClickListener { listener.onItemSelect(adapterPosition, data) }
             txtMobile.setOnClickListener {
-                val intent = Intent(Intent.ACTION_DIAL)
-                intent.data = Uri.parse("tel:${txtMobile.text}")
-                context.startActivity(intent)
+                callPhone(context, data.mobileNo.toString())
             }
         }
 
-        /**
-         * chooses a random color from array.xml
-         */
-        private fun getRandomMaterialColor(typeColor: String): Int {
-            var returnColor = Color.GRAY
-            val arrayId = itemView.context.resources.getIdentifier(
-                "mdcolor_$typeColor",
-                "array",
-                itemView.context!!.packageName
-            )
-            if (arrayId != 0) {
-                val colors = itemView.context.resources.obtainTypedArray(arrayId)
-                val index = (Math.random() * colors.length()).toInt()
-                returnColor = colors.getColor(index, Color.GRAY)
-                colors.recycle()
-            }
-            return returnColor
-        }
 
     }
 }

@@ -32,7 +32,7 @@
         <activity android:name="com.tcc.app.activity.EmployeeDetailActivity" />
         <activity android:name="com.tcc.app.activity.AddInspectionActivity" />
         <activity android:name="com.tcc.app.activity.AddPenaltyActivity" />
-        <activity android:name="com.tcc.app.activity.AddVisitorActivity" />
+        <activity android:name="com.tcc.app.activity.AddLeadActivity" />
         <activity android:name="com.tcc.app.activity.AddSiteActivity" />
         <activity android:name="com.tcc.app.activity.LeadDetailActivity" />
         <activity android:name="com.tcc.app.activity.AddQuotationActivity" />

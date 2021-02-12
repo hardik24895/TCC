@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.tcc.app.Adapter.LeadAdapter
 import com.tcc.app.R
-import com.tcc.app.activity.AddVisitorActivity
+import com.tcc.app.activity.AddLeadActivity
 import com.tcc.app.activity.LeadDetailActivity
 import com.tcc.app.dialog.AddVisitorDailog
 import com.tcc.app.extention.*
@@ -34,9 +34,9 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
     var hasNextPage: Boolean = true
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.reclerview_swipelayout, container, false)
         return root
@@ -91,7 +91,6 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.home, menu)
-
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -112,11 +111,11 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
 
     fun showDialog() {
         val dialog = AddVisitorDailog.newInstance(requireContext(),
-                object : AddVisitorDailog.onItemClick {
-                    override fun onItemCLicked() {
-                        goToActivity<AddVisitorActivity>()
-                    }
-                })
+            object : AddVisitorDailog.onItemClick {
+                override fun onItemCLicked(mobile: String) {
+                    checkLead(mobile)
+                }
+            })
         val bundle = Bundle()
         bundle.putString(Constant.TITLE, getString(R.string.app_name))
 //        bundle.putString(
@@ -137,8 +136,8 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
             jsonBody.put("EmailID", "")
             jsonBody.put("CityID", -1)
             result = Networking.setParentJsonData(
-                    Constant.METHOD_LEADLIST,
-                    jsonBody
+                Constant.METHOD_LEADLIST,
+                jsonBody
             )
 
         } catch (e: JSONException) {
@@ -147,36 +146,81 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
 
 
         Networking
-                .with(requireContext())
-                .getServices()
-                .getLeadList(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : CallbackObserver<LeadListModal>() {
-                    override fun onSuccess(response: LeadListModal) {
-                        if (list.size > 0) {
-                            progressbar.invisible()
-                        }
-                        swipeRefreshLayout.isRefreshing = false
-                        list.addAll(response.data)
-                        adapter?.notifyItemRangeInserted(
-                                list.size.minus(response.data.size),
-                                list.size
-                        )
-                        hasNextPage = list.size < response.rowcount
-
-                        refreshData(getString(R.string.no_data_found))
+            .with(requireContext())
+            .getServices()
+            .getLeadList(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : CallbackObserver<LeadListModal>() {
+                override fun onSuccess(response: LeadListModal) {
+                    if (list.size > 0) {
+                        progressbar.invisible()
                     }
+                    swipeRefreshLayout.isRefreshing = false
+                    list.addAll(response.data)
+                    adapter?.notifyItemRangeInserted(
+                        list.size.minus(response.data.size),
+                        list.size
+                    )
+                    hasNextPage = list.size < response.rowcount
 
-                    override fun onFailed(code: Int, message: String) {
-                        if (list.size > 0) {
-                            progressbar.invisible()
-                        }
-                        showAlert(message)
-                        refreshData(message)
+                    refreshData(getString(R.string.no_data_found))
+                }
+
+                override fun onFailed(code: Int, message: String) {
+                    if (list.size > 0) {
+                        progressbar.invisible()
                     }
+                    showAlert(message)
+                    refreshData(message)
+                }
 
-                }).addTo(autoDisposable)
+            }).addTo(autoDisposable)
+    }
+
+    fun checkLead(mobile: String) {
+        showProgressbar()
+        var result = ""
+        try {
+            val jsonBody = JSONObject()
+            jsonBody.put("PageSize", -1)
+            jsonBody.put("CurrentPage", 1)
+            jsonBody.put("Name", "")
+            jsonBody.put("EmailID", mobile)
+            jsonBody.put("CityID", -1)
+            result = Networking.setParentJsonData(
+                Constant.METHOD_LEADLIST,
+                jsonBody
+            )
+
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+        Networking
+            .with(requireContext())
+            .getServices()
+            .getLeadList(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : CallbackObserver<LeadListModal>() {
+                override fun onSuccess(response: LeadListModal) {
+                    hideProgressbar()
+                    if (response.data.size > 0) {
+                        val intent = Intent(context, AddLeadActivity::class.java)
+                        intent.putExtra(Constant.DATA, response.data.get(0))
+                        startActivity(intent)
+                        Animatoo.animateCard(context)
+                    } else {
+                        goToActivity<AddLeadActivity>()
+                    }
+                }
+
+                override fun onFailed(code: Int, message: String) {
+                    hideProgressbar()
+                    showAlert(message)
+                }
+
+            }).addTo(autoDisposable)
     }
 
     private fun refreshData(msg: String?) {

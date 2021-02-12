@@ -129,4 +129,5 @@ object Constant {
     const val METHOD_UNIFORM_LIST = "getEmployeeUniform"
     const val METHOD_ROOM_LIST = "getEmployeeRoom"
     const val METHOD_CITY_LIST = "getCities"
+    const val METHOD_CHANGE_PWD = "changePassword"
 }

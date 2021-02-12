@@ -11,6 +11,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.LifecycleOwner
 import com.tcc.app.R
+import com.tcc.app.extention.getValue
+import com.tcc.app.extention.isEmpty
+import com.tcc.app.extention.showSnackBar
 import com.tcc.app.network.AutoDisposable
 import com.tcc.app.utils.BlurDialogFragment
 import com.tcc.app.utils.SessionManager
@@ -56,11 +59,28 @@ class AddVisitorDailog(context: Context) : BlurDialogFragment(), LifecycleOwner 
         dialog?.setCancelable(false)
         dialog?.setCanceledOnTouchOutside(false)
         btnSubmit.setOnClickListener {
-            listener.onItemCLicked()
-            dismissAllowingStateLoss()
+            validation()
         }
 
 
+    }
+
+    fun validation() {
+        when {
+            edtPhone.isEmpty() -> {
+                root.showSnackBar("Enter Mobile Number")
+                edtPhone.requestFocus()
+            }
+            edtPhone.getValue().length < 10 -> {
+                root.showSnackBar("Enter Valid Mobile Number")
+                edtPhone.requestFocus()
+            }
+            else -> {
+                listener.onItemCLicked(edtPhone.getValue())
+                dismissAllowingStateLoss()
+            }
+
+        }
     }
 
     override fun onCancel(dialog: DialogInterface) {
@@ -78,7 +98,7 @@ class AddVisitorDailog(context: Context) : BlurDialogFragment(), LifecycleOwner 
     }
 
     interface onItemClick {
-        fun onItemCLicked()
+        fun onItemCLicked(mobile: String)
     }
 
     interface onDissmiss {
