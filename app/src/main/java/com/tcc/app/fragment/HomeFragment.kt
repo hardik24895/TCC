@@ -1,5 +1,6 @@
 package com.tcc.app.fragment
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,9 +8,12 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.tcc.app.Adapter.HomeCounterAdapter
-import com.tcc.app.Adapter.HomeServiceAdapter
+import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
+import com.smarteist.autoimageslider.SliderAnimations
+import com.smarteist.autoimageslider.SliderView
 import com.tcc.app.R
+import com.tcc.app.adapter.AutoImageSliderAdapter
+import com.tcc.app.adapter.HomeServiceAdapter
 import com.tcc.app.extention.setHomeScreenTitle
 import com.tcc.app.extention.showAlert
 import com.tcc.app.modal.CityDataItem
@@ -28,16 +32,17 @@ import tech.hibk.searchablespinnerlibrary.SearchableDialog
 import tech.hibk.searchablespinnerlibrary.SearchableItem
 
 
-class HomeFragment : BaseFragment(), HomeCounterAdapter.OnItemSelected,
+class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
         HomeServiceAdapter.OnItemSelected {
 
-    var adapter: HomeCounterAdapter? = null
+
     var adapter1: HomeServiceAdapter? = null
     lateinit var chipArray: ArrayList<String>
     lateinit var cityNameList: ArrayList<String>
     lateinit var cityListArray: ArrayList<CityDataItem>
     var adapterCity: ArrayAdapter<String>? = null
     var itens: List<SearchableItem>? = null
+    var autoImageSliderAdapter: AutoImageSliderAdapter? = null
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -100,10 +105,14 @@ class HomeFragment : BaseFragment(), HomeCounterAdapter.OnItemSelected,
 
     fun setuprvHomeCounterMarchant() {
 
-        val layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        rvHomeCounter.layoutManager = layoutManager
-        adapter = HomeCounterAdapter(requireContext(), chipArray, this)
-        rvHomeCounter.adapter = adapter
+        autoImageSliderAdapter = AutoImageSliderAdapter(mContext!!, chipArray, this)
+        rvHomeCounter.setSliderAdapter(autoImageSliderAdapter!!)
+        rvHomeCounter.setIndicatorAnimation(IndicatorAnimationType.SLIDE)
+        rvHomeCounter.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION)
+        rvHomeCounter.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH)
+        rvHomeCounter.setIndicatorUnselectedColor(Color.WHITE)
+        rvHomeCounter.setScrollTimeInSec(4)
+        rvHomeCounter.startAutoCycle()
 
         val layoutManager1 = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         rvDeepCleaing.layoutManager = layoutManager1

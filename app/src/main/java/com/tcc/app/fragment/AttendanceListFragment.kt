@@ -3,9 +3,9 @@ package com.tcc.app.fragment
 import android.os.Bundle
 import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.tcc.app.Adapter.AttendanceListAdapter
 import com.tcc.app.R
 import com.tcc.app.activity.AddAttendanceActivity
+import com.tcc.app.adapter.AttendanceListAdapter
 import com.tcc.app.extention.goToActivity
 import com.tcc.app.extention.setHomeScreenTitle
 import kotlinx.android.synthetic.main.reclerview_swipelayout.*
@@ -15,7 +15,6 @@ class AttendanceListFragment() : BaseFragment(), AttendanceListAdapter.OnItemSel
     constructor(b: Boolean) : this() {
         this.b = b
     }
-
 
     var adapter: AttendanceListAdapter? = null
     var b: Boolean? = true

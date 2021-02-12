@@ -11,12 +11,12 @@ import android.widget.RadioButton
 @SuppressLint("AppCompatCustomView")
 class RadioButtonReguler : RadioButton {
     constructor(context: Context) : super(context) {
-        val face = Typeface.createFromAsset(context.assets, "font/montserrat_semibold.ttf")
+        val face = Typeface.createFromAsset(context.assets, "font/opensans_semibold.ttf")
         this.typeface = face
     }
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        val face = Typeface.createFromAsset(context.assets, "font/montserrat_semibold.ttf")
+        val face = Typeface.createFromAsset(context.assets, "font/opensans_semibold.ttf")
         this.typeface = face
     }
 
@@ -25,7 +25,7 @@ class RadioButtonReguler : RadioButton {
         attrs,
         defStyle
     ) {
-        val face = Typeface.createFromAsset(context.assets, "font/montserrat_semibold.ttf")
+        val face = Typeface.createFromAsset(context.assets, "font/opensans_semibold.ttf")
         this.typeface = face
     }
 

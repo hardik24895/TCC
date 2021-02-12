@@ -94,7 +94,7 @@
                     android:backgroundTint="@color/colorWhite"
                     android:enabled="false"
                     android:focusable="false"
-                    android:fontFamily="@font/montserrat_regular"
+                    android:fontFamily="@font/opensans_regular"
                     android:inputType="date"
                     android:maxLength="20"
                     android:singleLine="true"

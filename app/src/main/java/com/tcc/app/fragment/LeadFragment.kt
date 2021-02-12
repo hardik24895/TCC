@@ -5,10 +5,10 @@ import android.os.Bundle
 import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
-import com.tcc.app.Adapter.LeadAdapter
 import com.tcc.app.R
 import com.tcc.app.activity.AddLeadActivity
 import com.tcc.app.activity.LeadDetailActivity
+import com.tcc.app.adapter.LeadAdapter
 import com.tcc.app.dialog.AddVisitorDailog
 import com.tcc.app.extention.*
 import com.tcc.app.interfaces.LoadMoreListener

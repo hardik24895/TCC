@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.tcc.app.Adapter.InvoicePaidAdapter
 import com.tcc.app.R
+import com.tcc.app.adapter.InvoicePaidAdapter
 import kotlinx.android.synthetic.main.reclerview_swipelayout.*
 
 

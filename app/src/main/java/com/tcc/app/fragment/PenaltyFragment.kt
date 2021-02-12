@@ -3,10 +3,10 @@ package com.tcc.app.fragment
 import android.os.Bundle
 import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.tcc.app.Adapter.PenaltiAdapter
 import com.tcc.app.R
 import com.tcc.app.activity.AddPenaltyActivity
 import com.tcc.app.activity.EmployeeDetailActivity
+import com.tcc.app.adapter.PenaltiAdapter
 import com.tcc.app.extention.goToActivity
 import com.tcc.app.extention.setHomeScreenTitle
 import kotlinx.android.synthetic.main.reclerview_swipelayout.*

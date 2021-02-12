@@ -2,8 +2,8 @@ package com.tcc.app.activity
 
 import android.os.Bundle
 import com.google.android.material.tabs.TabLayout
-import com.tcc.app.Adapter.ViewPagerPagerAdapter
 import com.tcc.app.R
+import com.tcc.app.adapter.ViewPagerPagerAdapter
 import com.tcc.app.extention.goToActivity
 import com.tcc.app.extention.invisible
 import com.tcc.app.extention.visible

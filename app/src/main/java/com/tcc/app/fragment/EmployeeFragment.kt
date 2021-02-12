@@ -3,10 +3,10 @@ package com.tcc.app.fragment
 import android.os.Bundle
 import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.tcc.app.Adapter.EmployeeAdapter
 import com.tcc.app.R
 import com.tcc.app.activity.AddEmployeeActivity
 import com.tcc.app.activity.EmployeeDetailActivity
+import com.tcc.app.adapter.EmployeeAdapter
 import com.tcc.app.extention.*
 import com.tcc.app.interfaces.LoadMoreListener
 import com.tcc.app.modal.EmployeeDataItem

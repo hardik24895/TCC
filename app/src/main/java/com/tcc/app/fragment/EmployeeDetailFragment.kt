@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.tcc.app.Adapter.InvoicePaidAdapter
 import com.tcc.app.R
+import com.tcc.app.adapter.InvoicePaidAdapter
 
 
 class EmployeeDetailFragment : BaseFragment() {
