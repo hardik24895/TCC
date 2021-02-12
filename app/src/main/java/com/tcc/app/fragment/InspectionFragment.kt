@@ -2,7 +2,6 @@ package com.tcc.app.fragment
 
 import android.os.Bundle
 import android.view.*
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tcc.app.Adapter.InspectionAdapter
 import com.tcc.app.R
@@ -13,14 +12,14 @@ import com.tcc.app.extention.setHomeScreenTitle
 import kotlinx.android.synthetic.main.reclerview_swipelayout.*
 
 
-class InspectionFragment : Fragment(), InspectionAdapter.OnItemSelected {
+class InspectionFragment : BaseFragment(), InspectionAdapter.OnItemSelected {
 
     var adapter: InspectionAdapter? = null
     lateinit var chipArray: ArrayList<String>
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.reclerview_swipelayout, container, false)
         return root

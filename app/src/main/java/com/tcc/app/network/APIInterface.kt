@@ -30,4 +30,18 @@ interface APIInterface {
     @POST("service/")
     fun getCustomerList(@Body body: RequestBody): Observable<Response<CustomerListModal>>
 
+    @POST("service/")
+    fun getEmployeeList(@Body body: RequestBody): Observable<Response<EmployeeListModel>>
+
+    @POST("service/")
+    fun getTrainingList(@Body body: RequestBody): Observable<Response<TrainingListModel>>
+
+    @POST("service/")
+    fun getUniformList(@Body body: RequestBody): Observable<Response<UniformListModel>>
+
+    @POST("service/")
+    fun getRoomAllocationList(@Body body: RequestBody): Observable<Response<RoomAllocationListModel>>
+
+    @POST("service/")
+    fun getCityList(@Body body: RequestBody): Observable<Response<CityListModel>>
 }
