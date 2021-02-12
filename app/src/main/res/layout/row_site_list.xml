@@ -23,7 +23,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.tcc.app.customview.TextviewSemiBold
-            android:id="@+id/txtName"
+            android:id="@+id/txtSiteName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_5sdp"
@@ -52,13 +52,13 @@
             app:layout_constraintTop_toTopOf="@+id/imgProfile" />
 
         <com.tcc.app.customview.TextviewReguler
-            android:id="@+id/textView2"
+            android:id="@+id/textName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_2sdp"
             android:text="Saggi Software Solutions"
-            app:layout_constraintStart_toStartOf="@+id/txtName"
-            app:layout_constraintTop_toBottomOf="@+id/txtName" />
+            app:layout_constraintStart_toStartOf="@+id/txtSiteName"
+            app:layout_constraintTop_toBottomOf="@+id/txtSiteName" />
 
         <com.tcc.app.customview.TextviewSemiBold
             android:id="@+id/txtSitetypetitle"

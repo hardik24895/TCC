@@ -121,4 +121,7 @@ object Constant {
     const val METHOD_FORGOTPWD = "forgotPassword"
     const val METHOD_LEADLIST = "getVisitor"
     const val METHOD_ROLE = "getRole"
+    const val METHOD_QUOTATION_LIST = "getQuotation"
+    const val METHOD_SITE_LIST = "getSites"
+    const val METHOD_CUSTOMER_LIST = "getCustomer"
 }

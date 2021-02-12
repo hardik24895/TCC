@@ -1,12 +1,14 @@
 package com.tcc.app.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.tcc.app.Adapter.LeadAdapter
 import com.tcc.app.R
 import com.tcc.app.activity.AddVisitorActivity
-import com.tcc.app.activity.VisitorDetailActivity
+import com.tcc.app.activity.LeadDetailActivity
 import com.tcc.app.dialog.AddVisitorDailog
 import com.tcc.app.extention.*
 import com.tcc.app.interfaces.LoadMoreListener
@@ -73,13 +75,17 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
 
         val layoutManager = LinearLayoutManager(requireContext())
         recyclerView.layoutManager = layoutManager
-        adapter = LeadAdapter(requireContext(), list, this)
+        adapter = LeadAdapter(requireContext(), list, session, this)
         recyclerView.adapter = adapter
 
     }
 
     override fun onItemSelect(position: Int, data: LeadItem) {
-        goToActivity<VisitorDetailActivity>()
+        val intent = Intent(context, LeadDetailActivity::class.java)
+        intent.putExtra(Constant.DATA, data)
+        startActivity(intent)
+        Animatoo.animateCard(context)
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

@@ -34,7 +34,7 @@
         <activity android:name="com.tcc.app.activity.AddPenaltyActivity" />
         <activity android:name="com.tcc.app.activity.AddVisitorActivity" />
         <activity android:name="com.tcc.app.activity.AddSiteActivity" />
-        <activity android:name="com.tcc.app.activity.VisitorDetailActivity" />
+        <activity android:name="com.tcc.app.activity.LeadDetailActivity" />
         <activity android:name="com.tcc.app.activity.AddQuotationActivity" />
         <activity android:name="com.tcc.app.activity.SalaryDetailActivity" />
         <activity android:name="com.tcc.app.activity.InspectionDetailActivity" />
