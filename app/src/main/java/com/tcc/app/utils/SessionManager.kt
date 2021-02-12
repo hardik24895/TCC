@@ -2,13 +2,15 @@ package com.tcc.app.utils
 
 import android.app.NotificationManager
 import android.content.Context
+import com.google.gson.Gson
 import com.tcc.app.R
+import com.tcc.app.modal.KeyRoleData
+import com.tcc.app.modal.LoginModal
 
 
 class SessionManager(val context: Context) {
     val pref =
-        context.getSharedPreferences(context.getString(R.string.app_name), Context.MODE_PRIVATE)
-
+            context.getSharedPreferences(context.getString(R.string.app_name), Context.MODE_PRIVATE)
 
     var isLoggedIn: Boolean
         get() = pref.contains(KEY_IS_LOGIN) && pref.getBoolean(KEY_IS_LOGIN, false)
@@ -18,19 +20,30 @@ class SessionManager(val context: Context) {
         get() = pref.contains(KEY_IS_REGISTER) && pref.getBoolean(KEY_IS_REGISTER, false)
         set(isRegester) = storeDataByKey(KEY_IS_REGISTER, isRegester)
 
-//    var user: UserModal
-//        get() {
-//            val gson = Gson()
-//            val json = getDataByKey(KEY_USER_INFO, "")
-//            return gson.fromJson(json, UserModal::class.java)
-//        }
-//        set(user) {
-//            val gson = Gson()
-//            val json = gson.toJson(user)
-//            pref.edit().putString(KEY_USER_INFO, json).apply()
-//            isLoggedIn = true
-//        }
+    var user: LoginModal
+        get() {
+            val gson = Gson()
+            val json = getDataByKey(KEY_USER_INFO, "")
+            return gson.fromJson(json, LoginModal::class.java)
+        }
+        set(user) {
+            val gson = Gson()
+            val json = gson.toJson(user)
+            pref.edit().putString(KEY_USER_INFO, json).apply()
+            isLoggedIn = true
+        }
 
+    var roleData: KeyRoleData
+        get() {
+            val gson = Gson()
+            val json = getDataByKey(KEY_ROLE_DATA, "")
+            return gson.fromJson(json, KeyRoleData::class.java)
+        }
+        set(roleData) {
+            val gson = Gson()
+            val json = gson.toJson(roleData)
+            pref.edit().putString(KEY_ROLE_DATA, json).apply()
+        }
 
     @JvmOverloads
     fun getDataByKey(Key: String, DefaultValue: String = ""): String {
@@ -94,6 +107,8 @@ class SessionManager(val context: Context) {
         const val KEY_IS_LOGIN = "isLogin"
         const val KEY_IS_REGISTER = "isRegister"
         const val KEY_USER_INFO = "user"
+        const val KEY_ROLE = "key_role"
+        const val KEY_ROLE_DATA = "key_role_data"
         const val KEY_EVENT_STATICS = "eventStatics"
         const val HOME_DATA = "homeData"
         const val BANNER_DATA = "bannerData"

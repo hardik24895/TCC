@@ -8,8 +8,8 @@ import com.tcc.app.extention.goToActivity
 import com.tcc.app.extention.invisible
 import com.tcc.app.extention.visible
 import com.tcc.app.fragment.CustomerSiteFragment
+import com.tcc.app.fragment.LeadInfofoFragment
 import com.tcc.app.fragment.QuotationFragment
-import com.tcc.app.fragment.VisitorInfoFragment
 import kotlinx.android.synthetic.main.activity_employee_detail.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 
@@ -65,7 +65,7 @@ class VisitorDetailActivity : BaseActivity() {
 
     private fun setStatePageAdapter() {
         viewPageradapter = ViewPagerPagerAdapter(supportFragmentManager)
-        viewPageradapter?.addFragment(VisitorInfoFragment(), "Detail")
+        viewPageradapter?.addFragment(LeadInfofoFragment(), "Detail")
         viewPageradapter?.addFragment(CustomerSiteFragment(), "Sites")
         viewPageradapter?.addFragment(QuotationFragment(), "Quotation")
 

@@ -4,6 +4,7 @@ object Constant {
 
     const val OVERTIME = "overtime"
     const val LATEFINE = "latefine"
+    const val PAGE_SIZE = 10
 
     const val IS_REFREESH = "is_refresh"
     const val LATITUDE = "latitude"
@@ -112,4 +113,12 @@ object Constant {
     const val SHARE = "Share"
     const val REPORT = "Report"
     const val DELETE = "Delete"
+
+
+    //--- Method Name-----
+
+    const val METHOD_LOGIN = "checkLogin"
+    const val METHOD_FORGOTPWD = "forgotPassword"
+    const val METHOD_LEADLIST = "getVisitor"
+    const val METHOD_ROLE = "getRole"
 }
