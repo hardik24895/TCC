@@ -58,9 +58,7 @@ class InvoicePaidAdapter(
             itemView.setOnClickListener { listener.onItemSelect(adapterPosition, data) }
         }
 
-        /**
-         * chooses a random color from array.xml
-         */
+
         private fun getRandomMaterialColor(typeColor: String): Int {
             var returnColor = Color.GRAY
             val arrayId = itemView.context.resources.getIdentifier(
