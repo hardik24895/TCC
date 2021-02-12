@@ -33,7 +33,7 @@
             android:gravity="center"
             android:lineSpacingExtra="2.5dp"
             android:padding="25dp"
-            android:textColor="@color/browser_actions_bg_grey"
+            android:textColor="@color/black"
             android:textSize="16sp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"

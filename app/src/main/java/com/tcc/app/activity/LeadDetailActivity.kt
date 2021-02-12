@@ -10,16 +10,22 @@ import com.tcc.app.extention.visible
 import com.tcc.app.fragment.CustomerSiteFragment
 import com.tcc.app.fragment.LeadInfofoFragment
 import com.tcc.app.fragment.QuotationFragment
+import com.tcc.app.modal.LeadItem
+import com.tcc.app.utils.Constant
 import kotlinx.android.synthetic.main.activity_employee_detail.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 
-class VisitorDetailActivity : BaseActivity() {
+class LeadDetailActivity : BaseActivity() {
     var viewPageradapter: ViewPagerPagerAdapter? = null
+    var leadItem: LeadItem? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_visitor_detail)
         txtTitle.text = "Hardik Kanzariya"
         imgBack.visible()
+
+        leadItem = intent.getSerializableExtra(Constant.DATA) as LeadItem
+
         mDeclaration()
         setStatePageAdapter()
         clickEvent()
@@ -64,10 +70,13 @@ class VisitorDetailActivity : BaseActivity() {
     }
 
     private fun setStatePageAdapter() {
+        val args = Bundle()
+        args.putSerializable(Constant.DATA, leadItem)
+
         viewPageradapter = ViewPagerPagerAdapter(supportFragmentManager)
-        viewPageradapter?.addFragment(LeadInfofoFragment(), "Detail")
-        viewPageradapter?.addFragment(CustomerSiteFragment(), "Sites")
-        viewPageradapter?.addFragment(QuotationFragment(), "Quotation")
+        viewPageradapter?.addFragment(LeadInfofoFragment.getInstance(args), "Detail")
+        viewPageradapter?.addFragment(CustomerSiteFragment.getInstance(args), "Sites")
+        viewPageradapter?.addFragment(QuotationFragment.getInstance(args), "Quotation")
 
         viewPager.adapter = viewPageradapter
         tabs.setupWithViewPager(viewPager, true)

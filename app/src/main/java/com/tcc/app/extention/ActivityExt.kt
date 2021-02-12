@@ -5,6 +5,7 @@ import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.os.Bundle
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -16,6 +17,7 @@ import androidx.fragment.app.Fragment
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.tcc.app.R
 import com.tcc.app.customview.TextviewBold
+import com.tcc.app.utils.Constant
 import java.util.*
 
 
@@ -43,6 +45,13 @@ inline fun <reified T : Activity> AppCompatActivity.goToActivity() {
 inline fun <reified T : Activity> Fragment.goToActivity() {
     startActivity(Intent(activity, T::class.java))
     Animatoo.animateCard(activity)
+}
+
+inline fun <reified T : Activity> Fragment.goToActivityBundle(bundle: Bundle) {
+    val intent = Intent(activity, T::class.java)
+    intent.putExtra(Constant.DATA, bundle)
+    startActivity(intent)
+    Animatoo.animateCard(context)
 }
 
 fun AppCompatActivity.addFragments(fragments: List<Fragment>, containerId: Int) {

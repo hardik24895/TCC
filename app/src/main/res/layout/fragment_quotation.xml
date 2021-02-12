@@ -50,7 +50,7 @@
         android:gravity="center"
         android:paddingHorizontal="@dimen/_10sdp"
         android:paddingVertical="@dimen/_5sdp"
-        android:text="@string/other"
+        android:text="@string/pending"
         android:textColor="@drawable/selector_attendance_textview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

@@ -166,6 +166,22 @@ fun dismissAlertDialog() {
     dialog?.dismiss()
 }
 
+fun getRandomMaterialColor(typeColor: String, context: Context): Int {
+    var returnColor = Color.GRAY
+    val arrayId = context.resources.getIdentifier(
+        "mdcolor_$typeColor",
+        "array",
+        context!!.packageName
+    )
+    if (arrayId != 0) {
+        val colors = context.resources.obtainTypedArray(arrayId)
+        val index = (Math.random() * colors.length()).toInt()
+        returnColor = colors.getColor(index, Color.GRAY)
+        colors.recycle()
+    }
+    return returnColor
+}
+
 inline
 val AppCompatActivity.connectivityManager: ConnectivityManager
     get() = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
