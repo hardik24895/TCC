@@ -35,7 +35,7 @@ class AddLeadActivity : BaseActivity() {
         edtName.setText(leadItem?.name.toString())
         edtEmail.setText(leadItem?.emailID.toString())
         edtMobile.setText(leadItem?.mobileNo.toString())
-        edtName.setText(leadItem?.name.toString())
+        edtAddress.setText(leadItem?.address.toString())
         edtName.setText(leadItem?.name.toString())
 
     }
