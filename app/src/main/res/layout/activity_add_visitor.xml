@@ -25,7 +25,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_10sdp"
-
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
@@ -109,7 +108,6 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:background="@drawable/bg_spinner"
                 android:orientation="vertical"
-
                 app:layout_constraintEnd_toEndOf="@+id/inMobile"
                 app:layout_constraintStart_toStartOf="@+id/inMobile"
                 app:layout_constraintTop_toBottomOf="@+id/inMobile">
