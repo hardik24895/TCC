@@ -16,7 +16,6 @@ class AttendanceListFragment() : BaseFragment(), AttendanceListAdapter.OnItemSel
         this.b = b
     }
 
-
     var adapter: AttendanceListAdapter? = null
     var b: Boolean? = true
     lateinit var chipArray: ArrayList<String>
