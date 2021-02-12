@@ -30,6 +30,7 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
     private val list: MutableList<LeadItem> = mutableListOf()
     var page: Int = 1
     var hasNextPage: Boolean = true
+
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,

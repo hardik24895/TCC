@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tcc.app.R
+import com.tcc.app.modal.TrainingDataItem
 import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.row_training.*
 
 class TrainingAdapter(
-    private val mContext: Context,
-    var list: MutableList<String> = mutableListOf(),
-    private val listener: OnItemSelected
+        private val mContext: Context,
+        var list: MutableList<TrainingDataItem> = mutableListOf(),
+        private val listener: OnItemSelected
 ) : RecyclerView.Adapter<TrainingAdapter.ItemHolder>() {
 
     override fun getItemCount(): Int {
@@ -34,7 +36,7 @@ class TrainingAdapter(
     }
 
     interface OnItemSelected {
-        fun onItemSelect(position: Int, data: String)
+        fun onItemSelect(position: Int, data: TrainingDataItem)
     }
 
     class ItemHolder(override val containerView: View) :
@@ -42,11 +44,12 @@ class TrainingAdapter(
         LayoutContainer {
 
         fun bindData(
-            context: Context,
-            data: String,
-            listener: TrainingAdapter.OnItemSelected
+                context: Context,
+                data: TrainingDataItem,
+                listener: TrainingAdapter.OnItemSelected
         ) {
-
+            txtName.text = data.training
+            txtDate.text = data.trainingDate
 
         }
 

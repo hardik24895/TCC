@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tcc.app.R
+import com.tcc.app.modal.UniformDataItem
 import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.row_uniform.*
 
 class UniformAdapter(
-    private val mContext: Context,
-    var list: MutableList<String> = mutableListOf(),
-    private val listener: OnItemSelected
+        private val mContext: Context,
+        var list: MutableList<UniformDataItem> = mutableListOf(),
+        private val listener: OnItemSelected
 ) : RecyclerView.Adapter<UniformAdapter.ItemHolder>() {
 
     override fun getItemCount(): Int {
@@ -34,7 +36,7 @@ class UniformAdapter(
     }
 
     interface OnItemSelected {
-        fun onItemSelect(position: Int, data: String)
+        fun onItemSelect(position: Int, data: UniformDataItem)
     }
 
     class ItemHolder(override val containerView: View) :
@@ -42,11 +44,13 @@ class UniformAdapter(
         LayoutContainer {
 
         fun bindData(
-            context: Context,
-            data: String,
-            listener: UniformAdapter.OnItemSelected
+                context: Context,
+                data: UniformDataItem,
+                listener: UniformAdapter.OnItemSelected
         ) {
 
+            txtName.text = data.uniformtype
+            txtDate.text = data.uniformDate
 
         }
 

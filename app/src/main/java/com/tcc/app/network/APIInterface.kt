@@ -1,9 +1,6 @@
 package com.tcc.app.network
 
-import com.tcc.app.modal.ForgotPasswordModal
-import com.tcc.app.modal.GetRoleModal
-import com.tcc.app.modal.LeadListModal
-import com.tcc.app.modal.LoginModal
+import com.tcc.app.modal.*
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -24,4 +21,18 @@ interface APIInterface {
     @POST("service/")
     fun getRole(@Body body: RequestBody): Observable<Response<GetRoleModal>>
 
+    @POST("service/")
+    fun getEmployeeList(@Body body: RequestBody): Observable<Response<EmployeeListModel>>
+
+    @POST("service/")
+    fun getTrainingList(@Body body: RequestBody): Observable<Response<TrainingListModel>>
+
+    @POST("service/")
+    fun getUniformList(@Body body: RequestBody): Observable<Response<UniformListModel>>
+
+    @POST("service/")
+    fun getRoomAllocationList(@Body body: RequestBody): Observable<Response<RoomAllocationListModel>>
+
+    @POST("service/")
+    fun getCityList(@Body body: RequestBody): Observable<Response<CityListModel>>
 }

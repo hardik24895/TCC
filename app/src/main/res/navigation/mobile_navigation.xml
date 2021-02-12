@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/nav_visitor"
-        android:name="com.tcc.app.fragment.VisitorFragment"
+        android:name="com.tcc.app.fragment.LeadFragment"
         android:label="@string/nav_visitor"
         tools:layout="@layout/fragment_profile" />
 

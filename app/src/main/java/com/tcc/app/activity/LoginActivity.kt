@@ -180,7 +180,7 @@ class LoginActivity : BaseActivity() {
             Log.d("json", jsonData.toString())
             session.storeDataByKey(SessionManager.KEY_ROLE, jsonData.toString())
             Animatoo.animateCard(this@LoginActivity)
-            goToActivity<HomeActivity>()
+            goToActivityAndClearTask<HomeActivity>()
         } catch (e: Exception) {
         }
     }
