@@ -114,7 +114,7 @@
 
 
                 <tech.hibk.searchablespinnerlibrary.SearchableSpinner
-                    android:id="@+id/spSite"
+                    android:id="@+id/spState"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_3sdp"
@@ -123,7 +123,7 @@
                     android:padding="@dimen/_5sdp"
                     app:cancelButtonColor="@color/black"
                     app:cancelButtontext="CLOSE"
-                    app:dialogTitle="Sample"
+                    app:dialogTitle="@string/select_state"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -135,10 +135,10 @@
                     android:id="@+id/view"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/spSite"
+                    app:layout_constraintBottom_toBottomOf="@+id/spState"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/spSite" />
+                    app:layout_constraintTop_toTopOf="@+id/spState" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -163,12 +163,12 @@
                     android:padding="@dimen/_5sdp"
                     app:cancelButtonColor="@color/black"
                     app:cancelButtontext="CLOSE"
-                    app:dialogTitle="Sample"
+                    app:dialogTitle="@string/select_city"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:nothingSelectedText="@string/select_gujrat"
+                    app:nothingSelectedText="@string/select_city"
                     app:onlyLightTheme="true" />
 
                 <View
