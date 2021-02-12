@@ -56,7 +56,7 @@
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <com.tcc.app.customview.TextviewMedium
+                <com.tcc.app.customview.TextviewSemiBold
                     android:id="@+id/tvOk"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -80,7 +80,7 @@
                 android:orientation="horizontal"
                 android:visibility="gone">
 
-                <com.tcc.app.customview.TextviewMedium
+                <com.tcc.app.customview.TextviewSemiBold
                     android:id="@+id/tvNo"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -101,7 +101,7 @@
                     android:layout_height="40dp"
                     android:background="@color/light_grey" />
 
-                <com.tcc.app.customview.TextviewMedium
+                <com.tcc.app.customview.TextviewSemiBold
                     android:id="@+id/tvYes"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

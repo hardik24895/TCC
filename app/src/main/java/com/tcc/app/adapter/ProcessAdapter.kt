@@ -1,25 +1,21 @@
-package com.tcc.app.Adapter
+package com.tcc.app.adapter
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tcc.app.R
 import com.tcc.app.extention.visible
-import com.tcc.app.modal.CustomerDataItem
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.row_customer.*
+import kotlinx.android.synthetic.main.row_invoice.*
 
-
-class CustomerListAdapter(
+class ProcessAdapter(
     private val mContext: Context,
-    var list: MutableList<CustomerDataItem> = mutableListOf(),
-    private val listener: CustomerListAdapter.OnItemSelected
-) : RecyclerView.Adapter<CustomerListAdapter.ItemHolder>() {
+    var list: MutableList<String> = mutableListOf(),
+    private val listener: ProcessAdapter.OnItemSelected
+) : RecyclerView.Adapter<ProcessAdapter.ItemHolder>() {
 
     override fun getItemCount(): Int {
         return list.size
@@ -28,7 +24,7 @@ class CustomerListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         return ItemHolder(
             LayoutInflater.from(mContext).inflate(
-                R.layout.row_customer,
+                R.layout.row_process,
                 parent, false
             )
         )
@@ -41,7 +37,7 @@ class CustomerListAdapter(
     }
 
     interface OnItemSelected {
-        fun onItemSelect(position: Int, data: CustomerDataItem)
+        fun onItemSelect(position: Int, data: String)
     }
 
     class ItemHolder(override val containerView: View) :
@@ -50,25 +46,33 @@ class CustomerListAdapter(
 
         fun bindData(
             context: Context,
-            data: CustomerDataItem,
-            listener: CustomerListAdapter.OnItemSelected
+            data: String,
+            listener: ProcessAdapter.OnItemSelected
         ) {
+            /* var txtName = containerView.findViewById<TextView>(R.id.txtName)
+             txtName.text= data*/
 
-            txtName.text = data.name
-            txtEmail.text = data.emailID
-            txtMobile.text = data.mobileNo
-            txtAddress.text = data.address
-            txtSiteCount.text = "2"
+            //chips.text= data
+
+            /* if (data.user?.profileImage != null) {
+                 Glide.with(context)
+                     .load(data)
+                     .circleCrop()
+                     .placeholder(R.drawable.no_profile)
+                     .into(imgProfile);
+                 imgProfile.setColorFilter(null)
+                 txtIcon.invisible()
+             } else {
+                 imgProfile.setImageResource(R.drawable.bg_circle)
+                 imgProfile.setColorFilter(getRandomMaterialColor("400"))
+                 txtIcon.text = data.user?.firstName.toString().substring(0, 1)
+                 txtIcon.visible()
+             }*/
             imgProfile.setImageResource(R.drawable.bg_circle)
             imgProfile.setColorFilter(getRandomMaterialColor("400"))
-            txtIcon.text = data.name.toString().substring(0, 1)
+            txtIcon.text = "H"
             txtIcon.visible()
             itemView.setOnClickListener { listener.onItemSelect(adapterPosition, data) }
-            txtMobile.setOnClickListener {
-                val intent = Intent(Intent.ACTION_DIAL)
-                intent.data = Uri.parse("tel:${txtMobile.text}")
-                context.startActivity(intent)
-            }
         }
 
         /**

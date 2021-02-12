@@ -1,4 +1,4 @@
-package com.tcc.app.Adapter
+package com.tcc.app.adapter
 
 import android.content.Context
 import android.graphics.Color
@@ -13,11 +13,11 @@ import kotlinx.android.synthetic.main.row_attendance.*
 import kotlinx.android.synthetic.main.row_invoice.imgProfile
 import kotlinx.android.synthetic.main.row_invoice.txtIcon
 
-class AttendanceAdapter(
+class AttendanceListAdapter(
     private val mContext: Context,
     var list: MutableList<String> = mutableListOf(),
-    private val listener: AttendanceAdapter.OnItemSelected
-) : RecyclerView.Adapter<AttendanceAdapter.ItemHolder>() {
+    private val listener: AttendanceListAdapter.OnItemSelected
+) : RecyclerView.Adapter<AttendanceListAdapter.ItemHolder>() {
 
     override fun getItemCount(): Int {
         return list.size
@@ -26,7 +26,7 @@ class AttendanceAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         return ItemHolder(
             LayoutInflater.from(mContext).inflate(
-                R.layout.row_attendance,
+                R.layout.row_attendance_list,
                 parent, false
             )
         )
@@ -51,24 +51,24 @@ class AttendanceAdapter(
         fun bindData(
             context: Context,
             data: String,
-            listener: AttendanceAdapter.OnItemSelected
+            listener: AttendanceListAdapter.OnItemSelected
         ) {
 
-            txtPresent.setOnClickListener {
-                txtPresent.isSelected = true
-                txtHalfDay.isSelected = false
-                txtAbsent.isSelected = false
-            }
-            txtAbsent.setOnClickListener {
-                txtPresent.isSelected = false
-                txtHalfDay.isSelected = false
-                txtAbsent.isSelected = true
-            }
-            txtHalfDay.setOnClickListener {
-                txtPresent.isSelected = false
-                txtHalfDay.isSelected = true
-                txtAbsent.isSelected = false
-            }
+            /*  txtPresent.setOnClickListener {
+                  txtPresent.isSelected = true
+                  txtHalfDay.isSelected = false
+                  txtAbsent.isSelected = false
+              }
+              txtAbsent.setOnClickListener {
+                  txtPresent.isSelected = false
+                  txtHalfDay.isSelected = false
+                  txtAbsent.isSelected = true
+              }
+              txtHalfDay.setOnClickListener {
+                  txtPresent.isSelected = false
+                  txtHalfDay.isSelected = true
+                  txtAbsent.isSelected = false
+              }*/
 
 
             /* var txtName = containerView.findViewById<TextView>(R.id.txtName)
@@ -94,7 +94,7 @@ class AttendanceAdapter(
             imgProfile.setColorFilter(getRandomMaterialColor("400"))
             txtIcon.text = "H"
             txtIcon.visible()
-            imgDown.setOnClickListener { listener.onItemSelect(adapterPosition, data) }
+            //  imgDown.setOnClickListener { listener.onItemSelect(adapterPosition, data) }
         }
 
         /**

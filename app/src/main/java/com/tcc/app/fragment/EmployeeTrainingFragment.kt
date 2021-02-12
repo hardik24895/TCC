@@ -3,8 +3,8 @@ package com.tcc.app.fragment
 import android.os.Bundle
 import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.tcc.app.Adapter.TrainingAdapter
 import com.tcc.app.R
+import com.tcc.app.adapter.TrainingAdapter
 import com.tcc.app.extention.invisible
 import com.tcc.app.extention.showAlert
 import com.tcc.app.extention.visible

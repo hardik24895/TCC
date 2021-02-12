@@ -1,4 +1,4 @@
-package com.tcc.app.Adapter
+package com.tcc.app.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,16 +8,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tcc.app.R
 import com.tcc.app.extention.getRandomMaterialColor
 import com.tcc.app.extention.visible
-import com.tcc.app.modal.QuotationItem
+import com.tcc.app.modal.SiteListItem
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.row_quoatation.*
+import kotlinx.android.synthetic.main.row_site_list.*
 
-class QuotationAdapter(
+
+class SiteListAdapter(
     private val mContext: Context,
-    var list: MutableList<QuotationItem> = mutableListOf(),
-    val isAccept: String,
-    private val listener: OnItemSelected
-) : RecyclerView.Adapter<QuotationAdapter.ItemHolder>() {
+    var list: MutableList<SiteListItem> = mutableListOf(),
+    private val listener: SiteListAdapter.OnItemSelected
+) : RecyclerView.Adapter<SiteListAdapter.ItemHolder>() {
+
     override fun getItemCount(): Int {
         return list.size
     }
@@ -25,7 +26,7 @@ class QuotationAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         return ItemHolder(
             LayoutInflater.from(mContext).inflate(
-                R.layout.row_quoatation,
+                R.layout.row_site_list,
                 parent, false
             )
         )
@@ -34,11 +35,11 @@ class QuotationAdapter(
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         val data = list[position]
 
-        holder.bindData(mContext, data, listener, isAccept)
+        holder.bindData(mContext, data, listener)
     }
 
     interface OnItemSelected {
-        fun onItemSelect(position: Int, data: String)
+        fun onItemSelect(position: Int, data: SiteListItem)
     }
 
     class ItemHolder(override val containerView: View) :
@@ -47,34 +48,27 @@ class QuotationAdapter(
 
         fun bindData(
             context: Context,
-            data: QuotationItem,
-            listener: QuotationAdapter.OnItemSelected,
-            isAccept: String
+            data: SiteListItem,
+            listener: SiteListAdapter.OnItemSelected
         ) {
-            txtCompanyName.text = data.companyName
+
             txtSiteName.text = data.siteName
-            txtEstinationNo.text = data.estimateNo
-            txtHRS.text = data.service
-            txtName.text = data.name
-            txtStatus.text = data.status
-            txtCGST.text = data.cGST
-            txtSGST.text = data.sGST
-            txtIGST.text = data.iGST
-            txtTotal.text = data.total
+            textName.text = data.name
+            txtSityType.text = data.siteType
+            txtHRS.text = data.workingHours
+            txtDay.text = data.workingDays
+            txtProposedDate.text = data.proposedDate
+            txtStartDate.text = data.startDate
+            txtEndDate.text = data.endDate
             txtAddress.text = data.address
 
             imgProfile.setImageResource(R.drawable.bg_circle)
             imgProfile.setColorFilter(getRandomMaterialColor("400", context))
-            txtIcon.text = data.name.toString().substring(0, 1)
+            txtIcon.text = data.siteName.toString().substring(0, 1)
             txtIcon.visible()
-
-            if (isAccept.equals("Accept")) {
-                constrain.visible()
-            }
-
+            itemView.setOnClickListener { listener.onItemSelect(adapterPosition, data) }
         }
 
+
     }
-
-
 }

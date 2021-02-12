@@ -1,4 +1,4 @@
-package com.tcc.app.Adapter
+package com.tcc.app.adapter
 
 import android.content.Context
 import android.graphics.Color
@@ -9,13 +9,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tcc.app.R
 import com.tcc.app.extention.visible
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.row_invoice.*
+import kotlinx.android.synthetic.main.row_invoice.imgProfile
+import kotlinx.android.synthetic.main.row_invoice.txtIcon
+import kotlinx.android.synthetic.main.row_visitor.*
 
-class InvoicePaidAdapter(
+class VisitorAdapter(
     private val mContext: Context,
     var list: MutableList<String> = mutableListOf(),
-    private val listener: InvoicePaidAdapter.OnItemSelected
-) : RecyclerView.Adapter<InvoicePaidAdapter.ItemHolder>() {
+    private val listener: VisitorAdapter.OnItemSelected
+) : RecyclerView.Adapter<VisitorAdapter.ItemHolder>() {
 
     override fun getItemCount(): Int {
         return list.size
@@ -24,7 +26,7 @@ class InvoicePaidAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         return ItemHolder(
             LayoutInflater.from(mContext).inflate(
-                R.layout.row_invoice,
+                R.layout.row_visitor,
                 parent, false
             )
         )
@@ -32,6 +34,26 @@ class InvoicePaidAdapter(
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         val data = list[position]
+
+
+        holder.linbtnCall.setOnClickListener {
+            holder.linbtnCall.isSelected = true
+            holder.linbtnSMS.isSelected = false
+            holder.linbtnEmail.isSelected = false
+
+        }
+        holder.linbtnSMS.setOnClickListener {
+            holder.linbtnCall.isSelected = false
+            holder.linbtnSMS.isSelected = true
+            holder.linbtnEmail.isSelected = false
+
+        }
+        holder.linbtnEmail.setOnClickListener {
+            holder.btnCall.isSelected = false
+            holder.btnSMS.isSelected = false
+            holder.btnEmail.isSelected = true
+
+        }
 
         holder.bindData(mContext, data, listener)
     }
@@ -48,9 +70,27 @@ class InvoicePaidAdapter(
         fun bindData(
             context: Context,
             data: String,
-            listener: InvoicePaidAdapter.OnItemSelected
+            listener: VisitorAdapter.OnItemSelected
         ) {
+            /* var txtName = containerView.findViewById<TextView>(R.id.txtName)
+             txtName.text= data*/
 
+            //chips.text= data
+
+            /* if (data.user?.profileImage != null) {
+                 Glide.with(context)
+                     .load(data)
+                     .circleCrop()
+                     .placeholder(R.drawable.no_profile)
+                     .into(imgProfile);
+                 imgProfile.setColorFilter(null)
+                 txtIcon.invisible()
+             } else {
+                 imgProfile.setImageResource(R.drawable.bg_circle)
+                 imgProfile.setColorFilter(getRandomMaterialColor("400"))
+                 txtIcon.text = data.user?.firstName.toString().substring(0, 1)
+                 txtIcon.visible()
+             }*/
             imgProfile.setImageResource(R.drawable.bg_circle)
             imgProfile.setColorFilter(getRandomMaterialColor("400"))
             txtIcon.text = "H"

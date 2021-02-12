@@ -1,4 +1,4 @@
-package com.tcc.app.Adapter
+package com.tcc.app.adapter
 
 import android.content.Context
 import android.graphics.Color
@@ -8,18 +8,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tcc.app.R
 import com.tcc.app.extention.visible
-import com.tcc.app.modal.EmployeeDataItem
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.row_employee.*
-import kotlinx.android.synthetic.main.row_invoice.imgProfile
-import kotlinx.android.synthetic.main.row_invoice.txtIcon
-import kotlinx.android.synthetic.main.row_invoice.txtName
+import kotlinx.android.synthetic.main.row_invoice.*
 
-class EmployeeAdapter(
-        private val mContext: Context,
-        var list: MutableList<EmployeeDataItem> = mutableListOf(),
-        private val listener: EmployeeAdapter.OnItemSelected
-) : RecyclerView.Adapter<EmployeeAdapter.ItemHolder>() {
+class HomeServiceAdapter(
+    private val mContext: Context,
+    var list: MutableList<String> = mutableListOf(),
+    private val listener: HomeServiceAdapter.OnItemSelected
+) : RecyclerView.Adapter<HomeServiceAdapter.ItemHolder>() {
 
     override fun getItemCount(): Int {
         return list.size
@@ -28,7 +24,7 @@ class EmployeeAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         return ItemHolder(
             LayoutInflater.from(mContext).inflate(
-                R.layout.row_employee,
+                R.layout.row_home_service,
                 parent, false
             )
         )
@@ -37,11 +33,12 @@ class EmployeeAdapter(
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         val data = list[position]
 
+
         holder.bindData(mContext, data, listener)
     }
 
     interface OnItemSelected {
-        fun onItemSelect(position: Int, data: EmployeeDataItem)
+        fun onItemSelect(position: Int, data: String)
     }
 
     class ItemHolder(override val containerView: View) :
@@ -50,27 +47,17 @@ class EmployeeAdapter(
 
 
         fun bindData(
-                context: Context,
-                data: EmployeeDataItem,
-                listener: EmployeeAdapter.OnItemSelected
+            context: Context,
+            data: String,
+            listener: HomeServiceAdapter.OnItemSelected
         ) {
-
-            txtName.text = data.firstName + " " + data.lastName
-            txtEmail.text = data.emailID
-            txtContact.text = data.mobileNo
-            txtUserType.text = data.usertype
-            txtJoinDate.text = data.joiningDate
-            txtCity.text = data.cityName
-
 
 
             imgProfile.setImageResource(R.drawable.bg_circle)
             imgProfile.setColorFilter(getRandomMaterialColor("400"))
-            txtIcon.text = data.firstName.toString().substring(0, 1)
+            txtIcon.text = "H"
             txtIcon.visible()
-            itemView.setOnClickListener {
-                listener.onItemSelect(adapterPosition, data)
-            }
+            itemView.setOnClickListener { listener.onItemSelect(adapterPosition, data) }
         }
 
 
@@ -89,6 +76,6 @@ class EmployeeAdapter(
             }
             return returnColor
         }
-
     }
+
 }

@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.tcc.app.Adapter.SalaryAdapter
 import com.tcc.app.R
 import com.tcc.app.activity.SalaryDetailActivity
+import com.tcc.app.adapter.SalaryAdapter
 import com.tcc.app.dialog.AddAdavanceDailog
 import com.tcc.app.dialog.AddSalaryDailog
 import com.tcc.app.extention.goToActivity

@@ -1,4 +1,4 @@
-package com.tcc.app.Adapter
+package com.tcc.app.adapter
 
 import android.content.Context
 import android.graphics.Color
@@ -11,11 +11,11 @@ import com.tcc.app.extention.visible
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.row_invoice.*
 
-class PenaltiAdapter(
+class InspectionAdapter(
     private val mContext: Context,
     var list: MutableList<String> = mutableListOf(),
-    private val listener: PenaltiAdapter.OnItemSelected
-) : RecyclerView.Adapter<PenaltiAdapter.ItemHolder>() {
+    private val listener: InspectionAdapter.OnItemSelected
+) : RecyclerView.Adapter<InspectionAdapter.ItemHolder>() {
 
     override fun getItemCount(): Int {
         return list.size
@@ -24,7 +24,7 @@ class PenaltiAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         return ItemHolder(
             LayoutInflater.from(mContext).inflate(
-                R.layout.row_penalty,
+                R.layout.row_inspection,
                 parent, false
             )
         )
@@ -48,7 +48,7 @@ class PenaltiAdapter(
         fun bindData(
             context: Context,
             data: String,
-            listener: PenaltiAdapter.OnItemSelected
+            listener: InspectionAdapter.OnItemSelected
         ) {
             /* var txtName = containerView.findViewById<TextView>(R.id.txtName)
              txtName.text= data*/

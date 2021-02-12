@@ -1,4 +1,4 @@
-package com.tcc.app.Adapter
+package com.tcc.app.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,15 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tcc.app.R
-import com.tcc.app.modal.RoomDataItem
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.row_room_allocation.*
 
-class RoomAllocationAdapter(
-        private val mContext: Context,
-        var list: MutableList<RoomDataItem> = mutableListOf(),
-        private val listener: OnItemSelected
-) : RecyclerView.Adapter<RoomAllocationAdapter.ItemHolder>() {
+class CheckInOutAdapter(
+    private val mContext: Context,
+    var list: MutableList<String> = mutableListOf(),
+    private val listener: OnItemSelected
+) : RecyclerView.Adapter<CheckInOutAdapter.ItemHolder>() {
 
     override fun getItemCount(): Int {
         return list.size
@@ -23,7 +21,7 @@ class RoomAllocationAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         return ItemHolder(
             LayoutInflater.from(mContext).inflate(
-                R.layout.row_room_allocation,
+                R.layout.row_checkinout,
                 parent, false
             )
         )
@@ -36,7 +34,7 @@ class RoomAllocationAdapter(
     }
 
     interface OnItemSelected {
-        fun onItemSelect(position: Int, data: RoomDataItem)
+        fun onItemSelect(position: Int, data: String)
     }
 
     class ItemHolder(override val containerView: View) :
@@ -44,15 +42,10 @@ class RoomAllocationAdapter(
         LayoutContainer {
 
         fun bindData(
-                context: Context,
-                data: RoomDataItem,
-                listener: RoomAllocationAdapter.OnItemSelected
+            context: Context,
+            data: String,
+            listener: CheckInOutAdapter.OnItemSelected
         ) {
-
-            txtRoomNo.text = data.rno
-            txtAddress.text = data.roomAddress
-            txtStartDate.text = data.startDate
-            txtEndDate.text = data.endDate
 
 
         }

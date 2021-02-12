@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.View
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.tcc.app.Adapter.ViewPagerPagerAdapter
 import com.tcc.app.R
+import com.tcc.app.adapter.ViewPagerPagerAdapter
 import com.tcc.app.extention.visible
 import com.tcc.app.fragment.CustomerInfoFragment
 import com.tcc.app.fragment.CustomerProcessFragment

@@ -1,4 +1,4 @@
-package com.tcc.app.Adapter
+package com.tcc.app.adapter
 
 import android.content.Context
 import android.graphics.Color
@@ -11,11 +11,11 @@ import com.tcc.app.extention.visible
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.row_invoice.*
 
-class HomeServiceAdapter(
+class PenaltiAdapter(
     private val mContext: Context,
     var list: MutableList<String> = mutableListOf(),
-    private val listener: HomeServiceAdapter.OnItemSelected
-) : RecyclerView.Adapter<HomeServiceAdapter.ItemHolder>() {
+    private val listener: PenaltiAdapter.OnItemSelected
+) : RecyclerView.Adapter<PenaltiAdapter.ItemHolder>() {
 
     override fun getItemCount(): Int {
         return list.size
@@ -24,7 +24,7 @@ class HomeServiceAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         return ItemHolder(
             LayoutInflater.from(mContext).inflate(
-                R.layout.row_home_service,
+                R.layout.row_penalty,
                 parent, false
             )
         )
@@ -32,7 +32,6 @@ class HomeServiceAdapter(
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         val data = list[position]
-
 
         holder.bindData(mContext, data, listener)
     }
@@ -49,10 +48,27 @@ class HomeServiceAdapter(
         fun bindData(
             context: Context,
             data: String,
-            listener: HomeServiceAdapter.OnItemSelected
+            listener: PenaltiAdapter.OnItemSelected
         ) {
+            /* var txtName = containerView.findViewById<TextView>(R.id.txtName)
+             txtName.text= data*/
 
+            //chips.text= data
 
+            /* if (data.user?.profileImage != null) {
+                 Glide.with(context)
+                     .load(data)
+                     .circleCrop()
+                     .placeholder(R.drawable.no_profile)
+                     .into(imgProfile);
+                 imgProfile.setColorFilter(null)
+                 txtIcon.invisible()
+             } else {
+                 imgProfile.setImageResource(R.drawable.bg_circle)
+                 imgProfile.setColorFilter(getRandomMaterialColor("400"))
+                 txtIcon.text = data.user?.firstName.toString().substring(0, 1)
+                 txtIcon.visible()
+             }*/
             imgProfile.setImageResource(R.drawable.bg_circle)
             imgProfile.setColorFilter(getRandomMaterialColor("400"))
             txtIcon.text = "H"
@@ -60,7 +76,9 @@ class HomeServiceAdapter(
             itemView.setOnClickListener { listener.onItemSelect(adapterPosition, data) }
         }
 
-
+        /**
+         * chooses a random color from array.xml
+         */
         private fun getRandomMaterialColor(typeColor: String): Int {
             var returnColor = Color.GRAY
             val arrayId = itemView.context.resources.getIdentifier(
@@ -76,6 +94,6 @@ class HomeServiceAdapter(
             }
             return returnColor
         }
-    }
 
+    }
 }

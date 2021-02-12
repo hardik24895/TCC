@@ -2,8 +2,8 @@ package com.tcc.app.activity
 
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.tcc.app.Adapter.AttendanceAdapter
 import com.tcc.app.R
+import com.tcc.app.adapter.AttendanceAdapter
 import com.tcc.app.dialog.AttendanceBottomSheetDialog
 import com.tcc.app.dialog.LateFineBottomSheetDialog
 import com.tcc.app.dialog.OverTimeBottomSheetDialog

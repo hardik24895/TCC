@@ -11,12 +11,12 @@ import android.widget.EditText
 @SuppressLint("AppCompatCustomView")
 class EditTextReguler : EditText {
     constructor(context: Context) : super(context) {
-        val face = Typeface.createFromAsset(context.assets, "font/montserrat_regular.ttf")
+        val face = Typeface.createFromAsset(context.assets, "font/opensans_regular.ttf")
         this.typeface = face
     }
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        val face = Typeface.createFromAsset(context.assets, "font/montserrat_regular.ttf")
+        val face = Typeface.createFromAsset(context.assets, "font/opensans_regular.ttf")
         this.typeface = face
     }
 
@@ -25,7 +25,7 @@ class EditTextReguler : EditText {
         attrs,
         defStyle
     ) {
-        val face = Typeface.createFromAsset(context.assets, "font/montserrat_regular.ttf")
+        val face = Typeface.createFromAsset(context.assets, "font/opensans_regular.ttf")
         this.typeface = face
     }
 
