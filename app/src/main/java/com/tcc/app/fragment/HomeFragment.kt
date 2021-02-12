@@ -34,8 +34,6 @@ import tech.hibk.searchablespinnerlibrary.SearchableItem
 
 class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
         HomeServiceAdapter.OnItemSelected {
-
-
     var adapter1: HomeServiceAdapter? = null
     lateinit var chipArray: ArrayList<String>
     lateinit var cityNameList: ArrayList<String>
@@ -49,7 +47,6 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         return root
     }
@@ -113,6 +110,7 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
         rvHomeCounter.setIndicatorUnselectedColor(Color.WHITE)
         rvHomeCounter.setScrollTimeInSec(4)
         rvHomeCounter.startAutoCycle()
+
 
         val layoutManager1 = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         rvDeepCleaing.layoutManager = layoutManager1
