@@ -50,25 +50,7 @@ class InvoicePaidAdapter(
             data: String,
             listener: InvoicePaidAdapter.OnItemSelected
         ) {
-            /* var txtName = containerView.findViewById<TextView>(R.id.txtName)
-             txtName.text= data*/
 
-            //chips.text= data
-
-            /* if (data.user?.profileImage != null) {
-                 Glide.with(context)
-                     .load(data)
-                     .circleCrop()
-                     .placeholder(R.drawable.no_profile)
-                     .into(imgProfile);
-                 imgProfile.setColorFilter(null)
-                 txtIcon.invisible()
-             } else {
-                 imgProfile.setImageResource(R.drawable.bg_circle)
-                 imgProfile.setColorFilter(getRandomMaterialColor("400"))
-                 txtIcon.text = data.user?.firstName.toString().substring(0, 1)
-                 txtIcon.visible()
-             }*/
             imgProfile.setImageResource(R.drawable.bg_circle)
             imgProfile.setColorFilter(getRandomMaterialColor("400"))
             txtIcon.text = "H"
