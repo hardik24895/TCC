@@ -133,4 +133,8 @@
     <string name="priority">Priority</string>
     <string name="pending">Pending</string>
     <string name="pincode">Pincode</string>
+    <string name="option_camera">Camera</string>
+    <string name="option_gallery">Gallery</string>
+    <string name="select_usertype">Select UserType</string>
+    <string name="email">Email</string>
 </resources>

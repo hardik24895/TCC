@@ -41,7 +41,7 @@ class ChangePasswordActivity : BaseActivity() {
                 edtOldPassword.requestFocus()
             }
             edtOldPassword.getValue().length < 6 -> {
-                root.showSnackBar("Enter Minimum six charecter")
+                root.showSnackBar("Enter Minimum six character")
                 edtOldPassword.requestFocus()
             }
             edtNewPassword.getValue().equals(edtOldPassword.getValue()) -> {
@@ -54,7 +54,7 @@ class ChangePasswordActivity : BaseActivity() {
             }
             edtNewPassword.getValue().length < 6 -> {
                 edtNewPassword.requestFocus()
-                root.showSnackBar("Enter Minimum six charecter")
+                root.showSnackBar("Enter Minimum six character")
             }
             !edtNewPassword.getValue().equals(edtConfirmPassword.getValue()) -> {
                 edtConfirmPassword.requestFocus()

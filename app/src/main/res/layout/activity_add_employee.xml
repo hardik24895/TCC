@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/root"
     android:layout_height="match_parent"
     tools:context=".activity.AddEmployeeActivity">
 
@@ -96,6 +97,30 @@
                     android:textColorHint="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til14"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/email"
+                app:layout_constraintEnd_toEndOf="@+id/til1"
+                app:layout_constraintStart_toStartOf="@+id/til1"
+                app:layout_constraintTop_toBottomOf="@+id/til2">
+
+                <EditText
+                    android:id="@+id/edtEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorWhite"
+                    android:fontFamily="@font/opensans_regular"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til3"
                 android:layout_width="0dp"
@@ -103,7 +128,7 @@
                 android:hint="Mobile"
                 app:layout_constraintEnd_toEndOf="@+id/til1"
                 app:layout_constraintStart_toStartOf="@+id/til1"
-                app:layout_constraintTop_toBottomOf="@+id/til2">
+                app:layout_constraintTop_toBottomOf="@+id/til14">
 
                 <EditText
                     android:id="@+id/edtMobile"
@@ -118,27 +143,7 @@
                     android:textColorHint="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til4"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:hint="Add Salary"
-                app:layout_constraintEnd_toEndOf="@+id/til1"
-                app:layout_constraintStart_toStartOf="@+id/til1"
-                app:layout_constraintTop_toBottomOf="@+id/til3">
 
-                <EditText
-                    android:id="@+id/edAddSalary"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorWhite"
-                    android:fontFamily="@font/opensans_regular"
-                    android:inputType="number"
-                    android:maxLength="10"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
-            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til5"
@@ -147,7 +152,7 @@
                 android:hint="Password"
                 app:layout_constraintEnd_toEndOf="@+id/til1"
                 app:layout_constraintStart_toStartOf="@+id/til1"
-                app:layout_constraintTop_toBottomOf="@+id/til4"
+                app:layout_constraintTop_toBottomOf="@+id/til3"
                 app:passwordToggleEnabled="true">
 
                 <EditText
@@ -202,7 +207,10 @@
                     android:backgroundTint="@color/colorWhite"
                     android:fontFamily="@font/opensans_regular"
                     android:inputType="date"
-                    android:maxLength="50"
+                    android:clickable="true"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:maxLength="15"
                     android:singleLine="true"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black" />
@@ -360,23 +368,21 @@
                     android:id="@+id/spUserType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_3sdp"
-                    android:layout_marginTop="@dimen/_8sdp"
                     android:clickable="false"
                     android:focusable="false"
                     android:padding="@dimen/_5sdp"
                     app:cancelButtonColor="@color/black"
                     app:cancelButtontext="CLOSE"
-                    app:dialogTitle="Sample"
+                    app:dialogTitle="@string/select_usertype"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:nothingSelectedText="Select UserType"
+                    app:nothingSelectedText="@string/select_usertype"
                     app:onlyLightTheme="true" />
 
                 <View
-                    android:id="@+id/view1"
+                    android:id="@+id/viewUserType"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     app:layout_constraintBottom_toBottomOf="@+id/spUserType"
@@ -402,8 +408,6 @@
                     android:id="@+id/spCity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_3sdp"
-                    android:layout_marginTop="@dimen/_8sdp"
                     android:clickable="false"
                     android:focusable="false"
                     android:padding="@dimen/_5sdp"
@@ -418,7 +422,7 @@
                     app:onlyLightTheme="true" />
 
                 <View
-                    android:id="@+id/view"
+                    android:id="@+id/viewCity"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     app:layout_constraintBottom_toBottomOf="@+id/spCity"
@@ -464,7 +468,7 @@
                 app:srcCompat="@drawable/ic_add_btn" />
 
             <com.tcc.app.customview.ButtonReguler
-                android:id="@+id/btnLogin"
+                android:id="@+id/btnSubmit"
                 style="@style/CustomPressButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

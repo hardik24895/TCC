@@ -57,7 +57,7 @@ class LoginActivity : BaseActivity() {
             }
             edtPassword.getValue().length < 6 -> {
                 edtPassword.requestFocus()
-                root.showSnackBar("Enter Minimum six charecter")
+                root.showSnackBar("Enter Minimum six character")
             }
 
             else -> {
