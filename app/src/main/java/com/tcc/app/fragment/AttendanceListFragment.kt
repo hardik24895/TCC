@@ -8,16 +8,20 @@ import com.tcc.app.activity.AddAttendanceActivity
 import com.tcc.app.adapter.AttendanceListAdapter
 import com.tcc.app.extention.goToActivity
 import com.tcc.app.extention.setHomeScreenTitle
+import com.tcc.app.modal.EmployeeDataItem
 import kotlinx.android.synthetic.main.reclerview_swipelayout.*
 
 
 class AttendanceListFragment() : BaseFragment(), AttendanceListAdapter.OnItemSelected {
-    constructor(b: Boolean) : this() {
+    constructor(b: Boolean, empData: EmployeeDataItem?) : this() {
         this.b = b
+        this.empItemData = empData
     }
 
+    var empItemData: EmployeeDataItem? = null
     var adapter: AttendanceListAdapter? = null
     var b: Boolean? = true
+
     lateinit var chipArray: ArrayList<String>
     override fun onCreateView(
         inflater: LayoutInflater,
