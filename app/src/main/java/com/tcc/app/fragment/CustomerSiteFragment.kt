@@ -169,6 +169,12 @@ class CustomerSiteFragment : BaseFragment(), SiteListAdapter.OnItemSelected {
 
     override fun onResume() {
         super.onResume()
+        page = 1
+        list.clear()
+        hasNextPage = true
+        recyclerView.isLoading = true
+        adapter?.notifyDataSetChanged()
+        getSiteList(page)
     }
 
 }

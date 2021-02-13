@@ -1,6 +1,8 @@
 package com.tcc.app.activity
 
+import android.content.Intent
 import android.os.Bundle
+import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.google.android.material.tabs.TabLayout
 import com.tcc.app.R
 import com.tcc.app.adapter.ViewPagerPagerAdapter
@@ -38,7 +40,10 @@ class LeadDetailActivity : BaseActivity() {
         imgAdd.setOnClickListener {
 
             if (viewPager.currentItem == 1) {
-                goToActivity<AddSiteActivity>()
+                val i = Intent(this, AddSiteActivity::class.java)
+                i.putExtra(Constant.ID, leadItem?.visitorID.toString())
+                startActivity(i)
+                Animatoo.animateCard(this)
             } else {
                 goToActivity<AddQuotationActivity>()
             }

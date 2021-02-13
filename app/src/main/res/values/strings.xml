@@ -136,5 +136,8 @@
     <string name="option_camera">Camera</string>
     <string name="option_gallery">Gallery</string>
     <string name="select_usertype">Select UserType</string>
-    <string name="email">Email</string>
+    <string name="company_name_indu_name">Company Name/Individual Name</string>
+    <string name="address_line1">Address Line 1</string>
+    <string name="address_line2">Address Line 2</string>
+    <string name="gst_dummy_no">24AABCU9603R1ZT</string>
 </resources>

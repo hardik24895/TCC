@@ -237,19 +237,6 @@ class AddLeadActivity : BaseActivity() {
             }).addTo(autoDisposable)
     }
 
-    fun leadSelction() {
-
-        val id = rg.checkedRadioButtonId
-
-        when (id) {
-            R.id.rbHot -> leadType = Constant.HOT
-            R.id.rbWarm -> leadType = Constant.WARM
-            R.id.rbCold -> leadType = Constant.COLD
-            R.id.rbSilent -> leadType = Constant.SILENT
-            else -> leadItem
-        }
-    }
-
     fun validation() {
         val selectedId: Int = rg.getCheckedRadioButtonId()
         val rbLead = findViewById<View>(selectedId) as? RadioButton
@@ -297,13 +284,66 @@ class AddLeadActivity : BaseActivity() {
             }
 
             else -> {
-                addLead(rbLead?.text.toString())
+                if (leadItem == null)
+                    addLead(rbLead?.text.toString())
+                else
+                    editLead(rbLead?.text.toString())
             }
 
         }
     }
 
     fun addLead(leadType: String?) {
+        var result = ""
+        showProgressbar()
+        try {
+            val jsonBody = JSONObject()
+            jsonBody.put("UserID", session.user.data?.userID)
+            jsonBody.put("Name", edtName.getValue())
+            jsonBody.put("MobileNo", edtMobile.getValue())
+            jsonBody.put("EmailID", edtEmail.getValue())
+            jsonBody.put("Address", edtAddress.getValue())
+            jsonBody.put("CityID", cityID)
+            jsonBody.put("StateID", stateID)
+            jsonBody.put("PinCode", edtPincode.getValue())
+            jsonBody.put("LeadType", leadType)
+
+
+            result = Networking.setParentJsonData(
+                Constant.METHOD_ADD_LEAD,
+                jsonBody
+            )
+
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+        Networking
+            .with(this)
+            .getServices()
+            .addLead(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : CallbackObserver<CommonAddModal>() {
+                override fun onSuccess(response: CommonAddModal) {
+                    val data = response.data
+                    hideProgressbar()
+                    if (response.error == 200) {
+                        root.showSnackBar(response.message.toString())
+                        finish()
+                    } else {
+                        showAlert(response.message.toString())
+                    }
+                }
+
+                override fun onFailed(code: Int, message: String) {
+                    showAlert(message)
+                    hideProgressbar()
+                }
+
+            }).addTo(autoDisposable)
+    }
+
+    fun editLead(leadType: String?) {
         var result = ""
         showProgressbar()
         try {
