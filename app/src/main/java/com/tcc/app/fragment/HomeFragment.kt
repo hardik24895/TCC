@@ -144,17 +144,13 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
                 .subscribeWith(object : CallbackObserver<CityListModel>() {
                     override fun onSuccess(response: CityListModel) {
                         cityListArray.addAll(response.data)
+                        var myList: MutableList<SearchableItem> = mutableListOf()
                         for (items in response.data.indices) {
                             cityNameList.add(response.data.get(items).cityName.toString())
-
+                            myList.add(SearchableItem(items.toLong(), cityNameList.get(items)))
                             if (response.data.get(items).cityID.toString().equals(session.getDataByKey(SessionManager.KEY_CITY_ID))) {
                                 SelecetdCityPostion = items
                             }
-                        }
-
-                        var myList: MutableList<SearchableItem> = mutableListOf()
-                        for (items in cityNameList.indices) {
-                            myList.add(SearchableItem(items.toLong(), cityNameList.get(items)))
                         }
                         itens = myList
 

@@ -132,4 +132,5 @@
     <string name="ticket">Ticket</string>
     <string name="priority">Priority</string>
     <string name="pending">Pending</string>
+    <string name="pincode">Pincode</string>
 </resources>

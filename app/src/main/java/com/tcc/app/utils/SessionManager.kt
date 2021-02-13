@@ -3,9 +3,12 @@ package com.tcc.app.utils
 import android.app.NotificationManager
 import android.content.Context
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.tcc.app.R
 import com.tcc.app.modal.KeyRoleData
 import com.tcc.app.modal.LoginModal
+import com.tcc.app.modal.StateItem
+import java.lang.reflect.Type
 
 
 class SessionManager(val context: Context) {
@@ -32,7 +35,18 @@ class SessionManager(val context: Context) {
             pref.edit().putString(KEY_USER_INFO, json).apply()
             isLoggedIn = true
         }
-
+    var stetList: MutableList<StateItem>
+        get() {
+            val gson = Gson()
+            val json = getDataByKey(STATE_DATA, "")
+            val type: Type = object : TypeToken<MutableList<StateItem>>() {}.type
+            return gson.fromJson(json, type)
+        }
+        set(BannerData) {
+            val gson = Gson()
+            val json = gson.toJson(BannerData)
+            pref.edit().putString(STATE_DATA, json).apply()
+        }
     var roleData: KeyRoleData
         get() {
             val gson = Gson()
@@ -111,7 +125,7 @@ class SessionManager(val context: Context) {
         const val KEY_ROLE_DATA = "key_role_data"
         const val KEY_EVENT_STATICS = "eventStatics"
         const val HOME_DATA = "homeData"
-        const val BANNER_DATA = "bannerData"
+        const val STATE_DATA = "stateData"
         const val EVENT_DETAIL_BANNER = "eventDetailBanner"
         const val EVENT_LIST = "eventList"
         const val KEY_CITY_ID = "cityId"
