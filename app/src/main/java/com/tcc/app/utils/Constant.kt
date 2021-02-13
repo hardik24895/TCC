@@ -114,6 +114,12 @@ object Constant {
     const val REPORT = "Report"
     const val DELETE = "Delete"
 
+    //----- Lead Type-----
+    const val HOT = "Hot"
+    const val WARM = "Warm"
+    const val COLD = "Cold"
+    const val SILENT = "Silent"
+
 
     //--- Method Name-----
 
@@ -131,4 +137,5 @@ object Constant {
     const val METHOD_CUSTOMER_LIST = "getCustomer"
     const val METHOD_CHANGE_PWD = "changePassword"
     const val METHOD_STATE_LIST = "getStates"
+    const val METHOD_ADD_LEAD = "addVisitor"
 }

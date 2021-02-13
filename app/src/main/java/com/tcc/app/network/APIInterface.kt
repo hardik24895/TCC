@@ -50,4 +50,7 @@ interface APIInterface {
 
     @POST("service/")
     fun getStateList(@Body body: RequestBody): Observable<Response<StateListModal>>
+
+    @POST("service/")
+    fun addLead(@Body body: RequestBody): Observable<Response<CommonAddModal>>
 }

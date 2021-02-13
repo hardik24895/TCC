@@ -10,7 +10,10 @@ import com.tcc.app.activity.AddLeadActivity
 import com.tcc.app.activity.LeadDetailActivity
 import com.tcc.app.adapter.LeadAdapter
 import com.tcc.app.dialog.AddVisitorDailog
-import com.tcc.app.extention.*
+import com.tcc.app.extention.invisible
+import com.tcc.app.extention.setHomeScreenTitle
+import com.tcc.app.extention.showAlert
+import com.tcc.app.extention.visible
 import com.tcc.app.interfaces.LoadMoreListener
 import com.tcc.app.modal.LeadItem
 import com.tcc.app.modal.LeadListModal
@@ -208,10 +211,14 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
                     if (response.data.size > 0) {
                         val intent = Intent(context, AddLeadActivity::class.java)
                         intent.putExtra(Constant.DATA, response.data.get(0))
+                        intent.putExtra(Constant.MOBILE, mobile)
                         startActivity(intent)
                         Animatoo.animateCard(context)
                     } else {
-                        goToActivity<AddLeadActivity>()
+                        val intent = Intent(context, AddLeadActivity::class.java)
+                        intent.putExtra(Constant.MOBILE, mobile)
+                        startActivity(intent)
+                        Animatoo.animateCard(context)
                     }
                 }
 

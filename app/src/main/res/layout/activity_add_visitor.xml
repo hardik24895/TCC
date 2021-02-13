@@ -3,6 +3,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:id="@+id/root"
     android:layout_height="match_parent">
 
     <include
@@ -24,7 +25,10 @@
             android:id="@+id/constrain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
@@ -182,30 +186,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inPincode"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:hint="Pincode"
-                app:hintTextColor="@color/black"
-                app:layout_constraintEnd_toEndOf="@+id/inName"
-                app:layout_constraintStart_toStartOf="@+id/inName"
-                app:layout_constraintTop_toBottomOf="@+id/linlayCity">
-
-                <EditText
-                    android:id="@+id/edtPincode"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorWhite"
-                    android:digits="01234567890"
-                    android:fontFamily="@font/opensans_regular"
-                    android:inputType="number"
-                    android:maxLength="6"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/inAddress"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -230,23 +210,48 @@
                     android:textColorHint="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inPincode"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:hint="Pincode"
+                app:hintTextColor="@color/black"
+                app:layout_constraintEnd_toEndOf="@+id/inName"
+                app:layout_constraintStart_toStartOf="@+id/inName"
+                app:layout_constraintTop_toBottomOf="@+id/inAddress">
+
+                <EditText
+                    android:id="@+id/edtPincode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorWhite"
+                    android:digits="01234567890"
+                    android:fontFamily="@font/opensans_regular"
+                    android:inputType="number"
+                    android:maxLength="6"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
             <com.tcc.app.customview.TextviewBold
-                android:id="@+id/txtAge"
+                android:id="@+id/txtLeadType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:paddingTop="@dimen/_2sdp"
                 android:text="@string/lead_type"
                 app:layout_constraintStart_toStartOf="@+id/inEmail"
-                app:layout_constraintTop_toBottomOf="@+id/inAddress" />
+                app:layout_constraintTop_toBottomOf="@+id/inPincode" />
 
             <RadioGroup
                 android:id="@+id/rg"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintStart_toStartOf="@+id/txtAge"
-                app:layout_constraintTop_toBottomOf="@+id/txtAge">
+                app:layout_constraintStart_toStartOf="@+id/txtLeadType"
+                app:layout_constraintTop_toBottomOf="@+id/txtLeadType">
 
                 <com.tcc.app.customview.RadioButtonReguler
                     android:id="@+id/rbHot"
