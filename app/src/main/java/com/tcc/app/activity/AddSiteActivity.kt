@@ -30,6 +30,7 @@ class AddSiteActivity : BaseActivity() {
 
         btnAddQuatation.setOnClickListener { goToActivity<AddQuotationActivity>() }
 
+
         edtSdate.setOnClickListener { showDateTimePicker(this@AddSiteActivity, edtSdate) }
         edtEdate.setOnClickListener { showDateTimePicker(this@AddSiteActivity, edtEdate) }
         edtPdate.setOnClickListener { showDateTimePicker(this@AddSiteActivity, edtPdate) }

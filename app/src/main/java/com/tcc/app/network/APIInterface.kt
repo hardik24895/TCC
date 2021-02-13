@@ -49,6 +49,12 @@ interface APIInterface {
     fun changePassword(@Body body: RequestBody): Observable<Response<ChangePasswordModal>>
 
     @POST("service/")
+    fun getStateList(@Body body: RequestBody): Observable<Response<StateListModal>>
+
+    @POST("service/")
+    fun addLead(@Body body: RequestBody): Observable<Response<CommonAddModal>>
+
+    @POST("service/")
     fun getTrainingData(@Body body: RequestBody): Observable<Response<TrainingSpinnerListModel>>
 
     @POST("service/")
@@ -57,9 +63,5 @@ interface APIInterface {
     @POST("service/")
     fun AddUniformData(@Body body: RequestBody): Observable<Response<UniformSpinnerListModel>>
 
-    @POST("service/")
-    fun getStateList(@Body body: RequestBody): Observable<Response<StateListModal>>
 
-    @POST("service/")
-    fun addLead(@Body body: RequestBody): Observable<Response<CommonAddModal>>
 }
