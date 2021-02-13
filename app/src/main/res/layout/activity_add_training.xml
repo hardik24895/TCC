@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/root"
     android:layout_height="match_parent"
     android:background="@color/swipe_view_bg"
     tools:context=".activity.AddTrainingActivity">
@@ -46,7 +47,7 @@
 
 
                 <tech.hibk.searchablespinnerlibrary.SearchableSpinner
-                    android:id="@+id/spCity"
+                    android:id="@+id/spTrainingType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_3sdp"
@@ -56,7 +57,7 @@
                     android:padding="@dimen/_5sdp"
                     app:cancelButtonColor="@color/black"
                     app:cancelButtontext="CLOSE"
-                    app:dialogTitle="Sample"
+                    app:dialogTitle="Select Training Type"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -68,14 +69,14 @@
                     android:id="@+id/view"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/spCity"
+                    app:layout_constraintBottom_toBottomOf="@+id/spTrainingType"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/spCity" />
+                    app:layout_constraintTop_toTopOf="@+id/spTrainingType" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.tcc.app.customview.ButtonReguler
-                android:id="@+id/btnLogin"
+                android:id="@+id/btnSubmit"
                 style="@style/CustomPressButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

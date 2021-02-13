@@ -147,13 +147,41 @@ fun setHomeScreenTitle(requireActivity: Activity, title: String) {
     tvTitle.setText(title)
 }
 
-fun showDateTimePicker(requireActivity: Activity, edittext: EditText) {
+
+fun getCurrentDate(): String {
+
+    var date: String? = ""
+    var selectedMonth: String = ""
+    var selectedDay: String = ""
 
     val c = Calendar.getInstance()
     val year = c.get(Calendar.YEAR)
     val month = c.get(Calendar.MONTH)
     val day = c.get(Calendar.DAY_OF_MONTH)
 
+
+    if (day < 10) {
+        selectedDay = "0" + day
+    } else
+        selectedDay = day.toString()
+
+
+    if (month < 10) {
+        selectedMonth = "0" + (month + 1)
+    } else
+        selectedMonth = month.toString()
+
+    date = "" + selectedDay + "/" + selectedMonth + "/" + year
+
+    return date.toString()
+}
+
+fun showDateTimePicker(requireActivity: Activity, edittext: EditText) {
+
+    val c = Calendar.getInstance()
+    val year = c.get(Calendar.YEAR)
+    val month = c.get(Calendar.MONTH)
+    val day = c.get(Calendar.DAY_OF_MONTH)
 
     val dpd = DatePickerDialog(
         requireActivity,

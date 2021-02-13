@@ -10,6 +10,7 @@ import com.tcc.app.adapter.InvoicePaidAdapter
 
 class EmployeeDetailFragment : BaseFragment() {
 
+
     var adapter: InvoicePaidAdapter? = null
     lateinit var chipArray: ArrayList<String>
     override fun onCreateView(

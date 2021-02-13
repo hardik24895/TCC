@@ -21,10 +21,10 @@ class LeadDetailActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_visitor_detail)
-        txtTitle.text = "Hardik Kanzariya"
+        leadItem = intent.getSerializableExtra(Constant.DATA) as LeadItem
+        txtTitle.text = leadItem?.name
         imgBack.visible()
 
-        leadItem = intent.getSerializableExtra(Constant.DATA) as LeadItem
 
         mDeclaration()
         setStatePageAdapter()

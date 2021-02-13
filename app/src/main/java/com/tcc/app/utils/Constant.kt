@@ -136,6 +136,11 @@ object Constant {
     const val METHOD_SITE_LIST = "getSites"
     const val METHOD_CUSTOMER_LIST = "getCustomer"
     const val METHOD_CHANGE_PWD = "changePassword"
+    const val METHOD_ADD_ROOM = "addEmployeeRoom"
+    const val METHOD_TRAINING_DATE_TIME = "getTrainingDateTime"
+    const val METHOD_UNIFORM_SPINNER_LIST = "getUniformType"
+    const val METHOD_ADD_TRAINING = "addEmployeeTraining"
+    const val METHOD_ADD_UNIFORM = "addEmployeeUniform"
     const val METHOD_STATE_LIST = "getStates"
     const val METHOD_ADD_LEAD = "addVisitor"
 }
