@@ -31,7 +31,6 @@ import org.json.JSONObject
 import tech.hibk.searchablespinnerlibrary.SearchableDialog
 import tech.hibk.searchablespinnerlibrary.SearchableItem
 
-
 class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
         HomeServiceAdapter.OnItemSelected {
     var adapter1: HomeServiceAdapter? = null

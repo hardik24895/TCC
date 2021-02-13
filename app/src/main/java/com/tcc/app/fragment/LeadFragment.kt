@@ -21,6 +21,7 @@ import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
+import com.tcc.app.utils.SessionManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.reclerview_swipelayout.*
@@ -48,14 +49,6 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHomeScreenTitle(requireActivity(), getString(R.string.nav_visitor))
-        page = 1
-        list.clear()
-        hasNextPage = true
-        swipeRefreshLayout.isRefreshing = true
-        setupRecyclerView()
-        recyclerView.isLoading = true
-        getLeadList(page)
-
         recyclerView.setLoadMoreListener(object : LoadMoreListener {
             override fun onLoadMore() {
                 if (hasNextPage && !recyclerView.isLoading) {
@@ -112,6 +105,18 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
         setHasOptionsMenu(true)
     }
 
+    override fun onResume() {
+        page = 1
+        list.clear()
+        hasNextPage = true
+        swipeRefreshLayout.isRefreshing = true
+        setupRecyclerView()
+        recyclerView.isLoading = true
+        getLeadList(page)
+        super.onResume()
+
+    }
+
     fun showDialog() {
         val dialog = AddVisitorDailog.newInstance(requireContext(),
             object : AddVisitorDailog.onItemClick {
@@ -137,7 +142,7 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
             jsonBody.put("CurrentPage", page)
             jsonBody.put("Name", "")
             jsonBody.put("EmailID", "")
-            jsonBody.put("CityID", -1)
+            jsonBody.put("CityID", session.getDataByKey(SessionManager.KEY_CITY_ID))
             result = Networking.setParentJsonData(
                 Constant.METHOD_LEADLIST,
                 jsonBody

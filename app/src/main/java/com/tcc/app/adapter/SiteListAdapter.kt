@@ -60,8 +60,10 @@ class SiteListAdapter(
             txtProposedDate.text = data.proposedDate
             txtStartDate.text = data.startDate
             txtEndDate.text = data.endDate
-            txtAddress.text = data.address
-
+            if (!data.address2?.isEmpty()!!)
+                txtAddress.text = data.address + "," + data.address2
+            else
+                txtAddress.text = data.address
             imgProfile.setImageResource(R.drawable.bg_circle)
             imgProfile.setColorFilter(getRandomMaterialColor("400", context))
             txtIcon.text = data.siteName.toString().substring(0, 1)

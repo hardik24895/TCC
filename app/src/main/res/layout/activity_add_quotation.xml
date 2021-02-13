@@ -67,12 +67,12 @@
                             android:padding="@dimen/_5sdp"
                             app:cancelButtonColor="@color/black"
                             app:cancelButtontext="CLOSE"
-                            app:dialogTitle="Sample"
+                            app:dialogTitle="@string/select_company"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:nothingSelectedText="Select Company"
+                            app:nothingSelectedText="@string/select_company"
                             app:onlyLightTheme="true" />
 
                         <View
@@ -674,7 +674,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_18sdp"
-                android:layout_marginBottom="@dimen/_12sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
                 android:text="Submit"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

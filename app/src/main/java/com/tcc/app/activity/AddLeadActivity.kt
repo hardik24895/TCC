@@ -139,7 +139,7 @@ class AddLeadActivity : BaseActivity() {
     fun setData() {
         edtName.setText(leadItem?.name.toString())
         edtEmail.setText(leadItem?.emailID.toString())
-        // edtMobile.setText(leadItem?.mobileNo.toString())
+        edtMobile.setText(leadItem?.mobileNo.toString())
         edtAddress.setText(leadItem?.address.toString())
         edtPincode.setText(leadItem?.pinCode.toString())
         stateID = leadItem?.stateID.toString()
@@ -221,7 +221,7 @@ class AddLeadActivity : BaseActivity() {
                         }
                     }
 
-                    if (stateid.equals("-1")) {
+                    if (cityID.equals("-1")) {
                         spCity.setSelection(-1)
                     }
 
@@ -349,6 +349,7 @@ class AddLeadActivity : BaseActivity() {
         try {
             val jsonBody = JSONObject()
             jsonBody.put("UserID", session.user.data?.userID)
+            jsonBody.put("VisitorID", leadItem?.visitorID)
             jsonBody.put("Name", edtName.getValue())
             jsonBody.put("MobileNo", edtMobile.getValue())
             jsonBody.put("EmailID", edtEmail.getValue())
@@ -360,7 +361,7 @@ class AddLeadActivity : BaseActivity() {
 
 
             result = Networking.setParentJsonData(
-                Constant.METHOD_ADD_LEAD,
+                Constant.METHOD_EDIT_LEAD,
                 jsonBody
             )
 

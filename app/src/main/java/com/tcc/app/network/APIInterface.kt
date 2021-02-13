@@ -61,4 +61,7 @@ interface APIInterface {
 
     @POST("service/")
     fun AddUniformData(@Body body: RequestBody): Observable<Response<UniformSpinnerListModel>>
+
+    @POST("service/")
+    fun getCompanyList(@Body body: RequestBody): Observable<Response<CompanyListModal>>
 }

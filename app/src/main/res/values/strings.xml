@@ -137,4 +137,5 @@
     <string name="address_line1">Address Line 1</string>
     <string name="address_line2">Address Line 2</string>
     <string name="gst_dummy_no">24AABCU9603R1ZT</string>
+    <string name="select_company">Select Company</string>
 </resources>
