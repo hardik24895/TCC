@@ -15,6 +15,7 @@ object Constant {
     const val DISTANCE = "distance"
     const val STEPS = "steps"
     const val CAT_ID = "catID"
+    const val ID = "id"
     const val BUSNESSNAME = "busnessname"
     const val SORTNAME = "sortname"
     const val ADDRESS1 = "address1"
@@ -143,4 +144,5 @@ object Constant {
     const val METHOD_ADD_UNIFORM = "addEmployeeUniform"
     const val METHOD_STATE_LIST = "getStates"
     const val METHOD_ADD_LEAD = "addVisitor"
+    const val METHOD_ADD_SITE = "addSites"
 }

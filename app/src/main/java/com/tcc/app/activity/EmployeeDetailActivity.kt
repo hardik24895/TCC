@@ -29,9 +29,6 @@ class EmployeeDetailActivity : BaseActivity() {
             txtTitle.text = employeeData?.firstName + " " + employeeData?.lastName
         }
 
-
-
-
         mDeclaration()
         clickEvent()
         setStatePageAdapter()
@@ -43,8 +40,6 @@ class EmployeeDetailActivity : BaseActivity() {
 
 
         imgAdd.setOnClickListener {
-
-
             var intent: Intent? = null
             if (viewPager.currentItem == 0) {
                 intent = Intent(this@EmployeeDetailActivity, AddTrainingActivity::class.java)
