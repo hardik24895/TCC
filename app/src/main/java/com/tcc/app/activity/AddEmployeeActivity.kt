@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.tcc.app.R
 import com.tcc.app.dialog.ImagePickerBottomSheetDialog
 import com.tcc.app.extention.*
@@ -17,11 +16,23 @@ import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
+import com.tcc.app.utils.GSTINValidator
+import com.tcc.app.utils.Logger
+import com.tcc.app.utils.TimeStamp.formatDateFromString
 import com.yalantis.ucrop.UCrop
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_add_employee.*
+import kotlinx.android.synthetic.main.activity_add_employee.btnSubmit
+import kotlinx.android.synthetic.main.activity_add_employee.edtAddress
+import kotlinx.android.synthetic.main.activity_add_employee.edtGST
+import kotlinx.android.synthetic.main.activity_add_employee.root
+import kotlinx.android.synthetic.main.activity_add_employee.spCity
+import kotlinx.android.synthetic.main.activity_add_site.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import org.json.JSONException
 import org.json.JSONObject
 import tech.hibk.searchablespinnerlibrary.SearchableDialog
@@ -31,6 +42,9 @@ import java.io.File
 class AddEmployeeActivity : BaseActivity() {
 
     var resultUri: Uri? = null
+    var resultUriProfile: Uri? = null
+    var resultUriAdhar: Uri? = null
+    var resultUriOfferLetter: Uri? = null
     var cityNameList: ArrayList<String>? = null
     var cityListArray: ArrayList<CityDataItem>? = null
     var userTypeNameList: ArrayList<String>? = null
@@ -38,6 +52,8 @@ class AddEmployeeActivity : BaseActivity() {
     var adapterCity: ArrayAdapter<String>? = null
     var itemCity: List<SearchableItem>? = null
     var itemUserType: List<SearchableItem>? = null
+    var usertypeId: String = ""
+    var cityId: String = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,7 +92,55 @@ class AddEmployeeActivity : BaseActivity() {
                             )
                             UCrop.of(uri, destinationUri)
                                 .withAspectRatio(1f, 1f)
-                                .start(this@AddEmployeeActivity)
+                                .start(this@AddEmployeeActivity, 1)
+                        }
+
+                        override fun onError(message: String) {
+                            showAlert(message)
+                        }
+                    })
+            dialog.show(supportFragmentManager, "ImagePicker")
+        }
+        ivSelectAdharImage.setOnClickListener {
+
+            val dialog = ImagePickerBottomSheetDialog
+                .newInstance(
+                    this,
+                    object : ImagePickerBottomSheetDialog.OnModeSelected {
+                        override fun onMediaPicked(uri: Uri) {
+                            val destinationUri = Uri.fromFile(
+                                File(
+                                    cacheDir,
+                                    "IMG_" + System.currentTimeMillis()
+                                )
+                            )
+                            UCrop.of(uri, destinationUri)
+                                .withAspectRatio(1f, 1f)
+                                .start(this@AddEmployeeActivity, 2)
+                        }
+
+                        override fun onError(message: String) {
+                            showAlert(message)
+                        }
+                    })
+            dialog.show(supportFragmentManager, "ImagePicker")
+        }
+        ivSelectOfferLetter.setOnClickListener {
+
+            val dialog = ImagePickerBottomSheetDialog
+                .newInstance(
+                    this,
+                    object : ImagePickerBottomSheetDialog.OnModeSelected {
+                        override fun onMediaPicked(uri: Uri) {
+                            val destinationUri = Uri.fromFile(
+                                File(
+                                    cacheDir,
+                                    "IMG_" + System.currentTimeMillis()
+                                )
+                            )
+                            UCrop.of(uri, destinationUri)
+                                .withAspectRatio(1f, 1f)
+                                .start(this@AddEmployeeActivity, 3)
                         }
 
                         override fun onError(message: String) {
@@ -99,6 +163,8 @@ class AddEmployeeActivity : BaseActivity() {
             ) {
                 if (position != -1 && cityListArray!!.size > position) {
                     //session.storeDataByKey(SessionManager.KEY_CITY_ID, cityListArray!!  .get(position).cityID.toString())
+                    cityId = cityListArray!!.get(position).cityID.toString()
+
                 }
 
             }
@@ -126,7 +192,8 @@ class AddEmployeeActivity : BaseActivity() {
                 id: Long
             ) {
                 if (position != -1 && userTypeListArray!!.size > position) {
-                    //  session.storeDataByKey(SessionManager.KEY_CITY_ID, userTypeListArray!!  .get(position).cityID.toString())
+                    usertypeId = userTypeListArray!!.get(position).usertypeID.toString()
+
                 }
 
             }
@@ -151,6 +218,16 @@ class AddEmployeeActivity : BaseActivity() {
     fun validation() {
 
         when {
+            resultUriProfile == null -> {
+                root.showSnackBar("Upload Profile Image")
+            }
+            resultUriAdhar == null -> {
+                root.showSnackBar("Upload Adhaar Card Image")
+            }
+            resultUriOfferLetter == null -> {
+                root.showSnackBar("Upload Offer Letter Image")
+            }
+
             edtFirstName.isEmpty() -> {
                 root.showSnackBar("Enter First Name")
                 edtFirstName.requestFocus()
@@ -186,17 +263,29 @@ class AddEmployeeActivity : BaseActivity() {
                 root.showSnackBar("Password and Confirm Password not matched")
             }
             edtAddress.isEmpty() -> {
-                root.showSnackBar("Enter Address")
                 edtAddress.requestFocus()
+                root.showSnackBar("Enter Address")
+            }
+            edAddSalary.isEmpty() -> {
+                root.showSnackBar("Enter Salary")
+                edAddSalary.requestFocus()
+            }
+            edtWorkingHours.isEmpty() -> {
+                root.showSnackBar("Enter Working Hrs")
+                edtWorkingHours.requestFocus()
+            }
+            edtGST.isEmpty() -> {
+                root.showSnackBar("Enter GST")
+                edtGST.requestFocus()
+            }
+            !GSTINValidator.validGSTIN(edtGST.getValue()) -> {
+                root.showSnackBar("Enter Valid GST No.")
+                edtGST.requestFocus()
             }
 
-            edtAddress.isEmpty() -> {
-                root.showSnackBar("Enter Address")
-                edtAddress.requestFocus()
-            }
 
             else -> {
-                //  addLead(rbLead?.text.toString())
+                AddEmployee()
             }
 
         }
@@ -209,16 +298,40 @@ class AddEmployeeActivity : BaseActivity() {
             requestCode == UCrop.REQUEST_CROP -> {
                 if (resultCode == Activity.RESULT_OK) {
                     resultUri = UCrop.getOutput(data!!)
-                    Glide.with(this)
-                        .load(resultUri)
-                        .apply(
-                            RequestOptions().centerCrop()
-                                .placeholder(R.drawable.ic_profile)
-                        )
-                        .into(circleImageView2)
-
-
                 }
+            }
+            requestCode == 1 -> {
+                resultUriProfile = UCrop.getOutput(data!!)
+                Glide.with(this)
+                    .load(resultUriProfile)
+                    .apply(
+                        com.bumptech.glide.request.RequestOptions().centerCrop()
+                            .placeholder(com.tcc.app.R.drawable.ic_profile)
+                    )
+                    .into(circleImageView2)
+
+            }
+
+            requestCode == 2 -> {
+                resultUriAdhar = UCrop.getOutput(data!!)
+                Glide.with(this)
+                    .load(resultUriAdhar)
+                    .apply(
+                        com.bumptech.glide.request.RequestOptions().centerCrop()
+                            .placeholder(R.drawable.ic_add_btn)
+                    )
+                    .into(ivSelectAdharImage)
+
+            }
+            requestCode == 3 -> {
+                resultUriOfferLetter = UCrop.getOutput(data!!)
+                Glide.with(this)
+                    .load(resultUriOfferLetter)
+                    .apply(
+                        com.bumptech.glide.request.RequestOptions().centerCrop()
+                            .placeholder(R.drawable.ic_add_btn)
+                    )
+                    .into(ivSelectOfferLetter)
             }
         }
     }
@@ -318,50 +431,86 @@ class AddEmployeeActivity : BaseActivity() {
     }
 
 
-    fun AddEmployee(roleID: String?) {
-        var result = ""
+    fun AddEmployee() {
         showProgressbar()
-        try {
-            val jsonBody = JSONObject()
-            jsonBody.put("RoleID", roleID)
+
+        val requestFile: RequestBody =
+            RequestBody.create("image/*".toMediaTypeOrNull(), File(resultUriProfile?.path))
+        val body: MultipartBody.Part = MultipartBody.Part.createFormData(
+            "ImageData",
+            File(resultUriProfile?.path).name + ".jpg",
+            requestFile
+        )
 
 
-            result = Networking.setParentJsonData(
-                Constant.METHOD_ROLE,
-                jsonBody
-            )
+        val requestFile1: RequestBody =
+            RequestBody.create("image/*".toMediaTypeOrNull(), File(resultUriAdhar?.path))
+        val body1: MultipartBody.Part = MultipartBody.Part.createFormData(
+            "DocumentImageData",
+            File(resultUriAdhar?.path).name + ".jpg",
+            requestFile1
+        )
 
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
+        val requestFile2: RequestBody =
+            RequestBody.create("image/*".toMediaTypeOrNull(), File(resultUriOfferLetter?.path))
+        val body2: MultipartBody.Part = MultipartBody.Part.createFormData(
+            "OfferletterData",
+            File(resultUriOfferLetter?.path).name + ".jpg",
+            requestFile2
+        )
+
+
+        val methodName: RequestBody =
+            RequestBody.create("text/plain".toMediaTypeOrNull(), "addEmployee")
+
         Networking
             .with(this)
             .getServices()
-            .getRole(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
-            .subscribeOn(Schedulers.io())
+            .AddEmployeeApi(
+                body,
+                body1,
+                body2,
+                methodName,
+                RequestBody.create("text/plain".toMediaTypeOrNull(), edtFirstName.getValue()),
+                RequestBody.create("text/plain".toMediaTypeOrNull(), edtLastName.getValue()),
+                RequestBody.create("text/plain".toMediaTypeOrNull(), edtEmail.getValue()),
+                RequestBody.create("text/plain".toMediaTypeOrNull(), edtPassword.getValue()),
+                RequestBody.create("text/plain".toMediaTypeOrNull(), edtMobile.getValue()),
+                RequestBody.create("text/plain".toMediaTypeOrNull(), edtAddress.getValue()),
+                RequestBody.create("text/plain".toMediaTypeOrNull(), usertypeId),
+                RequestBody.create("text/plain".toMediaTypeOrNull(), edAddSalary.getValue()),
+                RequestBody.create(
+                    "text/plain".toMediaTypeOrNull(),
+                    formatDateFromString(edtJoiningDate.getValue())
+                ),
+                RequestBody.create("text/plain".toMediaTypeOrNull(), edtWorkingHours.getValue()),
+                RequestBody.create("text/plain".toMediaTypeOrNull(), edtBankName.getValue()),
+                RequestBody.create("text/plain".toMediaTypeOrNull(), edtBranchName.getValue()),
+                RequestBody.create("text/plain".toMediaTypeOrNull(), edtAccountNumber.getValue()),
+                RequestBody.create("text/plain".toMediaTypeOrNull(), edtIfsc.getValue()),
+                RequestBody.create("text/plain".toMediaTypeOrNull(), edtGST.getValue()),
+                RequestBody.create("text/plain".toMediaTypeOrNull(), cityId)
+
+            )//wrapParams Wraps parameters in to Request body Json format
+            .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeWith(object : CallbackObserver<GetRoleModal>() {
-                override fun onSuccess(response: GetRoleModal) {
-                    val data = response.data
+            .subscribe(object : CallbackObserver<CommonAddModal>() {
+                override fun onSuccess(response: CommonAddModal) {
                     hideProgressbar()
-                    if (data != null) {
-                        if (response.error == 200) {
-
-                        } else {
-                            showAlert(response.message.toString())
-                        }
-
+                    if (response.error == 200) {
+                        root.showSnackBar(response.message.toString())
                     } else {
                         showAlert(response.message.toString())
                     }
                 }
 
                 override fun onFailed(code: Int, message: String) {
-                    showAlert(message)
-                    hideProgressbar()
+                    Logger.d("data", message.toString())
                 }
 
-            }).addTo(autoDisposable)
+            })
+
+
     }
 
 

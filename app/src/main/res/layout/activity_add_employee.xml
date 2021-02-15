@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_16sdp"
                 android:layout_marginTop="@dimen/_24ssp"
-                android:hint="First Name"
+                android:hint="@string/first_name"
                 app:hintTextColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -77,7 +77,7 @@
                 android:id="@+id/til2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="Last Name"
+                android:hint="@string/last_name"
 
                 app:layout_constraintEnd_toEndOf="@+id/til1"
                 app:layout_constraintStart_toStartOf="@+id/til1"
@@ -113,19 +113,20 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/colorWhite"
                     android:fontFamily="@font/opensans_regular"
-                    android:inputType="number"
-                    android:maxLength="10"
+                    android:inputType="textEmailAddress"
+                    android:maxLength="100"
                     android:singleLine="true"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="Mobile"
+                android:hint="@string/mobile_no"
                 app:layout_constraintEnd_toEndOf="@+id/til1"
                 app:layout_constraintStart_toStartOf="@+id/til1"
                 app:layout_constraintTop_toBottomOf="@+id/til14">
@@ -149,7 +150,7 @@
                 android:id="@+id/til5"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="Password"
+                android:hint="@string/password"
                 app:layout_constraintEnd_toEndOf="@+id/til1"
                 app:layout_constraintStart_toStartOf="@+id/til1"
                 app:layout_constraintTop_toBottomOf="@+id/til3"
@@ -172,7 +173,7 @@
                 android:id="@+id/til6"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="Confirm Password"
+                android:hint="@string/confirm_password"
                 app:layout_constraintEnd_toEndOf="@+id/til1"
                 app:layout_constraintStart_toStartOf="@+id/til1"
                 app:layout_constraintTop_toBottomOf="@+id/til5"
@@ -207,9 +208,9 @@
                     android:backgroundTint="@color/colorWhite"
                     android:fontFamily="@font/opensans_regular"
                     android:inputType="date"
+                    android:focusable="false"
                     android:clickable="true"
                     android:cursorVisible="false"
-                    android:focusable="false"
                     android:maxLength="15"
                     android:singleLine="true"
                     android:textColor="@color/black"
@@ -217,13 +218,36 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til8"
+                android:id="@+id/til4"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="Working Hours"
+                android:hint="Add Salary"
                 app:layout_constraintEnd_toEndOf="@+id/til1"
                 app:layout_constraintStart_toStartOf="@+id/til1"
                 app:layout_constraintTop_toBottomOf="@+id/til7">
+
+                <EditText
+                    android:id="@+id/edAddSalary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorWhite"
+                    android:fontFamily="@font/opensans_regular"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til8"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/working_hrs"
+                app:layout_constraintEnd_toEndOf="@+id/til1"
+                app:layout_constraintStart_toStartOf="@+id/til1"
+                app:layout_constraintTop_toBottomOf="@+id/til4">
 
                 <EditText
                     android:id="@+id/edtWorkingHours"
@@ -352,6 +376,31 @@
             </com.google.android.material.textfield.TextInputLayout>
 
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til15"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/gst_no"
+                app:layout_constraintEnd_toEndOf="@+id/til1"
+                app:layout_constraintStart_toStartOf="@+id/til1"
+                app:layout_constraintTop_toBottomOf="@+id/til13">
+
+                <EditText
+                    android:id="@+id/edtGST"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorWhite"
+                    android:digits="qwertyuiopasdfghjklzxcvbnm QWERTYUIOPASDFGHJKLZXCVBNM 1234567890"
+                    android:fontFamily="@font/opensans_regular"
+                    android:inputType="textCapCharacters"
+                    android:maxLength="15"
+                    android:singleLine="true"
+                    android:text="@string/gst_dummy_no"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/linlayUserType"
                 android:layout_width="0dp"
@@ -361,7 +410,7 @@
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="@+id/til1"
                 app:layout_constraintStart_toStartOf="@+id/til1"
-                app:layout_constraintTop_toBottomOf="@id/til13">
+                app:layout_constraintTop_toBottomOf="@id/til15">
 
 
                 <tech.hibk.searchablespinnerlibrary.SearchableSpinner
@@ -441,7 +490,7 @@
                 app:layout_constraintTop_toBottomOf="@id/linCity" />
 
             <ImageView
-                android:id="@+id/ivSelectImage"
+                android:id="@+id/ivSelectAdharImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_4sdp"
@@ -456,7 +505,7 @@
                 android:layout_marginTop="@dimen/_8sdp"
                 android:text="Add Offer Latter Image"
                 app:layout_constraintStart_toStartOf="@+id/til1"
-                app:layout_constraintTop_toBottomOf="@id/ivSelectImage" />
+                app:layout_constraintTop_toBottomOf="@id/ivSelectAdharImage" />
 
             <ImageView
                 android:id="@+id/ivSelectOfferLetter"
