@@ -53,14 +53,6 @@ class CustomerSiteFragment : BaseFragment(), SiteListAdapter.OnItemSelected {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getBundleData()
-        page = 1
-        list.clear()
-        hasNextPage = true
-        swipeRefreshLayout.isRefreshing = true
-        setupRecyclerView()
-        recyclerView.isLoading = true
-        getSiteList(page)
-
         recyclerView.setLoadMoreListener(object : LoadMoreListener {
             override fun onLoadMore() {
                 if (hasNextPage && !recyclerView.isLoading) {
@@ -168,13 +160,14 @@ class CustomerSiteFragment : BaseFragment(), SiteListAdapter.OnItemSelected {
     }
 
     override fun onResume() {
-        super.onResume()
         page = 1
         list.clear()
         hasNextPage = true
+        swipeRefreshLayout.isRefreshing = true
+        setupRecyclerView()
         recyclerView.isLoading = true
-        adapter?.notifyDataSetChanged()
         getSiteList(page)
+        super.onResume()
     }
 
 }

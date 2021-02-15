@@ -71,8 +71,6 @@ class EmployeeRoomAllocationFragment() : BaseFragment(), RoomAllocationAdapter.O
     }
 
     override fun onResume() {
-
-
         page = 1
         list.clear()
         hasNextPage = true

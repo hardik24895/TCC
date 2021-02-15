@@ -1,16 +1,20 @@
 package com.tcc.app.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.tcc.app.R
+import com.tcc.app.activity.AddLeadActivity
 import com.tcc.app.extention.callPhone
 import com.tcc.app.extention.getRandomMaterialColor
 import com.tcc.app.extention.sendEmail
 import com.tcc.app.extention.visible
 import com.tcc.app.modal.LeadItem
+import com.tcc.app.utils.Constant
 import com.tcc.app.utils.SessionManager
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.row_visitor.*
@@ -76,6 +80,13 @@ class LeadAdapter(
             txtIcon.visible()
 
             itemView.setOnClickListener { listener.onItemSelect(adapterPosition, data) }
+
+            imgEdit.setOnClickListener {
+                val intent = Intent(context, AddLeadActivity::class.java)
+                intent.putExtra(Constant.DATA, data)
+                context.startActivity(intent)
+                Animatoo.animateCard(context)
+            }
 
             linbtnCall.setOnClickListener {
                 linbtnCall.isSelected = true

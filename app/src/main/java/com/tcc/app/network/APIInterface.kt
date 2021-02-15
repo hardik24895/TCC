@@ -95,4 +95,6 @@ interface APIInterface {
     ): Observable<Response<CommonAddModal>>
 
 
+    @POST("service/")
+    fun getCompanyList(@Body body: RequestBody): Observable<Response<CompanyListModal>>
 }

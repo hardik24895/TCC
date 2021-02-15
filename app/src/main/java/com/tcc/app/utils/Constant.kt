@@ -146,4 +146,6 @@ object Constant {
     const val METHOD_STATE_LIST = "getStates"
     const val METHOD_ADD_LEAD = "addVisitor"
     const val METHOD_ADD_SITE = "addSites"
+    const val METHOD_EDIT_LEAD = "editVisitor"
+    const val METHOD_COMPANY_LIST = "getCompany"
 }
