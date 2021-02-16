@@ -1,11 +1,14 @@
 package com.tcc.app.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.tcc.app.R
+import com.tcc.app.activity.AddQuotationActivity
 import com.tcc.app.adapter.SiteListAdapter
 import com.tcc.app.extention.invisible
 import com.tcc.app.extention.showAlert
@@ -89,6 +92,12 @@ class CustomerSiteFragment : BaseFragment(), SiteListAdapter.OnItemSelected {
     }
 
     override fun onItemSelect(position: Int, data: SiteListItem) {
+
+        val i = Intent(requireContext(), AddQuotationActivity::class.java)
+        i.putExtra(Constant.DATA, data)
+        i.putExtra(Constant.DATA1, leadItem)
+        startActivity(i)
+        Animatoo.animateCard(requireContext())
 
     }
 

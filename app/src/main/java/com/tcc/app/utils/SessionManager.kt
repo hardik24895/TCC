@@ -5,6 +5,7 @@ import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.tcc.app.R
+import com.tcc.app.modal.ConfigDataModel
 import com.tcc.app.modal.KeyRoleData
 import com.tcc.app.modal.LoginModal
 import com.tcc.app.modal.StateItem
@@ -33,7 +34,18 @@ class SessionManager(val context: Context) {
             val gson = Gson()
             val json = gson.toJson(user)
             pref.edit().putString(KEY_USER_INFO, json).apply()
-            isLoggedIn = true
+        }
+
+    var configData: ConfigDataModel
+        get() {
+            val gson = Gson()
+            val json = getDataByKey(KEY_CONFIG_INFO, "")
+            return gson.fromJson(json, ConfigDataModel::class.java)
+        }
+        set(configData) {
+            val gson = Gson()
+            val json = gson.toJson(configData)
+            pref.edit().putString(KEY_CONFIG_INFO, json).apply()
         }
     var stetList: MutableList<StateItem>
         get() {
@@ -121,6 +133,7 @@ class SessionManager(val context: Context) {
         const val KEY_IS_LOGIN = "isLogin"
         const val KEY_IS_REGISTER = "isRegister"
         const val KEY_USER_INFO = "user"
+        const val KEY_CONFIG_INFO = "configData"
         const val KEY_ROLE = "key_role"
         const val KEY_ROLE_DATA = "key_role_data"
         const val KEY_EVENT_STATICS = "eventStatics"

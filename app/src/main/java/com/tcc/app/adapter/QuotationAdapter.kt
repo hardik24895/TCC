@@ -69,7 +69,9 @@ class QuotationAdapter(
             txtIcon.visible()
 
             if (isAccept.equals("Accept")) {
-                constrain.visible()
+                constrain_accepted.visible()
+            } else if (isAccept.equals("Pending")) {
+                constrain_pending.visible()
             }
 
         }

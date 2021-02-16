@@ -45,6 +45,7 @@ object Constant {
     const val ERROR = "error"
     const val ROW_COUNT = "rowCount"
     const val DATA = "data"
+    const val DATA1 = "data1"
 
 
     //---URL Image Load---//
@@ -148,4 +149,7 @@ object Constant {
     const val METHOD_ADD_SITE = "addSites"
     const val METHOD_EDIT_LEAD = "editVisitor"
     const val METHOD_COMPANY_LIST = "getCompany"
+    const val METHOD_SERVICE_LIST = "getService"
+    const val METHOD_CONFIG = "getConfig"
+    const val METHOD_ADD_QUOTATIOON = "addQuotation"
 }

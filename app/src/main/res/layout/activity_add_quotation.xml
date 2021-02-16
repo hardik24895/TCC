@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/root"
     android:background="@color/swipe_view_bg"
     tools:context=".activity.AddQuotationActivity">
 
@@ -14,6 +15,7 @@
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,8 +35,8 @@
                 android:elevation="@dimen/_2ssp"
                 app:cardCornerRadius="@dimen/_4sdp"
                 app:cardUseCompatPadding="true"
-
                 app:layout_constraintEnd_toEndOf="parent"
+
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -61,7 +63,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/_3sdp"
-                            android:layout_marginTop="@dimen/_8sdp"
                             android:clickable="false"
                             android:focusable="false"
                             android:padding="@dimen/_5sdp"
@@ -103,6 +104,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/colorWhite"
+                            android:clickable="true"
+                            android:cursorVisible="false"
+                            android:focusable="false"
                             android:fontFamily="@font/opensans_regular"
                             android:inputType="date"
                             android:maxLength="15"
@@ -182,7 +186,6 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/crdview2"
                 android:layout_width="match_parent"
-
                 android:layout_height="wrap_content"
                 android:elevation="@dimen/_2ssp"
                 app:cardCornerRadius="@dimen/_4sdp"
@@ -255,6 +258,7 @@
                             android:textColorHint="@color/black" />
                     </com.google.android.material.textfield.TextInputLayout>
 
+
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/linlayCity"
                         android:layout_width="0dp"
@@ -264,7 +268,7 @@
                         android:orientation="vertical"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/til4">
+                        app:layout_constraintTop_toBottomOf="@+id/linlayState">
 
 
                         <tech.hibk.searchablespinnerlibrary.SearchableSpinner
@@ -272,18 +276,18 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/_3sdp"
-                            android:layout_marginTop="@dimen/_8sdp"
                             android:clickable="false"
                             android:focusable="false"
+                            android:minHeight="@dimen/_36sdp"
                             android:padding="@dimen/_5sdp"
                             app:cancelButtonColor="@color/black"
                             app:cancelButtontext="CLOSE"
-                            app:dialogTitle="Sample"
+                            app:dialogTitle="@string/select_city"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:nothingSelectedText="Select City"
+                            app:nothingSelectedText="@string/select_city"
                             app:onlyLightTheme="true" />
 
                         <View
@@ -296,6 +300,7 @@
                             app:layout_constraintTop_toTopOf="@+id/spCity" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
+
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/linlayState"
                         android:layout_width="0dp"
@@ -305,7 +310,7 @@
                         android:orientation="vertical"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/linlayCity">
+                        app:layout_constraintTop_toBottomOf="@+id/til4">
 
 
                         <tech.hibk.searchablespinnerlibrary.SearchableSpinner
@@ -313,18 +318,17 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/_3sdp"
-                            android:layout_marginTop="@dimen/_8sdp"
                             android:clickable="false"
                             android:focusable="false"
                             android:padding="@dimen/_5sdp"
                             app:cancelButtonColor="@color/black"
                             app:cancelButtontext="CLOSE"
-                            app:dialogTitle="Sample"
+                            app:dialogTitle="@string/select_state"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:nothingSelectedText="Select State"
+                            app:nothingSelectedText="@string/select_state"
                             app:onlyLightTheme="true" />
 
                         <View
@@ -348,7 +352,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="@+id/til3"
                         app:layout_constraintStart_toStartOf="@+id/til3"
-                        app:layout_constraintTop_toBottomOf="@+id/linlayState">
+                        app:layout_constraintTop_toBottomOf="@+id/linlayCity">
 
                         <EditText
                             android:id="@+id/edPincode"
@@ -369,6 +373,79 @@
 
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/crdview5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:elevation="@dimen/_2ssp"
+                app:cardCornerRadius="@dimen/_4sdp"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/crdview2">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/_16ssp">
+
+                    <com.tcc.app.customview.TextviewBold
+                        android:id="@+id/txtServiceTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:layout_marginBottom="@dimen/_12sdp"
+                        android:text="Service"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/linlayService"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginBottom="@dimen/_12sdp"
+                        android:background="@drawable/bg_spinner"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txtServiceTitle">
+
+                        <tech.hibk.searchablespinnerlibrary.SearchableSpinner
+                            android:id="@+id/spService"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/_3sdp"
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:padding="@dimen/_5sdp"
+                            app:cancelButtonColor="@color/black"
+                            app:cancelButtontext="CLOSE"
+                            app:dialogTitle="@string/select_service"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:nothingSelectedText="@string/select_service"
+                            app:onlyLightTheme="true" />
+
+                        <View
+                            android:id="@+id/view5"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/spService"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/spService" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
                 android:id="@+id/crdview3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -377,7 +454,7 @@
                 app:cardUseCompatPadding="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/crdview2">
+                app:layout_constraintTop_toBottomOf="@id/crdview5">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -414,13 +491,12 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/_3sdp"
-                            android:layout_marginTop="@dimen/_8sdp"
                             android:clickable="false"
                             android:focusable="false"
                             android:padding="@dimen/_5sdp"
                             app:cancelButtonColor="@color/black"
                             app:cancelButtontext="CLOSE"
-                            app:dialogTitle="Sample"
+                            app:dialogTitle="@+id/spUserType"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -456,8 +532,8 @@
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/colorWhite"
                             android:fontFamily="@font/opensans_regular"
-                            android:inputType="date"
-                            android:maxLength="50"
+                            android:inputType="text"
+                            android:maxLength="150"
                             android:singleLine="true"
                             android:textColor="@color/black"
                             android:textColorHint="@color/black" />
@@ -519,7 +595,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:layout_marginBottom="@dimen/_8sdp"
-                        android:padding="@dimen/_5sdp"
+                        android:paddingHorizontal="@dimen/_10sdp"
+                        android:paddingVertical="@dimen/_5sdp"
                         android:text="@string/add_user"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"

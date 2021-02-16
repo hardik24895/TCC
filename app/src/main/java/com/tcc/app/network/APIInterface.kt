@@ -69,6 +69,17 @@ interface APIInterface {
     @POST("service/")
     fun getUserTypeList(@Body body: RequestBody): Observable<Response<UserTypeListModel>>
 
+    @POST("service/")
+    fun getConfigData(@Body body: RequestBody): Observable<Response<ConfigDataModel>>
+
+
+    @POST("service/")
+    fun AddQuotationData(@Body body: RequestBody): Observable<Response<CommonAddModal>>
+
+
+    @POST("service/")
+    fun getServiceList(@Body body: RequestBody): Observable<Response<ServiceListModel>>
+
     @Multipart
     @POST("service/")
     fun AddEmployeeApi(
