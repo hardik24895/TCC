@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.tcc.app.R
+import com.tcc.app.activity.AddPatmentActivity
 import com.tcc.app.adapter.InvoicePaidAdapter
 import com.tcc.app.extention.invisible
 import com.tcc.app.extention.showAlert
@@ -80,7 +81,7 @@ class InvoiceUnPaidFragment : BaseFragment(), InvoicePaidAdapter.OnItemSelected 
 
 
     override fun onItemSelect(position: Int, data: InvoiceDataItem) {
-        val intent = Intent(context, InvoiceDataItem::class.java)
+        val intent = Intent(context, AddPatmentActivity::class.java)
         intent.putExtra(Constant.DATA, data)
         startActivity(intent)
         Animatoo.animateCard(context)
