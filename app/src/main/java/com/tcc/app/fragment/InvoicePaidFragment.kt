@@ -88,7 +88,7 @@ class InvoicePaidFragment : BaseFragment(), InvoicePaidAdapter.OnItemSelected {
             jsonBody.put("PageSize", Constant.PAGE_SIZE)
             jsonBody.put("CurrentPage", page)
             jsonBody.put("QuotationID", "-1")
-            jsonBody.put("QuotationID", "-1")
+            jsonBody.put("CustomerID", "-1")
             jsonBody.put("SitesID", "-1")
             jsonBody.put("FilterStatus", "Paid")
             result = Networking.setParentJsonData(
