@@ -7,18 +7,23 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tcc.app.R
 import com.tcc.app.adapter.ProcessAdapter
+import com.tcc.app.modal.CustomerDataItem
 import kotlinx.android.synthetic.main.reclerview_swipelayout.*
 
 
-class CustomerProcessFragment : BaseFragment(), ProcessAdapter.OnItemSelected {
+class CustomerProcessFragment() : BaseFragment(), ProcessAdapter.OnItemSelected {
+    constructor(customerData: CustomerDataItem?) : this() {
+
+    }
 
     var adapter: ProcessAdapter? = null
     var customerArray: ArrayList<String>? = null
 
+
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.reclerview_swipelayout, container, false)
         return root
@@ -76,5 +81,6 @@ class CustomerProcessFragment : BaseFragment(), ProcessAdapter.OnItemSelected {
         super.onResume()
         setCustomerData()
     }
+
 
 }

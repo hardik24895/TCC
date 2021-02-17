@@ -45,6 +45,7 @@ object Constant {
     const val ERROR = "error"
     const val ROW_COUNT = "rowCount"
     const val DATA = "data"
+    const val DATA1 = "data1"
 
 
     //---URL Image Load---//
@@ -133,6 +134,7 @@ object Constant {
     const val METHOD_UNIFORM_LIST = "getEmployeeUniform"
     const val METHOD_ROOM_LIST = "getEmployeeRoom"
     const val METHOD_CITY_LIST = "getCities"
+    const val METHOD_USERTYPE_LIST = "getUsertype"
     const val METHOD_QUOTATION_LIST = "getQuotation"
     const val METHOD_SITE_LIST = "getSites"
     const val METHOD_CUSTOMER_LIST = "getCustomer"
@@ -147,4 +149,11 @@ object Constant {
     const val METHOD_ADD_SITE = "addSites"
     const val METHOD_EDIT_LEAD = "editVisitor"
     const val METHOD_COMPANY_LIST = "getCompany"
+    const val METHOD_SERVICE_LIST = "getService"
+    const val METHOD_CONFIG = "getConfig"
+    const val METHOD_ADD_QUOTATIOON = "addQuotation"
+    const val METHOD_GET_REASON = "getReason"
+    const val METHOD_REJECT_REASON = "convertToQuotationReject"
+    const val METHOD_ACCEPT_REASON = "convertToQuotationAccept"
+    const val METHOD_QUESTION = "getQuestion"
 }

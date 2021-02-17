@@ -5,13 +5,13 @@ import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tcc.app.R
 import com.tcc.app.adapter.QuotationAdapter
+import com.tcc.app.dialog.AcceptReasonDailog
+import com.tcc.app.dialog.RejectReasonDailog
 import com.tcc.app.extention.invisible
 import com.tcc.app.extention.showAlert
 import com.tcc.app.extention.visible
 import com.tcc.app.interfaces.LoadMoreListener
-import com.tcc.app.modal.LeadItem
-import com.tcc.app.modal.QuotationItem
-import com.tcc.app.modal.QuotationListModal
+import com.tcc.app.modal.*
 import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
@@ -24,7 +24,16 @@ import org.json.JSONException
 import org.json.JSONObject
 
 
-class QuotationFragment : BaseFragment(), QuotationAdapter.OnItemSelected {
+class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
+
+    var customerId: Int? = -1
+    var visitorId: Int? = -1
+
+    constructor(customerData: CustomerDataItem?) : this() {
+        customerId = customerData?.customerID?.toInt()
+        visitorId = customerData?.visitorID?.toInt()
+    }
+
 
     var adapter: QuotationAdapter? = null
     private val list: MutableList<QuotationItem> = mutableListOf()
@@ -32,6 +41,7 @@ class QuotationFragment : BaseFragment(), QuotationAdapter.OnItemSelected {
     var hasNextPage: Boolean = true
     var status: String = "Accept"
     var leadItem: LeadItem? = null
+
 
     companion object {
         fun getInstance(bundle: Bundle): QuotationFragment {
@@ -87,13 +97,15 @@ class QuotationFragment : BaseFragment(), QuotationAdapter.OnItemSelected {
             txtRejected.isSelected = false
             txtOther.isSelected = false
             status = "Accept"
+            setupRecyclerView()
             refershList(status)
         }
         txtRejected.setOnClickListener {
             txtAccepted.isSelected = false
             txtRejected.isSelected = true
             txtOther.isSelected = false
-            status = "Rejecte"
+            status = "Reject"
+            setupRecyclerView()
             refershList(status)
         }
         txtOther.setOnClickListener {
@@ -101,6 +113,7 @@ class QuotationFragment : BaseFragment(), QuotationAdapter.OnItemSelected {
             txtRejected.isSelected = false
             txtOther.isSelected = true
             status = "Pending"
+            setupRecyclerView()
             refershList(status)
         }
 
@@ -112,7 +125,7 @@ class QuotationFragment : BaseFragment(), QuotationAdapter.OnItemSelected {
         list.clear()
         hasNextPage = true
         recyclerView.isLoading = true
-        adapter?.notifyDataSetChanged()
+        //  adapter?.notifyDataSetChanged()
         getQuotationList(page, status)
     }
 
@@ -152,8 +165,55 @@ class QuotationFragment : BaseFragment(), QuotationAdapter.OnItemSelected {
 
     }
 
-    override fun onItemSelect(position: Int, data: String) {
+    override fun onItemSelect(position: Int, data: QuotationItem, action: String) {
 
+        if (action.equals("ACCEPT")) {
+            showAcceptDialog(data, position)
+        } else if (action.equals("REJECT")) {
+            showRejectDialog(data, position)
+        } else if (action.equals("TEAM-DEFINATION")) {
+        } else if (action.equals("INVOICE")) {
+        } else if (action.equals("ATTENDANCE")) {
+        }
+
+    }
+
+    private fun showAcceptDialog(data: QuotationItem, position: Int) {
+        AcceptReasonDailog(requireContext())
+        var data: QuotationItem = data
+        val dialog = AcceptReasonDailog.newInstance(requireContext(),
+            object : AcceptReasonDailog.onItemClick {
+                override fun onItemCLicked(startDate: String, endDate: String) {
+                    AcceptQuotation(
+                        startDate,
+                        endDate,
+                        data.quotationID!!,
+                        data.customerID!!,
+                        position
+                    )
+                }
+            })
+        val bundle = Bundle()
+        bundle.putString(Constant.TITLE, getString(R.string.app_name))
+
+        dialog.arguments = bundle
+        dialog.show(childFragmentManager, "YesNO")
+    }
+
+    private fun showRejectDialog(data: QuotationItem, position: Int) {
+        RejectReasonDailog(requireContext())
+        var data: QuotationItem = data
+        val dialog = RejectReasonDailog.newInstance(requireContext(),
+            object : RejectReasonDailog.onItemClick {
+                override fun onItemCLicked(reasonId: String) {
+                    RejectQuotation(reasonId, data.quotationID!!, position)
+                }
+            })
+        val bundle = Bundle()
+        bundle.putString(Constant.TITLE, getString(R.string.app_name))
+
+        dialog.arguments = bundle
+        dialog.show(childFragmentManager, "YesNO")
     }
 
     fun getQuotationList(page: Int, status: String) {
@@ -162,8 +222,11 @@ class QuotationFragment : BaseFragment(), QuotationAdapter.OnItemSelected {
             val jsonBody = JSONObject()
             jsonBody.put("PageSize", Constant.PAGE_SIZE)
             jsonBody.put("CurrentPage", page)
-            jsonBody.put("VisitorID", leadItem?.visitorID.toString())
-            jsonBody.put("CustomerID", -1)
+            if (leadItem != null)
+                jsonBody.put("VisitorID", leadItem?.visitorID.toString())
+            else
+                jsonBody.put("VisitorID", visitorId.toString())
+            jsonBody.put("CustomerID", customerId)
             jsonBody.put("SitesID", -1)
             jsonBody.put("QoutationStatus", status)
             result = Networking.setParentJsonData(
@@ -222,6 +285,100 @@ class QuotationFragment : BaseFragment(), QuotationAdapter.OnItemSelected {
             tvInfo.visible()
             recyclerView.invisible()
         }
+    }
+
+    fun RejectQuotation(reasonId: String, QuotationId: String, position: Int) {
+        var result = ""
+        showProgressbar()
+        try {
+            val jsonBody = JSONObject()
+            jsonBody.put("UserID", session.user.data?.userID)
+            jsonBody.put("ReasonID", reasonId)
+            jsonBody.put("QuotationID", QuotationId)
+
+            result = Networking.setParentJsonData(
+                Constant.METHOD_REJECT_REASON,
+                jsonBody
+            )
+
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+
+        Networking
+            .with(requireContext())
+            .getServices()
+            .QuationReason(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : CallbackObserver<CommonAddModal>() {
+                override fun onSuccess(response: CommonAddModal) {
+                    hideProgressbar()
+                    if (response.error == 200) {
+                        list.removeAt(position.toInt())
+                        adapter?.notifyItemRemoved(position.toInt())
+                        adapter?.notifyDataSetChanged()
+                    }
+                }
+
+                override fun onFailed(code: Int, message: String) {
+                    hideProgressbar()
+                    showAlert(message)
+
+                }
+
+            }).addTo(autoDisposable)
+    }
+
+    fun AcceptQuotation(
+        startDate: String,
+        endDate: String,
+        QuotationId: String,
+        customerId: String,
+        position: Int
+    ) {
+        var result = ""
+        showProgressbar()
+        try {
+            val jsonBody = JSONObject()
+            jsonBody.put("UserID", session.user.data?.userID)
+            jsonBody.put("QuotationID", QuotationId)
+            jsonBody.put("StartDate", startDate)
+            jsonBody.put("EndDate", endDate)
+            jsonBody.put("CustomerID", customerId)
+
+            result = Networking.setParentJsonData(
+                Constant.METHOD_ACCEPT_REASON,
+                jsonBody
+            )
+
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+
+        Networking
+            .with(requireContext())
+            .getServices()
+            .QuationReason(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : CallbackObserver<CommonAddModal>() {
+                override fun onSuccess(response: CommonAddModal) {
+                    hideProgressbar()
+                    if (response.error == 200) {
+                        list.removeAt(position.toInt())
+                        adapter?.notifyItemRemoved(position.toInt())
+                        adapter?.notifyDataSetChanged()
+                    }
+                }
+
+                override fun onFailed(code: Int, message: String) {
+                    hideProgressbar()
+                    showAlert(message)
+
+                }
+
+            }).addTo(autoDisposable)
     }
 
 }

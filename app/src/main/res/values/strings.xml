@@ -61,7 +61,6 @@
     <string name="text_image">image</string>
     <string name="no_data_available">No Data Available</string>
     <string name="site_type">Site Type</string>
-    <string name="working_hrs">Working Hrs</string>
     <string name="proposed_date">Proposed Date</string>
     <string name="workkinng_day">Working Day</string>
     <string name="start_date">Start Date</string>
@@ -133,9 +132,20 @@
     <string name="priority">Priority</string>
     <string name="pending">Pending</string>
     <string name="pincode">Pincode</string>
+    <string name="option_camera">Camera</string>
+    <string name="option_gallery">Gallery</string>
+    <string name="select_usertype">Select UserType</string>
     <string name="company_name_indu_name">Company Name/Individual Name</string>
     <string name="address_line1">Address Line 1</string>
     <string name="address_line2">Address Line 2</string>
     <string name="gst_dummy_no">24AABCU9603R1ZT</string>
+    <string name="working_hrs">Working Hrs</string>
+    <string name="gst_no">GST No</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
     <string name="select_company">Select Company</string>
+    <string name="select_service">Select Service</string>
+    <string name="accept">Accept</string>
+    <string name="invoice">Invoice</string>
+    <string name="team_defination">Team Defination</string>
 </resources>

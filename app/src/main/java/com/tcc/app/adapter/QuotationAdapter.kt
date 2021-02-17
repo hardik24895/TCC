@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tcc.app.R
 import com.tcc.app.extention.getRandomMaterialColor
+import com.tcc.app.extention.invisible
 import com.tcc.app.extention.visible
 import com.tcc.app.modal.QuotationItem
 import kotlinx.android.extensions.LayoutContainer
@@ -24,21 +25,28 @@ class QuotationAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         return ItemHolder(
-            LayoutInflater.from(mContext).inflate(
-                R.layout.row_quoatation,
-                parent, false
-            )
+            LayoutInflater.from(mContext).inflate(R.layout.row_quoatation, parent, false)
         )
     }
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         val data = list[position]
+        if (isAccept.equals("Accept")) {
+            holder.constrain_accepted.visible()
+            holder.constrain_pending.invisible()
+        } else if (isAccept.equals("Pending")) {
+            holder.constrain_pending.visible()
+            holder.constrain_accepted.invisible()
+        } else {
+            holder.constrain_accepted.invisible()
+            holder.constrain_pending.invisible()
+        }
 
         holder.bindData(mContext, data, listener, isAccept)
     }
 
     interface OnItemSelected {
-        fun onItemSelect(position: Int, data: String)
+        fun onItemSelect(position: Int, data: QuotationItem, action: String)
     }
 
     class ItemHolder(override val containerView: View) :
@@ -51,7 +59,7 @@ class QuotationAdapter(
             listener: QuotationAdapter.OnItemSelected,
             isAccept: String
         ) {
-            txtCompanyName.text = data.companyName
+            txtCompanyName.text = data.name
             txtSiteName.text = data.siteName
             txtEstinationNo.text = data.estimateNo
             txtHRS.text = data.service
@@ -61,16 +69,38 @@ class QuotationAdapter(
             txtSGST.text = data.sGST
             txtIGST.text = data.iGST
             txtTotal.text = data.total
-            txtAddress.text = data.address
+            txtAddress.text = data.address + ", " + data.address2 + ", " + data.pinCode
 
             imgProfile.setImageResource(R.drawable.bg_circle)
             imgProfile.setColorFilter(getRandomMaterialColor("400", context))
             txtIcon.text = data.name.toString().substring(0, 1)
             txtIcon.visible()
 
-            if (isAccept.equals("Accept")) {
-                constrain.visible()
+
+            btnAccept.setOnClickListener { listener.onItemSelect(adapterPosition, data, "ACCEPT") }
+            btnReject.setOnClickListener { listener.onItemSelect(adapterPosition, data, "REJECT") }
+            btnTeamDefination.setOnClickListener {
+                listener.onItemSelect(
+                    adapterPosition,
+                    data,
+                    "TEAM-DEFINATION"
+                )
             }
+            btnInvoice.setOnClickListener {
+                listener.onItemSelect(
+                    adapterPosition,
+                    data,
+                    "INVOICE"
+                )
+            }
+            btnAttencence.setOnClickListener {
+                listener.onItemSelect(
+                    adapterPosition,
+                    data,
+                    "ATTENDANCE"
+                )
+            }
+
 
         }
 
