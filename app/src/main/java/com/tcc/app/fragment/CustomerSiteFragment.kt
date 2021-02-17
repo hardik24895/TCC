@@ -11,6 +11,7 @@ import com.tcc.app.R
 import com.tcc.app.activity.AddQuotationActivity
 import com.tcc.app.adapter.SiteListAdapter
 import com.tcc.app.extention.invisible
+import com.tcc.app.extention.setHomeScreenTitle
 import com.tcc.app.extention.showAlert
 import com.tcc.app.extention.visible
 import com.tcc.app.interfaces.LoadMoreListener
@@ -66,6 +67,10 @@ class CustomerSiteFragment() : BaseFragment(), SiteListAdapter.OnItemSelected {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getBundleData()
+        if (leadItem == null && customerId == -1 && visitorId == -1) {
+            setHomeScreenTitle(requireActivity(), getString(R.string.nav_site))
+        }
+
         recyclerView.setLoadMoreListener(object : LoadMoreListener {
             override fun onLoadMore() {
                 if (hasNextPage && !recyclerView.isLoading) {
@@ -104,7 +109,6 @@ class CustomerSiteFragment() : BaseFragment(), SiteListAdapter.OnItemSelected {
     }
 
     override fun onItemSelect(position: Int, data: SiteListItem) {
-
         val i = Intent(requireContext(), AddQuotationActivity::class.java)
         i.putExtra(Constant.DATA, data)
         if (leadItem != null)

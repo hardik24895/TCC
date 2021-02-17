@@ -57,6 +57,7 @@ class HomeActivity : AppCompatActivity() {
                 R.id.nav_payment,
                 R.id.nav_attendance,
                 R.id.nav_ticket,
+                R.id.nav_site,
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

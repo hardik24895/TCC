@@ -28,6 +28,10 @@
             android:id="@+id/nav_quotation"
             android:icon="@drawable/ic_user_profile"
             android:title="@string/nav_quotations" />
+        <item
+            android:id="@+id/nav_site"
+            android:icon="@drawable/ic_user_profile"
+            android:title="@string/nav_site" />
 
         <item
             android:id="@+id/nav_invoice"

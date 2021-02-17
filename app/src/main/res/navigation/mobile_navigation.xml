@@ -76,5 +76,10 @@
         android:name="com.tcc.app.fragment.SettingsFragment"
         android:label="@string/nav_invoice"
         tools:layout="@layout/fragment_setting" />
+    <fragment
+        android:id="@+id/nav_site"
+        android:name="com.tcc.app.fragment.CustomerSiteFragment"
+        android:label="@string/nav_site"
+        tools:layout="@layout/fragment_customer_site" />
 
 </navigation>
