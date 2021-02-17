@@ -159,4 +159,5 @@ object Constant {
     const val METHOD_QUESTION = "getQuestion"
     const val METHOD_ADD_INVOICE = "addInvoice"
     const val METHOD_GET_INVOICE = "getInvoice"
+    const val METHOD_ADD_PAYMENT = "addPayment"
 }
