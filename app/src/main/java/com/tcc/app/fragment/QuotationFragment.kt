@@ -1,9 +1,12 @@
 package com.tcc.app.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.tcc.app.R
+import com.tcc.app.activity.AddInvoiceActivity
 import com.tcc.app.adapter.QuotationAdapter
 import com.tcc.app.dialog.AcceptReasonDailog
 import com.tcc.app.dialog.RejectReasonDailog
@@ -173,6 +176,13 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
             showRejectDialog(data, position)
         } else if (action.equals("TEAM-DEFINATION")) {
         } else if (action.equals("INVOICE")) {
+            val i = Intent(requireContext(), AddInvoiceActivity::class.java)
+            i.putExtra(Constant.DATA, data)
+            if (leadItem != null)
+                i.putExtra(Constant.DATA1, leadItem)
+            startActivity(i)
+            Animatoo.animateCard(requireContext())
+
         } else if (action.equals("ATTENDANCE")) {
         }
 

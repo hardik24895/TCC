@@ -23,7 +23,7 @@
     <string name="nav_invoice">Invoice</string>
     <string name="nav_employee">Employees</string>
     <string name="customer">Customers</string>
-    <string name="nav_panalti">Penaltys</string>
+    <string name="nav_panalti">Penalties</string>
     <string name="nav_inspection">Inspection</string>
     <string name="field_operator">Field Operator</string>
     <string name="site">Site</string>
@@ -148,4 +148,9 @@
     <string name="accept">Accept</string>
     <string name="invoice">Invoice</string>
     <string name="team_defination">Team Defination</string>
+    <string name="estimation_date">Estimation Date</string>
+    <string name="invoice_date">Invoice Date</string>
+    <string name="description">Description</string>
+    <string name="notes">Notes</string>
+    <string name="terms">Terms</string>
 </resources>
