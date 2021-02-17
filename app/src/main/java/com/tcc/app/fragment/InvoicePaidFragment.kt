@@ -71,14 +71,14 @@ class InvoicePaidFragment : BaseFragment(), InvoicePaidAdapter.OnItemSelected {
     fun setupRecyclerView() {
         val layoutManager = LinearLayoutManager(requireContext())
         recyclerView.layoutManager = layoutManager
-        adapter = InvoicePaidAdapter(requireContext(), list, this)
+        adapter = InvoicePaidAdapter(requireContext(), list, true, this)
         recyclerView.adapter = adapter
 
     }
 
 
     override fun onItemSelect(position: Int, data: InvoiceDataItem) {
-
+        // goToActivity<Add>()
     }
 
     fun getInvoiceList(page: Int) {

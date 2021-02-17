@@ -232,6 +232,7 @@
 
         <com.tcc.app.customview.TextviewReguler
             android:id="@+id/txtTerms"
+            android:visibility="gone"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8sdp"
@@ -241,6 +242,18 @@
             android:textColor="@color/txtgray"
             app:layout_constraintStart_toStartOf="@+id/imgProfile"
             app:layout_constraintTop_toBottomOf="@+id/txtNotes" />
+
+        <com.tcc.app.customview.ButtonReguler
+            android:id="@+id/btnPay"
+            style="@style/CustomPressButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            android:text="@string/pay_now"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtTerms" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
