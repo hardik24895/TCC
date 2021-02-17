@@ -1,6 +1,7 @@
 package com.tcc.app.modal
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class InvoiceListModal(
 
@@ -84,4 +85,4 @@ data class InvoiceDataItem(
 
 	@field:SerializedName("Notes")
 	val notes: String? = null
-)
+) : Serializable

@@ -78,7 +78,7 @@ class InvoicePaidFragment : BaseFragment(), InvoicePaidAdapter.OnItemSelected {
 
 
     override fun onItemSelect(position: Int, data: InvoiceDataItem) {
-        // goToActivity<Add>()
+
     }
 
     fun getInvoiceList(page: Int) {
