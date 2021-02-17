@@ -51,8 +51,10 @@ class HomeActivity : AppCompatActivity() {
                 R.id.nav_invoice,
                 R.id.nav_customer,
                 R.id.nav_employee,
+                R.id.nav_quotation,
                 R.id.nav_penalti,
                 R.id.nav_inspection,
+                R.id.nav_payment,
                 R.id.nav_attendance,
                 R.id.nav_ticket,
             ), drawerLayout

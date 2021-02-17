@@ -66,13 +66,18 @@ class InspectionAnswerAdapter(
                     }
                 } else {
 
-                    quationData.Answer.toString()
-                        .replace("," + quationData.Answer.toString(), "")
-                        .replace(quationData.Answer.toString(), "")
-                        .replace(",,", "")
+
+                    var stringArray: List<String> = quationData.Answer.toString().split(',');
+                    val arraytwo: ArrayList<String> = ArrayList()
+                    for (item in stringArray.indices) {
+                        if (!stringArray.get(item).equals(holder.cbAnswer.text.toString())) {
+                            arraytwo.add(stringArray.get(item))
+                        }
+                    }
+                    quationData.Answer = arraytwo.joinToString(",")
+
 
                 }
-                quationData.Answer = holder.cbAnswer.text.toString()
 
 
             }
