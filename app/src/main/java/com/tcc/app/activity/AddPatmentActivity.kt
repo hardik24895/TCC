@@ -2,12 +2,11 @@ package com.tcc.app.activity
 
 import android.os.Bundle
 import android.widget.RadioButton
+import androidx.core.view.isVisible
 import com.tcc.app.R
-import com.tcc.app.extention.invisible
-import com.tcc.app.extention.showAlert
-import com.tcc.app.extention.showSnackBar
-import com.tcc.app.extention.visible
+import com.tcc.app.extention.*
 import com.tcc.app.modal.CommonAddModal
+import com.tcc.app.modal.InvoiceDataItem
 import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
@@ -20,12 +19,17 @@ import org.json.JSONException
 import org.json.JSONObject
 
 class AddPatmentActivity : BaseActivity() {
-
+    var invoiceDataItem: InvoiceDataItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
         setContentView(R.layout.activity_add_payment)
+
+        if (intent.hasExtra(Constant.DATA)) {
+            invoiceDataItem = intent.getSerializableExtra(Constant.DATA) as InvoiceDataItem
+
+        }
 
 
         imgBack.visible()
@@ -86,25 +90,38 @@ class AddPatmentActivity : BaseActivity() {
 
     fun validation() {
         when {
-//            edtRoomNo.isEmpty() -> {
-//                root.showSnackBar("Enter Room Number")
-//                edtRoomNo.requestFocus()
-//            }
-//            edtRoomAddress.isEmpty() -> {
-//                root.showSnackBar("Enter Room Address")
-//                edtRoomAddress.requestFocus()
-//            }
-//            edtStartDate.isEmpty() -> {
-//                root.showSnackBar("Select Start Date")
-//                edtStartDate.requestFocus()
-//            }
-//            edtEndDate.isEmpty() -> {
-//                root.showSnackBar("Select End Date")
-//                edtEndDate.requestFocus()
-//            }
-//            else -> {
-//                AddPaymentApi()
-//            }
+            edtPaymentAmount.isEmpty() -> {
+                root.showSnackBar("Enter Payment Amount")
+                edtPaymentAmount.requestFocus()
+            }
+            edtGSTAmount.isEmpty() && edtGSTAmount.isVisible -> {
+                root.showSnackBar("Enter GST Amount")
+                edtGSTAmount.requestFocus()
+            }
+            edtAccountNo.isEmpty() && edtAccountNo.isVisible -> {
+                root.showSnackBar("Enter Account No.")
+                edtAccountNo.requestFocus()
+            }
+            edtChequeNo.isEmpty() && edtChequeNo.isVisible -> {
+                root.showSnackBar("Enter Cheque No.")
+                edtChequeNo.requestFocus()
+            }
+            edtIFSC.isEmpty() && edtIFSC.isVisible -> {
+                root.showSnackBar("Enter IFSC Code")
+                edtIFSC.requestFocus()
+            }
+            edtBankName.isEmpty() && edtBankName.isVisible -> {
+                root.showSnackBar("Enter Bank Name")
+                edtBankName.requestFocus()
+            }
+
+            edtBranchName.isEmpty() && edtBranchName.isVisible -> {
+                root.showSnackBar("Enter Branch Name")
+                edtBranchName.requestFocus()
+            }
+            else -> {
+                AddPaymentApi()
+            }
 
         }
     }
@@ -115,17 +132,20 @@ class AddPatmentActivity : BaseActivity() {
         try {
             val jsonBody = JSONObject()
             jsonBody.put("UserID", session.user.data?.userID)
-            jsonBody.put("InvoiceID", "")
-            jsonBody.put("PaymentAmount", "")
-            jsonBody.put("GSTAmount", "")
-            jsonBody.put("AmountType", "")
-            jsonBody.put("PaymentDate", "")
-            jsonBody.put("PaymentMode", "")
-            jsonBody.put("ChequeNo", "")
-            jsonBody.put("IFCCode", "")
-            jsonBody.put("AccountNo", "")
-            jsonBody.put("BankName", "")
-            jsonBody.put("BranchName", "")
+            jsonBody.put("InvoiceID", invoiceDataItem?.invoiceID)
+            jsonBody.put("PaymentAmount", edtPaymentAmount.getValue())
+            jsonBody.put("GSTAmount", edtGSTAmount.getValue())
+            jsonBody.put("AmountType", rg.indexOfChild(findViewById(rg.getCheckedRadioButtonId())))
+            jsonBody.put("PaymentDate", edtPaymentDate.getValue())
+            jsonBody.put(
+                "PaymentMode",
+                rgPaymentMode.indexOfChild(findViewById(rgPaymentMode.getCheckedRadioButtonId()))
+            )
+            jsonBody.put("ChequeNo", edtChequeNo.getValue())
+            jsonBody.put("IFCCode", edtIFSC.getValue())
+            jsonBody.put("AccountNo", edtAccountNo.getValue())
+            jsonBody.put("BankName", edtBankName.getValue())
+            jsonBody.put("BranchName", edtBranchName.getValue())
 
 
             result = Networking.setParentJsonData(

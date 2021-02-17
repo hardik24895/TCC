@@ -363,6 +363,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/ifsc_code"
                         android:visibility="gone"
+                        tools:visibility="visible"
                         app:hintTextColor="@color/black"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
