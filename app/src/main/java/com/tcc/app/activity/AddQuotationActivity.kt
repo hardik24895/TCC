@@ -88,6 +88,8 @@ class AddQuotationActivity : BaseActivity() {
 
         if (intent.hasExtra(Constant.DATA)) {
             siteListItem = intent.getSerializableExtra(Constant.DATA) as SiteListItem
+        }
+        if (intent.hasExtra(Constant.DATA1)) {
             leadItem = intent.getSerializableExtra(Constant.DATA1) as LeadItem
         }
         userTypeNameList = ArrayList()
@@ -744,8 +746,13 @@ class AddQuotationActivity : BaseActivity() {
             jsonBody.put("SGST", edSGST.getValue())
             jsonBody.put("IGST", edIGST.getValue())
             jsonBody.put("ServiceID", serviceId)
-            jsonBody.put("VisitorID", leadItem?.visitorID)
-            jsonBody.put("CustomerID", leadItem?.customerID)
+            if (leadItem != null) {
+                jsonBody.put("VisitorID", leadItem?.visitorID)
+                jsonBody.put("CustomerID", leadItem?.customerID)
+            } else {
+                jsonBody.put("VisitorID", siteListItem?.visitorID)
+                jsonBody.put("CustomerID", siteListItem?.customerID)
+            }
             jsonBody.put("UserID", session.user.data?.userID)
             jsonBody.put("Item", jsonArray)
 

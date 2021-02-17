@@ -152,4 +152,8 @@ object Constant {
     const val METHOD_SERVICE_LIST = "getService"
     const val METHOD_CONFIG = "getConfig"
     const val METHOD_ADD_QUOTATIOON = "addQuotation"
+    const val METHOD_GET_REASON = "getReason"
+    const val METHOD_REJECT_REASON = "convertToQuotationReject"
+    const val METHOD_ACCEPT_REASON = "convertToQuotationAccept"
+    const val METHOD_QUESTION = "getQuestion"
 }

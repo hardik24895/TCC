@@ -303,6 +303,8 @@
             android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginBottom="@dimen/_8sdp"
             android:visibility="gone"
+            tools:visibility="visible"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/txtStatus"
             app:layout_constraintStart_toStartOf="parent"
@@ -329,10 +331,13 @@
                     android:drawableStart="@drawable/ic_payment"
                     android:drawablePadding="@dimen/_4sdp"
                     android:gravity="center"
+                    android:lines="2"
                     android:paddingVertical="@dimen/_6sdp"
+
                     android:text="@string/accept"
                     android:textAllCaps="true"
-                    android:textColor="@color/colorWhite"
+                    android:textColor="@drawable/custom_button_press_text_bg_green"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -358,10 +363,12 @@
                     android:drawableStart="@drawable/ic_document"
                     android:drawablePadding="@dimen/_4sdp"
                     android:gravity="center"
+                    android:lines="2"
                     android:paddingVertical="@dimen/_6sdp"
+                    android:textColor="@drawable/custom_button_press_text_bg_red"
                     android:text="@string/rejected"
                     android:textAllCaps="true"
-                    android:textColor="@color/colorWhite"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -381,16 +388,16 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/txtStatus"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constrain_pending"
-            tools:visibility="visible">
+            app:layout_constraintTop_toBottomOf="@+id/txtAddress"
+            tools:visibility="gone">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout3"
+                android:id="@+id/btnTeamDefination"
                 style="@style/CustomPressButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/constraintLayout2"
+                app:layout_constraintEnd_toStartOf="@+id/btnInvoice"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -398,61 +405,63 @@
                 <com.tcc.app.customview.TextviewReguler
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
+                    android:lines="2"
                     android:gravity="center"
                     android:paddingVertical="@dimen/_6sdp"
                     android:text="@string/team_defination"
                     android:textAllCaps="true"
-                    android:textColor="@color/colorWhite"
+                    android:textColor="@drawable/custom_button_press_text_bg"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout2"
+                android:id="@+id/btnInvoice"
                 style="@style/CustomPressButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_4sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/constraintLayout4"
+                app:layout_constraintEnd_toStartOf="@+id/btnAttencence"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/constraintLayout3"
+                app:layout_constraintStart_toEndOf="@+id/btnTeamDefination"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.tcc.app.customview.TextviewReguler
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:lines="2"
                     android:paddingVertical="@dimen/_6sdp"
                     android:text="@string/invoice"
                     android:textAllCaps="true"
-                    android:textColor="@color/colorWhite"
+                    android:textColor="@drawable/custom_button_press_text_bg"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout4"
+                android:id="@+id/btnAttencence"
                 style="@style/CustomPressButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/constraintLayout2"
+                app:layout_constraintStart_toEndOf="@+id/btnInvoice"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.tcc.app.customview.TextviewReguler
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:lines="2"
                     android:paddingVertical="@dimen/_6sdp"
                     android:text="@string/nav_attendance"
                     android:textAllCaps="true"
-                    android:textColor="@color/colorWhite"
+                    android:textColor="@drawable/custom_button_press_text_bg"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

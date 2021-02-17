@@ -108,4 +108,13 @@ interface APIInterface {
 
     @POST("service/")
     fun getCompanyList(@Body body: RequestBody): Observable<Response<CompanyListModal>>
+
+    @POST("service/")
+    fun getRejectReasonList(@Body body: RequestBody): Observable<Response<RejectReasonListModel>>
+
+    @POST("service/")
+    fun QuationReason(@Body body: RequestBody): Observable<Response<CommonAddModal>>
+
+    @POST("service/")
+    fun InspectionQuestionList(@Body body: RequestBody): Observable<Response<InspectionQuestionListModel>>
 }

@@ -34,6 +34,7 @@ class SessionManager(val context: Context) {
             val gson = Gson()
             val json = gson.toJson(user)
             pref.edit().putString(KEY_USER_INFO, json).apply()
+            isLoggedIn = true
         }
 
     var configData: ConfigDataModel
