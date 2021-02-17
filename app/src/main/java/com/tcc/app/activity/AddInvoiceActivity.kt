@@ -19,11 +19,10 @@ import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
-import com.tcc.app.utils.Logger
 import com.tcc.app.utils.TimeStamp.formatDateFromString
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_add_quotation.*
+import kotlinx.android.synthetic.main.activity_add_invoice.*
 import kotlinx.android.synthetic.main.row_dynamic_user.view.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 import org.json.JSONArray
@@ -35,15 +34,11 @@ import tech.hibk.searchablespinnerlibrary.SearchableSpinner
 import java.text.DecimalFormat
 
 
-class AddQuotationActivity : BaseActivity() {
+class AddInvoiceActivity : BaseActivity() {
 
-    var compnyID: String = ""
-    var siteListItem: SiteListItem? = null
+    // var compnyID: String = ""
+    var quotationIteam: QuotationItem? = null
     var leadItem: LeadItem? = null
-    var companyNameList: ArrayList<String> = ArrayList()
-    var companyListArray: ArrayList<CompanyDataItem> = ArrayList()
-    var adaptercompany: ArrayAdapter<String>? = null
-    var companyIteams: List<SearchableItem>? = null
 
 
     var serviceNameList: ArrayList<String> = ArrayList()
@@ -73,16 +68,16 @@ class AddQuotationActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
-        setContentView(R.layout.activity_add_quotation)
+        setContentView(R.layout.activity_add_invoice)
         imgBack.visible()
         imgBack.setOnClickListener {
             finish()
         }
-        txtTitle.text = "Quotation"
+        txtTitle.text = getString(R.string.invoice)
         btnAddUser.setOnClickListener { onAddField() }
 
         if (intent.hasExtra(Constant.DATA)) {
-            siteListItem = intent.getSerializableExtra(Constant.DATA) as SiteListItem
+            quotationIteam = intent.getSerializableExtra(Constant.DATA) as QuotationItem
         }
         if (intent.hasExtra(Constant.DATA1)) {
             leadItem = intent.getSerializableExtra(Constant.DATA1) as LeadItem
@@ -93,11 +88,27 @@ class AddQuotationActivity : BaseActivity() {
         serviceNameList = ArrayList()
         serviceListArray = ArrayList()
 
-        edEstimationDate.setText(getCurrentDate())
-        edEstimationDate.setOnClickListener {
+        edtInvoiceDate.setText(getCurrentDate())
+        edStartDate.setText(getCurrentDate())
+        edEndDate.setText(getCurrentDate())
+        edtInvoiceDate.setOnClickListener {
             showDateTimePicker(
-                this@AddQuotationActivity,
-                edEstimationDate
+                this@AddInvoiceActivity,
+                edtInvoiceDate
+            )
+        }
+
+        edStartDate.setOnClickListener {
+            showDateTimePicker(
+                this@AddInvoiceActivity,
+                edStartDate
+            )
+        }
+
+        edEndDate.setOnClickListener {
+            showDateTimePicker(
+                this@AddInvoiceActivity,
+                edEndDate
             )
         }
 
@@ -128,112 +139,37 @@ class AddQuotationActivity : BaseActivity() {
             validation()
         }
 
-        getCompanyList()
-        getServiceList()
+
         getUserTypeList()
-        getStateSppinerData()
-        getCityList(stateID)
-
-        companySpinnerListner()
-        serviceSpinnerListner()
         userTypeSpinnerListner()
-        stateSpinnerListner()
-        citySpinnerListner()
-
-        compnyViewClick()
-        serviceViewClick()
         userTypeViewClick()
-        stateViewClick()
-        cityViewClick()
+
     }
 
 
     fun validation() {
         when {
-            edAddress1.isEmpty() -> {
-                root.showSnackBar("Enter Address 1")
-                edAddress1.requestFocus()
+            edtNote.isEmpty() -> {
+                root.showSnackBar("Enter Notes")
+                edtNote.requestFocus()
             }
-            edAddress2.isEmpty() -> {
-                root.showSnackBar("Enter Address 2")
-                edAddress2.requestFocus()
-            }
-            edPincode.isEmpty() -> {
-                root.showSnackBar("Select Pincode")
-                edPincode.requestFocus()
+            edtTerms.isEmpty() -> {
+                root.showSnackBar("Enter Terms")
+                edtTerms.requestFocus()
             }
 
             else -> {
-                AddQuotation()
+                AddInvoice()
             }
 
         }
     }
 
-
-    private fun getServiceList() {
-        var result = ""
-        try {
-            val jsonBody = JSONObject()
-            jsonBody.put("StateID", "")
-
-            result = Networking.setParentJsonData(Constant.METHOD_SERVICE_LIST, jsonBody)
-
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
-        Networking
-            .with(this@AddQuotationActivity)
-            .getServices()
-            .getServiceList(Networking.wrapParams(result))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeWith(object : CallbackObserver<ServiceListModel>() {
-                override fun onSuccess(response: ServiceListModel) {
-                    serviceListArray!!.addAll(response.data)
-                    var myList: MutableList<SearchableItem> = mutableListOf()
-                    for (items in response.data.indices) {
-                        serviceNameList!!.add(response.data.get(items).service.toString())
-                        myList.add(SearchableItem(items.toLong(), serviceNameList.get(items)))
-
-                    }
-                    itemService = myList
-
-                    adapterService = ArrayAdapter(
-                        this@AddQuotationActivity,
-                        R.layout.custom_spinner_item,
-                        serviceNameList!!
-                    )
-                    spService.setAdapter(adapterService)
-
-
-                }
-
-                override fun onFailed(code: Int, message: String) {
-
-                    showAlert(message)
-
-                }
-
-            }).addTo(autoDisposable)
-    }
-
-    private fun cityViewClick() {
-        view3.setOnClickListener {
-
-            SearchableDialog(this,
-                cityIteams!!,
-                getString(R.string.select_city),
-                { item, _ ->
-                    spCity.setSelection(item.id.toInt())
-                }).show()
-        }
-    }
 
     private fun userTypeViewClick() {
 
         view2.setOnClickListener {
-            SearchableDialog(this@AddQuotationActivity,
+            SearchableDialog(this@AddInvoiceActivity,
                 itemUserType!!,
                 getString(R.string.select_usertype), { item, _ ->
                     spUserType.setSelection(item.id.toInt())
@@ -267,58 +203,6 @@ class AddQuotationActivity : BaseActivity() {
         }
     }
 
-    fun citySpinnerListner() {
-        spCity.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
-
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                if (position != -1 && cityListArray.size > position) {
-                    cityID = cityListArray.get(position).cityID.toString()
-                    Logger.d("city", cityID)
-                }
-
-            }
-        }
-    }
-
-    fun stateSpinnerListner() {
-        spState.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
-
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                if (position != -1 && stateNameList.size > position) {
-                    stateID = session.stetList.get(position).stateID.toString()
-                    Logger.d("state", stateID)
-                    getCityList(stateID)
-                }
-
-            }
-        }
-    }
-
-    fun stateViewClick() {
-        view4.setOnClickListener {
-
-            SearchableDialog(this,
-                stateIteams!!,
-                getString(R.string.select_state),
-                { item, _ ->
-                    spState.setSelection(item.id.toInt())
-                }).show()
-        }
-    }
 
     fun onAddField() {
         val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -339,7 +223,7 @@ class AddQuotationActivity : BaseActivity() {
             setUpdatedTotal()
         }
         adapterUserType = ArrayAdapter(
-            this@AddQuotationActivity,
+            this@AddInvoiceActivity,
             R.layout.custom_spinner_item,
             userTypeNameList!!
         )
@@ -403,7 +287,7 @@ class AddQuotationActivity : BaseActivity() {
 
         viewChild.setOnClickListener {
             SearchableDialog(
-                this@AddQuotationActivity,
+                this@AddInvoiceActivity,
                 itemUserType!!,
                 getString(R.string.select_usertype),
                 { item, _ -> spUserTypeChild.setSelection(item.id.toInt()) }).show()
@@ -412,127 +296,6 @@ class AddQuotationActivity : BaseActivity() {
         lin_add_user!!.addView(rowView)
     }
 
-    fun compnyViewClick() {
-        view1.setOnClickListener {
-
-            SearchableDialog(this,
-                companyIteams!!,
-                getString(R.string.select_company),
-                { item, _ ->
-                    spCompany.setSelection(item.id.toInt())
-                }).show()
-        }
-    }
-
-    fun serviceViewClick() {
-        view5.setOnClickListener {
-
-            SearchableDialog(this,
-                itemService!!,
-                getString(R.string.select_service),
-                { item, _ ->
-                    spService.setSelection(item.id.toInt())
-                }).show()
-        }
-    }
-
-    fun companySpinnerListner() {
-        spCompany.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
-
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                if (position != -1 && companyListArray.size > position) {
-                    compnyID = companyListArray.get(position).companyID.toString()
-                    Logger.d("companyID", compnyID)
-                }
-
-            }
-        }
-    }
-
-    fun serviceSpinnerListner() {
-        spService.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
-
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                if (position != -1 && serviceListArray.size > position) {
-                    serviceId = serviceListArray.get(position).serviceID.toString()
-
-
-                    Logger.d("serviceID : ", serviceId)
-                }
-
-            }
-        }
-    }
-
-    fun getCompanyList() {
-        showProgressbar()
-        companyListArray.clear()
-        var result = ""
-        try {
-            val jsonBody = JSONObject()
-            // jsonBody.put("StateID", stateid)
-
-            result = Networking.setParentJsonData(Constant.METHOD_COMPANY_LIST, jsonBody)
-
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
-        Networking
-            .with(this)
-            .getServices()
-            .getCompanyList(Networking.wrapParams(result))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeWith(object : CallbackObserver<CompanyListModal>() {
-                override fun onSuccess(response: CompanyListModal) {
-                    hideProgressbar()
-                    companyListArray?.addAll(response.data)
-                    var myList: MutableList<SearchableItem> = mutableListOf()
-                    for (items in response.data.indices) {
-                        companyNameList.add(response.data.get(items).companyName.toString())
-                        myList.add(SearchableItem(items.toLong(), companyNameList.get(items)))
-                    }
-                    companyIteams = myList
-
-                    adaptercompany = ArrayAdapter(
-                        this@AddQuotationActivity,
-                        R.layout.custom_spinner_item,
-                        companyNameList
-                    )
-                    spCompany.setAdapter(adaptercompany)
-
-                    for (i in response.data.indices) {
-                        if (response.data.get(i).companyID.equals(compnyID)) {
-                            spCompany.setSelection(i)
-                        }
-                    }
-
-                    if (compnyID.equals("")) {
-                        spCompany.setSelection(-1, true)
-                        spCompany.nothingSelectedText = getString(R.string.select_company)
-                    }
-                }
-
-                override fun onFailed(code: Int, message: String) {
-                    showAlert(message)
-                }
-
-            }).addTo(autoDisposable)
-    }
 
     fun getUserTypeList() {
         var result = ""
@@ -546,7 +309,7 @@ class AddQuotationActivity : BaseActivity() {
             e.printStackTrace()
         }
         Networking
-            .with(this@AddQuotationActivity)
+            .with(this@AddInvoiceActivity)
             .getServices()
             .getUserTypeList(Networking.wrapParams(result))
             .subscribeOn(Schedulers.io())
@@ -563,92 +326,36 @@ class AddQuotationActivity : BaseActivity() {
                     itemUserType = myList
 
                     adapterUserType = ArrayAdapter(
-                        this@AddQuotationActivity,
+                        this@AddInvoiceActivity,
                         R.layout.custom_spinner_item,
                         userTypeNameList!!
                     )
                     spUserType.setAdapter(adapterUserType)
 
-
-                }
-
-                override fun onFailed(code: Int, message: String) {
-
-                    showAlert(message)
-
-                }
-
-            }).addTo(autoDisposable)
-    }
-
-    fun getStateSppinerData() {
-        var myList: MutableList<SearchableItem> = mutableListOf()
-        for (i in session.stetList.indices) {
-            stateNameList.add(session.stetList.get(i).stateName.toString())
-            myList.add(SearchableItem(i.toLong(), stateNameList.get(i)))
-        }
-        stateIteams = myList
-
-        adapterState = ArrayAdapter(this, R.layout.custom_spinner_item, stateNameList)
-        spState.setAdapter(adapterState)
-
-        for (i in session.stetList.indices) {
-            if (session.stetList.get(i).stateID.toString().equals(stateID)) {
-                spState.setSelection(i)
-            }
-
-        }
-
-        if (stateID.equals("")) {
-            spState.setSelection(11)
-        }
-    }
-
-    fun getCityList(stateid: String) {
-        showProgressbar()
-        cityListArray.clear()
-        var result = ""
-        try {
-            val jsonBody = JSONObject()
-            jsonBody.put("StateID", stateid)
-
-            result = Networking.setParentJsonData(Constant.METHOD_CITY_LIST, jsonBody)
-
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
-        Networking
-            .with(this)
-            .getServices()
-            .getCityList(Networking.wrapParams(result))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeWith(object : CallbackObserver<CityListModel>() {
-                override fun onSuccess(response: CityListModel) {
-                    hideProgressbar()
-                    cityListArray?.addAll(response.data)
-                    var myList: MutableList<SearchableItem> = mutableListOf()
-                    for (items in response.data.indices) {
-                        cityNameList.add(response.data.get(items).cityName.toString())
-                        myList.add(SearchableItem(items.toLong(), cityNameList.get(items)))
-                    }
-                    cityIteams = myList
-
-                    adapterCity = ArrayAdapter(
-                        this@AddQuotationActivity,
-                        R.layout.custom_spinner_item,
-                        cityNameList
-                    )
-                    spCity.setAdapter(adapterCity)
-
-                    for (i in response.data.indices) {
-                        if (response.data.get(i).cityID.equals(cityID)) {
-                            spCity.setSelection(i)
+                    for (iteam in quotationIteam?.item!!.indices) {
+                        if (iteam == 0) {
+                            for (i in userTypeListArray!!.indices) {
+                                if (quotationIteam!!.item.get(iteam).usertypeID.equals(
+                                        userTypeListArray!!.get(i).usertypeID
+                                    )
+                                ) {
+                                    spUserType.setSelection(i)
+                                }
+                            }
+                        } else {
+                            onAddField()
+                            for (i in userTypeListArray!!.indices) {
+                                if (quotationIteam!!.item.get(iteam).usertypeID.equals(
+                                        userTypeListArray!!.get(i).usertypeID
+                                    )
+                                ) {
+                                    lin_add_user.getChildAt(iteam - 1).spUserTypeChild.setSelection(
+                                        i
+                                    )
+                                }
+                            }
                         }
-                    }
 
-                    if (cityID.equals("")) {
-                        spCity.setSelection(-1)
                     }
 
 
@@ -708,7 +415,7 @@ class AddQuotationActivity : BaseActivity() {
 
             var df: DecimalFormat = DecimalFormat("##.##")
 
-            if (siteListItem?.stateID?.toInt() == 12) {
+            if (quotationIteam?.stateID?.toInt() == 12) {
                 edCGST.setText(df.format(CGST))
                 edSGST.setText(df.format(SGST))
                 edIGST.setText("")
@@ -721,32 +428,40 @@ class AddQuotationActivity : BaseActivity() {
     }
 
 
-    fun AddQuotation() {
+    fun AddInvoice() {
         var result = ""
         showProgressbar()
+        var total = 0.0;
+        if (quotationIteam?.stateID?.toInt() == 12) {
+            total = edTotalAmount.getValue().toDouble() + edCGST.getValue()
+                .toDouble() + edSGST.getValue().toDouble() + 0
+        } else {
+            total = edTotalAmount.getValue().toDouble() + 0 + 0 + edIGST.getValue().toDouble()
+        }
+
         try {
             val jsonBody = JSONObject()
             val jsonArray = JSONArray()
 
-            jsonBody.put("SitesID", siteListItem?.sitesID)
-            jsonBody.put("CompanyID", compnyID)
-            jsonBody.put("EstimateDate", formatDateFromString(edEstimationDate.getValue()))
-            jsonBody.put("Address", edAddress1.getValue())
-            jsonBody.put("Address2", edAddress2.getValue())
-            jsonBody.put("CityID", cityID)
-            jsonBody.put("StateID", stateID)
-            jsonBody.put("PinCode", edPincode.getValue())
+            jsonBody.put("SitesID", quotationIteam?.sitesID)
+            jsonBody.put("QuotationID", quotationIteam?.quotationID)
+            //  jsonBody.put("CompanyID", compnyID)
+            jsonBody.put("InvoiceDate", formatDateFromString(edtInvoiceDate.getValue()))
+            jsonBody.put("StartDate", formatDateFromString(edStartDate.getValue()))
+            jsonBody.put("EndDate", formatDateFromString(edEndDate.getValue()))
             jsonBody.put("SubTotal", edTotalAmount.getValue())
+            jsonBody.put("TotalAmount", total)
             jsonBody.put("CGST", edCGST.getValue())
             jsonBody.put("SGST", edSGST.getValue())
             jsonBody.put("IGST", edIGST.getValue())
-            jsonBody.put("ServiceID", serviceId)
+            jsonBody.put("Notes", edtNote.getValue())
+            jsonBody.put("Terms", edtTerms.getValue())
             if (leadItem != null) {
                 jsonBody.put("VisitorID", leadItem?.visitorID)
                 jsonBody.put("CustomerID", leadItem?.customerID)
             } else {
-                jsonBody.put("VisitorID", siteListItem?.visitorID)
-                jsonBody.put("CustomerID", siteListItem?.customerID)
+                jsonBody.put("VisitorID", quotationIteam?.visitorID)
+                jsonBody.put("CustomerID", quotationIteam?.customerID)
             }
             jsonBody.put("UserID", session.user.data?.userID)
             jsonBody.put("Item", jsonArray)
@@ -783,13 +498,13 @@ class AddQuotationActivity : BaseActivity() {
 
 
 
-            result = Networking.setParentJsonData(Constant.METHOD_ADD_QUOTATIOON, jsonBody)
+            result = Networking.setParentJsonData(Constant.METHOD_ADD_INVOICE, jsonBody)
 
         } catch (e: JSONException) {
             e.printStackTrace()
         }
         Networking
-            .with(this@AddQuotationActivity)
+            .with(this@AddInvoiceActivity)
             .getServices()
             .AddQuotationData(Networking.wrapParams(result))
             .subscribeOn(Schedulers.io())

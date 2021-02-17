@@ -157,4 +157,6 @@ object Constant {
     const val METHOD_REJECT_REASON = "convertToQuotationReject"
     const val METHOD_ACCEPT_REASON = "convertToQuotationAccept"
     const val METHOD_QUESTION = "getQuestion"
+    const val METHOD_ADD_INVOICE = "addInvoice"
+    const val METHOD_GET_INVOICE = "getInvoice"
 }

@@ -76,6 +76,9 @@ interface APIInterface {
     @POST("service/")
     fun AddQuotationData(@Body body: RequestBody): Observable<Response<CommonAddModal>>
 
+    @POST("service/")
+    fun AddInvoice(@Body body: RequestBody): Observable<Response<CommonAddModal>>
+
 
     @POST("service/")
     fun getServiceList(@Body body: RequestBody): Observable<Response<ServiceListModel>>
@@ -117,6 +120,9 @@ interface APIInterface {
 
     @POST("service/")
     fun InspectionQuestionList(@Body body: RequestBody): Observable<Response<InspectionQuestionListModel>>
+
+    @POST("service/")
+    fun getInvoiceList(@Body body: RequestBody): Observable<Response<InvoiceListModal>>
 
     @POST("service/")
     fun PaymetList(@Body body: RequestBody): Observable<Response<PaymentListModel>>
