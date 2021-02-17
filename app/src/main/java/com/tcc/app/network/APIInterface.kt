@@ -117,4 +117,7 @@ interface APIInterface {
 
     @POST("service/")
     fun InspectionQuestionList(@Body body: RequestBody): Observable<Response<InspectionQuestionListModel>>
+
+    @POST("service/")
+    fun PaymetList(@Body body: RequestBody): Observable<Response<PaymentListModel>>
 }

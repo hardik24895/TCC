@@ -56,6 +56,7 @@
         <activity android:name="com.tcc.app.activity.AddTrainingActivity" />
         <activity android:name="com.tcc.app.activity.AddAttendanceActivity" />
         <activity android:name="com.tcc.app.activity.AddTicketActivity" />
+        <activity android:name="com.tcc.app.activity.AddPatmentActivity" />
 
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"

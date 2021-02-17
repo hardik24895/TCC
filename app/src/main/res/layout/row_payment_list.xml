@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/_5sdp"
+    android:elevation="5dp"
+    app:cardCornerRadius="8dp"
+    app:cardUseCompatPadding="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_5sdp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgProfile"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:src="@mipmap/ic_launcher"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.tcc.app.customview.TextviewSemiBold
+            android:id="@+id/txtCompanyName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/imgProfile"
+            app:layout_constraintTop_toTopOf="@+id/imgProfile" />
+
+        <com.tcc.app.customview.TextviewBold
+            android:id="@+id/txtIcon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="A"
+            android:textAllCaps="true"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_extra_large"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/imgProfile"
+            app:layout_constraintEnd_toEndOf="@+id/imgProfile"
+            app:layout_constraintStart_toStartOf="@+id/imgProfile"
+            app:layout_constraintTop_toTopOf="@+id/imgProfile" />
+
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtInvoiceNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp"
+            app:layout_constraintStart_toStartOf="@+id/txtCompanyName"
+            app:layout_constraintTop_toBottomOf="@+id/txtCompanyName" />
+
+        <com.tcc.app.customview.TextviewSemiBold
+            android:id="@+id/txtPaymentDatetitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="@string/payment_date"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="@+id/imgProfile"
+            app:layout_constraintTop_toBottomOf="@+id/imgProfile" />
+
+
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtPaymentDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:textColor="@color/txtgray"
+            app:layout_constraintStart_toStartOf="@+id/imgProfile"
+            app:layout_constraintTop_toBottomOf="@+id/txtPaymentDatetitle" />
+
+
+        <com.tcc.app.customview.TextviewSemiBold
+            android:id="@+id/txtPaymentModeTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/payment_mode"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/txtPaymentDatetitle" />
+
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtPaymentMode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/_2sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/txtPaymentDate" />
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:background="@color/light_grey"
+            android:scaleY="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtPaymentMode" />
+
+        <com.tcc.app.customview.TextviewSemiBold
+            android:id="@+id/txtAmountTypeTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:text="Amount Type"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="@+id/imgProfile"
+            app:layout_constraintTop_toBottomOf="@+id/view1" />
+
+
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtAmountType"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:textColor="@color/txtgray"
+            app:layout_constraintStart_toStartOf="@+id/imgProfile"
+            app:layout_constraintTop_toBottomOf="@+id/txtAmountTypeTitle" />
+
+
+        <com.tcc.app.customview.TextviewSemiBold
+            android:id="@+id/txtPaymentAmountTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/payment_amount"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txtAmountTypeTitle" />
+
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtPaymentAmount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:textColor="@color/txtgray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtAmountTypeTitle" />
+
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:background="@color/light_grey"
+            android:scaleY="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtPaymentAmount" />
+
+
+        <com.tcc.app.customview.TextviewSemiBold
+            android:id="@+id/txtGSTAmountTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:text="@string/gst_amount"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="@+id/imgProfile"
+            app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtGSTAmount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:textColor="@color/txtgray"
+            app:layout_constraintStart_toStartOf="@+id/imgProfile"
+            app:layout_constraintTop_toBottomOf="@+id/txtGSTAmountTitle" />
+
+
+        <com.tcc.app.customview.TextviewSemiBold
+            android:id="@+id/txtChequeNoTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:text="@string/cheque_no"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txtGSTAmountTitle" />
+
+
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtChequeNo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:textColor="@color/txtgray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtChequeNoTitle" />
+
+        <View
+            android:id="@+id/view3"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:background="@color/light_grey"
+            android:scaleY="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtChequeNo" />
+
+
+        <com.tcc.app.customview.TextviewSemiBold
+            android:id="@+id/txtIFSCCodeTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:text="@string/ifsc_code"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="@+id/imgProfile"
+            app:layout_constraintTop_toBottomOf="@+id/view3" />
+
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtIFSCCode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:textColor="@color/txtgray"
+            app:layout_constraintStart_toStartOf="@+id/imgProfile"
+            app:layout_constraintTop_toBottomOf="@+id/txtIFSCCodeTitle" />
+
+
+        <com.tcc.app.customview.TextviewSemiBold
+            android:id="@+id/txtAccountNoTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:text="@string/account_no"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txtIFSCCodeTitle" />
+
+
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtAccountNo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:textColor="@color/txtgray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtAccountNoTitle" />
+
+        <View
+            android:id="@+id/view4"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:background="@color/light_grey"
+            android:scaleY="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtAccountNo" />
+
+
+        <com.tcc.app.customview.TextviewSemiBold
+            android:id="@+id/txtBankNameTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:text="@string/bank_name"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="@+id/imgProfile"
+            app:layout_constraintTop_toBottomOf="@+id/view4" />
+
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtBankName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp"
+
+            android:textColor="@color/txtgray"
+            app:layout_constraintStart_toStartOf="@+id/imgProfile"
+            app:layout_constraintTop_toBottomOf="@+id/txtBankNameTitle" />
+
+
+        <com.tcc.app.customview.TextviewSemiBold
+            android:id="@+id/txtBranchNameTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:text="@string/branch_name"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txtBankNameTitle" />
+
+
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtBranchName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:textColor="@color/txtgray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtBranchNameTitle" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

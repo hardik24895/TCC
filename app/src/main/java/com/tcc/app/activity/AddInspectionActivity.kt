@@ -40,7 +40,7 @@ class AddInspectionActivity : BaseActivity(), InspectionQuesiontAdapter.OnItemSe
         imgBack.setOnClickListener {
             finish()
         }
-        txtTitle.text = "Inspection"
+        txtTitle.text = getString(R.string.inspection)
         img.invisible()
         inpRemark.invisible()
         edtDate.setText(getCurrentDate())
@@ -62,17 +62,16 @@ class AddInspectionActivity : BaseActivity(), InspectionQuesiontAdapter.OnItemSe
                 linlaySp.visibility = View.VISIBLE
                 img.invisible()
                 inpRemark.invisible()
-                btnSubmit.setText("Next")
+                btnSubmit.setText(getString(R.string.next))
             } else if (layoutManager!!.findLastCompletelyVisibleItemPosition() == (QuestionListArray.size - 2)) {
                 img.visible()
                 inpRemark.visible()
-                btnSubmit.setText("Submit")
-
+                btnSubmit.setText(getString(R.string.submit))
 
             } else {
                 img.invisible()
                 inpRemark.invisible()
-                btnSubmit.setText("Next")
+                btnSubmit.setText(getString(R.string.next))
             }
         } else {
             for (item in QuestionListArray.indices)

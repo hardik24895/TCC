@@ -1,13 +1,16 @@
 package com.tcc.app.fragment
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tcc.app.R
 import com.tcc.app.adapter.QuotationAdapter
 import com.tcc.app.dialog.AcceptReasonDailog
 import com.tcc.app.dialog.RejectReasonDailog
 import com.tcc.app.extention.invisible
+import com.tcc.app.extention.setHomeScreenTitle
 import com.tcc.app.extention.showAlert
 import com.tcc.app.extention.visible
 import com.tcc.app.interfaces.LoadMoreListener
@@ -63,6 +66,11 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getBundleData()
+
+        if (leadItem == null && customerId == -1) {
+            setHomeScreenTitle(requireActivity(), getString(R.string.nav_quotations))
+        }
+
         page = 1
         list.clear()
         hasNextPage = true
@@ -129,26 +137,26 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
         getQuotationList(page, status)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.home, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_add -> {
-                //   goToActivity<AddEmployeeActivity>()
-
-                return true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        inflater.inflate(R.menu.home, menu)
+//        super.onCreateOptionsMenu(menu, inflater)
+//    }
+//
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        return when (item.itemId) {
+//            R.id.action_add -> {
+//                //   goToActivity<AddEmployeeActivity>()
+//
+//                return true
+//            }
+//            else -> super.onOptionsItemSelected(item)
+//        }
+//    }
+//
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        setHasOptionsMenu(true)
+//    }
 
     private fun getBundleData() {
         val bundle = arguments
@@ -172,6 +180,7 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
         } else if (action.equals("REJECT")) {
             showRejectDialog(data, position)
         } else if (action.equals("TEAM-DEFINATION")) {
+
         } else if (action.equals("INVOICE")) {
         } else if (action.equals("ATTENDANCE")) {
         }

@@ -80,25 +80,13 @@ class QuotationAdapter(
             btnAccept.setOnClickListener { listener.onItemSelect(adapterPosition, data, "ACCEPT") }
             btnReject.setOnClickListener { listener.onItemSelect(adapterPosition, data, "REJECT") }
             btnTeamDefination.setOnClickListener {
-                listener.onItemSelect(
-                    adapterPosition,
-                    data,
-                    "TEAM-DEFINATION"
-                )
+                listener.onItemSelect(adapterPosition, data, "TEAM-DEFINATION")
             }
             btnInvoice.setOnClickListener {
-                listener.onItemSelect(
-                    adapterPosition,
-                    data,
-                    "INVOICE"
-                )
+                listener.onItemSelect(adapterPosition, data, "INVOICE")
             }
             btnAttencence.setOnClickListener {
-                listener.onItemSelect(
-                    adapterPosition,
-                    data,
-                    "ATTENDANCE"
-                )
+                listener.onItemSelect(adapterPosition, data, "ATTENDANCE")
             }
 
 
