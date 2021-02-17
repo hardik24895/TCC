@@ -11,6 +11,7 @@ import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
+import com.tcc.app.utils.TimeStamp.formatDateFromString
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_add_payment.*
@@ -90,32 +91,32 @@ class AddPaymentActivity : BaseActivity() {
 
     fun validation() {
         when {
-            edtPaymentAmount.isEmpty() -> {
+            edtPaymentAmount.isEmpty() && tilPaymentAmount.isVisible -> {
                 root.showSnackBar("Enter Payment Amount")
                 edtPaymentAmount.requestFocus()
             }
-            edtGSTAmount.isEmpty() && edtGSTAmount.isVisible -> {
+            edtGSTAmount.isEmpty() && tilGSTAmount.isVisible -> {
                 root.showSnackBar("Enter GST Amount")
                 edtGSTAmount.requestFocus()
             }
-            edtAccountNo.isEmpty() && edtAccountNo.isVisible -> {
+            edtAccountNo.isEmpty() && tilAccountNo.isVisible -> {
                 root.showSnackBar("Enter Account No.")
                 edtAccountNo.requestFocus()
             }
-            edtChequeNo.isEmpty() && edtChequeNo.isVisible -> {
+            edtChequeNo.isEmpty() && tilChequeNo.isVisible -> {
                 root.showSnackBar("Enter Cheque No.")
                 edtChequeNo.requestFocus()
             }
-            edtIFSC.isEmpty() && edtIFSC.isVisible -> {
+            edtIFSC.isEmpty() && tilIFSC.isVisible -> {
                 root.showSnackBar("Enter IFSC Code")
                 edtIFSC.requestFocus()
             }
-            edtBankName.isEmpty() && edtBankName.isVisible -> {
+            edtBankName.isEmpty() && tilBankName.isVisible -> {
                 root.showSnackBar("Enter Bank Name")
                 edtBankName.requestFocus()
             }
 
-            edtBranchName.isEmpty() && edtBranchName.isVisible -> {
+            edtBranchName.isEmpty() && tilBranchName.isVisible -> {
                 root.showSnackBar("Enter Branch Name")
                 edtBranchName.requestFocus()
             }
@@ -136,7 +137,7 @@ class AddPaymentActivity : BaseActivity() {
             jsonBody.put("PaymentAmount", edtPaymentAmount.getValue())
             jsonBody.put("GSTAmount", edtGSTAmount.getValue())
             jsonBody.put("AmountType", rg.indexOfChild(findViewById(rg.getCheckedRadioButtonId())))
-            jsonBody.put("PaymentDate", edtPaymentDate.getValue())
+            jsonBody.put("PaymentDate", formatDateFromString(edtPaymentDate.getValue()))
             jsonBody.put(
                 "PaymentMode",
                 rgPaymentMode.indexOfChild(findViewById(rgPaymentMode.getCheckedRadioButtonId()))
