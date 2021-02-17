@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/swipe_view_bg"
-    tools:context=".activity.AddPatmentActivity">
+    tools:context=".activity.AddPaymentActivity">
 
     <include
         android:id="@+id/toolbar"
@@ -258,16 +258,15 @@
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/colorWhite"
                             android:fontFamily="@font/opensans_regular"
-                            android:inputType="textCapCharacters"
-                            android:maxLength="15"
+                            android:inputType="number"
+                            android:maxLength="10"
                             android:singleLine="true"
-                            android:text="@string/gst_dummy_no"
                             android:textColor="@color/black"
                             android:textColorHint="@color/black" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/til4"
+                        android:id="@+id/tilAccountNo"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
 
@@ -300,7 +299,7 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/_14sdp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/til4" />
+                        app:layout_constraintTop_toBottomOf="@+id/tilAccountNo" />
 
                     <RadioGroup
                         android:id="@+id/rgPaymentMode"
