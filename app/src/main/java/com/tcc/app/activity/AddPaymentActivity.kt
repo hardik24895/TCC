@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 import org.json.JSONException
 import org.json.JSONObject
 
-class AddPatmentActivity : BaseActivity() {
+class AddPaymentActivity : BaseActivity() {
     var invoiceDataItem: InvoiceDataItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,17 +38,17 @@ class AddPatmentActivity : BaseActivity() {
         }
         txtTitle.text = getString(R.string.payment)
 
-//        edtStartDate.setOnClickListener {
-//            showDateTimePicker(this@AddPatmentActivity, edtStartDate)
-//        }
-//
-//        edtStartDate.setText(getCurrentDate())
-//
-//
-//        btnSubmit.setOnClickListener {
-//            validation()
-//
-//        }
+        edtPaymentDate.setOnClickListener {
+            showDateTimePicker(this@AddPaymentActivity, edtPaymentDate)
+        }
+
+        edtPaymentDate.setText(getCurrentDate())
+
+
+        btnSubmit.setOnClickListener {
+            validation()
+
+        }
 
         rg.setOnCheckedChangeListener({ group, checkedId ->
             val radio: RadioButton = findViewById(checkedId)
@@ -158,7 +158,7 @@ class AddPatmentActivity : BaseActivity() {
         }
 
         Networking
-            .with(this@AddPatmentActivity)
+            .with(this@AddPaymentActivity)
             .getServices()
             .AddPayment(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
             .subscribeOn(Schedulers.io())
