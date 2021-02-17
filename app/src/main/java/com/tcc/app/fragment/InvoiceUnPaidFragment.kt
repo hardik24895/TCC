@@ -79,7 +79,6 @@ class InvoiceUnPaidFragment : BaseFragment(), InvoicePaidAdapter.OnItemSelected 
 
     }
 
-
     override fun onItemSelect(position: Int, data: InvoiceDataItem) {
         val intent = Intent(context, AddPatmentActivity::class.java)
         intent.putExtra(Constant.DATA, data)
