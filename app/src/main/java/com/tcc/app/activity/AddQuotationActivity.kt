@@ -62,7 +62,6 @@ class AddQuotationActivity : BaseActivity() {
     fun onAddField() {
         val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val rowView: View = inflater.inflate(R.layout.row_dynamic_user, null, false)
-
         var btnRemove: TextView = rowView.findViewById(R.id.btnRemoveUser)
         btnRemove.setOnClickListener {
             lin_add_user.removeView(rowView)
