@@ -122,8 +122,11 @@ interface APIInterface {
     fun InspectionQuestionList(@Body body: RequestBody): Observable<Response<InspectionQuestionListModel>>
 
     @POST("service/")
+    fun getInvoiceList(@Body body: RequestBody): Observable<Response<InvoiceListModal>>
+
+    @POST("service/")
     fun PaymetList(@Body body: RequestBody): Observable<Response<PaymentListModel>>
 
     @POST("service/")
-    fun getInvoiceList(@Body body: RequestBody): Observable<Response<InvoiceListModal>>
+    fun AddPayment(@Body body: RequestBody): Observable<Response<CommonAddModal>>
 }
