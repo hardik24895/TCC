@@ -1,5 +1,6 @@
 package com.tcc.app.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -9,7 +10,7 @@ import com.tcc.app.R
 import com.tcc.app.extention.*
 import com.tcc.app.modal.CityDataItem
 import com.tcc.app.modal.CityListModel
-import com.tcc.app.modal.CommonAddModal
+import com.tcc.app.modal.SiteListModal
 import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
@@ -272,8 +273,8 @@ class AddSiteActivity : BaseActivity() {
             val jsonBody = JSONObject()
             jsonBody.put("UserID", session.user.data?.userID)
             jsonBody.put("Name", edtCompanyName.getValue())
-            jsonBody.put("VisitorID", intent.getStringExtra(Constant.ID))
-            jsonBody.put("CustomerID", "0")
+            jsonBody.put("VisitorID", intent.getStringExtra(Constant.VISITOR_ID))
+            jsonBody.put("CustomerID", intent.getStringExtra(Constant.CUSTOMER_ID))
             jsonBody.put("Address", edtAddress.getValue())
             jsonBody.put("SiteName", edtSiteName.getValue())
             jsonBody.put("StateID", stateID)
@@ -300,18 +301,20 @@ class AddSiteActivity : BaseActivity() {
         Networking
             .with(this)
             .getServices()
-            .addLead(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
+            .AddSite(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeWith(object : CallbackObserver<CommonAddModal>() {
-                override fun onSuccess(response: CommonAddModal) {
+            .subscribeWith(object : CallbackObserver<SiteListModal>() {
+                override fun onSuccess(response: SiteListModal) {
                     val data = response.data
                     hideProgressbar()
                     if (response.error == 200) {
                         root.showSnackBar(response.message.toString())
-
-                        if (flag)
-                            goToActivity<AddQuotationActivity>()
+                        if (flag) {
+                            val i = Intent(this@AddSiteActivity, AddQuotationActivity::class.java)
+                            i.putExtra(Constant.DATA, data.get(0))
+                            startActivity(i)
+                        }
                         finish()
                     } else {
                         showAlert(response.message.toString())

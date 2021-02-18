@@ -68,7 +68,7 @@ class SiteListAdapter(
             imgProfile.setColorFilter(getRandomMaterialColor("400", context))
             txtIcon.text = data.siteName.toString().substring(0, 1)
             txtIcon.visible()
-            itemView.setOnClickListener { listener.onItemSelect(adapterPosition, data) }
+            btnAddQuotation.setOnClickListener { listener.onItemSelect(adapterPosition, data) }
         }
 
 

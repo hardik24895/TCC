@@ -129,4 +129,7 @@ interface APIInterface {
 
     @POST("service/")
     fun AddPayment(@Body body: RequestBody): Observable<Response<CommonAddModal>>
+
+    @POST("service/")
+    fun AddSite(@Body body: RequestBody): Observable<Response<SiteListModal>>
 }

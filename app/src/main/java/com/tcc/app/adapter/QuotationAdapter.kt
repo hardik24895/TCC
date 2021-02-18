@@ -8,8 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tcc.app.R
 import com.tcc.app.extention.getRandomMaterialColor
 import com.tcc.app.extention.invisible
+import com.tcc.app.extention.openPDF
 import com.tcc.app.extention.visible
 import com.tcc.app.modal.QuotationItem
+import com.tcc.app.utils.Constant
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.row_quoatation.*
 
@@ -89,6 +91,12 @@ class QuotationAdapter(
                 listener.onItemSelect(adapterPosition, data, "ATTENDANCE")
             }
 
+            imgPrint.setOnClickListener {
+                openPDF(
+                    Constant.PDF_QUOTATION_URL + data.document,
+                    context
+                )
+            }
 
         }
 

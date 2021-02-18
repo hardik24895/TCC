@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit
 
 
 class Networking(private val context: Context) {
-    private var baseURL: String = "http://societyfy.in/tcc_new/api/"
+
     val prefs = context.getSharedPreferences("Session", Context.MODE_PRIVATE)
 
     companion object {
@@ -44,12 +44,12 @@ class Networking(private val context: Context) {
 
         fun wrapParams(params: String): RequestBody {
             return params
-                    .toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
+                .toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
         }
 
         fun setParentJsonData(
-                methodName: String,
-                jsonBody: JSONObject
+            methodName: String,
+            jsonBody: JSONObject
         ): String {
             val jsonObject = JSONObject()
             try {
@@ -87,7 +87,7 @@ class Networking(private val context: Context) {
             .create()
 
         return retrofit2.Retrofit.Builder()
-            .baseUrl(baseURL)
+            .baseUrl(Constant.API_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(httpClient.build())

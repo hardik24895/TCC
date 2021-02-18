@@ -32,7 +32,7 @@
             android:singleLine="true"
             android:text="Saggi Software Solutions, Santorini"
             android:textSize="@dimen/_14ssp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imgPrint"
             app:layout_constraintStart_toEndOf="@+id/imgProfile"
             app:layout_constraintTop_toTopOf="@+id/imgProfile" />
 
@@ -66,8 +66,10 @@
             android:id="@+id/imgPrint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="@dimen/_5sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/txtCompanyName"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/txtSiteName"
+            app:layout_constraintTop_toTopOf="@+id/txtCompanyName"
             app:srcCompat="@drawable/ic_print" />
 
         <com.tcc.app.customview.TextviewSemiBold
@@ -366,7 +368,7 @@
                     android:lines="2"
                     android:paddingVertical="@dimen/_6sdp"
                     android:textColor="@drawable/custom_button_press_text_bg_red"
-                    android:text="@string/rejected"
+                    android:text="@string/rejecte"
                     android:textAllCaps="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

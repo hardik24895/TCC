@@ -744,6 +744,9 @@ class AddQuotationActivity : BaseActivity() {
             if (leadItem != null) {
                 jsonBody.put("VisitorID", leadItem?.visitorID)
                 jsonBody.put("CustomerID", leadItem?.customerID)
+            } else if (siteListItem != null) {
+                jsonBody.put("VisitorID", siteListItem?.visitorID)
+                jsonBody.put("CustomerID", siteListItem?.customerID)
             } else {
                 jsonBody.put("VisitorID", siteListItem?.visitorID)
                 jsonBody.put("CustomerID", siteListItem?.customerID)
