@@ -7,9 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
-import com.tcc.app.Adapter.CustomerListAdapter
 import com.tcc.app.R
 import com.tcc.app.activity.CustomerDetailActivity
+import com.tcc.app.adapter.CustomerListAdapter
 import com.tcc.app.extention.invisible
 import com.tcc.app.extention.setHomeScreenTitle
 import com.tcc.app.extention.showAlert

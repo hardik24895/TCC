@@ -14,7 +14,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.tcc.app.R
 import com.tcc.app.extention.addFragment
-import com.tcc.app.fragment.ProfileFragment
+import com.tcc.app.fragment.ProfileMainFragment
 
 
 class HomeActivity : AppCompatActivity() {
@@ -27,14 +27,13 @@ class HomeActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
 
         var headerview: View = navView.getHeaderView(0)
         var nav_main: ConstraintLayout = headerview?.findViewById(R.id.nav_main);
         nav_main.setOnClickListener {
-            addFragment(ProfileFragment(), R.id.container_main)
+            addFragment(ProfileMainFragment(), R.id.nav_host_fragment)
             drawerLayout.closeDrawers()
         }
 
@@ -48,15 +47,17 @@ class HomeActivity : AppCompatActivity() {
             setOf(
                 R.id.nav_home,
                 R.id.nav_visitor,
-                R.id.nav_profile,
                 R.id.nav_setting,
                 R.id.nav_invoice,
                 R.id.nav_customer,
                 R.id.nav_employee,
+                R.id.nav_quotation,
                 R.id.nav_penalti,
                 R.id.nav_inspection,
+                R.id.nav_payment,
                 R.id.nav_attendance,
                 R.id.nav_ticket,
+                R.id.nav_site,
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

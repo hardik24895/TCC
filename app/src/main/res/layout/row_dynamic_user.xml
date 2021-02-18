@@ -48,7 +48,7 @@
 
 
                 <tech.hibk.searchablespinnerlibrary.SearchableSpinner
-                    android:id="@+id/spUserType"
+                    android:id="@+id/spUserTypeChild"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_3sdp"
@@ -67,13 +67,13 @@
                     app:onlyLightTheme="true" />
 
                 <View
-                    android:id="@+id/view2"
+                    android:id="@+id/viewUserTypeChild"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/spUserType"
+                    app:layout_constraintBottom_toBottomOf="@id/spUserTypeChild"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/spUserType" />
+                    app:layout_constraintTop_toTopOf="@id/spUserTypeChild" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -89,11 +89,11 @@
                 app:layout_constraintTop_toBottomOf="@+id/linlayUserType">
 
                 <EditText
-                    android:id="@+id/edHSN"
+                    android:id="@+id/edHSNChild"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/colorWhite"
-                    android:fontFamily="@font/montserrat_regular"
+                    android:fontFamily="@font/opensans_regular"
                     android:inputType="date"
                     android:maxLength="50"
                     android:singleLine="true"
@@ -113,11 +113,11 @@
                 app:layout_constraintTop_toBottomOf="@+id/til6">
 
                 <EditText
-                    android:id="@+id/edQty"
+                    android:id="@+id/edQtyChild"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/colorWhite"
-                    android:fontFamily="@font/montserrat_regular"
+                    android:fontFamily="@font/opensans_regular"
                     android:inputType="number"
                     android:maxLength="10"
                     android:singleLine="true"
@@ -131,17 +131,16 @@
                 android:layout_height="wrap_content"
                 android:hint="Rate"
                 app:hintTextColor="@color/black"
-
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/til7">
 
                 <EditText
-                    android:id="@+id/edRate"
+                    android:id="@+id/edRateChild"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/colorWhite"
-                    android:fontFamily="@font/montserrat_regular"
+                    android:fontFamily="@font/opensans_regular"
                     android:inputType="number"
                     android:maxLength="10"
                     android:singleLine="true"
@@ -157,7 +156,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:layout_marginBottom="@dimen/_8sdp"
-                android:padding="@dimen/_5sdp"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingVertical="@dimen/_5sdp"
                 android:text="@string/remove"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -3,6 +3,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:id="@+id/root"
     android:layout_height="match_parent">
 
     <include
@@ -24,8 +25,10 @@
             android:id="@+id/constrain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_10sdp"
-
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
@@ -48,7 +51,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/colorWhite"
-                    android:fontFamily="@font/montserrat_regular"
+                    android:fontFamily="@font/opensans_regular"
                     android:inputType="textCapWords"
                     android:maxLength="50"
                     android:textColor="@color/black"
@@ -71,7 +74,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/colorWhite"
-                    android:fontFamily="@font/montserrat_regular"
+                    android:fontFamily="@font/opensans_regular"
                     android:inputType="textEmailAddress"
                     android:maxLength="80"
                     android:textColor="@color/black"
@@ -94,7 +97,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/colorWhite"
-                    android:fontFamily="@font/montserrat_regular"
+                    android:fontFamily="@font/opensans_regular"
                     android:inputType="number"
                     android:maxLength="10"
                     android:textColor="@color/black"
@@ -109,14 +112,13 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:background="@drawable/bg_spinner"
                 android:orientation="vertical"
-
                 app:layout_constraintEnd_toEndOf="@+id/inMobile"
                 app:layout_constraintStart_toStartOf="@+id/inMobile"
                 app:layout_constraintTop_toBottomOf="@+id/inMobile">
 
 
                 <tech.hibk.searchablespinnerlibrary.SearchableSpinner
-                    android:id="@+id/spSite"
+                    android:id="@+id/spState"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_3sdp"
@@ -125,7 +127,7 @@
                     android:padding="@dimen/_5sdp"
                     app:cancelButtonColor="@color/black"
                     app:cancelButtontext="CLOSE"
-                    app:dialogTitle="Sample"
+                    app:dialogTitle="@string/select_state"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -137,10 +139,10 @@
                     android:id="@+id/view"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/spSite"
+                    app:layout_constraintBottom_toBottomOf="@+id/spState"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/spSite" />
+                    app:layout_constraintTop_toTopOf="@+id/spState" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -165,12 +167,12 @@
                     android:padding="@dimen/_5sdp"
                     app:cancelButtonColor="@color/black"
                     app:cancelButtontext="CLOSE"
-                    app:dialogTitle="Sample"
+                    app:dialogTitle="@string/select_city"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:nothingSelectedText="@string/select_gujrat"
+                    app:nothingSelectedText="@string/select_city"
                     app:onlyLightTheme="true" />
 
                 <View
@@ -182,30 +184,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/spCity" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inPincode"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:hint="Pincode"
-                app:hintTextColor="@color/black"
-                app:layout_constraintEnd_toEndOf="@+id/inName"
-                app:layout_constraintStart_toStartOf="@+id/inName"
-                app:layout_constraintTop_toBottomOf="@+id/linlayCity">
-
-                <EditText
-                    android:id="@+id/edtPincode"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorWhite"
-                    android:digits="01234567890"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:inputType="number"
-                    android:maxLength="6"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
-            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/inAddress"
@@ -223,7 +201,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/colorWhite"
-                    android:fontFamily="@font/montserrat_regular"
+                    android:fontFamily="@font/opensans_regular"
                     android:inputType="textPostalAddress"
                     android:lines="2"
                     android:maxLength="150"
@@ -232,23 +210,48 @@
                     android:textColorHint="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inPincode"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:hint="Pincode"
+                app:hintTextColor="@color/black"
+                app:layout_constraintEnd_toEndOf="@+id/inName"
+                app:layout_constraintStart_toStartOf="@+id/inName"
+                app:layout_constraintTop_toBottomOf="@+id/inAddress">
+
+                <EditText
+                    android:id="@+id/edtPincode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorWhite"
+                    android:digits="01234567890"
+                    android:fontFamily="@font/opensans_regular"
+                    android:inputType="number"
+                    android:maxLength="6"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
             <com.tcc.app.customview.TextviewBold
-                android:id="@+id/txtAge"
+                android:id="@+id/txtLeadType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:paddingTop="@dimen/_2sdp"
                 android:text="@string/lead_type"
                 app:layout_constraintStart_toStartOf="@+id/inEmail"
-                app:layout_constraintTop_toBottomOf="@+id/inAddress" />
+                app:layout_constraintTop_toBottomOf="@+id/inPincode" />
 
             <RadioGroup
                 android:id="@+id/rg"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintStart_toStartOf="@+id/txtAge"
-                app:layout_constraintTop_toBottomOf="@+id/txtAge">
+                app:layout_constraintStart_toStartOf="@+id/txtLeadType"
+                app:layout_constraintTop_toBottomOf="@+id/txtLeadType">
 
                 <com.tcc.app.customview.RadioButtonReguler
                     android:id="@+id/rbHot"

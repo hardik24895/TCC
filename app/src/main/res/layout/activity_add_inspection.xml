@@ -49,7 +49,7 @@
                     android:backgroundTint="@color/colorWhite"
                     android:editable="false"
                     android:focusableInTouchMode="false"
-                    android:fontFamily="@font/montserrat_regular"
+                    android:fontFamily="@font/opensans_regular"
                     android:inputType="none"
                     android:maxLength="10"
                     android:singleLine="true"
@@ -258,6 +258,21 @@
                     app:layout_constraintTop_toTopOf="@+id/spQuality" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvQueAns"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_18sdp"
+                android:clipToPadding="false"
+                android:isScrollContainer="false"
+                android:nestedScrollingEnabled="false"
+                android:paddingVertical="@dimen/_4sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/linlaySp4" />
+
+
             <com.tcc.app.customview.TextviewBold
                 android:id="@+id/txtAge"
                 android:layout_width="wrap_content"
@@ -265,6 +280,7 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:paddingTop="@dimen/_2sdp"
                 android:text="@string/which_age_category_do_you_fall_into"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="@+id/inpsdate"
                 app:layout_constraintTop_toBottomOf="@+id/linlaySp4" />
 
@@ -273,6 +289,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="@+id/txtAge"
                 app:layout_constraintTop_toBottomOf="@+id/txtAge">
 
@@ -301,14 +318,16 @@
                     android:text="60+" />
             </RadioGroup>
 
-            <com.github.siyamed.shapeimageview.CircularImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/img"
                 android:layout_width="@dimen/_50sdp"
                 android:layout_height="@dimen/_50sdp"
                 android:layout_marginTop="@dimen/_2sdp"
-
+                android:src="@drawable/ic_profile"
+                app:civ_border_color="@color/black"
+                app:civ_border_width="@dimen/_2ssp"
                 app:layout_constraintStart_toStartOf="@+id/txtAge"
-                app:layout_constraintTop_toBottomOf="@+id/rg"
+                app:layout_constraintTop_toBottomOf="@+id/rvQueAns"
                 app:srcCompat="@drawable/ic_profile" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -327,7 +346,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/colorWhite"
-                    android:fontFamily="@font/montserrat_regular"
+                    android:fontFamily="@font/opensans_regular"
                     android:inputType="text"
                     android:lines="3"
                     android:maxLength="500"
@@ -343,7 +362,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_18sdp"
                 android:layout_marginBottom="@dimen/_18sdp"
-                android:text="@string/submit"
+                android:text="Next"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/linlaySp4"
                 app:layout_constraintStart_toStartOf="@+id/txtAge"

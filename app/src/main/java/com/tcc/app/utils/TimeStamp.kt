@@ -88,12 +88,12 @@ object TimeStamp {
         return sdf.format(cal.time)
     }
 
-    fun formatDateFromString(inputFormat: String, outputFormat: String, inputDate: String): String {
+    fun formatDateFromString(inputDate: String): String {
         var parsed: Date? = null
         var outputDate = ""
 
-        val dfInput = SimpleDateFormat(inputFormat, Locale.getDefault())
-        val dfOutput = SimpleDateFormat(outputFormat, Locale.getDefault())
+        val dfInput = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val dfOutput = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
         try {
             parsed = dfInput.parse(inputDate)
@@ -104,6 +104,7 @@ object TimeStamp {
         }
         return outputDate
     }
+
 
     fun getLocalfromUtc(utc_data: String, inputPattern: String, outputPattern: String): String {
         var formattedDate = ""

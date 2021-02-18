@@ -1,16 +1,21 @@
 package com.tcc.app.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.tcc.app.Adapter.SiteListAdapter
+import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.tcc.app.R
+import com.tcc.app.activity.AddQuotationActivity
+import com.tcc.app.adapter.SiteListAdapter
 import com.tcc.app.extention.invisible
+import com.tcc.app.extention.setHomeScreenTitle
 import com.tcc.app.extention.showAlert
 import com.tcc.app.extention.visible
 import com.tcc.app.interfaces.LoadMoreListener
+import com.tcc.app.modal.CustomerDataItem
 import com.tcc.app.modal.LeadItem
 import com.tcc.app.modal.SiteListItem
 import com.tcc.app.modal.SiteListModal
@@ -25,13 +30,22 @@ import org.json.JSONException
 import org.json.JSONObject
 
 
-class CustomerSiteFragment : BaseFragment(), SiteListAdapter.OnItemSelected {
+class CustomerSiteFragment() : BaseFragment(), SiteListAdapter.OnItemSelected {
+
+    var customerId: Int? = -1
+    var visitorId: Int? = -1
+
+    constructor(customerData: CustomerDataItem?) : this() {
+        customerId = customerData?.customerID?.toInt()
+        visitorId = customerData?.visitorID?.toInt()
+    }
 
     var adapter: SiteListAdapter? = null
     private val list: MutableList<SiteListItem> = mutableListOf()
     var page: Int = 1
     var hasNextPage: Boolean = true
     var leadItem: LeadItem? = null
+
 
     companion object {
         fun getInstance(bundle: Bundle): CustomerSiteFragment {
@@ -53,13 +67,9 @@ class CustomerSiteFragment : BaseFragment(), SiteListAdapter.OnItemSelected {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getBundleData()
-        page = 1
-        list.clear()
-        hasNextPage = true
-        swipeRefreshLayout.isRefreshing = true
-        setupRecyclerView()
-        recyclerView.isLoading = true
-        getSiteList(page)
+        if (leadItem == null && customerId == -1 && visitorId == -1) {
+            setHomeScreenTitle(requireActivity(), getString(R.string.nav_site))
+        }
 
         recyclerView.setLoadMoreListener(object : LoadMoreListener {
             override fun onLoadMore() {
@@ -85,6 +95,8 @@ class CustomerSiteFragment : BaseFragment(), SiteListAdapter.OnItemSelected {
         val bundle = arguments
         if (bundle != null) {
             leadItem = bundle.getSerializable(Constant.DATA) as LeadItem
+            visitorId = leadItem?.visitorID?.toInt()
+
         }
     }
 
@@ -97,6 +109,12 @@ class CustomerSiteFragment : BaseFragment(), SiteListAdapter.OnItemSelected {
     }
 
     override fun onItemSelect(position: Int, data: SiteListItem) {
+        val i = Intent(requireContext(), AddQuotationActivity::class.java)
+        i.putExtra(Constant.DATA, data)
+        if (leadItem != null)
+            i.putExtra(Constant.DATA1, leadItem)
+        startActivity(i)
+        Animatoo.animateCard(requireContext())
 
     }
 
@@ -106,8 +124,8 @@ class CustomerSiteFragment : BaseFragment(), SiteListAdapter.OnItemSelected {
             val jsonBody = JSONObject()
             jsonBody.put("PageSize", Constant.PAGE_SIZE)
             jsonBody.put("CurrentPage", page)
-            jsonBody.put("VisitorID", leadItem?.visitorID.toString())
-            jsonBody.put("CustomerID", -1)
+            jsonBody.put("VisitorID", visitorId.toString())
+            jsonBody.put("CustomerID", customerId)
             jsonBody.put("SiteName", "")
             result = Networking.setParentJsonData(
                 Constant.METHOD_SITE_LIST,
@@ -168,6 +186,13 @@ class CustomerSiteFragment : BaseFragment(), SiteListAdapter.OnItemSelected {
     }
 
     override fun onResume() {
+        page = 1
+        list.clear()
+        hasNextPage = true
+        swipeRefreshLayout.isRefreshing = true
+        setupRecyclerView()
+        recyclerView.isLoading = true
+        getSiteList(page)
         super.onResume()
     }
 

@@ -9,6 +9,7 @@ import com.tcc.app.extention.*
 import com.tcc.app.modal.GetRoleModal
 import com.tcc.app.modal.LoginModal
 import com.tcc.app.modal.RoleItem
+import com.tcc.app.modal.StateListModal
 import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
@@ -36,6 +37,7 @@ class LoginActivity : BaseActivity() {
         btnLogin.setOnClickListener {
             validation()
         }
+        getStateList()
 
     }
 
@@ -55,7 +57,7 @@ class LoginActivity : BaseActivity() {
             }
             edtPassword.getValue().length < 6 -> {
                 edtPassword.requestFocus()
-                root.showSnackBar("Enter Minimum six charecter")
+                root.showSnackBar("Enter Minimum six character")
             }
 
             else -> {
@@ -81,42 +83,42 @@ class LoginActivity : BaseActivity() {
             jsonBody.put("UserType", "Andriod")
 
             result = Networking.setParentJsonData(
-                    Constant.METHOD_LOGIN,
-                    jsonBody
+                Constant.METHOD_LOGIN,
+                jsonBody
             )
 
         } catch (e: JSONException) {
             e.printStackTrace()
         }
         Networking
-                .with(this)
-                .getServices()
-                .login(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : CallbackObserver<LoginModal>() {
-                    override fun onSuccess(response: LoginModal) {
-                        val data = response.data
-                        hideProgressbar()
-                        if (data != null) {
-                            if (response.error == 200) {
-                                session.user = response
-                                getRole(data.roleID)
-                            } else {
-                                showAlert(response.message.toString())
-                            }
-
+            .with(this)
+            .getServices()
+            .login(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : CallbackObserver<LoginModal>() {
+                override fun onSuccess(response: LoginModal) {
+                    val data = response.data
+                    hideProgressbar()
+                    if (data != null) {
+                        if (response.error == 200) {
+                            session.user = response
+                            getRole(data.roleID)
                         } else {
                             showAlert(response.message.toString())
                         }
-                    }
 
-                    override fun onFailed(code: Int, message: String) {
-                        showAlert(message)
-                        hideProgressbar()
+                    } else {
+                        showAlert(response.message.toString())
                     }
+                }
 
-                }).addTo(autoDisposable)
+                override fun onFailed(code: Int, message: String) {
+                    showAlert(message)
+                    hideProgressbar()
+                }
+
+            }).addTo(autoDisposable)
     }
 
     fun getRole(roleID: String?) {
@@ -128,41 +130,71 @@ class LoginActivity : BaseActivity() {
 
 
             result = Networking.setParentJsonData(
-                    Constant.METHOD_ROLE,
-                    jsonBody
+                Constant.METHOD_ROLE,
+                jsonBody
             )
 
         } catch (e: JSONException) {
             e.printStackTrace()
         }
         Networking
-                .with(this)
-                .getServices()
-                .getRole(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : CallbackObserver<GetRoleModal>() {
-                    override fun onSuccess(response: GetRoleModal) {
-                        val data = response.data
-                        hideProgressbar()
-                        if (data != null) {
-                            if (response.error == 200) {
-                                saveDataToSharedPreferencesforRole(response.data)
-                            } else {
-                                showAlert(response.message.toString())
-                            }
-
+            .with(this)
+            .getServices()
+            .getRole(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : CallbackObserver<GetRoleModal>() {
+                override fun onSuccess(response: GetRoleModal) {
+                    val data = response.data
+                    hideProgressbar()
+                    if (data != null) {
+                        if (response.error == 200) {
+                            saveDataToSharedPreferencesforRole(response.data)
                         } else {
                             showAlert(response.message.toString())
                         }
-                    }
 
-                    override fun onFailed(code: Int, message: String) {
-                        showAlert(message)
-                        hideProgressbar()
+                    } else {
+                        showAlert(response.message.toString())
                     }
+                }
 
-                }).addTo(autoDisposable)
+                override fun onFailed(code: Int, message: String) {
+                    showAlert(message)
+                    hideProgressbar()
+                }
+
+            }).addTo(autoDisposable)
+    }
+
+    fun getStateList() {
+        var result = ""
+        try {
+            val jsonBody = JSONObject()
+            // jsonBody.put("StateID", "-1")
+
+            result = Networking.setParentJsonData(Constant.METHOD_STATE_LIST, jsonBody)
+
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+        Networking
+            .with(this)
+            .getServices()
+            .getStateList(Networking.wrapParams(result))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : CallbackObserver<StateListModal>() {
+                override fun onSuccess(response: StateListModal) {
+                    session.stetList = response.data
+                }
+
+                override fun onFailed(code: Int, message: String) {
+                    showAlert(message)
+
+                }
+
+            }).addTo(autoDisposable)
     }
 
     private fun saveDataToSharedPreferencesforRole(roleList: List<RoleItem>) {

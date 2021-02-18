@@ -16,7 +16,6 @@ data class LeadListModal(
 
         @field:SerializedName("rowcount")
         val rowcount: Int = 0
-
 )
 
 data class LeadItem(

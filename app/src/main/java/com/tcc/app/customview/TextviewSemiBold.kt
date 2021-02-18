@@ -11,12 +11,12 @@ import android.widget.TextView
 @SuppressLint("AppCompatCustomView")
 class TextviewSemiBold : TextView {
     constructor(context: Context) : super(context) {
-        val face = Typeface.createFromAsset(context.assets, "font/montserrat_semibold.ttf")
+        val face = Typeface.createFromAsset(context.assets, "font/opensans_semibold.ttf")
         this.typeface = face
     }
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        val face = Typeface.createFromAsset(context.assets, "font/montserrat_semibold.ttf")
+        val face = Typeface.createFromAsset(context.assets, "font/opensans_semibold.ttf")
         this.typeface = face
     }
 
@@ -25,7 +25,7 @@ class TextviewSemiBold : TextView {
         attrs,
         defStyle
     ) {
-        val face = Typeface.createFromAsset(context.assets, "font/montserrat_semibold.ttf")
+        val face = Typeface.createFromAsset(context.assets, "font/opensans_semibold.ttf")
         this.typeface = face
     }
 

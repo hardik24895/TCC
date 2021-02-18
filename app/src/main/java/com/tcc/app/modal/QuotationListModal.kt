@@ -1,6 +1,7 @@
 package com.tcc.app.modal
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class QuotationListModal(
 
@@ -16,6 +17,42 @@ data class QuotationListModal(
     @field:SerializedName("message")
     val message: String? = null
 )
+
+data class ItemItem(
+
+    @field:SerializedName("Status")
+    val status: String? = null,
+
+    @field:SerializedName("Usertype")
+    val usertype: String? = null,
+
+    @field:SerializedName("Rno")
+    val rno: String? = null,
+
+    @field:SerializedName("rowcount")
+    val rowcount: String? = null,
+
+    @field:SerializedName("QuotationItemID")
+    val quotationItemID: String? = null,
+
+    @field:SerializedName("Rate")
+    val rate: String? = null,
+
+    @field:SerializedName("Qty")
+    val qty: String? = null,
+
+    @field:SerializedName("Amount")
+    val amount: String? = null,
+
+    @field:SerializedName("HSNNo")
+    val hSNNo: String? = null,
+
+    @field:SerializedName("QuotationID")
+    val quotationID: String? = null,
+
+    @field:SerializedName("UsertypeID")
+    val usertypeID: String? = null
+) : Serializable
 
 data class QuotationItem(
 
@@ -52,6 +89,9 @@ data class QuotationItem(
     @field:SerializedName("CompanyName")
     val companyName: String? = null,
 
+    @field:SerializedName("Item")
+    val item: List<ItemItem> = mutableListOf(),
+
     @field:SerializedName("Rno")
     val rno: String? = null,
 
@@ -63,6 +103,9 @@ data class QuotationItem(
 
     @field:SerializedName("IGST")
     val iGST: String? = null,
+
+    @field:SerializedName("IsFixCost")
+    val isFixCost: String? = null,
 
     @field:SerializedName("Status")
     val status: String? = null,
@@ -105,4 +148,4 @@ data class QuotationItem(
 
     @field:SerializedName("Total")
     val total: String? = null
-)
+) : Serializable

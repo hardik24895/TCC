@@ -5,20 +5,29 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.tcc.app.Adapter.SalaryAdapter
 import com.tcc.app.R
 import com.tcc.app.activity.SalaryDetailActivity
+import com.tcc.app.adapter.SalaryAdapter
 import com.tcc.app.dialog.AddAdavanceDailog
 import com.tcc.app.dialog.AddSalaryDailog
 import com.tcc.app.extention.goToActivity
+import com.tcc.app.modal.EmployeeDataItem
 import com.tcc.app.utils.Constant
 import kotlinx.android.synthetic.main.fragment_employee_salary.*
 import kotlinx.android.synthetic.main.reclerview_swipelayout.*
 
 
-class EmployeeSalaryFragment : BaseFragment(), SalaryAdapter.OnItemSelected {
+class EmployeeSalaryFragment() : BaseFragment(), SalaryAdapter.OnItemSelected {
+    constructor(employeeData: EmployeeDataItem?) : this() {
+        this.empItemData = employeeData
+    }
+
+    var empItemData: EmployeeDataItem? = null
+
     var adapter: SalaryAdapter? = null
     lateinit var chipArray: ArrayList<String>
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -101,4 +110,5 @@ class EmployeeSalaryFragment : BaseFragment(), SalaryAdapter.OnItemSelected {
         dialog.arguments = bundle
         dialog.show(childFragmentManager, "YesNO")
     }
+
 }

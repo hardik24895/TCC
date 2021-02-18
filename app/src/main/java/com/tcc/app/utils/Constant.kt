@@ -15,6 +15,7 @@ object Constant {
     const val DISTANCE = "distance"
     const val STEPS = "steps"
     const val CAT_ID = "catID"
+    const val ID = "id"
     const val BUSNESSNAME = "busnessname"
     const val SORTNAME = "sortname"
     const val ADDRESS1 = "address1"
@@ -44,6 +45,7 @@ object Constant {
     const val ERROR = "error"
     const val ROW_COUNT = "rowCount"
     const val DATA = "data"
+    const val DATA1 = "data1"
 
 
     //---URL Image Load---//
@@ -114,6 +116,12 @@ object Constant {
     const val REPORT = "Report"
     const val DELETE = "Delete"
 
+    //----- Lead Type-----
+    const val HOT = "Hot"
+    const val WARM = "Warm"
+    const val COLD = "Cold"
+    const val SILENT = "Silent"
+
 
     //--- Method Name-----
 
@@ -126,7 +134,30 @@ object Constant {
     const val METHOD_UNIFORM_LIST = "getEmployeeUniform"
     const val METHOD_ROOM_LIST = "getEmployeeRoom"
     const val METHOD_CITY_LIST = "getCities"
+    const val METHOD_USERTYPE_LIST = "getUsertype"
     const val METHOD_QUOTATION_LIST = "getQuotation"
     const val METHOD_SITE_LIST = "getSites"
+    const val METHOD_PAYMENT_LIST = "getPayment"
     const val METHOD_CUSTOMER_LIST = "getCustomer"
+    const val METHOD_CHANGE_PWD = "changePassword"
+    const val METHOD_ADD_ROOM = "addEmployeeRoom"
+    const val METHOD_TRAINING_DATE_TIME = "getTrainingDateTime"
+    const val METHOD_UNIFORM_SPINNER_LIST = "getUniformType"
+    const val METHOD_ADD_TRAINING = "addEmployeeTraining"
+    const val METHOD_ADD_UNIFORM = "addEmployeeUniform"
+    const val METHOD_STATE_LIST = "getStates"
+    const val METHOD_ADD_LEAD = "addVisitor"
+    const val METHOD_ADD_SITE = "addSites"
+    const val METHOD_EDIT_LEAD = "editVisitor"
+    const val METHOD_COMPANY_LIST = "getCompany"
+    const val METHOD_SERVICE_LIST = "getService"
+    const val METHOD_CONFIG = "getConfig"
+    const val METHOD_ADD_QUOTATIOON = "addQuotation"
+    const val METHOD_GET_REASON = "getReason"
+    const val METHOD_REJECT_REASON = "convertToQuotationReject"
+    const val METHOD_ACCEPT_REASON = "convertToQuotationAccept"
+    const val METHOD_QUESTION = "getQuestion"
+    const val METHOD_ADD_INVOICE = "addInvoice"
+    const val METHOD_GET_INVOICE = "getInvoice"
+    const val METHOD_ADD_PAYMENT = "addPayment"
 }

@@ -1,12 +1,14 @@
 package com.tcc.app.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.tcc.app.Adapter.EmployeeAdapter
+import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.tcc.app.R
 import com.tcc.app.activity.AddEmployeeActivity
 import com.tcc.app.activity.EmployeeDetailActivity
+import com.tcc.app.adapter.EmployeeAdapter
 import com.tcc.app.extention.*
 import com.tcc.app.interfaces.LoadMoreListener
 import com.tcc.app.modal.EmployeeDataItem
@@ -31,9 +33,9 @@ class EmployeeFragment : BaseFragment(), EmployeeAdapter.OnItemSelected {
 
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.reclerview_swipelayout, container, false)
         return root
@@ -103,7 +105,10 @@ class EmployeeFragment : BaseFragment(), EmployeeAdapter.OnItemSelected {
     }
 
     override fun onItemSelect(position: Int, data: EmployeeDataItem) {
-        goToActivity<EmployeeDetailActivity>()
+        val intent = Intent(context, EmployeeDetailActivity::class.java)
+        intent.putExtra(Constant.DATA, data)
+        startActivity(intent)
+        Animatoo.animateCard(context)
     }
 
 
@@ -125,36 +130,36 @@ class EmployeeFragment : BaseFragment(), EmployeeAdapter.OnItemSelected {
             e.printStackTrace()
         }
         Networking
-                .with(requireContext())
-                .getServices()
-                .getEmployeeList(Networking.wrapParams(result))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : CallbackObserver<EmployeeListModel>() {
-                    override fun onSuccess(response: EmployeeListModel) {
-                        if (list.size > 0) {
-                            progressbar.invisible()
-                        }
-                        swipeRefreshLayout.isRefreshing = false
-                        list.addAll(response.data)
-                        adapter?.notifyItemRangeInserted(
-                                list.size.minus(response.data.size),
-                                list.size
-                        )
-                        hasNextPage = list.size < response.rowcount!!
-
-                        refreshData(getString(R.string.no_data_found))
+            .with(requireContext())
+            .getServices()
+            .getEmployeeList(Networking.wrapParams(result))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : CallbackObserver<EmployeeListModel>() {
+                override fun onSuccess(response: EmployeeListModel) {
+                    if (list.size > 0) {
+                        progressbar.invisible()
                     }
+                    swipeRefreshLayout.isRefreshing = false
+                    list.addAll(response.data)
+                    adapter?.notifyItemRangeInserted(
+                        list.size.minus(response.data.size),
+                        list.size
+                    )
+                    hasNextPage = list.size < response.rowcount!!
 
-                    override fun onFailed(code: Int, message: String) {
-                        if (list.size > 0) {
-                            progressbar.invisible()
-                        }
-                        showAlert(message)
-                        refreshData(message)
+                    refreshData(getString(R.string.no_data_found))
+                }
+
+                override fun onFailed(code: Int, message: String) {
+                    if (list.size > 0) {
+                        progressbar.invisible()
                     }
+                    showAlert(message)
+                    refreshData(message)
+                }
 
-                }).addTo(autoDisposable)
+            }).addTo(autoDisposable)
     }
 
 

@@ -3,12 +3,13 @@ package com.tcc.app.fragment
 import android.os.Bundle
 import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.tcc.app.Adapter.TrainingAdapter
 import com.tcc.app.R
+import com.tcc.app.adapter.TrainingAdapter
 import com.tcc.app.extention.invisible
 import com.tcc.app.extention.showAlert
 import com.tcc.app.extention.visible
 import com.tcc.app.interfaces.LoadMoreListener
+import com.tcc.app.modal.EmployeeDataItem
 import com.tcc.app.modal.TrainingDataItem
 import com.tcc.app.modal.TrainingListModel
 import com.tcc.app.network.CallbackObserver
@@ -22,19 +23,24 @@ import org.json.JSONException
 import org.json.JSONObject
 
 
-class EmployeeTrainingFragment : BaseFragment(), TrainingAdapter.OnItemSelected {
+class EmployeeTrainingFragment() : BaseFragment(), TrainingAdapter.OnItemSelected {
 
 
+    var empItemData: EmployeeDataItem? = null
     var adapter: TrainingAdapter? = null
     private val list: MutableList<TrainingDataItem> = mutableListOf()
     var page: Int = 1
     var hasNextPage: Boolean = true
 
+    constructor(employeeData: EmployeeDataItem?) : this() {
+        this.empItemData = employeeData
+    }
+
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.reclerview_swipelayout, container, false)
         return root
@@ -44,13 +50,7 @@ class EmployeeTrainingFragment : BaseFragment(), TrainingAdapter.OnItemSelected 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        page = 1
-        list.clear()
-        hasNextPage = true
-        swipeRefreshLayout.isRefreshing = true
-        setupRecyclerView()
-        recyclerView.isLoading = true
-        getTrainingList(page)
+
 
         recyclerView.setLoadMoreListener(object : LoadMoreListener {
             override fun onLoadMore() {
@@ -69,6 +69,17 @@ class EmployeeTrainingFragment : BaseFragment(), TrainingAdapter.OnItemSelected 
             adapter?.notifyDataSetChanged()
             getTrainingList(page)
         }
+    }
+
+    override fun onResume() {
+        page = 1
+        list.clear()
+        hasNextPage = true
+        swipeRefreshLayout.isRefreshing = true
+        setupRecyclerView()
+        recyclerView.isLoading = true
+        getTrainingList(page)
+        super.onResume()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -111,46 +122,46 @@ class EmployeeTrainingFragment : BaseFragment(), TrainingAdapter.OnItemSelected 
             val jsonBody = JSONObject()
             jsonBody.put("PageSize", Constant.PAGE_SIZE)
             jsonBody.put("CurrentPage", page)
-            jsonBody.put("EmployeeID", "4")
-
-
-
+            jsonBody.put("EmployeeID", empItemData?.userID)
             result = Networking.setParentJsonData(Constant.METHOD_TRAINING_LIST, jsonBody)
 
         } catch (e: JSONException) {
             e.printStackTrace()
         }
         Networking
-                .with(requireContext())
-                .getServices()
-                .getTrainingList(Networking.wrapParams(result))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : CallbackObserver<TrainingListModel>() {
-                    override fun onSuccess(response: TrainingListModel) {
-                        if (list.size > 0) {
-                            progressbar.invisible()
-                        }
-                        swipeRefreshLayout.isRefreshing = false
+            .with(requireContext())
+            .getServices()
+            .getTrainingList(Networking.wrapParams(result))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : CallbackObserver<TrainingListModel>() {
+                override fun onSuccess(response: TrainingListModel) {
+                    if (list.size > 0) {
+                        progressbar.invisible()
+                    }
+
+                    swipeRefreshLayout.isRefreshing = false
+                    if (response.error == 200) {
                         list.addAll(response.data)
                         adapter?.notifyItemRangeInserted(
-                                list.size.minus(response.data.size),
-                                list.size
+                            list.size.minus(response.data.size),
+                            list.size
                         )
                         hasNextPage = list.size < response.rowcount!!
-
-                        refreshData(getString(R.string.no_data_found))
                     }
 
-                    override fun onFailed(code: Int, message: String) {
-                        if (list.size > 0) {
-                            progressbar.invisible()
-                        }
-                        showAlert(message)
-                        refreshData(message)
-                    }
+                    refreshData(getString(R.string.no_data_found))
+                }
 
-                }).addTo(autoDisposable)
+                override fun onFailed(code: Int, message: String) {
+                    if (list.size > 0) {
+                        progressbar.invisible()
+                    }
+                    showAlert(message)
+                    refreshData(message)
+                }
+
+            }).addTo(autoDisposable)
     }
 
 

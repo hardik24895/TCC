@@ -2,8 +2,10 @@ package com.tcc.app.extention
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.net.ConnectivityManager
+import android.net.Uri
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
@@ -182,6 +184,22 @@ fun getRandomMaterialColor(typeColor: String, context: Context): Int {
     return returnColor
 }
 
-inline
-val AppCompatActivity.connectivityManager: ConnectivityManager
+fun sendEmail(context: Context, email: String) {
+    val emailIntent = Intent(
+        Intent.ACTION_SENDTO, Uri.fromParts(
+            "mailto", email, null
+        )
+    )
+    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject")
+    emailIntent.putExtra(Intent.EXTRA_TEXT, "Body")
+    context.startActivity(Intent.createChooser(emailIntent, "Send email..."))
+}
+
+fun callPhone(context: Context, phone: String) {
+    val intent = Intent(Intent.ACTION_DIAL)
+    intent.data = Uri.parse("tel:${phone}")
+    context.startActivity(intent)
+}
+
+inline val AppCompatActivity.connectivityManager: ConnectivityManager
     get() = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

@@ -24,6 +24,14 @@
             android:icon="@drawable/ic_employee"
             android:title="@string/nav_employee" />
 
+        <item
+            android:id="@+id/nav_quotation"
+            android:icon="@drawable/ic_user_profile"
+            android:title="@string/nav_quotations" />
+        <item
+            android:id="@+id/nav_site"
+            android:icon="@drawable/ic_user_profile"
+            android:title="@string/nav_site" />
 
         <item
             android:id="@+id/nav_invoice"
@@ -50,6 +58,11 @@
             android:id="@+id/nav_attendance"
             android:icon="@drawable/ic_user_profile"
             android:title="@string/nav_attendance" />
+
+        <item
+            android:id="@+id/nav_payment"
+            android:icon="@drawable/ic_user_profile"
+            android:title="@string/nav_payment" />
         <item
             android:id="@+id/nav_ticket"
             android:icon="@drawable/ic_user_profile"

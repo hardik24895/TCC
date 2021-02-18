@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="@dimen/_5sdp"
@@ -50,6 +51,7 @@
             app:layout_constraintStart_toStartOf="@+id/imgProfile"
             app:layout_constraintTop_toTopOf="@+id/imgProfile" />
 
+
         <com.tcc.app.customview.TextviewReguler
             android:id="@+id/txtSiteName"
             android:layout_width="wrap_content"
@@ -58,6 +60,15 @@
             android:text="Saggi Software Solutions"
             app:layout_constraintStart_toStartOf="@+id/txtCompanyName"
             app:layout_constraintTop_toBottomOf="@+id/txtCompanyName" />
+
+
+        <ImageView
+            android:id="@+id/imgPrint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txtSiteName"
+            app:srcCompat="@drawable/ic_print" />
 
         <com.tcc.app.customview.TextviewSemiBold
             android:id="@+id/txtEstinationNotitle"
@@ -181,7 +192,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_2sdp"
-
             android:text="118"
             android:textColor="@color/txtgray"
             app:layout_constraintEnd_toEndOf="parent"
@@ -287,27 +297,29 @@
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constrain"
+            android:id="@+id/constrain_pending"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginBottom="@dimen/_8sdp"
             android:visibility="gone"
+            tools:visibility="visible"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/txtStatus"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtAddress">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/btnPayment"
-                style="@style/CustomPressButton"
+                android:id="@+id/btnAccept"
+                style="@style/CustomPressButton_Green"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:layout_marginBottom="@dimen/_8sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btnDocument"
+                app:layout_constraintEnd_toStartOf="@+id/btnReject"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -319,18 +331,21 @@
                     android:drawableStart="@drawable/ic_payment"
                     android:drawablePadding="@dimen/_4sdp"
                     android:gravity="center"
+                    android:lines="2"
                     android:paddingVertical="@dimen/_6sdp"
-                    android:text="@string/payment"
+
+                    android:text="@string/accept"
                     android:textAllCaps="true"
-                    android:textColor="@color/colorWhite"
+                    android:textColor="@drawable/custom_button_press_text_bg_green"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/btnDocument"
-                style="@style/CustomPressButton"
+                android:id="@+id/btnReject"
+                style="@style/CustomPressButton_Red"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
@@ -339,7 +354,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/btnPayment"
+                app:layout_constraintStart_toEndOf="@+id/btnAccept"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.tcc.app.customview.TextviewReguler
@@ -348,10 +363,12 @@
                     android:drawableStart="@drawable/ic_document"
                     android:drawablePadding="@dimen/_4sdp"
                     android:gravity="center"
+                    android:lines="2"
                     android:paddingVertical="@dimen/_6sdp"
-                    android:text="@string/document"
+                    android:textColor="@drawable/custom_button_press_text_bg_red"
+                    android:text="@string/rejected"
                     android:textAllCaps="true"
-                    android:textColor="@color/colorWhite"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -359,6 +376,100 @@
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constrain_accepted"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/txtStatus"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtAddress"
+            tools:visibility="gone">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/btnTeamDefination"
+                style="@style/CustomPressButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btnInvoice"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.tcc.app.customview.TextviewReguler
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lines="2"
+                    android:gravity="center"
+                    android:paddingVertical="@dimen/_6sdp"
+                    android:text="@string/team_defination"
+                    android:textAllCaps="true"
+                    android:textColor="@drawable/custom_button_press_text_bg"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/btnInvoice"
+                style="@style/CustomPressButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_4sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btnAttencence"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/btnTeamDefination"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.tcc.app.customview.TextviewReguler
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:lines="2"
+                    android:paddingVertical="@dimen/_6sdp"
+                    android:text="@string/invoice"
+                    android:textAllCaps="true"
+                    android:textColor="@drawable/custom_button_press_text_bg"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/btnAttencence"
+                style="@style/CustomPressButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/btnInvoice"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.tcc.app.customview.TextviewReguler
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:lines="2"
+                    android:paddingVertical="@dimen/_6sdp"
+                    android:text="@string/nav_attendance"
+                    android:textAllCaps="true"
+                    android:textColor="@drawable/custom_button_press_text_bg"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

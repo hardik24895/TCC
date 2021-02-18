@@ -22,6 +22,13 @@ class LeadInfofoFragment : BaseFragment() {
         }
     }
 
+    private fun getBundleData() {
+        val bundle = arguments
+        if (bundle != null) {
+            leadItem = bundle.getSerializable(Constant.DATA) as LeadItem
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -47,13 +54,6 @@ class LeadInfofoFragment : BaseFragment() {
         txtPincode.text = leadItem?.pinCode.toString()
         txtAddress.text = leadItem?.address.toString()
         txtLeadType.text = leadItem?.leadType.toString()
-    }
-
-    private fun getBundleData() {
-        val bundle = arguments
-        if (bundle != null) {
-            leadItem = bundle.getSerializable(Constant.DATA) as LeadItem
-        }
     }
 
 

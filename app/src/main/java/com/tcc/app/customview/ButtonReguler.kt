@@ -11,12 +11,12 @@ import android.widget.Button
 @SuppressLint("AppCompatCustomView")
 class ButtonReguler : Button {
     constructor(context: Context) : super(context) {
-        val face = Typeface.createFromAsset(context.assets, "font/montserrat_semibold.ttf")
+        val face = Typeface.createFromAsset(context.assets, "font/opensans_semibold.ttf")
         this.typeface = face
     }
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        val face = Typeface.createFromAsset(context.assets, "font/montserrat_semibold.ttf")
+        val face = Typeface.createFromAsset(context.assets, "font/opensans_semibold.ttf")
         this.typeface = face
     }
 
@@ -25,7 +25,7 @@ class ButtonReguler : Button {
         attrs,
         defStyle
     ) {
-        val face = Typeface.createFromAsset(context.assets, "font/montserrat_semibold.ttf")
+        val face = Typeface.createFromAsset(context.assets, "font/opensans_semibold.ttf")
         this.typeface = face
     }
 

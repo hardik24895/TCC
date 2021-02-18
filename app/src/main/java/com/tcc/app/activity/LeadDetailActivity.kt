@@ -1,10 +1,11 @@
 package com.tcc.app.activity
 
+import android.content.Intent
 import android.os.Bundle
+import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.google.android.material.tabs.TabLayout
-import com.tcc.app.Adapter.ViewPagerPagerAdapter
 import com.tcc.app.R
-import com.tcc.app.extention.goToActivity
+import com.tcc.app.adapter.ViewPagerPagerAdapter
 import com.tcc.app.extention.invisible
 import com.tcc.app.extention.visible
 import com.tcc.app.fragment.CustomerSiteFragment
@@ -21,10 +22,10 @@ class LeadDetailActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_visitor_detail)
-        txtTitle.text = "Hardik Kanzariya"
+        leadItem = intent.getSerializableExtra(Constant.DATA) as LeadItem
+        txtTitle.text = leadItem?.name
         imgBack.visible()
 
-        leadItem = intent.getSerializableExtra(Constant.DATA) as LeadItem
 
         mDeclaration()
         setStatePageAdapter()
@@ -38,10 +39,14 @@ class LeadDetailActivity : BaseActivity() {
         imgAdd.setOnClickListener {
 
             if (viewPager.currentItem == 1) {
-                goToActivity<AddSiteActivity>()
-            } else {
-                goToActivity<AddQuotationActivity>()
+                val i = Intent(this, AddSiteActivity::class.java)
+                i.putExtra(Constant.ID, leadItem?.visitorID.toString())
+                startActivity(i)
+                Animatoo.animateCard(this)
             }
+//            } else {
+//                goToActivity<AddQuotationActivity>()
+//            }
         }
 
     }
@@ -84,7 +89,7 @@ class LeadDetailActivity : BaseActivity() {
 
         tabs!!.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-                if (tab.position == 0) {
+                if (tab.position != 1) {
                     imgAdd.invisible()
                 } else {
                     imgAdd.visible()
