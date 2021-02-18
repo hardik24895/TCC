@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.tcc.app.R
 import com.tcc.app.activity.AddInvoiceActivity
+import com.tcc.app.activity.TeamDefinitionListActivity
 import com.tcc.app.adapter.QuotationAdapter
 import com.tcc.app.dialog.AcceptReasonDailog
 import com.tcc.app.dialog.RejectReasonDailog
@@ -183,6 +184,10 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
         } else if (action.equals("REJECT")) {
             showRejectDialog(data, position)
         } else if (action.equals("TEAM-DEFINATION")) {
+            val i = Intent(requireContext(), TeamDefinitionListActivity::class.java)
+            i.putExtra(Constant.DATA, data)
+            startActivity(i)
+            Animatoo.animateCard(requireContext())
 
         } else if (action.equals("INVOICE")) {
             val i = Intent(requireContext(), AddInvoiceActivity::class.java)

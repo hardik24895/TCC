@@ -184,4 +184,14 @@
     <string name="halfday_count">HalfDay Count</string>
     <string name="absent_count">Absent count</string>
     <string name="present_count">Present Count</string>
+    <string name="team_definitions">Team Definitions</string>
+    <string name="team_definition">Team Definition</string>
+    <string name="estimation_no">Estimation No</string>
+    <string name="type">Type</string>
+    <string name="new_title">New</string>
+    <string name="rokadi">Rokadi</string>
+    <string name="shuffle">Shuffle</string>
+    <string name="start_time">Start Time</string>
+    <string name="end_time">End Time</string>
+    <string name="add">ADD</string>
 </resources>

@@ -12,6 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingEnd="@dimen/_5ssp"
         android:layout_margin="@dimen/_5sdp">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -410,7 +411,7 @@
                     android:lines="2"
                     android:gravity="center"
                     android:paddingVertical="@dimen/_6sdp"
-                    android:text="@string/team_defination"
+                    android:text="@string/team_definition"
                     android:textAllCaps="true"
                     android:textColor="@drawable/custom_button_press_text_bg"
                     app:layout_constraintEnd_toEndOf="parent"
