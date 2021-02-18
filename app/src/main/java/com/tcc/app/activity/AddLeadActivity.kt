@@ -51,8 +51,8 @@ class AddLeadActivity : BaseActivity() {
         }
         txtTitle.text = resources.getText(R.string.visitor)
 
-        btnSubmit.setOnClickListener { validation() }
-        btnAddSite.setOnClickListener { goToActivity<AddSiteActivity>() }
+        btnSubmit.setOnClickListener { validation(false) }
+        btnAddSite.setOnClickListener { validation(true) }
         stateSpinnerListner()
         citySpinnerListner()
         stateViewClick()
@@ -237,7 +237,7 @@ class AddLeadActivity : BaseActivity() {
             }).addTo(autoDisposable)
     }
 
-    fun validation() {
+    fun validation(flag: Boolean) {
         val selectedId: Int = rg.getCheckedRadioButtonId()
         val rbLead = findViewById<View>(selectedId) as? RadioButton
         when {
@@ -285,7 +285,7 @@ class AddLeadActivity : BaseActivity() {
 
             else -> {
                 if (leadItem == null)
-                    addLead(rbLead?.text.toString())
+                    addLead(rbLead?.text.toString(), flag)
                 else
                     editLead(rbLead?.text.toString())
             }
@@ -293,7 +293,7 @@ class AddLeadActivity : BaseActivity() {
         }
     }
 
-    fun addLead(leadType: String?) {
+    fun addLead(leadType: String?, flag: Boolean) {
         var result = ""
         showProgressbar()
         try {
@@ -329,7 +329,11 @@ class AddLeadActivity : BaseActivity() {
                     hideProgressbar()
                     if (response.error == 200) {
                         root.showSnackBar(response.message.toString())
+                        if (flag)
+                            goToActivity<AddSiteActivity>()
+
                         finish()
+
                     } else {
                         showAlert(response.message.toString())
                     }

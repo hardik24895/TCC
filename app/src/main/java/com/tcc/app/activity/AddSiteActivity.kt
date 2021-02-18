@@ -50,9 +50,9 @@ class AddSiteActivity : BaseActivity() {
             finish()
         }
         txtTitle.text = "Site"
-        btnSubmit.setOnClickListener { validation() }
+        btnSubmit.setOnClickListener { validation(false) }
 
-        btnAddQuatation.setOnClickListener { goToActivity<AddQuotationActivity>() }
+        btnAddQuatation.setOnClickListener { validation(true) }
         getStateSppinerData()
         getCityList(stateID)
         stateSpinnerListner()
@@ -216,7 +216,7 @@ class AddSiteActivity : BaseActivity() {
             }).addTo(autoDisposable)
     }
 
-    fun validation() {
+    fun validation(flag: Boolean) {
         val selectedId: Int = rg.getCheckedRadioButtonId()
         val rbLead = findViewById<View>(selectedId) as? RadioButton
         when {
@@ -259,13 +259,13 @@ class AddSiteActivity : BaseActivity() {
             }
 
             else -> {
-                addSite(rbLead?.text.toString())
+                addSite(rbLead?.text.toString(), flag)
             }
 
         }
     }
 
-    fun addSite(siteType: String?) {
+    fun addSite(siteType: String?, flag: Boolean) {
         var result = ""
         showProgressbar()
         try {
@@ -309,6 +309,9 @@ class AddSiteActivity : BaseActivity() {
                     hideProgressbar()
                     if (response.error == 200) {
                         root.showSnackBar(response.message.toString())
+
+                        if (flag)
+                            goToActivity<AddQuotationActivity>()
                         finish()
                     } else {
                         showAlert(response.message.toString())
