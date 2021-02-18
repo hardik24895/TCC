@@ -129,4 +129,14 @@ interface APIInterface {
 
     @POST("service/")
     fun AddPayment(@Body body: RequestBody): Observable<Response<CommonAddModal>>
+
+    @POST("service/")
+    fun getTeamDefinationList(@Body body: RequestBody): Observable<Response<TeamDefinitionListModel>>
+
+    @POST("service/")
+    fun getAvailableEmployeeList(@Body body: RequestBody): Observable<Response<AvailableEmployeeListModel>>
+
+
+    @POST("service/")
+    fun AddTeamDefinition(@Body body: RequestBody): Observable<Response<CommonAddModal>>
 }

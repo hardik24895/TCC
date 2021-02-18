@@ -11,8 +11,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingEnd="@dimen/_5ssp"
-        android:layout_margin="@dimen/_5sdp">
+        android:layout_margin="@dimen/_5sdp"
+        android:paddingEnd="@dimen/_5ssp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imgProfile"
@@ -24,13 +24,13 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.tcc.app.customview.TextviewSemiBold
-            android:id="@+id/txtSiteName"
+            android:id="@+id/txtCompanyName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_5sdp"
             android:ellipsize="end"
             android:singleLine="true"
-            android:text="Saggi Software Solutions, Santorini"
+            android:text="Saggi Software Solution"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -57,49 +57,49 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_2sdp"
-            android:text="Saggi Software Solutions"
-            app:layout_constraintStart_toStartOf="@+id/txtSiteName"
-            app:layout_constraintTop_toBottomOf="@+id/txtSiteName" />
+            android:text="Tushar Prajapati"
+            app:layout_constraintStart_toStartOf="@+id/txtCompanyName"
+            app:layout_constraintTop_toBottomOf="@+id/txtCompanyName" />
 
         <com.tcc.app.customview.TextviewSemiBold
-            android:id="@+id/txtSitetypetitle"
+            android:id="@+id/txtEstimationTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
-            android:text="@string/site_type"
+            android:text="@string/estimation_no"
             android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="@+id/imgProfile"
             app:layout_constraintTop_toBottomOf="@+id/imgProfile" />
 
 
         <com.tcc.app.customview.TextviewReguler
-            android:id="@+id/txtSityType"
+            android:id="@+id/txtEstimationNo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_2sdp"
-            android:text="Commertial"
+            android:text="# EST- 1003"
             android:textColor="@color/txtgray"
             app:layout_constraintStart_toStartOf="@+id/imgProfile"
-            app:layout_constraintTop_toBottomOf="@+id/txtSitetypetitle" />
+            app:layout_constraintTop_toBottomOf="@+id/txtEstimationTitle" />
 
 
         <com.tcc.app.customview.TextviewSemiBold
-            android:id="@+id/txtWorkingHrstitle"
+            android:id="@+id/txtTypeTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/working_hrs"
+            android:text="@string/type"
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/txtSitetypetitle" />
+            app:layout_constraintTop_toTopOf="@id/txtEstimationTitle" />
 
         <com.tcc.app.customview.TextviewReguler
-            android:id="@+id/txtHRS"
+            android:id="@+id/txtType"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/_2sdp"
-            android:text="5 Hrs"
+            android:text="New"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/txtSityType" />
+            app:layout_constraintTop_toTopOf="@id/txtEstimationNo" />
 
         <View
             android:id="@+id/view1"
@@ -110,60 +110,7 @@
             android:scaleY="0.5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txtHRS" />
-
-        <com.tcc.app.customview.TextviewSemiBold
-            android:id="@+id/txtWorkingDaytitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_4sdp"
-            android:text="@string/workkinng_day"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="@+id/imgProfile"
-            app:layout_constraintTop_toBottomOf="@+id/view1" />
-
-
-        <com.tcc.app.customview.TextviewReguler
-            android:id="@+id/txtDay"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_2sdp"
-            android:text="4 Days"
-            android:textColor="@color/txtgray"
-            app:layout_constraintStart_toStartOf="@+id/imgProfile"
-            app:layout_constraintTop_toBottomOf="@+id/txtWorkingDaytitle" />
-
-
-        <com.tcc.app.customview.TextviewSemiBold
-            android:id="@+id/txtProposedDatetitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/proposed_date"
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/txtWorkingDaytitle" />
-
-        <com.tcc.app.customview.TextviewReguler
-            android:id="@+id/txtProposedDate"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_2sdp"
-            android:text="05/02/2021"
-            android:textColor="@color/txtgray"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtProposedDatetitle" />
-
-
-        <View
-            android:id="@+id/view2"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_1sdp"
-            android:layout_marginTop="@dimen/_4sdp"
-            android:background="@color/light_grey"
-            android:scaleY="0.5"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txtProposedDate" />
+            app:layout_constraintTop_toBottomOf="@id/txtType" />
 
 
         <com.tcc.app.customview.TextviewSemiBold
@@ -174,7 +121,7 @@
             android:text="@string/start_date"
             android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="@+id/imgProfile"
-            app:layout_constraintTop_toBottomOf="@+id/view2" />
+            app:layout_constraintTop_toBottomOf="@+id/view1" />
 
         <com.tcc.app.customview.TextviewReguler
             android:id="@+id/txtStartDate"
@@ -207,29 +154,6 @@
             android:textColor="@color/txtgray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtEndDatetitle" />
-
-        <View
-            android:id="@+id/view3"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/_1sdp"
-            android:layout_marginTop="@dimen/_4sdp"
-            android:background="@color/light_grey"
-            android:scaleY="0.5"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txtEndDate" />
-
-        <com.tcc.app.customview.TextviewReguler
-            android:id="@+id/txtAddress"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:drawableStart="@drawable/ic_location"
-            android:drawablePadding="@dimen/_4sdp"
-            android:text="508, Sontorini squre, jodhpur, Ahmedabad, 380015"
-            android:textColor="@color/txtgray"
-            app:layout_constraintStart_toStartOf="@+id/imgProfile"
-            app:layout_constraintTop_toBottomOf="@+id/view3" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
