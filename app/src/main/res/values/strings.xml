@@ -181,4 +181,7 @@
     <string name="nav_quotations">Quotations</string>
     <string name="nav_site">Sites</string>
     <string name="rejecte">Reject</string>
+    <string name="halfday_count">HalfDay Count</string>
+    <string name="absent_count">Absent count</string>
+    <string name="present_count">Present Count</string>
 </resources>
