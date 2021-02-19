@@ -6,8 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tcc.app.R
+import com.tcc.app.extention.getRandomMaterialColor
+import com.tcc.app.extention.visible
 import com.tcc.app.modal.TeamDefinitionDataItem
 import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.row_team_definition_list.*
 
 
 class TeamDefinitionListAdapter(
@@ -49,23 +52,17 @@ class TeamDefinitionListAdapter(
             listener: TeamDefinitionListAdapter.OnItemSelected
         ) {
 
-//            txtSiteName.text = data.siteName
-//            textName.text = data.name
-//            txtSityType.text = data.siteType
-//            txtHRS.text = data.workingHours
-//            txtDay.text = data.workingDays
-//            txtProposedDate.text = data.proposedDate
-//            txtStartDate.text = data.startDate
-//            txtEndDate.text = data.endDate
-//            if (!data.address2?.isEmpty()!!)
-//                txtAddress.text = data.address + "," + data.address2
-//            else
-//                txtAddress.text = data.address
-//            imgProfile.setImageResource(R.drawable.bg_circle)
-//            imgProfile.setColorFilter(getRandomMaterialColor("400", context))
-//            txtIcon.text = data.siteName.toString().substring(0, 1)
-//            txtIcon.visible()
-//            itemView.setOnClickListener { listener.onItemSelect(adapterPosition, data) }
+            txtCompanyName.text = data.siteUserFrindlyName
+            textName.text = data.employeeName
+
+            txtStartDate.text = data.startDate
+            txtEndDate.text = data.endDate
+
+            imgProfile.setImageResource(R.drawable.bg_circle)
+            imgProfile.setColorFilter(getRandomMaterialColor("400", context))
+            txtIcon.text = data.siteUserFrindlyName.toString().substring(0, 1)
+            txtIcon.visible()
+            itemView.setOnClickListener { listener.onItemSelect(adapterPosition, data) }
         }
 
 
