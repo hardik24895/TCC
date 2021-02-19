@@ -22,6 +22,7 @@ import com.tcc.app.utils.TimeStamp.formatDateFromString
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_add_team_definition.*
+import kotlinx.android.synthetic.main.row_dynamic_user_team_definition.view.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 import org.json.JSONArray
 import org.json.JSONException
@@ -135,6 +136,9 @@ class AddTeamDefinitionActivity : BaseActivity() {
         btnAddUser.setOnClickListener { onAddField() }
         btnSubmit.setOnClickListener { AddTeamDefinitionList() }
 
+
+
+
         edStartTime.setOnClickListener {
             SnapTimePickerDialog.Builder().apply {
                 setTitle(R.string.start_time)
@@ -169,7 +173,7 @@ class AddTeamDefinitionActivity : BaseActivity() {
     }
 
     private fun AddTeamDefinitionList() {
-        showProgressbar()
+
         var result = ""
 
         try {
@@ -182,7 +186,7 @@ class AddTeamDefinitionActivity : BaseActivity() {
                 for (item in 0 until linAddTeamDefinition.childCount) {
                     jsonObj.put(
                         "EmployeeID",
-                        userTypeListArray.get(linAddTeamDefinition.getChildAt(item).spUserTypeChild.selectedItemPosition).userID.toString()
+                        userTypeListArray.get(linAddTeamDefinition.spUserTypeChild.selectedItemPosition).userID.toString()
                     )
                     jsonArray.put(jsonObj)
                 }
@@ -224,11 +228,9 @@ class AddTeamDefinitionActivity : BaseActivity() {
                     } else {
                         showAlert(response.message.toString())
                     }
-
                 }
 
                 override fun onFailed(code: Int, message: String) {
-                    hideProgressbar()
                     showAlert(message)
                 }
 
@@ -386,6 +388,7 @@ class AddTeamDefinitionActivity : BaseActivity() {
             ) {
                 if (position != -1 && userTypeListArray.size > position) {
                     userId = userTypeListArray.get(position).userID.toString()
+
                 }
 
             }

@@ -783,6 +783,9 @@ class AddQuotationActivity : BaseActivity() {
                 }
             }
 
+
+
+
             result = Networking.setParentJsonData(Constant.METHOD_ADD_QUOTATIOON, jsonBody)
 
         } catch (e: JSONException) {
@@ -796,15 +799,11 @@ class AddQuotationActivity : BaseActivity() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeWith(object : CallbackObserver<CommonAddModal>() {
                 override fun onSuccess(response: CommonAddModal) {
-
+                    hideProgressbar()
                     if (response.error == 200) {
                         root.showSnackBar(response.message.toString())
                         finish()
-                    } else {
-                        showAlert(response.message.toString())
                     }
-
-                    hideProgressbar()
                 }
 
                 override fun onFailed(code: Int, message: String) {

@@ -34,8 +34,7 @@ class AttendanceAdapter(
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         val data = list[position]
-
-      //  holder.txtPresent.isSelected = true
+        holder.txtPresent.isSelected = true
         holder.bindData(mContext, data, listener)
     }
 
@@ -46,7 +45,6 @@ class AttendanceAdapter(
     class ItemHolder(override val containerView: View) :
         RecyclerView.ViewHolder(containerView),
         LayoutContainer {
-
 
         fun bindData(
             context: Context,

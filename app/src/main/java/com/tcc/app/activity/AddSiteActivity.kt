@@ -274,10 +274,7 @@ class AddSiteActivity : BaseActivity() {
             jsonBody.put("UserID", session.user.data?.userID)
             jsonBody.put("Name", edtCompanyName.getValue())
             jsonBody.put("VisitorID", intent.getStringExtra(Constant.VISITOR_ID))
-            if (intent.hasExtra(Constant.CUSTOMER_ID))
-                jsonBody.put("CustomerID", intent.getStringExtra(Constant.CUSTOMER_ID))
-            else
-                jsonBody.put("CustomerID", "0")
+            jsonBody.put("CustomerID", intent.getStringExtra(Constant.CUSTOMER_ID))
             jsonBody.put("Address", edtAddress.getValue())
             jsonBody.put("SiteName", edtSiteName.getValue())
             jsonBody.put("StateID", stateID)
@@ -310,7 +307,7 @@ class AddSiteActivity : BaseActivity() {
             .subscribeWith(object : CallbackObserver<SiteListModal>() {
                 override fun onSuccess(response: SiteListModal) {
                     val data = response.data
-
+                    hideProgressbar()
                     if (response.error == 200) {
                         root.showSnackBar(response.message.toString())
                         if (flag) {
@@ -322,7 +319,6 @@ class AddSiteActivity : BaseActivity() {
                     } else {
                         showAlert(response.message.toString())
                     }
-                    hideProgressbar()
                 }
 
                 override fun onFailed(code: Int, message: String) {
