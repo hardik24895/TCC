@@ -1,19 +1,21 @@
-package com.tcc.app.activity
+package com.tcc.app.fragment
 
-import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.tcc.app.R
-import com.tcc.app.adapter.TeamDefinitionListAdapter
-import com.tcc.app.extention.goToActivity
+import com.tcc.app.adapter.LeaderReminderListAdapter
 import com.tcc.app.extention.invisible
+import com.tcc.app.extention.setHomeScreenTitle
 import com.tcc.app.extention.showAlert
 import com.tcc.app.extention.visible
 import com.tcc.app.interfaces.LoadMoreListener
-import com.tcc.app.modal.QuotationItem
-import com.tcc.app.modal.TeamDefinitionDataItem
-import com.tcc.app.modal.TeamDefinitionListModel
+import com.tcc.app.modal.CustomerDataItem
+import com.tcc.app.modal.LeadItem
+import com.tcc.app.modal.LeadReminderDataItem
+import com.tcc.app.modal.LeadReminderListModal
 import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
@@ -21,61 +23,56 @@ import com.tcc.app.utils.Constant
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.reclerview_swipelayout.*
-import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 import org.json.JSONException
 import org.json.JSONObject
 
 
-class TeamDefinitionListActivity : BaseActivity(), TeamDefinitionListAdapter.OnItemSelected {
+class LeadReminderFragment() : BaseFragment() {
 
+    var customerId: Int? = -1
+    var visitorId: Int? = -1
 
-    private var adapter: TeamDefinitionListAdapter? = null
-    private val list: MutableList<TeamDefinitionDataItem> = mutableListOf()
+    constructor(customerData: CustomerDataItem?) : this() {
+        customerId = customerData?.customerID?.toInt()
+        visitorId = customerData?.visitorID?.toInt()
+    }
+
+    var adapter: LeaderReminderListAdapter? = null
+    private val list: MutableList<LeadReminderDataItem> = mutableListOf()
     var page: Int = 1
     var hasNextPage: Boolean = true
-    var quotationItem: QuotationItem? = null
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_team_definition_list)
+    var leadItem: LeadItem? = null
 
-        txtTitle.setText(getString(R.string.team_definitions))
 
-        if (intent.hasExtra(Constant.DATA)) {
-            quotationItem = intent.getSerializableExtra(Constant.DATA) as QuotationItem
-
+    companion object {
+        fun getInstance(bundle: Bundle): LeadReminderFragment {
+            val fragment = LeadReminderFragment()
+            fragment.arguments = bundle
+            return fragment
         }
+    }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val root = inflater.inflate(R.layout.reclerview_swipelayout, container, false)
+        return root
+    }
 
-        imgAdd.visible()
-        imgBack.setOnClickListener {
-            finish()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        getBundleData()
+        if (leadItem == null && customerId == -1 && visitorId == -1) {
+            setHomeScreenTitle(requireActivity(), getString(R.string.nav_site))
         }
-
-        imgAdd.setOnClickListener {
-            goToActivity<AddTeamDefinitionActivity>()
-            val i = Intent(this@TeamDefinitionListActivity, AddTeamDefinitionActivity::class.java)
-            i.putExtra(Constant.DATA, quotationItem)
-            startActivity(i)
-            Animatoo.animateCard(this)
-        }
-
-
-        page = 1
-        list.clear()
-        hasNextPage = true
-        swipeRefreshLayout.isRefreshing = true
-        setupRecyclerView()
-        recyclerView.isLoading = true
-        getTeamDefinition(page)
-
-
-
 
         recyclerView.setLoadMoreListener(object : LoadMoreListener {
             override fun onLoadMore() {
                 if (hasNextPage && !recyclerView.isLoading) {
                     progressbar.visible()
-                    getTeamDefinition(page)
+                    getVisitorReminderList(page)
                 }
             }
         })
@@ -86,39 +83,38 @@ class TeamDefinitionListActivity : BaseActivity(), TeamDefinitionListAdapter.OnI
             hasNextPage = true
             recyclerView.isLoading = true
             adapter?.notifyDataSetChanged()
-            getTeamDefinition(page)
+            getVisitorReminderList(page)
         }
-
-
     }
 
 
+    private fun getBundleData() {
+        val bundle = arguments
+        if (bundle != null) {
+            leadItem = bundle.getSerializable(Constant.DATA) as LeadItem
+            visitorId = leadItem?.visitorID?.toInt()
+
+        }
+    }
+
     fun setupRecyclerView() {
-        val layoutManager = LinearLayoutManager(this@TeamDefinitionListActivity)
+        val layoutManager = LinearLayoutManager(requireContext())
         recyclerView.layoutManager = layoutManager
-        adapter = TeamDefinitionListAdapter(this@TeamDefinitionListActivity, list, this)
+        adapter = LeaderReminderListAdapter(requireContext(), list)
         recyclerView.adapter = adapter
 
     }
 
 
-    override fun onItemSelect(position: Int, data: TeamDefinitionDataItem) {
-
-    }
-
-
-    fun getTeamDefinition(page: Int) {
+    fun getVisitorReminderList(page: Int) {
         var result = ""
         try {
             val jsonBody = JSONObject()
             jsonBody.put("PageSize", Constant.PAGE_SIZE)
             jsonBody.put("CurrentPage", page)
-            jsonBody.put("SitesID", quotationItem?.sitesID)
-            jsonBody.put("QuotationID", quotationItem?.quotationID)
-            jsonBody.put("CustomerID", quotationItem?.customerID)
-
+            jsonBody.put("VisitorID", visitorId.toString())
             result = Networking.setParentJsonData(
-                Constant.METHOD_TEAM_DEFINITION_LIST,
+                Constant.METHOD_GET_LEAD_REMINDER,
                 jsonBody
             )
 
@@ -128,13 +124,13 @@ class TeamDefinitionListActivity : BaseActivity(), TeamDefinitionListAdapter.OnI
 
 
         Networking
-            .with(this@TeamDefinitionListActivity)
+            .with(requireContext())
             .getServices()
-            .getTeamDefinationList(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
+            .getLeadReminder(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeWith(object : CallbackObserver<TeamDefinitionListModel>() {
-                override fun onSuccess(response: TeamDefinitionListModel) {
+            .subscribeWith(object : CallbackObserver<LeadReminderListModal>() {
+                override fun onSuccess(response: LeadReminderListModal) {
                     if (list.size > 0) {
                         progressbar.invisible()
                     }
@@ -175,5 +171,15 @@ class TeamDefinitionListActivity : BaseActivity(), TeamDefinitionListAdapter.OnI
         }
     }
 
+    override fun onResume() {
+        page = 1
+        list.clear()
+        hasNextPage = true
+        swipeRefreshLayout.isRefreshing = true
+        setupRecyclerView()
+        recyclerView.isLoading = true
+        getVisitorReminderList(page)
+        super.onResume()
+    }
 
 }

@@ -31,8 +31,6 @@
             android:singleLine="true"
             android:text="Hardik Kanzariya"
             android:textSize="@dimen/_14ssp"
-
-
             app:layout_constraintEnd_toStartOf="@+id/imageView2"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/imgProfile"

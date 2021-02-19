@@ -39,12 +39,11 @@ class HomeActivity : AppCompatActivity() {
             drawerLayout.closeDrawers()
         }
 
-
         val navController = findNavController(R.id.nav_host_fragment)
 
 
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+// Passing each menu ID as a set of Ids because each
+// menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_home,
@@ -59,12 +58,11 @@ class HomeActivity : AppCompatActivity() {
                 R.id.nav_payment,
                 R.id.nav_attendance,
                 R.id.nav_ticket,
-                R.id.nav_site,
+                R.id.nav_site
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
 
         if (session.roleData.data?.customer?.isView.equals("0")) {
             navView.getMenu().findItem(R.id.nav_customer).setVisible(false)
@@ -106,11 +104,11 @@ class HomeActivity : AppCompatActivity() {
 
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+// override fun onCreateOptionsMenu(menu: Menu): Boolean {
 //
-//        menuInflater.inflate(R.menu.home, menu)
-//        return true
-//    }
+// menuInflater.inflate(R.menu.home, menu)
+// return true
+// }
 
 
     override fun onSupportNavigateUp(): Boolean {

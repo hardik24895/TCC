@@ -60,6 +60,7 @@
         <activity android:name="com.tcc.app.activity.AddPaymentActivity" />
         <activity android:name=".activity.AddTeamDefinitionActivity" />
         <activity android:name=".activity.TeamDefinitionListActivity" />
+        <activity android:name=".activity.AddLeadReminderActivity" />
 
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"

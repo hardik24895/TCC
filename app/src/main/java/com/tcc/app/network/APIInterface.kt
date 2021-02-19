@@ -151,4 +151,7 @@ interface APIInterface {
 
     @POST("service/")
     fun AddAttendence(@Body body: RequestBody): Observable<Response<CommonAddModal>>
+
+    @POST("service/")
+    fun getLeadReminder(@Body body: RequestBody): Observable<Response<LeadReminderListModal>>
 }
