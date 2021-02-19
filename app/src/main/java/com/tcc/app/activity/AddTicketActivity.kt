@@ -2,9 +2,7 @@ package com.tcc.app.activity
 
 import android.os.Bundle
 import com.tcc.app.R
-import com.tcc.app.extention.showDateTimePicker
 import com.tcc.app.extention.visible
-import kotlinx.android.synthetic.main.activity_add_employee.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 
 class AddTicketActivity : BaseActivity() {
@@ -23,9 +21,9 @@ class AddTicketActivity : BaseActivity() {
 
 
 
-        edtJoiningDate.setOnClickListener {
+       /* edtJoiningDate.setOnClickListener {
             showDateTimePicker(this@AddTicketActivity, edtJoiningDate)
-        }
+        }*/
     }
 
 }

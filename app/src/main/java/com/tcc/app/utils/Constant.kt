@@ -172,4 +172,6 @@ object Constant {
     const val METHOD_AVAILABLE_EMPLOYEE_LIST = "getAvailableEmployee"
     const val METHOD_ADD_TEAM_DEFINITION = "addTeamDefination"
     const val METHOD_GETCUSTOMER_ATTEDANCE = "getAttendance"
+    const val METHOD_GET_LEAD_REMINDER = "getVisitorReminder"
+    const val METHOD_ADD_LEAD_REMINDER = "addVisitorReminder"
 }

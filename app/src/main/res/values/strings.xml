@@ -194,4 +194,11 @@
     <string name="start_time">Start Time</string>
     <string name="end_time">End Time</string>
     <string name="add">ADD</string>
+    <string name="message">Message</string>
+    <string name="reminder_date">Reminder Date</string>
+    <string name="reminder_time">Reminder Time</string>
+    <string name="procces_date">Process Date</string>
+    <string name="procces_time">Process Time</string>
+    <string name="reminder_date_time">Reminder Date Time</string>
+    <string name="process_date_time">Process Date Time</string>
 </resources>

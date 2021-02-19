@@ -220,5 +220,15 @@ fun isActivityForIntentAvailable(
     return list.size > 0
 }
 
+
+fun convertIntoTowDigit(value: Int): String {
+    var finalValue = value.toString()
+    if (value < 10) {
+        finalValue = "0" + value.toString()
+    }
+
+    return finalValue
+}
+
 inline val AppCompatActivity.connectivityManager: ConnectivityManager
     get() = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

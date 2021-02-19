@@ -61,7 +61,7 @@
                         android:id="@+id/total_basic_amount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="10000"
+
                         android:textColor="@color/black"
                         android:textSize="@dimen/_12sdp"
                         app:layout_constraintStart_toEndOf="@id/total_basic_amount_title"
