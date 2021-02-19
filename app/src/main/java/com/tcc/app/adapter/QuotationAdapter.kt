@@ -87,6 +87,12 @@ class QuotationAdapter(
             btnInvoice.setOnClickListener {
                 listener.onItemSelect(adapterPosition, data, "INVOICE")
             }
+            if (data.service?.equals("Deep cleaning")!! || data.service?.equals("Sanetize")!!) {
+                btnAttencence.invisible()
+            } else {
+                btnAttencence.visible()
+            }
+
             btnAttencence.setOnClickListener {
                 listener.onItemSelect(adapterPosition, data, "ATTENDANCE")
             }
