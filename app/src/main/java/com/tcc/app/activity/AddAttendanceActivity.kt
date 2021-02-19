@@ -7,12 +7,14 @@ import com.tcc.app.adapter.AttendanceAdapter
 import com.tcc.app.dialog.AttendanceBottomSheetDialog
 import com.tcc.app.dialog.LateFineBottomSheetDialog
 import com.tcc.app.dialog.OverTimeBottomSheetDialog
+import com.tcc.app.extention.invisible
 import com.tcc.app.extention.showAlert
 import com.tcc.app.extention.visible
 import com.tcc.app.modal.QuotationItem
 import com.tcc.app.utils.Constant
 import devs.mulham.horizontalcalendar.HorizontalCalendar
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener
+import kotlinx.android.synthetic.main.activity_attendance.*
 import kotlinx.android.synthetic.main.reclerview_swipelayout.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 import java.util.*
@@ -41,21 +43,18 @@ class AddAttendanceActivity : BaseActivity(), AttendanceAdapter.OnItemSelected {
 
         if (intent.hasExtra(Constant.DATA)) {
             quotationItem = intent.getSerializableExtra(Constant.DATA) as QuotationItem
+            calendarView.invisible()
+        } else {
+            calendarView.visible()
         }
     }
 
     fun horizontalCalender() {
 
-/* starts before 1 month from now */
-        /* starts before 1 month from now */
+
         val startDate: Calendar = Calendar.getInstance()
         startDate.add(Calendar.MONTH, -1)
-
-/* ends after 1 month from now */
-
-/* ends after 1 month from now */
         val endDate: Calendar = Calendar.getInstance()
-        //  endDate.add(Calendar.DATE, 1)
 
         val horizontalCalendar: HorizontalCalendar =
             HorizontalCalendar.Builder(this, R.id.calendarView)
