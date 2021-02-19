@@ -75,13 +75,7 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
             setHomeScreenTitle(requireActivity(), getString(R.string.nav_quotations))
         }
 
-        page = 1
-        list.clear()
-        hasNextPage = true
-        swipeRefreshLayout.isRefreshing = true
-        setupRecyclerView()
-        recyclerView.isLoading = true
-        getQuotationList(page, status)
+
 
         recyclerView.setLoadMoreListener(object : LoadMoreListener {
             override fun onLoadMore() {
@@ -129,6 +123,17 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
             refershList(status)
         }
 
+    }
+
+    override fun onResume() {
+        page = 1
+        list.clear()
+        hasNextPage = true
+        swipeRefreshLayout.isRefreshing = true
+        setupRecyclerView()
+        recyclerView.isLoading = true
+        getQuotationList(page, status)
+        super.onResume()
     }
 
     fun refershList(status: String) {
