@@ -21,15 +21,17 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
+
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
-        var headerview: View = navView.getHeaderView(0)
 
+        var headerview: View = navView.getHeaderView(0)
         var nav_main: ConstraintLayout = headerview.findViewById(R.id.nav_main);
         nav_main.setOnClickListener {
             addFragment(ProfileMainFragment(), R.id.nav_host_fragment)
@@ -56,21 +58,21 @@ class HomeActivity : AppCompatActivity() {
                 R.id.nav_payment,
                 R.id.nav_attendance,
                 R.id.nav_ticket,
-                R.id.nav_site
+                R.id.nav_site,
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
-        //setDataRoleWise(navView)
+        setDataRoleWise(navView)
         navView.setupWithNavController(navController)
 
-        /*if (session.roleData.data?.customer?.isView.equals("0")) {
+        if (session.roleData.data?.customer?.isView.equals("0")) {
             navView.getMenu().findItem(R.id.nav_customer).setVisible(false)
             navView.invalidate()
-        }*/
+        }
 
     }
 
-    /*private fun setDataRoleWise(navView: NavigationView) {
+    private fun setDataRoleWise(navView: NavigationView) {
         if (session.roleData.data?.customer?.isView.equals("0")) {
             navView.getMenu().findItem(R.id.nav_customer).setVisible(false)
             navView.invalidate()
@@ -107,7 +109,7 @@ class HomeActivity : AppCompatActivity() {
             navView.getMenu().findItem(R.id.nav_visitor).setVisible(false)
             navView.invalidate()
         }
-    }*/
+    }
 
 //    override fun onCreateOptionsMenu(menu: Menu): Boolean {
 //
