@@ -2,6 +2,7 @@ package com.tcc.app.activity
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.drawerlayout.widget.DrawerLayout
@@ -16,7 +17,7 @@ import com.tcc.app.extention.addFragment
 import com.tcc.app.fragment.ProfileMainFragment
 
 
-class HomeActivity : BaseActivity() {
+class HomeActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
@@ -60,54 +61,49 @@ class HomeActivity : BaseActivity() {
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
-        setDataRoleWise(navView)
+        //   setDataRoleWise(navView)
         navView.setupWithNavController(navController)
 
-        if (session.roleData.data?.customer?.isView.equals("0")) {
-            navView.getMenu().findItem(R.id.nav_customer).setVisible(false)
-            navView.invalidate()
-        }
-
     }
 
-    private fun setDataRoleWise(navView: NavigationView) {
-        if (session.roleData.data?.customer?.isView.equals("0")) {
-            navView.getMenu().findItem(R.id.nav_customer).setVisible(false)
-            navView.invalidate()
-        }
-        if (session.roleData.data?.employee?.isView.equals("0")) {
-            navView.getMenu().findItem(R.id.nav_employee).setVisible(false)
-            navView.invalidate()
-        }
-        if (session.roleData.data?.attendance?.isView.equals("0")) {
-            navView.getMenu().findItem(R.id.nav_attendance).setVisible(false)
-            navView.invalidate()
-        }
-        if (session.roleData.data?.inspection?.isView.equals("0")) {
-            navView.getMenu().findItem(R.id.nav_inspection).setVisible(false)
-            navView.invalidate()
-        }
-        if (session.roleData.data?.invoice?.isView.equals("0")) {
-            navView.getMenu().findItem(R.id.nav_invoice).setVisible(false)
-            navView.invalidate()
-        }
-        if (session.roleData.data?.payment?.isView.equals("0")) {
-            navView.getMenu().findItem(R.id.nav_payment).setVisible(false)
-            navView.invalidate()
-        }
-        if (session.roleData.data?.penlty?.isView.equals("0")) {
-            navView.getMenu().findItem(R.id.nav_penalti).setVisible(false)
-            navView.invalidate()
-        }
-        if (session.roleData.data?.sites?.isView.equals("0")) {
-            navView.getMenu().findItem(R.id.nav_site).setVisible(false)
-            navView.invalidate()
-        }
-        if (session.roleData.data?.visitor?.isView.equals("0")) {
-            navView.getMenu().findItem(R.id.nav_visitor).setVisible(false)
-            navView.invalidate()
-        }
-    }
+    /* private fun setDataRoleWise(navView: NavigationView) {
+         if (session.roleData.data?.customer?.isView.equals("0")) {
+             navView.getMenu().findItem(R.id.nav_customer).setVisible(false)
+             navView.invalidate()
+         }
+         if (session.roleData.data?.employee?.isView.equals("0")) {
+             navView.getMenu().findItem(R.id.nav_employee).setVisible(false)
+             navView.invalidate()
+         }
+         if (session.roleData.data?.attendance?.isView.equals("0")) {
+             navView.getMenu().findItem(R.id.nav_attendance).setVisible(false)
+             navView.invalidate()
+         }
+         if (session.roleData.data?.inspection?.isView.equals("0")) {
+             navView.getMenu().findItem(R.id.nav_inspection).setVisible(false)
+             navView.invalidate()
+         }
+         if (session.roleData.data?.invoice?.isView.equals("0")) {
+             navView.getMenu().findItem(R.id.nav_invoice).setVisible(false)
+             navView.invalidate()
+         }
+         if (session.roleData.data?.payment?.isView.equals("0")) {
+             navView.getMenu().findItem(R.id.nav_payment).setVisible(false)
+             navView.invalidate()
+         }
+         if (session.roleData.data?.penlty?.isView.equals("0")) {
+             navView.getMenu().findItem(R.id.nav_penalti).setVisible(false)
+             navView.invalidate()
+         }
+         if (session.roleData.data?.sites?.isView.equals("0")) {
+             navView.getMenu().findItem(R.id.nav_site).setVisible(false)
+             navView.invalidate()
+         }
+         if (session.roleData.data?.visitor?.isView.equals("0")) {
+             navView.getMenu().findItem(R.id.nav_visitor).setVisible(false)
+             navView.invalidate()
+         }
+     }*/
 
 //    override fun onCreateOptionsMenu(menu: Menu): Boolean {
 //
