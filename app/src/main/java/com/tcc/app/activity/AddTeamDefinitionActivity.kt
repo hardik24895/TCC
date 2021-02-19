@@ -21,8 +21,17 @@ import com.tcc.app.utils.Logger
 import com.tcc.app.utils.TimeStamp.formatDateFromString
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_add_payment.*
+import kotlinx.android.synthetic.main.activity_add_quotation.*
 import kotlinx.android.synthetic.main.activity_add_team_definition.*
+import kotlinx.android.synthetic.main.activity_add_team_definition.btnAddUser
+import kotlinx.android.synthetic.main.activity_add_team_definition.btnSubmit
+import kotlinx.android.synthetic.main.activity_add_team_definition.root
+import kotlinx.android.synthetic.main.activity_add_team_definition.spUserType
+import kotlinx.android.synthetic.main.activity_add_team_definition.view2
+import kotlinx.android.synthetic.main.row_dynamic_user.view.*
 import kotlinx.android.synthetic.main.row_dynamic_user_team_definition.view.*
+import kotlinx.android.synthetic.main.row_dynamic_user_team_definition.view.spUserTypeChild
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 import org.json.JSONArray
 import org.json.JSONException
@@ -136,9 +145,6 @@ class AddTeamDefinitionActivity : BaseActivity() {
         btnAddUser.setOnClickListener { onAddField() }
         btnSubmit.setOnClickListener { AddTeamDefinitionList() }
 
-
-
-
         edStartTime.setOnClickListener {
             SnapTimePickerDialog.Builder().apply {
                 setTitle(R.string.start_time)
@@ -173,7 +179,7 @@ class AddTeamDefinitionActivity : BaseActivity() {
     }
 
     private fun AddTeamDefinitionList() {
-
+        showProgressbar()
         var result = ""
 
         try {
@@ -184,13 +190,15 @@ class AddTeamDefinitionActivity : BaseActivity() {
 
             if (linAddTeamDefinition.childCount > 0) {
                 for (item in 0 until linAddTeamDefinition.childCount) {
-                    jsonObj.put(
+                    val jsonObj1 = JSONObject()
+                    jsonObj1.put(
                         "EmployeeID",
-                        userTypeListArray.get(linAddTeamDefinition.spUserTypeChild.selectedItemPosition).userID.toString()
+                        userTypeListArray.get(linAddTeamDefinition.getChildAt(item).spUserTypeChild.selectedItemPosition).userID.toString()
                     )
-                    jsonArray.put(jsonObj)
+                    jsonArray.put(jsonObj1)
                 }
             }
+
 
             val jsonBody = JSONObject()
 
@@ -228,9 +236,11 @@ class AddTeamDefinitionActivity : BaseActivity() {
                     } else {
                         showAlert(response.message.toString())
                     }
+
                 }
 
                 override fun onFailed(code: Int, message: String) {
+                    hideProgressbar()
                     showAlert(message)
                 }
 

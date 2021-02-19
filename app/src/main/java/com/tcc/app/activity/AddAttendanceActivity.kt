@@ -9,6 +9,7 @@ import com.tcc.app.dialog.LateFineBottomSheetDialog
 import com.tcc.app.dialog.OverTimeBottomSheetDialog
 import com.tcc.app.extention.showAlert
 import com.tcc.app.extention.visible
+import com.tcc.app.modal.QuotationItem
 import com.tcc.app.utils.Constant
 import devs.mulham.horizontalcalendar.HorizontalCalendar
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener
@@ -20,6 +21,7 @@ import kotlin.collections.ArrayList
 class AddAttendanceActivity : BaseActivity(), AttendanceAdapter.OnItemSelected {
 
     var adapter: AttendanceAdapter? = null
+    var quotationItem: QuotationItem? = null
     lateinit var chipArray: ArrayList<String>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +36,12 @@ class AddAttendanceActivity : BaseActivity(), AttendanceAdapter.OnItemSelected {
 
         chipArray = ArrayList()
         setChipList()
+
         horizontalCalender()
+
+        if (intent.hasExtra(Constant.DATA)) {
+            quotationItem = intent.getSerializableExtra(Constant.DATA) as QuotationItem
+        }
     }
 
     fun horizontalCalender() {

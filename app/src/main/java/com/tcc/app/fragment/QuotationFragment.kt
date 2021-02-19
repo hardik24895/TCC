@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.tcc.app.R
+import com.tcc.app.activity.AddAttendanceActivity
 import com.tcc.app.activity.AddInvoiceActivity
 import com.tcc.app.activity.TeamDefinitionListActivity
 import com.tcc.app.adapter.QuotationAdapter
@@ -74,8 +75,6 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
         if (leadItem == null && customerId == -1) {
             setHomeScreenTitle(requireActivity(), getString(R.string.nav_quotations))
         }
-
-
 
         recyclerView.setLoadMoreListener(object : LoadMoreListener {
             override fun onLoadMore() {
@@ -203,6 +202,11 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
             Animatoo.animateCard(requireContext())
 
         } else if (action.equals("ATTENDANCE")) {
+
+            val i = Intent(requireContext(), AddAttendanceActivity::class.java)
+            i.putExtra(Constant.DATA, data)
+            startActivity(i)
+            Animatoo.animateCard(requireContext())
         }
 
     }
