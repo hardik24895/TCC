@@ -139,9 +139,6 @@ class AddTeamDefinitionActivity : BaseActivity() {
         btnAddUser.setOnClickListener { onAddField() }
         btnSubmit.setOnClickListener { AddTeamDefinitionList() }
 
-
-
-
         edStartTime.setOnClickListener {
             SnapTimePickerDialog.Builder().apply {
                 setTitle(R.string.start_time)
@@ -176,7 +173,7 @@ class AddTeamDefinitionActivity : BaseActivity() {
     }
 
     private fun AddTeamDefinitionList() {
-
+        showProgressbar()
         var result = ""
 
         try {
@@ -189,7 +186,7 @@ class AddTeamDefinitionActivity : BaseActivity() {
                 for (item in 0 until linAddTeamDefinition.childCount) {
                     jsonObj.put(
                         "EmployeeID",
-                        userTypeListArray.get(linAddTeamDefinition.spUserTypeChild.selectedItemPosition).userID.toString()
+                        userTypeListArray.get(linAddTeamDefinition.getChildAt(item).spUserTypeChild.selectedItemPosition).userID.toString()
                     )
                     jsonArray.put(jsonObj)
                 }
@@ -231,9 +228,11 @@ class AddTeamDefinitionActivity : BaseActivity() {
                     } else {
                         showAlert(response.message.toString())
                     }
+
                 }
 
                 override fun onFailed(code: Int, message: String) {
+                    hideProgressbar()
                     showAlert(message)
                 }
 
