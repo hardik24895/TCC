@@ -19,7 +19,7 @@ import com.tcc.app.utils.Constant
 import com.tcc.app.utils.Logger
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_add_visitor.*
+import kotlinx.android.synthetic.main.activity_add_lead.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 import org.json.JSONException
 import org.json.JSONObject
@@ -43,7 +43,7 @@ class AddLeadActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
-        setContentView(R.layout.activity_add_visitor)
+        setContentView(R.layout.activity_add_lead)
         rbHot.isChecked = true
         getBundleData()
         imgBack.visible()
