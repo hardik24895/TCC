@@ -2,6 +2,7 @@ package com.tcc.app.activity
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.drawerlayout.widget.DrawerLayout
@@ -14,23 +15,25 @@ import com.google.android.material.navigation.NavigationView
 import com.tcc.app.R
 import com.tcc.app.extention.addFragment
 import com.tcc.app.fragment.ProfileMainFragment
+import com.tcc.app.utils.SessionManager
 
 
-class HomeActivity : BaseActivity() {
+class HomeActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
+    lateinit var session: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
-
+        session = SessionManager(this)
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
 
         var headerview: View = navView.getHeaderView(0)
-        var nav_main: ConstraintLayout = headerview.findViewById(R.id.nav_main);
+        var nav_main: ConstraintLayout = headerview?.findViewById(R.id.nav_main);
         nav_main.setOnClickListener {
             addFragment(ProfileMainFragment(), R.id.nav_host_fragment)
             drawerLayout.closeDrawers()
@@ -60,17 +63,9 @@ class HomeActivity : BaseActivity() {
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
-        setDataRoleWise(navView)
         navView.setupWithNavController(navController)
 
-        if (session.roleData.data?.customer?.isView.equals("0")) {
-            navView.getMenu().findItem(R.id.nav_customer).setVisible(false)
-            navView.invalidate()
-        }
 
-    }
-
-    private fun setDataRoleWise(navView: NavigationView) {
         if (session.roleData.data?.customer?.isView.equals("0")) {
             navView.getMenu().findItem(R.id.nav_customer).setVisible(false)
             navView.invalidate()
@@ -107,6 +102,8 @@ class HomeActivity : BaseActivity() {
             navView.getMenu().findItem(R.id.nav_visitor).setVisible(false)
             navView.invalidate()
         }
+
+
     }
 
 //    override fun onCreateOptionsMenu(menu: Menu): Boolean {
