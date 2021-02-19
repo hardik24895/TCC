@@ -17,7 +17,7 @@ import com.tcc.app.extention.showSnackBar
 import com.tcc.app.network.AutoDisposable
 import com.tcc.app.utils.BlurDialogFragment
 import com.tcc.app.utils.SessionManager
-import kotlinx.android.synthetic.main.dialog_add_visitor.*
+import kotlinx.android.synthetic.main.dialog_add_lead.*
 
 
 class AddVisitorDailog(context: Context) : BlurDialogFragment(), LifecycleOwner {
@@ -49,7 +49,7 @@ class AddVisitorDailog(context: Context) : BlurDialogFragment(), LifecycleOwner 
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         session = SessionManager(requireContext())
         autoDisposable.bindTo(this.lifecycle)
-        return inflater.inflate(R.layout.dialog_add_visitor, container, false)
+        return inflater.inflate(R.layout.dialog_add_lead, container, false)
     }
 
 

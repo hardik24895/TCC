@@ -21,7 +21,7 @@ class LeadDetailActivity : BaseActivity() {
     var leadItem: LeadItem? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_visitor_detail)
+        setContentView(R.layout.activity_lead_detail)
         leadItem = intent.getSerializableExtra(Constant.DATA) as LeadItem
         txtTitle.text = leadItem?.name
         imgBack.visible()

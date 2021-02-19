@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import com.tcc.app.R
 import com.tcc.app.modal.LeadItem
 import com.tcc.app.utils.Constant
-import kotlinx.android.synthetic.main.fragment_visitor_detail.*
+import kotlinx.android.synthetic.main.fragment_lead_detail.*
 
 
 class LeadInfofoFragment : BaseFragment() {
@@ -34,7 +34,7 @@ class LeadInfofoFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_visitor_detail, container, false)
+        val root = inflater.inflate(R.layout.fragment_lead_detail, container, false)
         return root
     }
 

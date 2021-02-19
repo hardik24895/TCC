@@ -17,7 +17,7 @@ import com.tcc.app.modal.LeadItem
 import com.tcc.app.utils.Constant
 import com.tcc.app.utils.SessionManager
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.row_visitor.*
+import kotlinx.android.synthetic.main.row_lead.*
 
 
 class LeadAdapter(
@@ -34,7 +34,7 @@ class LeadAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         return ItemHolder(
             LayoutInflater.from(mContext).inflate(
-                R.layout.row_visitor,
+                R.layout.row_lead,
                 parent, false
             )
         )
