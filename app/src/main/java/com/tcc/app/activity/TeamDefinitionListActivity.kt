@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.tcc.app.R
 import com.tcc.app.adapter.TeamDefinitionListAdapter
-import com.tcc.app.extention.goToActivity
 import com.tcc.app.extention.invisible
 import com.tcc.app.extention.showAlert
 import com.tcc.app.extention.visible
@@ -54,7 +53,6 @@ class TeamDefinitionListActivity : BaseActivity(), TeamDefinitionListAdapter.OnI
         }
 
         imgAdd.setOnClickListener {
-            goToActivity<AddTeamDefinitionActivity>()
             val i = Intent(this@TeamDefinitionListActivity, AddTeamDefinitionActivity::class.java)
             i.putExtra(Constant.DATA, quotationItem)
             startActivity(i)
