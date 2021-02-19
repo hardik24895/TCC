@@ -40,7 +40,8 @@ class LeadDetailActivity : BaseActivity() {
 
             if (viewPager.currentItem == 1) {
                 val i = Intent(this, AddSiteActivity::class.java)
-                i.putExtra(Constant.ID, leadItem?.visitorID.toString())
+                i.putExtra(Constant.VISITOR_ID, leadItem?.visitorID.toString())
+                intent.putExtra(Constant.CUSTOMER_ID, "0")
                 startActivity(i)
                 Animatoo.animateCard(this)
             }

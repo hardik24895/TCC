@@ -8,16 +8,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tcc.app.R
 import com.tcc.app.extention.getRandomMaterialColor
 import com.tcc.app.extention.visible
-import com.tcc.app.modal.SiteListItem
+import com.tcc.app.modal.CustomerAttendanceDataItem
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.row_site_list.*
+import kotlinx.android.synthetic.main.row_customer_attendance.*
 
 
-class SiteListAdapter(
+class CustomerAttendanceListAdapter(
     private val mContext: Context,
-    var list: MutableList<SiteListItem> = mutableListOf(),
-    private val listener: SiteListAdapter.OnItemSelected
-) : RecyclerView.Adapter<SiteListAdapter.ItemHolder>() {
+    var list: MutableList<CustomerAttendanceDataItem> = mutableListOf(),
+    private val listener: OnItemSelected
+) : RecyclerView.Adapter<CustomerAttendanceListAdapter.ItemHolder>() {
 
     override fun getItemCount(): Int {
         return list.size
@@ -26,7 +26,7 @@ class SiteListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         return ItemHolder(
             LayoutInflater.from(mContext).inflate(
-                R.layout.row_site_list,
+                R.layout.row_customer_attendance,
                 parent, false
             )
         )
@@ -39,36 +39,32 @@ class SiteListAdapter(
     }
 
     interface OnItemSelected {
-        fun onItemSelect(position: Int, data: SiteListItem)
+        fun onItemSelect(position: Int, data: CustomerAttendanceDataItem)
     }
 
     class ItemHolder(override val containerView: View) :
         RecyclerView.ViewHolder(containerView),
         LayoutContainer {
 
+
         fun bindData(
             context: Context,
-            data: SiteListItem,
-            listener: SiteListAdapter.OnItemSelected
+            data: CustomerAttendanceDataItem,
+            listener: OnItemSelected
         ) {
 
-            txtSiteName.text = data.siteName
-            textName.text = data.name
-            txtSityType.text = data.siteType
-            txtHRS.text = data.workingHours
-            txtDay.text = data.workingDays
-            txtProposedDate.text = data.proposedDate
-            txtStartDate.text = data.startDate
-            txtEndDate.text = data.endDate
-            if (!data.address2?.isEmpty()!!)
-                txtAddress.text = data.address + "," + data.address2
-            else
-                txtAddress.text = data.address
+            txtName.text = data.siteUserFrindlyName
+            txtDate.text = data.attendanceDate
+            txtEstimateNo.text = data.estimateNo
+            txtPresentCount.text = data.presentCount
+            txtAbsentCount.text = data.absentount
+            txtHalfDayCount.text = data.halfDayount
+            txtOverTime.text = data.overTime
             imgProfile.setImageResource(R.drawable.bg_circle)
             imgProfile.setColorFilter(getRandomMaterialColor("400", context))
-            txtIcon.text = data.siteName.toString().substring(0, 1)
+            txtIcon.text = data.siteUserFrindlyName.toString().substring(0, 1)
             txtIcon.visible()
-            btnAddQuotation.setOnClickListener { listener.onItemSelect(adapterPosition, data) }
+            //  imgDown.setOnClickListener { listener.onItemSelect(adapterPosition, data) }
         }
 
 

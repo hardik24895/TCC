@@ -3,6 +3,7 @@ package com.tcc.app.extention
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.Uri
@@ -199,6 +200,24 @@ fun callPhone(context: Context, phone: String) {
     val intent = Intent(Intent.ACTION_DIAL)
     intent.data = Uri.parse("tel:${phone}")
     context.startActivity(intent)
+}
+
+fun openPDF(url: String?, context: Context) {
+
+    val browserIntent1 = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+    context.startActivity(browserIntent1)
+
+
+}
+
+fun isActivityForIntentAvailable(
+    context: Context,
+    intent: Intent?
+): Boolean {
+    val packageManager = context.packageManager
+    val list: List<*> =
+        packageManager.queryIntentActivities(intent!!, PackageManager.MATCH_DEFAULT_ONLY)
+    return list.size > 0
 }
 
 inline val AppCompatActivity.connectivityManager: ConnectivityManager

@@ -131,6 +131,12 @@ interface APIInterface {
     fun AddPayment(@Body body: RequestBody): Observable<Response<CommonAddModal>>
 
     @POST("service/")
+    fun AddSite(@Body body: RequestBody): Observable<Response<SiteListModal>>
+
+    @POST("service/")
+    fun getCustomerAttendanceList(@Body body: RequestBody): Observable<Response<CustomerAttendanceListModal>>
+
+    @POST("service/")
     fun getTeamDefinationList(@Body body: RequestBody): Observable<Response<TeamDefinitionListModel>>
 
     @POST("service/")

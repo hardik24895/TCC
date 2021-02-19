@@ -8,8 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tcc.app.R
 import com.tcc.app.extention.getRandomMaterialColor
 import com.tcc.app.extention.invisible
+import com.tcc.app.extention.openPDF
 import com.tcc.app.extention.visible
 import com.tcc.app.modal.InvoiceDataItem
+import com.tcc.app.utils.Constant
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.row_invoice.*
 
@@ -73,6 +75,13 @@ class InvoicePaidAdapter(
             txtIcon.text = data.siteUserFrindlyName.toString().substring(0, 1)
             txtIcon.visible()
             btnPay.setOnClickListener { listener.onItemSelect(adapterPosition, data) }
+
+            imgPrint.setOnClickListener {
+                openPDF(
+                    Constant.PDF_INVOICE_URL + data.document,
+                    context
+                )
+            }
         }
 
 

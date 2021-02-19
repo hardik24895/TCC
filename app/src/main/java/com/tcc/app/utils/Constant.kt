@@ -2,6 +2,14 @@ package com.tcc.app.utils
 
 object Constant {
 
+
+    const val VISITOR_ID = "visitor_id"
+    const val CUSTOMER_ID = "customer_id"
+    const val BASE_URL = "http://societyfy.in/tcc_new/"
+    const val API_URL = "${BASE_URL}api/"
+    const val PDF_INVOICE_URL = "${BASE_URL}assets/uploads/invoice/"
+    const val PDF_QUOTATION_URL = "${BASE_URL}assets/uploads/estimation/"
+
     const val OVERTIME = "overtime"
     const val LATEFINE = "latefine"
     const val PAGE_SIZE = 10
@@ -163,4 +171,5 @@ object Constant {
     const val METHOD_TEAM_DEFINITION_LIST = "getTeamDefination"
     const val METHOD_AVAILABLE_EMPLOYEE_LIST = "getAvailableEmployee"
     const val METHOD_ADD_TEAM_DEFINITION = "addTeamDefination"
+    const val METHOD_GETCUSTOMER_ATTEDANCE = "getAttendance"
 }

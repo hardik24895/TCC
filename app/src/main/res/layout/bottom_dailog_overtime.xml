@@ -116,7 +116,7 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:paddingHorizontal="@dimen/_10sdp"
             android:paddingVertical="@dimen/_10sdp"
-            android:text="$2000"
+            android:text="\u20b9 2000"
             android:textColor="@color/black"
             android:textSize="@dimen/_14ssp" />
 
@@ -125,7 +125,7 @@
             android:layout_height="wrap_content"
             android:paddingHorizontal="@dimen/_10sdp"
             android:paddingVertical="@dimen/_10sdp"
-            android:text="$ 600 * 3:57"
+            android:text="\u20b9 600 * 3:57"
             android:textColor="@color/black"
             android:textSize="@dimen/_10ssp" />
 

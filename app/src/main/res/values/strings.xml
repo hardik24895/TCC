@@ -146,6 +146,7 @@
     <string name="select_service">Select Service</string>
     <string name="accept">Accept</string>
     <string name="invoice">Invoice</string>
+    <string name="team_defination">Team Defination</string>
     <string name="estimation_date">Estimation Date</string>
     <string name="invoice_date">Invoice Date</string>
     <string name="description">Description</string>
@@ -179,11 +180,14 @@
     <string name="nav_payment">Payments</string>
     <string name="nav_quotations">Quotations</string>
     <string name="nav_site">Sites</string>
+    <string name="rejecte">Reject</string>
+    <string name="halfday_count">HalfDay Count</string>
+    <string name="absent_count">Absent count</string>
+    <string name="present_count">Present Count</string>
     <string name="team_definitions">Team Definitions</string>
     <string name="team_definition">Team Definition</string>
     <string name="estimation_no">Estimation No</string>
     <string name="type">Type</string>
-
     <string name="new_title">New</string>
     <string name="rokadi">Rokadi</string>
     <string name="shuffle">Shuffle</string>
