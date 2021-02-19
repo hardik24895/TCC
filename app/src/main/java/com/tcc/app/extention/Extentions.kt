@@ -185,6 +185,19 @@ fun getRandomMaterialColor(typeColor: String, context: Context): Int {
     return returnColor
 }
 
+fun checkUserRight(context: Context, role: String, view: View): Boolean {
+
+    if (role.equals("1")) {
+
+        return true
+    } else {
+        view.showSnackBar(context.getString(R.string.you_dont_have_a_rights))
+        return false
+    }
+
+}
+
+
 fun sendEmail(context: Context, email: String) {
     val emailIntent = Intent(
         Intent.ACTION_SENDTO, Uri.fromParts(

@@ -10,10 +10,7 @@ import com.tcc.app.activity.AddLeadActivity
 import com.tcc.app.activity.LeadDetailActivity
 import com.tcc.app.adapter.LeadAdapter
 import com.tcc.app.dialog.AddVisitorDailog
-import com.tcc.app.extention.invisible
-import com.tcc.app.extention.setHomeScreenTitle
-import com.tcc.app.extention.showAlert
-import com.tcc.app.extention.visible
+import com.tcc.app.extention.*
 import com.tcc.app.interfaces.LoadMoreListener
 import com.tcc.app.modal.LeadItem
 import com.tcc.app.modal.LeadListModal
@@ -77,11 +74,38 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
 
     }
 
-    override fun onItemSelect(position: Int, data: LeadItem) {
-        val intent = Intent(context, LeadDetailActivity::class.java)
-        intent.putExtra(Constant.DATA, data)
-        startActivity(intent)
-        Animatoo.animateCard(context)
+    override fun onItemSelect(position: Int, data: LeadItem, action: String) {
+
+        if (action.equals("MainView")) {
+            val intent = Intent(context, LeadDetailActivity::class.java)
+            intent.putExtra(Constant.DATA, data)
+            startActivity(intent)
+            Animatoo.animateCard(context)
+        } else {
+
+            if (checkUserRight(
+                    requireContext(),
+                    session.roleData.data?.visitor?.isEdit.toString(),
+                    swipeRefreshLayout
+                )
+            ) {
+                val intent = Intent(context, AddLeadActivity::class.java)
+                intent.putExtra(Constant.DATA, data)
+                startActivity(intent)
+                Animatoo.animateCard(context)
+
+            }
+
+
+//            if (session.roleData.data?.visitor?.toString().equals("1")) {
+//                val intent = Intent(context, AddLeadActivity::class.java)
+//                intent.putExtra(Constant.DATA, data)
+//                startActivity(intent)
+//                Animatoo.animateCard(context)
+//            } else {
+//                swipeRefreshLayout.showSnackBar(getString(R.string.you_dont_have_a_rights))
+//            }
+        }
 
     }
 
@@ -93,7 +117,13 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_add -> {
-                showDialog()
+                if (checkUserRight(
+                        requireContext(),
+                        session.roleData.data?.visitor?.isEdit.toString(),
+                        swipeRefreshLayout
+                    )
+                )
+                    showDialog()
                 return true
             }
             else -> super.onOptionsItemSelected(item)

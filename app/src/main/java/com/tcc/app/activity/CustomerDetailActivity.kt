@@ -68,12 +68,15 @@ class CustomerDetailActivity : BaseActivity() {
         }
 
     }
+
     private fun setStatePageAdapter() {
         viewPageradapter = ViewPagerPagerAdapter(supportFragmentManager)
         viewPageradapter?.addFragment(CustomerInfoFragment(customerData), "Information")
         viewPageradapter?.addFragment(CustomerSiteFragment(customerData), "Sites")
         viewPageradapter?.addFragment(CustomerProcessFragment(customerData), "Process")
         viewPageradapter?.addFragment(QuotationFragment(customerData), "Quotation")
+        viewPageradapter?.addFragment(InvoiceFragment(customerData), "Invoice")
+        viewPageradapter?.addFragment(PaymentListFragment(customerData), "Payment")
         viewPageradapter?.addFragment(QuotationFragment(customerData), "Team Defination")
         viewPageradapter?.addFragment(CustomerAttendanceListFragment(customerData), "Attendace")
         view_pager.adapter = viewPageradapter
