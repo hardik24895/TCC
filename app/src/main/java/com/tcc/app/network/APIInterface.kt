@@ -151,4 +151,7 @@ interface APIInterface {
 
     @POST("service/")
     fun AddAttendence(@Body body: RequestBody): Observable<Response<CommonAddModal>>
+
+    @POST("service/")
+    fun getInvoiceAttedanceList(@Body body: RequestBody): Observable<Response<InvoiceAttendanceListModal>>
 }

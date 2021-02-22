@@ -173,4 +173,5 @@ object Constant {
     const val METHOD_ADD_TEAM_DEFINITION = "addTeamDefination"
     const val METHOD_GETCUSTOMER_ATTEDANCE = "getAttendance"
     const val METHOD_ADD_ATTEDANCE_LIST = "getaddAttendaneEmployee"
+    const val METHOD_GET_INVOICE_ATTEDANCE_LIST = "getInvoiceAttendance"
 }
