@@ -6,9 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.tcc.app.R
+import com.tcc.app.extention.getRandomMaterialColor
+import com.tcc.app.extention.invisible
 import com.tcc.app.extention.visible
 import com.tcc.app.modal.EmployeeDataItem
+import com.tcc.app.utils.Constant
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.row_employee.*
 import kotlinx.android.synthetic.main.row_invoice.imgProfile
@@ -62,33 +66,19 @@ class EmployeeAdapter(
             txtJoinDate.text = data.joiningDate
             txtCity.text = data.cityName
 
+             Glide.with(context).load(Constant.EMP_PROFILE + data.profilePic).placeholder(R.drawable.ic_profile).into(imgProfile)
 
-
-            imgProfile.setImageResource(R.drawable.bg_circle)
-            imgProfile.setColorFilter(getRandomMaterialColor("400"))
+          //  imgProfile.setImageResource(R.drawable.bg_circle)
+        //    imgProfile.setColorFilter(getRandomMaterialColor("400", context))
             txtIcon.text = data.firstName.toString().substring(0, 1)
-            txtIcon.visible()
+            txtIcon.invisible()
             itemView.setOnClickListener {
                 listener.onItemSelect(adapterPosition, data)
             }
         }
 
 
-        private fun getRandomMaterialColor(typeColor: String): Int {
-            var returnColor = Color.GRAY
-            val arrayId = itemView.context.resources.getIdentifier(
-                "mdcolor_$typeColor",
-                "array",
-                itemView.context!!.packageName
-            )
-            if (arrayId != 0) {
-                val colors = itemView.context.resources.obtainTypedArray(arrayId)
-                val index = (Math.random() * colors.length()).toInt()
-                returnColor = colors.getColor(index, Color.GRAY)
-                colors.recycle()
-            }
-            return returnColor
-        }
+
 
     }
 }

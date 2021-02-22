@@ -169,4 +169,7 @@ interface APIInterface {
 
     @POST("service/")
     fun getUserSalaryList(@Body body: RequestBody): Observable<Response<GetUserSalaryDetail>>
+
+    @POST("service/")
+    fun getTicketList(@Body body: RequestBody): Observable<Response<TicketListMdal>>
 }

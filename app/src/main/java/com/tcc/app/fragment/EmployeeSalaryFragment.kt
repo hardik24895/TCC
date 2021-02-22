@@ -1,14 +1,19 @@
 package com.tcc.app.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.tcc.app.R
+import com.tcc.app.activity.CustomerDetailActivity
+import com.tcc.app.activity.SalaryDetailActivity
 import com.tcc.app.activity.AddSalaryActivity
 import com.tcc.app.adapter.SalaryAdapter
 import com.tcc.app.dialog.AddAdavanceDailog
+import com.tcc.app.dialog.AddSalaryDailog
 import com.tcc.app.extention.goToActivity
 import com.tcc.app.extention.invisible
 import com.tcc.app.extention.showAlert
@@ -33,6 +38,7 @@ class EmployeeSalaryFragment() : BaseFragment(), SalaryAdapter.OnItemSelected {
     constructor(empData: EmployeeDataItem?) : this() {
         this.empItemData = empData
     }
+
     var empItemData: EmployeeDataItem? = null
     var adapter: SalaryAdapter? = null
     private val list: MutableList<SalaryDataItem> = mutableListOf()
@@ -93,6 +99,10 @@ class EmployeeSalaryFragment() : BaseFragment(), SalaryAdapter.OnItemSelected {
     }
 
     override fun onItemSelect(position: Int, data: SalaryDataItem) {
+        val intent = Intent(context, SalaryDetailActivity::class.java)
+        intent.putExtra(Constant.DATA, data)
+        startActivity(intent)
+        Animatoo.animateCard(context)
 
     }
 
@@ -178,6 +188,4 @@ class EmployeeSalaryFragment() : BaseFragment(), SalaryAdapter.OnItemSelected {
         dialog.arguments = bundle
         dialog.show(childFragmentManager, "YesNO")
     }
-
-
 }
