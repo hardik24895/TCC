@@ -42,6 +42,7 @@
 
 
             <com.tcc.app.customview.TextviewReguler
+                android:id="@+id/txtMonthSalary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/_4sdp"
@@ -144,49 +145,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/txtPresent" />
 
-            <View
-                android:id="@+id/view2"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/_1ssp"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:background="@color/light_grey"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/txtTotalPresent" />
-
-            <com.tcc.app.customview.TextviewSemiBold
-                android:id="@+id/txtPaidHoliday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:text="@string/paid_holiday"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_14sdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view2" />
-
-            <com.tcc.app.customview.TextviewReguler
-                android:id="@+id/txtTotalPaidHoliday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1 Paid Holiday"
-                android:textColor="@color/txtgray"
-                android:textSize="@dimen/_10sdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtPaidHoliday" />
-
-
-            <com.tcc.app.customview.TextviewReguler
-                android:id="@+id/txtPaidHolidayAmount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/_4sdp"
-                android:text="\u20b9 1000"
-                android:textColor="@color/colorGreen"
-                android:textSize="@dimen/_14sdp"
-                app:layout_constraintBottom_toBottomOf="@+id/txtTotalPaidHoliday"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/txtPaidHoliday" />
 
             <View
                 android:id="@+id/view3"
@@ -196,7 +154,7 @@
                 android:background="@color/light_grey"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/txtTotalPaidHoliday" />
+                app:layout_constraintTop_toBottomOf="@id/txtPresentAmount" />
 
             <com.tcc.app.customview.TextviewSemiBold
                 android:id="@+id/txtOverTime"
@@ -216,6 +174,7 @@
                 android:text="\u20b9 500 X 05:00"
                 android:textColor="@color/txtgray"
                 android:textSize="@dimen/_10sdp"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtOverTime" />
 

@@ -1,6 +1,7 @@
 package com.tcc.app.modal
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class SalaryListModal(
 
@@ -33,6 +34,9 @@ data class SalaryDataItem(
 
 	@field:SerializedName("Rate")
 	val rate: String? = null,
+
+	@field:SerializedName("Salary")
+	val salary: String? = null,
 
 	@field:SerializedName("FirstName")
 	val firstName: String? = null,
@@ -69,4 +73,4 @@ data class SalaryDataItem(
 
 	@field:SerializedName("Absent")
 	val absent: String? = null
-)
+): Serializable
