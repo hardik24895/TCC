@@ -6,11 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tcc.app.R
+import com.tcc.app.modal.SalaryDataItem
 import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.row_salary.*
+import kotlin.time.times
 
 class SalaryAdapter(
     private val mContext: Context,
-    var list: MutableList<String> = mutableListOf(),
+    var list: MutableList<SalaryDataItem> = mutableListOf(),
     private val listener: OnItemSelected
 ) : RecyclerView.Adapter<SalaryAdapter.ItemHolder>() {
 
@@ -34,7 +37,7 @@ class SalaryAdapter(
     }
 
     interface OnItemSelected {
-        fun onItemSelect(position: Int, data: String)
+        fun onItemSelect(position: Int, data: SalaryDataItem)
     }
 
     class ItemHolder(override val containerView: View) :
@@ -43,9 +46,16 @@ class SalaryAdapter(
 
         fun bindData(
             context: Context,
-            data: String,
+            data: SalaryDataItem,
             listener: SalaryAdapter.OnItemSelected
         ) {
+
+            val finalAmount = data.salary?.toInt()?.let { data.presentCount?.toInt()?.times(it) }
+
+            txtAmount.text = context.getString(R.string.RS) + " " + finalAmount?.toString()
+
+            txtDate.text = data.startDate
+
             itemView.setOnClickListener { listener.onItemSelect(adapterPosition, data) }
 
         }

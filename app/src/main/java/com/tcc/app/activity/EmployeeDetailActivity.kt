@@ -2,15 +2,19 @@ package com.tcc.app.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.google.android.material.tabs.TabLayout
 import com.tcc.app.R
 import com.tcc.app.adapter.ViewPagerPagerAdapter
+import com.tcc.app.dialog.AddSalaryDailog
+import com.tcc.app.dialog.DateFilterDailog
 import com.tcc.app.extention.invisible
 import com.tcc.app.extention.visible
 import com.tcc.app.fragment.*
 import com.tcc.app.modal.EmployeeDataItem
 import com.tcc.app.utils.Constant
+import com.tcc.app.utils.Logger
 import kotlinx.android.synthetic.main.activity_employee_detail.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 
@@ -43,17 +47,43 @@ class EmployeeDetailActivity : BaseActivity() {
             var intent: Intent? = null
             if (viewPager.currentItem == 0) {
                 intent = Intent(this@EmployeeDetailActivity, AddTrainingActivity::class.java)
+                intent?.putExtra(Constant.DATA, employeeData)
+                startActivity(intent)
+                Animatoo.animateCard(this@EmployeeDetailActivity)
             } else if (viewPager.currentItem == 1) {
-
                 intent = Intent(this@EmployeeDetailActivity, AddUniformActivity::class.java)
+                intent?.putExtra(Constant.DATA, employeeData)
+                startActivity(intent)
+                Animatoo.animateCard(this@EmployeeDetailActivity)
             } else if (viewPager.currentItem == 3) {
                 intent = Intent(this@EmployeeDetailActivity, AddRoomAllocationActivity::class.java)
+                intent?.putExtra(Constant.DATA, employeeData)
+                startActivity(intent)
+                Animatoo.animateCard(this@EmployeeDetailActivity)
+            } else if (viewPager.currentItem == 4) {
+                showDateFilteryDialog()
             }
-            intent?.putExtra(Constant.DATA, employeeData)
-            startActivity(intent)
-            Animatoo.animateCard(this@EmployeeDetailActivity)
+
+
         }
 
+    }
+
+    fun showDateFilteryDialog() {
+        val dialog = DateFilterDailog.newInstance(this,
+            object : DateFilterDailog.onItemClick {
+                override fun onItemCLicked(strdate: String, enddate: String) {
+
+                }
+            })
+        val bundle = Bundle()
+        bundle.putString(Constant.TITLE, getString(R.string.app_name))
+//        bundle.putString(
+//            Constant.TEXT,
+//            getString(R.string.msg_get_data_from_server)
+//        )
+        dialog.arguments = bundle
+        dialog.show(supportFragmentManager, "YesNO")
     }
 
     private fun mDeclaration() {
@@ -100,12 +130,17 @@ class EmployeeDetailActivity : BaseActivity() {
 
         tabs!!.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-                if (tab.position == 2 || tab.position == 4) {
+                if (tab.position == 2) {
                     imgAdd.invisible()
                 } else {
                     imgAdd.visible()
                 }
 
+                if (tab.position == 4) {
+                    imgAdd.setImageResource(R.drawable.ic_start_date)
+                } else {
+                    imgAdd.setImageResource(R.drawable.ic_add)
+                }
 
             }
 

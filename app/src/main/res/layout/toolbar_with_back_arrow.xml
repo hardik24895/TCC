@@ -48,6 +48,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:visibility="gone"
+            android:tint="@color/colorWhite"
             app:layout_constraintBottom_toBottomOf="@+id/txtTitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/txtTitle"
