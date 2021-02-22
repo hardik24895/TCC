@@ -11,7 +11,7 @@ import com.tcc.app.adapter.InvoicePaidAdapter
 import com.tcc.app.adapter.SalaryAdapter
 import com.tcc.app.dialog.AddAdavanceDailog
 import com.tcc.app.dialog.AddSalaryDailog
-import com.tcc.app.extention.goToActivity
+
 import com.tcc.app.extention.invisible
 import com.tcc.app.extention.showAlert
 import com.tcc.app.extention.visible
@@ -43,12 +43,15 @@ class EmployeeSalaryFragment() : BaseFragment(), SalaryAdapter.OnItemSelected {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.reclerview_swipelayout, container, false)
+        val root = inflater.inflate(R.layout.fragment_employee_salary, container, false)
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        txtAdavance.setOnClickListener { showAdavanceDialog() }
+        txtSalary.setOnClickListener { showSalaryDialog() }
 
         recyclerView.setLoadMoreListener(object : LoadMoreListener {
             override fun onLoadMore() {
@@ -99,7 +102,7 @@ class EmployeeSalaryFragment() : BaseFragment(), SalaryAdapter.OnItemSelected {
             val jsonBody = JSONObject()
             jsonBody.put("PageSize", Constant.PAGE_SIZE)
             jsonBody.put("CurrentPage", page)
-            jsonBody.put("UserID", session.user.data?.userID)
+            jsonBody.put("UserID", empItemData?.userID)
             result = Networking.setParentJsonData(
                 Constant.METHOD_GET_SLARYY,
                 jsonBody
@@ -127,7 +130,7 @@ class EmployeeSalaryFragment() : BaseFragment(), SalaryAdapter.OnItemSelected {
                         list.size.minus(response.data.size),
                         list.size
                     )
-                    hasNextPage = list.size < response.rowcount
+                    hasNextPage = list.size < response.rowcount!!
 
                     refreshData(getString(R.string.no_data_found))
                 }
@@ -156,5 +159,40 @@ class EmployeeSalaryFragment() : BaseFragment(), SalaryAdapter.OnItemSelected {
             tvInfo.visible()
             recyclerView.invisible()
         }
+    }
+
+    fun showAdavanceDialog() {
+        val dialog = AddAdavanceDailog.newInstance(requireContext(),
+            object : AddAdavanceDailog.onItemClick {
+                override fun onItemCLicked() {
+                    // goToActivity<AddVisitorActivity>()
+                }
+
+            })
+        val bundle = Bundle()
+        bundle.putString(Constant.TITLE, getString(R.string.app_name))
+//        bundle.putString(
+//            Constant.TEXT,
+//            getString(R.string.msg_get_data_from_server)
+//        )
+        dialog.arguments = bundle
+        dialog.show(childFragmentManager, "YesNO")
+    }
+
+    fun showSalaryDialog() {
+        val dialog = AddSalaryDailog.newInstance(requireContext(),
+            object : AddSalaryDailog.onItemClick {
+                override fun onItemCLicked() {
+                    // goToActivity<AddVisitorActivity>()
+                }
+            })
+        val bundle = Bundle()
+        bundle.putString(Constant.TITLE, getString(R.string.app_name))
+//        bundle.putString(
+//            Constant.TEXT,
+//            getString(R.string.msg_get_data_from_server)
+//        )
+        dialog.arguments = bundle
+        dialog.show(childFragmentManager, "YesNO")
     }
 }

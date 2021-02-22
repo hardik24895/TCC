@@ -4,54 +4,69 @@ import com.google.gson.annotations.SerializedName
 
 data class SalaryListModal(
 
-    @field:SerializedName("data")
-    val data: List<SalaryDataItem> = mutableListOf(),
+	@field:SerializedName("data")
+	val data: List<SalaryDataItem> = mutableListOf(),
 
-    @field:SerializedName("error")
-    val error: Int? = null,
+	@field:SerializedName("rowcount")
+	val rowcount: Int? = null,
 
-    @field:SerializedName("message")
-    val message: String? = null,
+	@field:SerializedName("error")
+	val error: Int? = null,
 
-    @field:SerializedName("rowcount")
-    val rowcount: Int = 0
+	@field:SerializedName("message")
+	val message: String? = null
 )
 
 data class SalaryDataItem(
 
-    @field:SerializedName("StartDate")
-    val startDate: String? = null,
+	@field:SerializedName("Status")
+	val status: String? = null,
 
-    @field:SerializedName("SalaryDate")
-    val salaryDate: String? = null,
+	@field:SerializedName("MobileNo")
+	val mobileNo: String? = null,
 
-    @field:SerializedName("MobileNo")
-    val mobileNo: String? = null,
+	@field:SerializedName("HalfDay")
+	val halfDay: String? = null,
 
-    @field:SerializedName("AbsentCount")
-    val absentCount: String? = null,
+	@field:SerializedName("rowcount")
+	val rowcount: String? = null,
 
-    @field:SerializedName("Salary")
-    val salary: String? = null,
+	@field:SerializedName("Rate")
+	val rate: String? = null,
 
-    @field:SerializedName("UserID")
-    val userID: String? = null,
+	@field:SerializedName("FirstName")
+	val firstName: String? = null,
 
-    @field:SerializedName("HalfOverTime")
-    val halfOverTime: String? = null,
+	@field:SerializedName("FullOverTime")
+	val fullOverTime: String? = null,
 
-    @field:SerializedName("FullOverTime")
-    val fullOverTime: String? = null,
+	@field:SerializedName("EndDate")
+	val endDate: String? = null,
 
-    @field:SerializedName("PresentCount")
-    val presentCount: String? = null,
+	@field:SerializedName("SalaryID")
+	val salaryID: String? = null,
 
-    @field:SerializedName("EndDate")
-    val endDate: String? = null,
+	@field:SerializedName("StartDate")
+	val startDate: String? = null,
 
-    @field:SerializedName("EmployeeName")
-    val employeeName: String? = null,
+	@field:SerializedName("Rno")
+	val rno: String? = null,
 
-    @field:SerializedName("HalfDayCount")
-    val halfDayCount: String? = null
+	@field:SerializedName("SalaryDate")
+	val salaryDate: String? = null,
+
+	@field:SerializedName("UserID")
+	val userID: String? = null,
+
+	@field:SerializedName("HalfOverTime")
+	val halfOverTime: String? = null,
+
+	@field:SerializedName("Present")
+	val present: String? = null,
+
+	@field:SerializedName("LastName")
+	val lastName: String? = null,
+
+	@field:SerializedName("Absent")
+	val absent: String? = null
 )

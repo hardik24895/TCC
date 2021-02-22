@@ -50,12 +50,9 @@ class SalaryAdapter(
             listener: SalaryAdapter.OnItemSelected
         ) {
 
-            val finalAmount = data.salary?.toInt()?.let { data.presentCount?.toInt()?.times(it) }
-
+            val finalAmount = data.rate?.toDouble()?.let { data.present?.toDouble()?.times(it) }
             txtAmount.text = context.getString(R.string.RS) + " " + finalAmount?.toString()
-
             txtDate.text = data.startDate
-
             itemView.setOnClickListener { listener.onItemSelect(adapterPosition, data) }
 
         }
