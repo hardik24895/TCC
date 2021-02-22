@@ -205,4 +205,52 @@ object TimeStamp {
 
         return ageInt + 1
     }
+
+    fun getStartDateRange(): String {
+        var begining: Date
+
+        run {
+            val calendar = getCalendarForNow()
+            calendar[Calendar.DAY_OF_MONTH] = calendar.getActualMinimum(Calendar.DAY_OF_MONTH)
+            setTimeToBeginningOfDay(calendar)
+            begining = calendar.time
+        }
+        val simpleDate = SimpleDateFormat("dd/MM/yyyy")
+        val strDt = simpleDate.format(begining)
+        return strDt
+    }
+
+    fun getEndDateRange(): String {
+        var end: Date
+        run {
+            val calendar = getCalendarForNow()
+            calendar[Calendar.DAY_OF_MONTH] = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
+            setTimeToEndofDay(calendar)
+            end = calendar.time
+        }
+        val simpleDate = SimpleDateFormat("dd/MM/yyyy")
+        val strDt = simpleDate.format(end)
+        return strDt
+    }
+
+
+    private fun getCalendarForNow(): Calendar {
+        val calendar = GregorianCalendar.getInstance()
+        calendar.time = Date()
+        return calendar
+    }
+
+    private fun setTimeToBeginningOfDay(calendar: Calendar) {
+        calendar[Calendar.HOUR_OF_DAY] = 0
+        calendar[Calendar.MINUTE] = 0
+        calendar[Calendar.SECOND] = 0
+        calendar[Calendar.MILLISECOND] = 0
+    }
+
+    private fun setTimeToEndofDay(calendar: Calendar) {
+        calendar[Calendar.HOUR_OF_DAY] = 23
+        calendar[Calendar.MINUTE] = 59
+        calendar[Calendar.SECOND] = 59
+        calendar[Calendar.MILLISECOND] = 999
+    }
 }

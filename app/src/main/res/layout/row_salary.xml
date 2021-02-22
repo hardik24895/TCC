@@ -17,7 +17,7 @@
 
 
         <com.tcc.app.customview.TextviewSemiBold
-            android:id="@+id/txtName"
+            android:id="@+id/txtDate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ellipsize="end"

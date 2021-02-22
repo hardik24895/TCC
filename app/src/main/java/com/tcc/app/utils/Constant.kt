@@ -178,4 +178,6 @@ object Constant {
     const val METHOD_ADD_EMPLOYEE_ATTENDENCE = "addAttendance"
     const val METHOD_ADD_ALL_EMPLOYEE_ATTENDENCE = "getAttendanceMenu"
     const val METHOD_ADD_EMPLOYEE_WISE_ATTENDENCE = "getEmployeeAttendance"
+    const val METHOD_GET_INVOICE_ATTEDANCE_LIST = "getInvoiceAttendance"
+    const val METHOD_GET_SLARYY = "getSalary"
 }
