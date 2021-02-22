@@ -6,12 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tcc.app.R
-import com.tcc.app.activity.SalaryDetailActivity
-import com.tcc.app.adapter.InvoicePaidAdapter
 import com.tcc.app.adapter.SalaryAdapter
 import com.tcc.app.dialog.AddAdavanceDailog
 import com.tcc.app.dialog.AddSalaryDailog
-
 import com.tcc.app.extention.invisible
 import com.tcc.app.extention.showAlert
 import com.tcc.app.extention.visible
@@ -33,6 +30,7 @@ class EmployeeSalaryFragment() : BaseFragment(), SalaryAdapter.OnItemSelected {
     constructor(empData: EmployeeDataItem?) : this() {
         this.empItemData = empData
     }
+
     var empItemData: EmployeeDataItem? = null
     var adapter: SalaryAdapter? = null
     private val list: MutableList<SalaryDataItem> = mutableListOf()
@@ -78,7 +76,6 @@ class EmployeeSalaryFragment() : BaseFragment(), SalaryAdapter.OnItemSelected {
         recyclerView.layoutManager = layoutManager
         adapter = SalaryAdapter(requireContext(), list, this)
         recyclerView.adapter = adapter
-
     }
 
     override fun onResume() {
