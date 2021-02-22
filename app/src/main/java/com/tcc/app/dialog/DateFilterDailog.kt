@@ -17,9 +17,7 @@ import com.tcc.app.network.AutoDisposable
 import com.tcc.app.utils.BlurDialogFragment
 import com.tcc.app.utils.SessionManager
 import com.tcc.app.utils.TimeStamp
-import kotlinx.android.synthetic.main.activity_add_invoice.*
 import kotlinx.android.synthetic.main.dialog_date_filter.*
-import kotlinx.android.synthetic.main.dialog_date_filter.btnSubmit
 
 
 class DateFilterDailog(context: Context) : BlurDialogFragment(), LifecycleOwner {
@@ -61,7 +59,7 @@ class DateFilterDailog(context: Context) : BlurDialogFragment(), LifecycleOwner 
         dialog?.setCancelable(false)
         dialog?.setCanceledOnTouchOutside(false)
         btnSubmit.setOnClickListener {
-            listener.onItemCLicked(TimeStamp.formatDateFromString(edtStartDate.getValue()), TimeStamp.formatDateFromString(edtEndDate.getValue()))
+            listener.onItemCLicked(edtStartDate.getValue(), edtEndDate.getValue())
             dismissAllowingStateLoss()
         }
         btn_close.setOnClickListener {

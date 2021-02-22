@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.tcc.app.R
 import com.tcc.app.activity.AddAttendanceActivity
 import com.tcc.app.adapter.AttendanceListAdapter
+import com.tcc.app.dialog.DateFilterDailog
 import com.tcc.app.extention.*
 import com.tcc.app.interfaces.LoadMoreListener
 import com.tcc.app.modal.AllEmpAttendanceDataItem
@@ -36,6 +37,9 @@ class AttendanceListFragment() : BaseFragment(), AttendanceListAdapter.OnItemSel
     var empItemData: EmployeeDataItem? = null
     var adapter: AttendanceListAdapter? = null
     var b: Boolean? = true
+    var startDate: String = getCurrentDate()
+    var endDate: String = getCurrentDate()
+
 
     lateinit var chipArray: ArrayList<String>
     override fun onCreateView(
@@ -52,6 +56,9 @@ class AttendanceListFragment() : BaseFragment(), AttendanceListAdapter.OnItemSel
 
         if (b == true)
             setHomeScreenTitle(requireActivity(), getString(R.string.nav_attendance))
+
+
+
         page = 1
         list.clear()
         hasNextPage = true
@@ -97,6 +104,11 @@ class AttendanceListFragment() : BaseFragment(), AttendanceListAdapter.OnItemSel
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.home, menu)
+        val filter = menu.findItem(R.id.action_filter)
+        filter.setVisible(true)
+
+        val add = menu.findItem(R.id.action_add)
+        add.setVisible(false)
 
         super.onCreateOptionsMenu(menu, inflater)
     }
@@ -107,9 +119,41 @@ class AttendanceListFragment() : BaseFragment(), AttendanceListAdapter.OnItemSel
                 goToActivity<AddAttendanceActivity>()
                 return true
             }
+            R.id.action_filter -> {
+                showDateFilteryDialog()
+                return true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
+
+
+    fun showDateFilteryDialog() {
+        val dialog = DateFilterDailog.newInstance(requireContext(),
+            object : DateFilterDailog.onItemClick {
+                override fun onItemCLicked(strdate: String, enddate: String) {
+                    startDate = strdate
+                    endDate = enddate
+
+                    page = 1
+                    list.clear()
+                    hasNextPage = true
+                    swipeRefreshLayout.isRefreshing = true
+                    recyclerView.isLoading = true
+                    getAttendenceList(page)
+
+                }
+            })
+        val bundle = Bundle()
+        bundle.putString(Constant.TITLE, getString(R.string.app_name))
+//        bundle.putString(
+//            Constant.TEXT,
+//            getString(R.string.msg_get_data_from_server)
+//        )
+        dialog.arguments = bundle
+        dialog.show(childFragmentManager, "YesNO")
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -123,8 +167,8 @@ class AttendanceListFragment() : BaseFragment(), AttendanceListAdapter.OnItemSel
             val jsonBody = JSONObject()
             jsonBody.put("PageSize", Constant.PAGE_SIZE)
             jsonBody.put("CurrentPage", page)
-            jsonBody.put("StartDate", formatDateFromString(getCurrentDate()))
-            jsonBody.put("EndDate", formatDateFromString(getCurrentDate()))
+            jsonBody.put("StartDate", formatDateFromString(startDate))
+            jsonBody.put("EndDate", formatDateFromString(endDate))
 
 
             result = Networking.setParentJsonData(
