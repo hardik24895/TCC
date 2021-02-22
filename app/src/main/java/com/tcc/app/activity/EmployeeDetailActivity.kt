@@ -88,7 +88,7 @@ class EmployeeDetailActivity : BaseActivity() {
         viewPageradapter = ViewPagerPagerAdapter(supportFragmentManager)
         viewPageradapter?.addFragment(EmployeeTrainingFragment(employeeData), "Training")
         viewPageradapter?.addFragment(EmployeeUniformFragment(employeeData), "Uniform")
-        viewPageradapter?.addFragment(AttendanceListFragment(false, employeeData), "Attendace")
+        viewPageradapter?.addFragment(EmployeeAttendanceListFragment(employeeData), "Attendace")
         viewPageradapter?.addFragment(
             EmployeeRoomAllocationFragment(employeeData),
             "Room Allocation"
@@ -105,7 +105,6 @@ class EmployeeDetailActivity : BaseActivity() {
                 } else {
                     imgAdd.visible()
                 }
-
 
             }
 

@@ -1,21 +1,19 @@
 package com.tcc.app.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tcc.app.R
-import com.tcc.app.adapter.PaymentListAdapter
+import com.tcc.app.activity.AddAttendanceActivity
+import com.tcc.app.adapter.EmpWiseAttendanceListAdapter
+import com.tcc.app.extention.goToActivity
 import com.tcc.app.extention.invisible
-import com.tcc.app.extention.setHomeScreenTitle
 import com.tcc.app.extention.showAlert
 import com.tcc.app.extention.visible
 import com.tcc.app.interfaces.LoadMoreListener
-import com.tcc.app.modal.CustomerDataItem
-import com.tcc.app.modal.LeadItem
-import com.tcc.app.modal.PaymentListDataItem
-import com.tcc.app.modal.PaymentListModel
+import com.tcc.app.modal.EmployeeAttendanceListModel
+import com.tcc.app.modal.EmployeeDataItem
+import com.tcc.app.modal.EmployeeWiseDataItem
 import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
@@ -27,39 +25,45 @@ import org.json.JSONException
 import org.json.JSONObject
 
 
-class PaymentListFragment() : BaseFragment(), PaymentListAdapter.OnItemSelected {
-    var customerId: Int? = -1
-    var visitorId: Int? = -1
-
-    constructor(customerData: CustomerDataItem?) : this() {
-        customerId = customerData?.customerID?.toInt()
-        visitorId = customerData?.visitorID?.toInt()
+class EmployeeAttendanceListFragment() : BaseFragment(),
+    EmpWiseAttendanceListAdapter.OnItemSelected {
+    constructor(empData: EmployeeDataItem?) : this() {
+        this.empItemData = empData
     }
 
-    var adapter: PaymentListAdapter? = null
-    private val list: MutableList<PaymentListDataItem> = mutableListOf()
+    private val list: MutableList<EmployeeWiseDataItem> = mutableListOf()
     var page: Int = 1
     var hasNextPage: Boolean = true
-    var leadItem: LeadItem? = null
 
+    var empItemData: EmployeeDataItem? = null
+    var adapter: EmpWiseAttendanceListAdapter? = null
+    var b: Boolean? = true
+
+    lateinit var chipArray: ArrayList<String>
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.reclerview_swipelayout, container, false)
+        val root = inflater.inflate(R.layout.fragment_employee_wise_list, container, false)
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (customerId == -1)
-            setHomeScreenTitle(requireActivity(), getString(R.string.nav_payment))
+        page = 1
+        list.clear()
+        hasNextPage = true
+        swipeRefreshLayout.isRefreshing = true
+        setupRecyclerView()
+        recyclerView.isLoading = true
+        getAttendenceList(page)
+
         recyclerView.setLoadMoreListener(object : LoadMoreListener {
             override fun onLoadMore() {
                 if (hasNextPage && !recyclerView.isLoading) {
                     progressbar.visible()
-                    getSiteList(++page)
+                    getAttendenceList(++page)
                 }
             }
         })
@@ -70,41 +74,59 @@ class PaymentListFragment() : BaseFragment(), PaymentListAdapter.OnItemSelected 
             hasNextPage = true
             recyclerView.isLoading = true
             adapter?.notifyDataSetChanged()
-            getSiteList(page)
+            getAttendenceList(page)
         }
+
     }
 
 
     fun setupRecyclerView() {
+
         val layoutManager = LinearLayoutManager(requireContext())
         recyclerView.layoutManager = layoutManager
-        adapter = PaymentListAdapter(requireContext(), list, this)
+        adapter = EmpWiseAttendanceListAdapter(requireContext(), list, this)
         recyclerView.adapter = adapter
 
     }
 
-    override fun onItemSelect(position: Int, data: PaymentListDataItem) {
-
-//        val i = Intent(requireContext(), AddQuotationActivity::class.java)
-//        i.putExtra(Constant.DATA, data)
-//        if (leadItem != null)
-//            i.putExtra(Constant.DATA1, leadItem)
-//        startActivity(i)
-//        Animatoo.animateCard(requireContext())
+    override fun onItemSelect(position: Int, data: EmployeeWiseDataItem) {
 
     }
 
-    fun getSiteList(page: Int) {
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.home, menu)
+
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_add -> {
+                goToActivity<AddAttendanceActivity>()
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+
+    fun getAttendenceList(page: Int) {
         var result = ""
         try {
             val jsonBody = JSONObject()
             jsonBody.put("PageSize", Constant.PAGE_SIZE)
             jsonBody.put("CurrentPage", page)
-            jsonBody.put("InvoiceID", -1)
-            jsonBody.put("CustomerID", -1)
+            jsonBody.put("UserID", empItemData?.userID)
+
 
             result = Networking.setParentJsonData(
-                Constant.METHOD_PAYMENT_LIST,
+                Constant.METHOD_ADD_EMPLOYEE_WISE_ATTENDENCE,
                 jsonBody
             )
 
@@ -112,25 +134,27 @@ class PaymentListFragment() : BaseFragment(), PaymentListAdapter.OnItemSelected 
             e.printStackTrace()
         }
 
-
         Networking
             .with(requireContext())
             .getServices()
-            .PaymetList(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
+            .getEmpListWiseAttendance(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeWith(object : CallbackObserver<PaymentListModel>() {
-                override fun onSuccess(response: PaymentListModel) {
+            .subscribeWith(object : CallbackObserver<EmployeeAttendanceListModel>() {
+                override fun onSuccess(response: EmployeeAttendanceListModel) {
                     if (list.size > 0) {
                         progressbar.invisible()
                     }
                     swipeRefreshLayout.isRefreshing = false
-                    list.addAll(response.data)
-                    adapter?.notifyItemRangeInserted(
-                        list.size.minus(response.data.size),
-                        list.size
-                    )
-                    hasNextPage = list.size < response.rowcount!!
+
+                    if (response.error == 200) {
+                        list.addAll(response.data)
+                        adapter?.notifyItemRangeInserted(
+                            list.size.minus(response.data.size),
+                            list.size
+                        )
+                        hasNextPage = list.size < response.rowcount!!
+                    }
 
                     refreshData(getString(R.string.no_data_found))
                 }
@@ -146,6 +170,7 @@ class PaymentListFragment() : BaseFragment(), PaymentListAdapter.OnItemSelected 
             }).addTo(autoDisposable)
     }
 
+
     private fun refreshData(msg: String?) {
         recyclerView.setLoadedCompleted()
         swipeRefreshLayout.isRefreshing = false
@@ -160,16 +185,4 @@ class PaymentListFragment() : BaseFragment(), PaymentListAdapter.OnItemSelected 
             recyclerView.invisible()
         }
     }
-
-    override fun onResume() {
-        page = 1
-        list.clear()
-        hasNextPage = true
-        swipeRefreshLayout.isRefreshing = true
-        setupRecyclerView()
-        recyclerView.isLoading = true
-        getSiteList(page)
-        super.onResume()
-    }
-
 }

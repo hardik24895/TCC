@@ -75,7 +75,7 @@ class TeamDefinitionListActivity : BaseActivity(), TeamDefinitionListAdapter.OnI
             override fun onLoadMore() {
                 if (hasNextPage && !recyclerView.isLoading) {
                     progressbar.visible()
-                    getTeamDefinition(page)
+                    getTeamDefinition(++page)
                 }
             }
         })

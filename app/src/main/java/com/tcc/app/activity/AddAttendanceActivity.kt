@@ -6,9 +6,6 @@ import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tcc.app.R
 import com.tcc.app.adapter.AttendanceAdapter
-import com.tcc.app.dialog.AttendanceBottomSheetDialog
-import com.tcc.app.dialog.LateFineBottomSheetDialog
-import com.tcc.app.dialog.OverTimeBottomSheetDialog
 import com.tcc.app.extention.*
 import com.tcc.app.interfaces.LoadMoreListener
 import com.tcc.app.modal.*
@@ -21,7 +18,6 @@ import devs.mulham.horizontalcalendar.HorizontalCalendar
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-
 import kotlinx.android.synthetic.main.activity_attendance.*
 import kotlinx.android.synthetic.main.reclerview_swipelayout.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
@@ -29,11 +25,12 @@ import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class AddAttendanceActivity : BaseActivity(), AttendanceAdapter.OnItemSelected {
 
-    private val list: MutableList<AttendanceListDataItem> = mutableListOf()
+    private val list: ArrayList<AttendanceListDataItem> = ArrayList()
     var page: Int = 1
     var hasNextPage: Boolean = true
     var selectedDateStr: String = getCurrentDate()
@@ -78,7 +75,7 @@ class AddAttendanceActivity : BaseActivity(), AttendanceAdapter.OnItemSelected {
             override fun onLoadMore() {
                 if (hasNextPage && !recyclerView.isLoading) {
                     progressbar.visible()
-                    getAttendenceList(page)
+                    getAttendenceList(++page)
                 }
             }
         })
@@ -125,86 +122,97 @@ class AddAttendanceActivity : BaseActivity(), AttendanceAdapter.OnItemSelected {
 
     }
 
-    override fun onItemSelect(position: Int, data: AttendanceListDataItem, action: String) {
+    override fun onItemSelect(
+        position: Int,
+        data: AttendanceListDataItem,
+        action: String,
+        attendance: String,
+        overtime: String
+    ) {
+
+        list.set(
+            position, AttendanceListDataItem(
+                status = data.status,
+                mobileNo = data.mobileNo,
+                attendance = attendance,
+                teamdefinationID = data.teamdefinationID,
+                sitesID = data.sitesID,
+                endTime = data.endTime,
+                estimateNo = data.estimateNo,
+                rowcount = data.rowcount,
+                startTime = data.startTime,
+                quotationID = data.quotationID,
+                endDate = data.endDate,
+                startDate = data.startDate,
+                type = data.type,
+                attendanceID = data.attendanceID,
+                rno = data.rno,
+                overtime = overtime,
+                userID = data.userID,
+                employeeName = data.employeeName
+            )
+        )
+
+
+    }
+
+//    fun showBottomSheetDialog() {
+//        val dialog = AttendanceBottomSheetDialog
+//            .newInstance(
+//                this,
+//                object : AttendanceBottomSheetDialog.OnItemClick {
+//                    override fun onItemClicked(message: String) {
+//                        if (Constant.OVERTIME.equals(message)) {
+//                            showOverTimeDialog()
+//                        } else if (Constant.LATEFINE.equals(message)) {
+//                            showLateFineDialog()
+//                        }
+//                    }
 //
-//        if (action.equals("PRESENT")) {
-//            AddAttendence()
-//        }
-//        if (action.equals("HALFDAY")) {
-//            AddAttendence()
-//        }
-//        if (action.equals("ABSENT")) {
-//            AddAttendence()
-//        }
-//        if (action.equals("OVERTIMEHALT")) {
-//            AddAttendence()
-//        }
-//        if (action.equals("OVERTIMEFULL")) {
-//            AddAttendence()
-//        }
-//        if (action.equals("NONE")) {
-//            AddAttendence()
-//        }
-    }
-
-    fun showBottomSheetDialog() {
-        val dialog = AttendanceBottomSheetDialog
-            .newInstance(
-                this,
-                object : AttendanceBottomSheetDialog.OnItemClick {
-                    override fun onItemClicked(message: String) {
-                        if (Constant.OVERTIME.equals(message)) {
-                            showOverTimeDialog()
-                        } else if (Constant.LATEFINE.equals(message)) {
-                            showLateFineDialog()
-                        }
-                    }
-
-
-                    override fun onError(message: String) {
-                        showAlert(message)
-                    }
-                })
-        dialog.show(supportFragmentManager, "ImagePicker")
-
-    }
-
-    fun showOverTimeDialog() {
-        val dialog = OverTimeBottomSheetDialog
-            .newInstance(
-                this,
-                object : OverTimeBottomSheetDialog.OnItemClick {
-                    override fun onItemClicked(message: String) {
-                        if (Constant.OVERTIME.equals(message)) {
-
-                        }
-                    }
-
-
-                    override fun onError(message: String) {
-                        showAlert(message)
-                    }
-                })
-        dialog.show(supportFragmentManager, "ImagePicker")
-    }
-
-    fun showLateFineDialog() {
-        val dialog = LateFineBottomSheetDialog
-            .newInstance(
-                this,
-                object : LateFineBottomSheetDialog.OnItemClick {
-                    override fun onItemClicked(message: String) {
-                        if (Constant.OVERTIME.equals(message)) {
-
-                        }
-                    }
-
-                    override fun onError(message: String) {
-                        showAlert(message)
-                    }
-                })
-        dialog.show(supportFragmentManager, "ImagePicker")
-    }
+//                    override fun onError(message: String) {
+//                        showAlert(message)
+//                    }
+//                })
+//        dialog.show(supportFragmentManager, "ImagePicker")
+//
+//    }
+//
+//    fun showOverTimeDialog() {
+//        val dialog = OverTimeBottomSheetDialog
+//            .newInstance(
+//                this,
+//                object : OverTimeBottomSheetDialog.OnItemClick {
+//                    override fun onItemClicked(message: String) {
+//                        if (Constant.OVERTIME.equals(message)) {
+//
+//                        }
+//                    }
+//
+//
+//                    override fun onError(message: String) {
+//                        showAlert(message)
+//                    }
+//                })
+//        dialog.show(supportFragmentManager, "ImagePicker")
+//    }
+//
+//    fun showLateFineDialog() {
+//        val dialog = LateFineBottomSheetDialog
+//            .newInstance(
+//                this,
+//                object : LateFineBottomSheetDialog.OnItemClick {
+//                    override fun onItemClicked(message: String) {
+//                        if (Constant.OVERTIME.equals(message)) {
+//
+//                        }
+//                    }
+//
+//                    override fun onError(message: String) {
+//                        showAlert(message)
+//                    }
+//                })
+//        dialog.show(supportFragmentManager, "ImagePicker")
+//    }
 
 
     fun getAttendenceList(page: Int) {
@@ -266,6 +274,7 @@ class AddAttendanceActivity : BaseActivity(), AttendanceAdapter.OnItemSelected {
 
 
     fun AddAttendence() {
+        showProgressbar()
         var result = ""
         try {
             val jsonBody = JSONObject()
@@ -273,16 +282,16 @@ class AddAttendanceActivity : BaseActivity(), AttendanceAdapter.OnItemSelected {
 
             for (item in list.indices) {
 
-                if (!list.get(item).SubmitAttendance?.equals("")!!) {
-                    val jsonObj = JSONObject()
-                    jsonObj.put("EmployeeID", list.get(item).userID)
-                    jsonObj.put("Attendance", list.get(item).SubmitAttendance)
-                    jsonObj.put("Overtime", list.get(item).SubmitOvertime)
+                //   if (!list.get(item).attendance?.equals("")!!) {
+                val jsonObj = JSONObject()
+                jsonObj.put("EmployeeID", list.get(item).userID)
+                jsonObj.put("Attendance", list.get(item).attendance)
+                jsonObj.put("Overtime", list.get(item).overtime)
 
-                    jsonArray.put(jsonObj)
+                jsonArray.put(jsonObj)
 
-                    Log.e("TAG", "AddAttendence: " + jsonObj.toString())
-                }
+                Log.e("TAG", "AddAttendence: " + jsonObj.toString())
+                //   }
             }
 
             jsonBody.put("AttendanceDate", formatDateFromString(selectedDateStr))
@@ -292,7 +301,7 @@ class AddAttendanceActivity : BaseActivity(), AttendanceAdapter.OnItemSelected {
             jsonBody.put("Item", jsonArray)
 
             result = Networking.setParentJsonData(
-                Constant.METHOD_ADD_ATTEDANCE_LIST,
+                Constant.METHOD_ADD_EMPLOYEE_ATTENDENCE,
                 jsonBody
             )
 
@@ -308,9 +317,10 @@ class AddAttendanceActivity : BaseActivity(), AttendanceAdapter.OnItemSelected {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeWith(object : CallbackObserver<CommonAddModal>() {
                 override fun onSuccess(response: CommonAddModal) {
-
+                    hideProgressbar()
                     if (response.error == 200) {
                         root.showSnackBar(response.message.toString())
+                        finish()
                     } else {
                         showAlert(response.message.toString())
                     }

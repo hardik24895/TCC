@@ -50,7 +50,7 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
             override fun onLoadMore() {
                 if (hasNextPage && !recyclerView.isLoading) {
                     progressbar.visible()
-                    getLeadList(page)
+                    getLeadList(++page)
                 }
             }
         })

@@ -56,7 +56,7 @@ class EmployeeFragment : BaseFragment(), EmployeeAdapter.OnItemSelected {
             override fun onLoadMore() {
                 if (hasNextPage && !recyclerView.isLoading) {
                     progressbar.visible()
-                    getEmployeeList(page)
+                    getEmployeeList(++page)
                 }
             }
         })

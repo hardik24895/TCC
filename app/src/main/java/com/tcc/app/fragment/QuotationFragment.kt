@@ -80,7 +80,7 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
             override fun onLoadMore() {
                 if (hasNextPage && !recyclerView.isLoading) {
                     progressbar.visible()
-                    getQuotationList(page, status)
+                    getQuotationList(++page, status)
                 }
             }
         })

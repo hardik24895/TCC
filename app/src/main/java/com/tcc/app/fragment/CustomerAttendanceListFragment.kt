@@ -51,7 +51,7 @@ class CustomerAttendanceListFragment() : BaseFragment(),
             override fun onLoadMore() {
                 if (hasNextPage && !recyclerView.isLoading) {
                     progressbar.visible()
-                    getAttendanceList(page)
+                    getAttendanceList(++page)
                 }
             }
         })

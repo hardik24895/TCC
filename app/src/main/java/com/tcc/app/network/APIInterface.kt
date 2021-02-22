@@ -154,4 +154,10 @@ interface APIInterface {
 
     @POST("service/")
     fun getLeadReminder(@Body body: RequestBody): Observable<Response<LeadReminderListModal>>
+
+    @POST("service/")
+    fun getAllEmpList(@Body body: RequestBody): Observable<Response<AllEmpAttendanceListModel>>
+
+    @POST("service/")
+    fun getEmpListWiseAttendance(@Body body: RequestBody): Observable<Response<EmployeeAttendanceListModel>>
 }

@@ -72,7 +72,7 @@ class LeadReminderFragment() : BaseFragment() {
             override fun onLoadMore() {
                 if (hasNextPage && !recyclerView.isLoading) {
                     progressbar.visible()
-                    getVisitorReminderList(page)
+                    getVisitorReminderList(++page)
                 }
             }
         })

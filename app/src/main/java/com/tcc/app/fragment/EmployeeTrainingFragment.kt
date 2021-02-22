@@ -56,7 +56,7 @@ class EmployeeTrainingFragment() : BaseFragment(), TrainingAdapter.OnItemSelecte
             override fun onLoadMore() {
                 if (hasNextPage && !recyclerView.isLoading) {
                     progressbar.visible()
-                    getTrainingList(page)
+                    getTrainingList(++page)
                 }
             }
         })
