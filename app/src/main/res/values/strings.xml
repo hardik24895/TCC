@@ -206,4 +206,11 @@
     <string name="reminder_date_time">Reminder Date Time</string>
     <string name="process_date_time">Process Date Time</string>
     <string name="over_time">Over Time</string>
+    <string name="salary_amount">Salary Amount</string>
+    <string name="per_day_salary">Per Day Salary</string>
+    <string name="present_day">Present Day</string>
+    <string name="absent_day">Absent Day</string>
+    <string name="halfday_overtime">Halfday Overtime</string>
+    <string name="fullday_overtime">Fullday Overtime</string>
+    <string name="pay_amount">Pay Amount</string>
 </resources>

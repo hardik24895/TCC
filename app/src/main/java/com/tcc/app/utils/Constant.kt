@@ -180,4 +180,6 @@ object Constant {
     const val METHOD_ADD_EMPLOYEE_WISE_ATTENDENCE = "getEmployeeAttendance"
     const val METHOD_GET_INVOICE_ATTEDANCE_LIST = "getInvoiceAttendance"
     const val METHOD_GET_SLARYY = "getSalary"
+    const val METHOD_ADD_SALARY = "addSalary"
+    const val METHOD_GET_SALARY_DATA = "getSalaryUserData"
 }

@@ -6,17 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tcc.app.R
-import com.tcc.app.activity.SalaryDetailActivity
-import com.tcc.app.adapter.InvoicePaidAdapter
+import com.tcc.app.activity.AddSalaryActivity
 import com.tcc.app.adapter.SalaryAdapter
 import com.tcc.app.dialog.AddAdavanceDailog
-import com.tcc.app.dialog.AddSalaryDailog
-
+import com.tcc.app.extention.goToActivity
 import com.tcc.app.extention.invisible
 import com.tcc.app.extention.showAlert
 import com.tcc.app.extention.visible
 import com.tcc.app.interfaces.LoadMoreListener
-import com.tcc.app.modal.*
+import com.tcc.app.modal.EmployeeDataItem
+import com.tcc.app.modal.SalaryDataItem
+import com.tcc.app.modal.SalaryListModal
 import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
@@ -51,7 +51,7 @@ class EmployeeSalaryFragment() : BaseFragment(), SalaryAdapter.OnItemSelected {
         super.onViewCreated(view, savedInstanceState)
 
         txtAdavance.setOnClickListener { showAdavanceDialog() }
-        txtSalary.setOnClickListener { showSalaryDialog() }
+        txtSalary.setOnClickListener { goToActivity<AddSalaryActivity>() }
 
         recyclerView.setLoadMoreListener(object : LoadMoreListener {
             override fun onLoadMore() {
@@ -179,20 +179,5 @@ class EmployeeSalaryFragment() : BaseFragment(), SalaryAdapter.OnItemSelected {
         dialog.show(childFragmentManager, "YesNO")
     }
 
-    fun showSalaryDialog() {
-        val dialog = AddSalaryDailog.newInstance(requireContext(),
-            object : AddSalaryDailog.onItemClick {
-                override fun onItemCLicked() {
-                    // goToActivity<AddVisitorActivity>()
-                }
-            })
-        val bundle = Bundle()
-        bundle.putString(Constant.TITLE, getString(R.string.app_name))
-//        bundle.putString(
-//            Constant.TEXT,
-//            getString(R.string.msg_get_data_from_server)
-//        )
-        dialog.arguments = bundle
-        dialog.show(childFragmentManager, "YesNO")
-    }
+
 }
