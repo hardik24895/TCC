@@ -62,7 +62,7 @@ class CustomerFragment : BaseFragment(), CustomerListAdapter.OnItemSelected {
             override fun onLoadMore() {
                 if (hasNextPage && !recyclerView.isLoading) {
                     progressbar.visible()
-                    getCustomerList(page)
+                    getCustomerList(++page)
                 }
             }
         })

@@ -29,6 +29,12 @@ class AddPaymentActivity : BaseActivity() {
 
         if (intent.hasExtra(Constant.DATA)) {
             invoiceDataItem = intent.getSerializableExtra(Constant.DATA) as InvoiceDataItem
+            total_basic_amount.text = invoiceDataItem?.totalAmount
+            remaining_basic_payment.text = invoiceDataItem?.remainingPayment
+
+            total_gst_amount.text =
+                "" + invoiceDataItem?.cGST?.toFloat()!! * invoiceDataItem?.sGST?.toFloat()!! * invoiceDataItem?.iGST?.toFloat()!!
+            remaining_gst_payment.text = invoiceDataItem?.remainingGSTPayment
 
         }
 

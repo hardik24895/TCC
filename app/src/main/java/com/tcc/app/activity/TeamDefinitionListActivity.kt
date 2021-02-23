@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.tcc.app.R
 import com.tcc.app.adapter.TeamDefinitionListAdapter
+import com.tcc.app.extention.goToActivity
 import com.tcc.app.extention.invisible
 import com.tcc.app.extention.showAlert
 import com.tcc.app.extention.visible
@@ -19,7 +20,6 @@ import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_notification.*
 import kotlinx.android.synthetic.main.reclerview_swipelayout.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 import org.json.JSONException
@@ -33,7 +33,6 @@ class TeamDefinitionListActivity : BaseActivity(), TeamDefinitionListAdapter.OnI
     private val list: MutableList<TeamDefinitionDataItem> = mutableListOf()
     var page: Int = 1
     var hasNextPage: Boolean = true
-
     var quotationItem: QuotationItem? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,12 +52,12 @@ class TeamDefinitionListActivity : BaseActivity(), TeamDefinitionListAdapter.OnI
         }
 
         imgAdd.setOnClickListener {
+            goToActivity<AddTeamDefinitionActivity>()
             val i = Intent(this@TeamDefinitionListActivity, AddTeamDefinitionActivity::class.java)
             i.putExtra(Constant.DATA, quotationItem)
             startActivity(i)
             Animatoo.animateCard(this)
         }
-
 
 
         page = 1
@@ -76,7 +75,7 @@ class TeamDefinitionListActivity : BaseActivity(), TeamDefinitionListAdapter.OnI
             override fun onLoadMore() {
                 if (hasNextPage && !recyclerView.isLoading) {
                     progressbar.visible()
-                    getTeamDefinition(page)
+                    getTeamDefinition(++page)
                 }
             }
         })

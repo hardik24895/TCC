@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/root"
     android:layout_height="match_parent"
     tools:context=".activity.AddInspectionActivity">
 
@@ -26,7 +27,6 @@
             android:id="@+id/constrain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
@@ -86,10 +86,9 @@
                     android:layout_margin="@dimen/_3sdp"
                     android:clickable="false"
                     android:focusable="false"
-                    android:padding="@dimen/_5sdp"
                     app:cancelButtonColor="@color/black"
                     app:cancelButtontext="CLOSE"
-                    app:dialogTitle="Sample"
+                    app:dialogTitle="@string/select_site"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -136,10 +135,9 @@
                     android:layout_margin="@dimen/_3sdp"
                     android:clickable="false"
                     android:focusable="false"
-                    android:padding="@dimen/_5sdp"
                     app:cancelButtonColor="@color/black"
                     app:cancelButtontext="CLOSE"
-                    app:dialogTitle="Sample"
+                    app:dialogTitle="@string/select_field_operator"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -187,7 +185,6 @@
                     android:layout_margin="@dimen/_3sdp"
                     android:clickable="false"
                     android:focusable="false"
-                    android:padding="@dimen/_5sdp"
                     app:cancelButtonColor="@color/black"
                     app:cancelButtontext="CLOSE"
                     app:dialogTitle="Sample"
@@ -237,7 +234,6 @@
                     android:layout_margin="@dimen/_3sdp"
                     android:clickable="false"
                     android:focusable="false"
-                    android:padding="@dimen/_5sdp"
                     app:cancelButtonColor="@color/black"
                     app:cancelButtontext="CLOSE"
                     app:dialogTitle="Sample"

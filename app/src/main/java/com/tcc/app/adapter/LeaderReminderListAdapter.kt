@@ -8,16 +8,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tcc.app.R
 import com.tcc.app.extention.getRandomMaterialColor
 import com.tcc.app.extention.visible
-import com.tcc.app.modal.AllEmpAttendanceDataItem
+import com.tcc.app.modal.LeadReminderDataItem
+import com.tcc.app.modal.SiteListItem
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.row_attendance_list.*
+import kotlinx.android.synthetic.main.row_lead_reminder_list.*
 
 
-class AttendanceListAdapter(
+class LeaderReminderListAdapter(
     private val mContext: Context,
-    var list: MutableList<AllEmpAttendanceDataItem> = mutableListOf(),
-    private val listener: AttendanceListAdapter.OnItemSelected
-) : RecyclerView.Adapter<AttendanceListAdapter.ItemHolder>() {
+    var list: MutableList<LeadReminderDataItem> = mutableListOf()
+) : RecyclerView.Adapter<LeaderReminderListAdapter.ItemHolder>() {
 
     override fun getItemCount(): Int {
         return list.size
@@ -26,7 +26,7 @@ class AttendanceListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         return ItemHolder(
             LayoutInflater.from(mContext).inflate(
-                R.layout.row_attendance_list,
+                R.layout.row_lead_reminder_list,
                 parent, false
             )
         )
@@ -35,38 +35,31 @@ class AttendanceListAdapter(
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         val data = list[position]
 
-        holder.txtPresent.isSelected = true
-        holder.bindData(mContext, data, listener)
+        holder.bindData(mContext, data)
     }
 
     interface OnItemSelected {
-        fun onItemSelect(position: Int, data: AllEmpAttendanceDataItem)
+        fun onItemSelect(position: Int, data: SiteListItem)
     }
 
     class ItemHolder(override val containerView: View) :
         RecyclerView.ViewHolder(containerView),
         LayoutContainer {
 
-
         fun bindData(
             context: Context,
-            data: AllEmpAttendanceDataItem,
-            listener: AttendanceListAdapter.OnItemSelected
+            data: LeadReminderDataItem
         ) {
 
-            txtPresent.text = data.presentCount
-            txtAbsent.text = data.absentCount
-            txtHalfDay.text = data.halfDayCount
-            txtHalfDayOt.text = data.halfOverTime
-            txtFullDayOt.text = data.fullOverTime
-            txtName.text = data.employeeName
-            txtTotal.text =
-                (data.presentCount?.toFloat()!! + data.absentCount?.toFloat()!! + data.halfDayCount?.toFloat()!! + data.halfOverTime?.toFloat()!! + data.fullOverTime?.toFloat()!!).toString()
-            txtContact.text = data.mobileNo
+            txtname.text = data.employeeName
+            txtReminderDateTime1.text = data.reminderDate
+            txtProcessDatetime2.text = data.pastDate
+            txtmsg.text = data.message
             imgProfile.setImageResource(R.drawable.bg_circle)
             imgProfile.setColorFilter(getRandomMaterialColor("400", context))
             txtIcon.text = data.employeeName.toString().substring(0, 1)
             txtIcon.visible()
+
         }
 
 

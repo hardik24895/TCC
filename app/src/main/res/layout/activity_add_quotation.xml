@@ -91,10 +91,9 @@
                         android:id="@+id/til1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/_12sdp"
                         android:hint="Estimation Date"
+                        android:layout_marginBottom="@dimen/_5sdp"
                         app:hintTextColor="@color/black"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="@+id/linlayCompany"
                         app:layout_constraintStart_toStartOf="@+id/linlayCompany"
                         app:layout_constraintTop_toBottomOf="@+id/linlayCompany">
@@ -114,6 +113,7 @@
                             android:textColor="@color/black"
                             android:textColorHint="@color/black" />
                     </com.google.android.material.textfield.TextInputLayout>
+
 
                     <!--   <com.google.android.material.textfield.TextInputLayout
                            android:id="@+id/til2"
@@ -564,6 +564,32 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til22"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_12sdp"
+                        android:hint="Days"
+                        app:hintTextColor="@color/black"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/til7">
+
+                        <EditText
+                            android:id="@+id/edtDays"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorWhite"
+                            android:clickable="true"
+                            android:fontFamily="@font/opensans_regular"
+                            android:inputType="number"
+                            android:maxLength="10"
+                            android:singleLine="true"
+                            android:text="1"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/til8"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -572,7 +598,7 @@
 
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/til7">
+                        app:layout_constraintTop_toBottomOf="@+id/til22">
 
                         <EditText
                             android:id="@+id/edRate"

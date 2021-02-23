@@ -2,19 +2,16 @@ package com.tcc.app.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.google.android.material.tabs.TabLayout
 import com.tcc.app.R
 import com.tcc.app.adapter.ViewPagerPagerAdapter
-import com.tcc.app.dialog.AddSalaryDailog
 import com.tcc.app.dialog.DateFilterDailog
 import com.tcc.app.extention.invisible
 import com.tcc.app.extention.visible
 import com.tcc.app.fragment.*
 import com.tcc.app.modal.EmployeeDataItem
 import com.tcc.app.utils.Constant
-import com.tcc.app.utils.Logger
 import kotlinx.android.synthetic.main.activity_employee_detail.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 
@@ -118,7 +115,7 @@ class EmployeeDetailActivity : BaseActivity() {
         viewPageradapter = ViewPagerPagerAdapter(supportFragmentManager)
         viewPageradapter?.addFragment(EmployeeTrainingFragment(employeeData), "Training")
         viewPageradapter?.addFragment(EmployeeUniformFragment(employeeData), "Uniform")
-        viewPageradapter?.addFragment(AttendanceListFragment(false, employeeData), "Attendace")
+        viewPageradapter?.addFragment(EmployeeAttendanceListFragment(employeeData), "Attendace")
         viewPageradapter?.addFragment(
             EmployeeRoomAllocationFragment(employeeData),
             "Room Allocation"

@@ -1,5 +1,6 @@
 package com.tcc.app.network
 
+import com.tcc.app.adapter.InspectionListModel
 import com.tcc.app.modal.*
 import io.reactivex.Observable
 import okhttp3.MultipartBody
@@ -153,10 +154,22 @@ interface APIInterface {
     fun AddAttendence(@Body body: RequestBody): Observable<Response<CommonAddModal>>
 
     @POST("service/")
+    fun getLeadReminder(@Body body: RequestBody): Observable<Response<LeadReminderListModal>>
+
+    @POST("service/")
+    fun getAllEmpList(@Body body: RequestBody): Observable<Response<AllEmpAttendanceListModel>>
+
+    @POST("service/")
+    fun getEmpListWiseAttendance(@Body body: RequestBody): Observable<Response<EmployeeAttendanceListModel>>
+
+    @POST("service/")
     fun getInvoiceAttedanceList(@Body body: RequestBody): Observable<Response<InvoiceAttendanceListModal>>
 
     @POST("service/")
     fun getSalaryList(@Body body: RequestBody): Observable<Response<SalaryListModal>>
+
+    @POST("service/")
+    fun getUserSalaryList(@Body body: RequestBody): Observable<Response<GetUserSalaryDetail>>
 
     @POST("service/")
     fun getTicketList(@Body body: RequestBody): Observable<Response<TicketListMdal>>
@@ -182,4 +195,23 @@ interface APIInterface {
 
     @POST("service/")
     fun getLeadFollowupList(@Body body: RequestBody): Observable<Response<LeadFollowUpListModal>>
+
+    @POST("service/")
+    fun getInspectionList(@Body body: RequestBody): Observable<Response<InspectionListModel>>
+
+    @POST("service/")
+    fun getUserbyTypeList(@Body body: RequestBody): Observable<Response<GetUserByType>>
+
+    @POST("service/")
+    fun AddInspection(@Body body: RequestBody): Observable<Response<CommonAddModal>>
+
+
+    @Multipart
+    @POST("service/")
+    fun AddInspectionImage(
+        @Part ImageData: MultipartBody.Part,
+        @Part("method") method: RequestBody,
+        @Part("InspectionID") FirstName: RequestBody
+    ): Observable<Response<CommonAddModal>>
+
 }

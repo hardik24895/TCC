@@ -35,10 +35,63 @@ class AttendanceAdapter(
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         val data = list[position]
 
-        holder.txtNone.isSelected = true
-        holder.txtOvertimeHalfDay.isEnabled = false
-        holder.txtOvertimeFullDay.isEnabled = false
-        setselection(holder, position, data)
+//        holder.txtNone.isSelected = true
+//        holder.txtOvertimeHalfDay.isEnabled = false
+//        holder.txtOvertimeFullDay.isEnabled = false
+        if (data.attendance.equals("1")) {
+            holder.txtPresent.isSelected = true
+            holder.txtHalfDay.isSelected = false
+            holder.txtAbsent.isSelected = false
+            holder.txtNone.isSelected = false
+            holder.txtOvertimeHalfDay.isEnabled = true
+            holder.txtOvertimeFullDay.isEnabled = true
+
+            if (data.overtime.equals("1")) {
+                holder.txtHalfDay.isSelected = false
+                holder.txtAbsent.isSelected = false
+                holder.txtOvertimeHalfDay.isSelected = false
+                holder.txtOvertimeFullDay.isSelected = true
+                holder.txtNone.isSelected = false
+            } else if (data.overtime.equals("0.5")) {
+                holder.txtHalfDay.isSelected = false
+                holder.txtAbsent.isSelected = false
+                holder.txtOvertimeHalfDay.isSelected = true
+                holder.txtOvertimeFullDay.isSelected = false
+                holder.txtNone.isSelected = false
+            }
+
+        } else if (data.attendance.equals("0.5")) {
+            holder.txtPresent.isSelected = false
+            holder.txtHalfDay.isSelected = true
+            holder.txtAbsent.isSelected = false
+            holder.txtOvertimeHalfDay.isSelected = false
+            holder.txtOvertimeFullDay.isSelected = false
+            holder.txtNone.isSelected = false
+            holder.txtOvertimeHalfDay.isEnabled = false
+            holder.txtOvertimeFullDay.isEnabled = false
+        } else if (data.attendance.equals("0")) {
+            holder.txtPresent.isSelected = false
+            holder.txtAbsent.isSelected = true
+            holder.txtHalfDay.isSelected = false
+            holder.txtOvertimeHalfDay.isSelected = false
+            holder.txtOvertimeFullDay.isSelected = false
+            holder.txtNone.isSelected = false
+            holder.txtOvertimeHalfDay.isEnabled = false
+            holder.txtOvertimeFullDay.isEnabled = false
+        }
+        if (data.attendance.equals("")) {
+            holder.txtPresent.isSelected = false
+            holder.txtHalfDay.isSelected = false
+            holder.txtAbsent.isSelected = false
+            holder.txtOvertimeHalfDay.isSelected = false
+            holder.txtOvertimeFullDay.isSelected = false
+            holder.txtOvertimeHalfDay.isEnabled = false
+            holder.txtOvertimeFullDay.isEnabled = false
+            holder.txtNone.isSelected = true
+        }
+
+
+        setselection(holder, position, list[position])
         holder.bindData(mContext, data, listener)
     }
 
@@ -49,95 +102,47 @@ class AttendanceAdapter(
     ) {
 
         holder.txtPresent.setOnClickListener {
-
-            data.SubmitAttendance.toString() == "0"
-            holder.txtPresent.isSelected = true
-            holder.txtHalfDay.isSelected = false
-            holder.txtAbsent.isSelected = false
-            holder.txtNone.isSelected = false
-            holder.txtOvertimeHalfDay.isEnabled = true
-            holder.txtOvertimeFullDay.isEnabled = true
-            listener.onItemSelect(
-                position,
-                data,
-                "PRESENT"
-            )
+            listener.onItemSelect(position, data, "PRESENT", "1", "0")
+            notifyItemChanged(position)
         }
         holder.txtAbsent.setOnClickListener {
-            data.SubmitAttendance.toString() == "0"
-            holder.txtPresent.isSelected = false
-            holder.txtAbsent.isSelected = true
-            holder.txtHalfDay.isSelected = false
-            holder.txtOvertimeHalfDay.isSelected = false
-            holder.txtOvertimeFullDay.isSelected = false
-            holder.txtNone.isSelected = false
-            holder.txtOvertimeHalfDay.isEnabled = false
-            holder.txtOvertimeFullDay.isEnabled = false
-            listener.onItemSelect(position, data, "ABSENT")
+
+            listener.onItemSelect(position, data, "ABSENT", "0", "0")
+            notifyItemChanged(position)
         }
         holder.txtHalfDay.setOnClickListener {
-            data.SubmitAttendance.toString() == "0.5"
-            holder.txtPresent.isSelected = false
-            holder.txtHalfDay.isSelected = true
-            holder.txtAbsent.isSelected = false
-            holder.txtOvertimeHalfDay.isSelected = false
-            holder.txtOvertimeFullDay.isSelected = false
-            holder.txtNone.isSelected = false
 
-            holder.txtOvertimeHalfDay.isEnabled = false
-            holder.txtOvertimeFullDay.isEnabled = false
-            listener.onItemSelect(
-                position,
-                data,
-                "HALFDAY"
-            )
+            listener.onItemSelect(position, data, "HALFDAY", "0.5", "0")
+            notifyItemChanged(position)
         }
 
 
         holder.txtOvertimeHalfDay.setOnClickListener {
-            data.SubmitOvertime.toString() == "0.5"
-            holder.txtHalfDay.isSelected = false
-            holder.txtAbsent.isSelected = false
-            holder.txtOvertimeHalfDay.isSelected = true
-            holder.txtOvertimeFullDay.isSelected = false
-            holder.txtNone.isSelected = false
-            listener.onItemSelect(
-                position,
-                data,
-                "OVERTIMEHALT"
-            )
+
+            listener.onItemSelect(position, data, "OVERTIMEHALT", "1", "0.5")
+            notifyItemChanged(position)
         }
         holder.txtOvertimeFullDay.setOnClickListener {
-            data.SubmitOvertime.toString() == "1"
-            holder.txtHalfDay.isSelected = false
-            holder.txtAbsent.isSelected = false
-            holder.txtOvertimeHalfDay.isSelected = false
-            holder.txtOvertimeFullDay.isSelected = true
-            holder.txtNone.isSelected = false
-            listener.onItemSelect(
-                position,
-                data,
-                "OVERTIMEFULL"
-            )
+
+            listener.onItemSelect(position, data, "OVERTIMEFULL", "1", "1")
+            notifyItemChanged(position)
         }
         holder.txtNone.setOnClickListener {
-            data.SubmitOvertime.toString() == "0"
-            holder.txtPresent.isSelected = false
-            holder.txtHalfDay.isSelected = false
-            holder.txtAbsent.isSelected = false
-            holder.txtOvertimeHalfDay.isSelected = false
-            holder.txtOvertimeFullDay.isSelected = false
 
-            holder.txtOvertimeHalfDay.isEnabled = false
-            holder.txtOvertimeFullDay.isEnabled = false
-            holder.txtNone.isSelected = true
-            listener.onItemSelect(position, data, "NONE")
+            listener.onItemSelect(position, data, "NONE", "-1", "0")
+            notifyItemChanged(position)
         }
 
     }
 
     interface OnItemSelected {
-        fun onItemSelect(position: Int, data: AttendanceListDataItem, action: String)
+        fun onItemSelect(
+            position: Int,
+            data: AttendanceListDataItem,
+            action: String,
+            attendance: String,
+            overtime: String
+        )
     }
 
     class ItemHolder(override val containerView: View) :

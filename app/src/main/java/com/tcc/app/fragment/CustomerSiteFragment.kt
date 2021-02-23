@@ -75,7 +75,7 @@ class CustomerSiteFragment() : BaseFragment(), SiteListAdapter.OnItemSelected {
             override fun onLoadMore() {
                 if (hasNextPage && !recyclerView.isLoading) {
                     progressbar.visible()
-                    getSiteList(page)
+                    getSiteList(++page)
                 }
             }
         })

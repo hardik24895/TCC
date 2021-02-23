@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tcc.app.R
-import com.tcc.app.adapter.PaymentListAdapter
+import com.tcc.app.adapter.LeaderReminderListAdapter
 import com.tcc.app.extention.invisible
 import com.tcc.app.extention.setHomeScreenTitle
 import com.tcc.app.extention.showAlert
@@ -14,8 +14,8 @@ import com.tcc.app.extention.visible
 import com.tcc.app.interfaces.LoadMoreListener
 import com.tcc.app.modal.CustomerDataItem
 import com.tcc.app.modal.LeadItem
-import com.tcc.app.modal.PaymentListDataItem
-import com.tcc.app.modal.PaymentListModel
+import com.tcc.app.modal.LeadReminderDataItem
+import com.tcc.app.modal.LeadReminderListModal
 import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
@@ -27,7 +27,8 @@ import org.json.JSONException
 import org.json.JSONObject
 
 
-class PaymentListFragment() : BaseFragment(), PaymentListAdapter.OnItemSelected {
+class LeadReminderFragment() : BaseFragment() {
+
     var customerId: Int? = -1
     var visitorId: Int? = -1
 
@@ -36,11 +37,20 @@ class PaymentListFragment() : BaseFragment(), PaymentListAdapter.OnItemSelected 
         visitorId = customerData?.visitorID?.toInt()
     }
 
-    var adapter: PaymentListAdapter? = null
-    private val list: MutableList<PaymentListDataItem> = mutableListOf()
+    var adapter: LeaderReminderListAdapter? = null
+    private val list: MutableList<LeadReminderDataItem> = mutableListOf()
     var page: Int = 1
     var hasNextPage: Boolean = true
     var leadItem: LeadItem? = null
+
+
+    companion object {
+        fun getInstance(bundle: Bundle): LeadReminderFragment {
+            val fragment = LeadReminderFragment()
+            fragment.arguments = bundle
+            return fragment
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,13 +63,16 @@ class PaymentListFragment() : BaseFragment(), PaymentListAdapter.OnItemSelected 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (customerId == -1)
-            setHomeScreenTitle(requireActivity(), getString(R.string.nav_payment))
+        getBundleData()
+        if (leadItem == null && customerId == -1 && visitorId == -1) {
+            setHomeScreenTitle(requireActivity(), getString(R.string.nav_site))
+        }
+
         recyclerView.setLoadMoreListener(object : LoadMoreListener {
             override fun onLoadMore() {
                 if (hasNextPage && !recyclerView.isLoading) {
                     progressbar.visible()
-                    getSiteList(++page)
+                    getVisitorReminderList(++page)
                 }
             }
         })
@@ -70,41 +83,38 @@ class PaymentListFragment() : BaseFragment(), PaymentListAdapter.OnItemSelected 
             hasNextPage = true
             recyclerView.isLoading = true
             adapter?.notifyDataSetChanged()
-            getSiteList(page)
+            getVisitorReminderList(page)
         }
     }
 
 
+    private fun getBundleData() {
+        val bundle = arguments
+        if (bundle != null) {
+            leadItem = bundle.getSerializable(Constant.DATA) as LeadItem
+            visitorId = leadItem?.visitorID?.toInt()
+
+        }
+    }
+
     fun setupRecyclerView() {
         val layoutManager = LinearLayoutManager(requireContext())
         recyclerView.layoutManager = layoutManager
-        adapter = PaymentListAdapter(requireContext(), list, this)
+        adapter = LeaderReminderListAdapter(requireContext(), list)
         recyclerView.adapter = adapter
 
     }
 
-    override fun onItemSelect(position: Int, data: PaymentListDataItem) {
 
-//        val i = Intent(requireContext(), AddQuotationActivity::class.java)
-//        i.putExtra(Constant.DATA, data)
-//        if (leadItem != null)
-//            i.putExtra(Constant.DATA1, leadItem)
-//        startActivity(i)
-//        Animatoo.animateCard(requireContext())
-
-    }
-
-    fun getSiteList(page: Int) {
+    fun getVisitorReminderList(page: Int) {
         var result = ""
         try {
             val jsonBody = JSONObject()
             jsonBody.put("PageSize", Constant.PAGE_SIZE)
             jsonBody.put("CurrentPage", page)
-            jsonBody.put("InvoiceID", -1)
-            jsonBody.put("CustomerID", -1)
-
+            jsonBody.put("VisitorID", visitorId.toString())
             result = Networking.setParentJsonData(
-                Constant.METHOD_PAYMENT_LIST,
+                Constant.METHOD_GET_LEAD_REMINDER,
                 jsonBody
             )
 
@@ -116,11 +126,11 @@ class PaymentListFragment() : BaseFragment(), PaymentListAdapter.OnItemSelected 
         Networking
             .with(requireContext())
             .getServices()
-            .PaymetList(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
+            .getLeadReminder(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeWith(object : CallbackObserver<PaymentListModel>() {
-                override fun onSuccess(response: PaymentListModel) {
+            .subscribeWith(object : CallbackObserver<LeadReminderListModal>() {
+                override fun onSuccess(response: LeadReminderListModal) {
                     if (list.size > 0) {
                         progressbar.invisible()
                     }
@@ -168,7 +178,7 @@ class PaymentListFragment() : BaseFragment(), PaymentListAdapter.OnItemSelected 
         swipeRefreshLayout.isRefreshing = true
         setupRecyclerView()
         recyclerView.isLoading = true
-        getSiteList(page)
+        getVisitorReminderList(page)
         super.onResume()
     }
 

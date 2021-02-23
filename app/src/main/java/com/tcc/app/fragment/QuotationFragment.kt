@@ -80,7 +80,7 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
             override fun onLoadMore() {
                 if (hasNextPage && !recyclerView.isLoading) {
                     progressbar.visible()
-                    getQuotationList(page, status)
+                    getQuotationList(++page, status)
                 }
             }
         })
@@ -222,7 +222,6 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
                         endDate,
                         data.quotationID!!,
                         data.customerID!!,
-                        data.visitorID!!,
                         position
                     )
                 }
@@ -369,7 +368,6 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
         endDate: String,
         QuotationId: String,
         customerId: String,
-        visitorId: String,
         position: Int
     ) {
         var result = ""
@@ -381,7 +379,6 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
             jsonBody.put("StartDate", startDate)
             jsonBody.put("EndDate", endDate)
             jsonBody.put("CustomerID", customerId)
-            jsonBody.put("VisitorID", visitorId)
 
             result = Networking.setParentJsonData(
                 Constant.METHOD_ACCEPT_REASON,

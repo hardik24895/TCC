@@ -1,16 +1,13 @@
 package com.tcc.app.adapter
 
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.tcc.app.R
-import com.tcc.app.extention.getRandomMaterialColor
 import com.tcc.app.extention.invisible
-import com.tcc.app.extention.visible
 import com.tcc.app.modal.EmployeeDataItem
 import com.tcc.app.utils.Constant
 import kotlinx.android.extensions.LayoutContainer

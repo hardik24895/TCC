@@ -1,6 +1,7 @@
 package com.tcc.app.modal
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class AttendanceListModel(
 
@@ -74,7 +75,4 @@ data class AttendanceListDataItem(
     val employeeName: String? = null,
 
 
-    val SubmitAttendance: String? = "",
-
-    val SubmitOvertime: String? = "0"
-)
+    ) : Serializable
