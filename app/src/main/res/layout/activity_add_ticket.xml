@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/root"
     tools:context=".activity.AddTicketActivity">
 
     <include
@@ -38,7 +39,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <EditText
-                    android:id="@+id/edtFirstName"
+                    android:id="@+id/edtTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/colorWhite"
@@ -60,13 +61,14 @@
                 app:layout_constraintTop_toBottomOf="@+id/til1">
 
                 <EditText
-                    android:id="@+id/edtLastName"
+                    android:id="@+id/edtDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/colorWhite"
                     android:fontFamily="@font/opensans_regular"
                     android:inputType="textCapSentences"
                     android:maxLength="300"
+                    android:maxLines="3"
                     android:singleLine="true"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black" />
@@ -85,7 +87,7 @@
 
 
                 <tech.hibk.searchablespinnerlibrary.SearchableSpinner
-                    android:id="@+id/spUser"
+                    android:id="@+id/spState"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_3sdp"
@@ -100,17 +102,17 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:nothingSelectedText="@string/select_site"
+                    app:nothingSelectedText="@string/select_state"
                     app:onlyLightTheme="true" />
 
                 <View
                     android:id="@+id/view"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/spUser"
+                    app:layout_constraintBottom_toBottomOf="@+id/spState"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/spUser" />
+                    app:layout_constraintTop_toTopOf="@+id/spState" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -127,7 +129,7 @@
 
 
                 <tech.hibk.searchablespinnerlibrary.SearchableSpinner
-                    android:id="@+id/sppriority"
+                    android:id="@+id/spCity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_3sdp"
@@ -141,17 +143,17 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:nothingSelectedText="@string/select_site"
+                    app:nothingSelectedText="@string/select_city"
                     app:onlyLightTheme="true" />
 
                 <View
-                    android:id="@+id/view1"
+                    android:id="@+id/viewCity"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/sppriority"
+                    app:layout_constraintBottom_toBottomOf="@+id/spCity"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/sppriority" />
+                    app:layout_constraintTop_toTopOf="@+id/spCity" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -174,9 +176,48 @@
                 app:layout_constraintTop_toBottomOf="@id/txtaddAdharTitle"
                 app:srcCompat="@drawable/ic_add_btn" />
 
+            <com.tcc.app.customview.TextviewBold
+                android:id="@+id/txtLeadType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:paddingTop="@dimen/_2sdp"
+                android:text="@string/priority"
+                app:layout_constraintStart_toStartOf="@+id/txtaddAdharTitle"
+                app:layout_constraintTop_toBottomOf="@+id/ivSelectImage" />
+
+            <RadioGroup
+                android:id="@+id/rg"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="@+id/txtLeadType"
+                app:layout_constraintTop_toBottomOf="@+id/txtLeadType">
+
+                <com.tcc.app.customview.RadioButtonReguler
+                    android:id="@+id/rbHigh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:text="@string/high" />
+
+                <com.tcc.app.customview.RadioButtonReguler
+                    android:id="@+id/rbMeduim"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:text="@string/medium" />
+
+                <com.tcc.app.customview.RadioButtonReguler
+                    android:id="@+id/rbLow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:text="@string/low" />
+
+
+            </RadioGroup>
+
 
             <com.tcc.app.customview.ButtonReguler
-                android:id="@+id/btnLogin"
+                android:id="@+id/btnSubmit"
                 style="@style/CustomPressButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -186,7 +227,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/til1"
                 app:layout_constraintStart_toStartOf="@+id/til1"
-                app:layout_constraintTop_toBottomOf="@id/ivSelectImage" />
+                app:layout_constraintTop_toBottomOf="@id/rg" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

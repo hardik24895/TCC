@@ -67,11 +67,11 @@
 
 
         <com.tcc.app.customview.TextviewReguler
-            android:id="@+id/txtAddress"
+            android:id="@+id/txtMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8sdp"
-            android:drawableLeft="@drawable/ic_location"
+            android:drawableLeft="@drawable/ic_note"
             android:drawablePadding="@dimen/_8sdp"
             android:text="508 Santorini Square, jodhpur cross Road, Admedabad"
             android:textColor="@color/txtgray"
@@ -79,9 +79,23 @@
             app:layout_constraintStart_toStartOf="@+id/imgProfile"
             app:layout_constraintTop_toBottomOf="@+id/imgProfile" />
 
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtReminderTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:layout_marginBottom="@dimen/_4sdp"
+            android:drawableLeft="@drawable/ic_start_date"
+            android:drawablePadding="@dimen/_8sdp"
+            android:text="Reminder Time"
+            android:textColor="@color/txtgray"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintStart_toStartOf="@+id/imgProfile"
+            app:layout_constraintTop_toBottomOf="@+id/txtMessage" />
+
 
         <com.tcc.app.customview.TextviewReguler
-            android:id="@+id/txtLeadType"
+            android:id="@+id/txtEmpName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_4sdp"
@@ -93,7 +107,7 @@
             android:textSize="@dimen/_12sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/imgProfile"
-            app:layout_constraintTop_toBottomOf="@+id/txtAddress" />
+            app:layout_constraintTop_toBottomOf="@+id/txtReminderTime" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

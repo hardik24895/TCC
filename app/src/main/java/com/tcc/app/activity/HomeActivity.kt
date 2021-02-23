@@ -1,7 +1,9 @@
 package com.tcc.app.activity
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -11,7 +13,9 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.messaging.FirebaseMessaging
 import com.tcc.app.R
 import com.tcc.app.extention.addFragment
 import com.tcc.app.fragment.ProfileMainFragment
@@ -101,6 +105,22 @@ class HomeActivity : AppCompatActivity() {
             navView.invalidate()
         }
 
+
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w("", "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+
+            // Log and toast
+           // val msg = getString(R.string.msg_token_fmt, token)
+            Log.d("token", token.toString())
+          //  Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+        })
 
     }
 

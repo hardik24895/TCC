@@ -213,4 +213,8 @@
     <string name="halfday_overtime">Halfday Overtime</string>
     <string name="fullday_overtime">Fullday Overtime</string>
     <string name="pay_amount">Pay Amount</string>
+    <string name="high">High</string>
+    <string name="medium">Medium</string>
+    <string name="low">Low</string>
+    <string name="default_notification_channel_id">tcc_v1</string>
 </resources>

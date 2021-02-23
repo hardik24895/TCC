@@ -5,10 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.tcc.app.R
 import com.tcc.app.modal.TicketDataItem
+import com.tcc.app.utils.Constant
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.row_ticket.*
+import kotlinx.android.synthetic.main.row_ticket.imgProfile
 
 class TicketAdapter(
     private val mContext: Context,
@@ -50,7 +53,7 @@ class TicketAdapter(
             data: TicketDataItem,
             listener: TicketAdapter.OnItemSelected
         ) {
-
+            Glide.with(context).load(Constant.TICKET_IMG + data.image).placeholder(R.drawable.ic_profile).into(imgProfile)
             txtTitle.text = data.title
             txtDescription.text = data.description
             txtCGST.text = data.firstName + " " + data.lastName

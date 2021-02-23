@@ -10,15 +10,16 @@ import com.tcc.app.R
 import com.tcc.app.extention.getRandomMaterialColor
 import com.tcc.app.extention.visible
 import com.tcc.app.modal.DashBoardLeadDataItem
+import com.tcc.app.modal.LeadFollowUpDataItem
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.row_home_service.*
+import kotlinx.android.synthetic.main.row_lead_follow_up.*
 
 
-class HomeServiceAdapter(
+class LeadFollowUpAdapter(
     private val mContext: Context,
-    var list: MutableList<DashBoardLeadDataItem> = mutableListOf(),
-    private val listener: HomeServiceAdapter.OnItemSelected
-) : RecyclerView.Adapter<HomeServiceAdapter.ItemHolder>() {
+    var list: MutableList<LeadFollowUpDataItem> = mutableListOf(),
+    private val listener: OnItemSelected
+) : RecyclerView.Adapter<LeadFollowUpAdapter.ItemHolder>() {
 
     override fun getItemCount(): Int {
         return list.size
@@ -27,7 +28,7 @@ class HomeServiceAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         return ItemHolder(
             LayoutInflater.from(mContext).inflate(
-                R.layout.row_home_service,
+                R.layout.row_lead_follow_up,
                 parent, false
             )
         )
@@ -41,7 +42,7 @@ class HomeServiceAdapter(
     }
 
     interface OnItemSelected {
-        fun onItemSelect(position: Int, data: DashBoardLeadDataItem)
+        fun onItemSelect(position: Int, data: LeadFollowUpDataItem)
     }
 
     class ItemHolder(override val containerView: View) :
@@ -51,14 +52,14 @@ class HomeServiceAdapter(
 
         fun bindData(
             context: Context,
-            data: DashBoardLeadDataItem,
-            listener: HomeServiceAdapter.OnItemSelected
+            data: LeadFollowUpDataItem,
+            listener: LeadFollowUpAdapter.OnItemSelected
         ) {
 
-            txtName.text = data.name
+            txtEmpName.text = data.employeeFirstName + " " + data.employeeLastName
             txtConatct.text = data.mobileNo
-            txtAddress.text = data.address
-            txtLeadType.text = data.leadType
+            txtMessage.text = data.message
+            txtName.text = data.name
 
             imgProfile.setImageResource(R.drawable.bg_circle)
             imgProfile.setColorFilter(getRandomMaterialColor("400",context))
