@@ -18,6 +18,7 @@ import kotlinx.android.synthetic.main.activity_add_payment.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 import org.json.JSONException
 import org.json.JSONObject
+import java.text.DecimalFormat
 
 class AddPaymentActivity : BaseActivity() {
     var invoiceDataItem: InvoiceDataItem? = null
@@ -29,12 +30,18 @@ class AddPaymentActivity : BaseActivity() {
 
         if (intent.hasExtra(Constant.DATA)) {
             invoiceDataItem = intent.getSerializableExtra(Constant.DATA) as InvoiceDataItem
+
+
+            var df = DecimalFormat("##.##")
+
             total_basic_amount.text = invoiceDataItem?.totalAmount
             remaining_basic_payment.text = invoiceDataItem?.remainingPayment
 
             total_gst_amount.text =
-                "" + invoiceDataItem?.cGST?.toFloat()!! * invoiceDataItem?.sGST?.toFloat()!! * invoiceDataItem?.iGST?.toFloat()!!
-            remaining_gst_payment.text = invoiceDataItem?.remainingGSTPayment
+                df.format(invoiceDataItem?.cGST?.toFloat()!! * invoiceDataItem?.sGST?.toFloat()!! * invoiceDataItem?.iGST?.toFloat()!!)
+                    .toString()
+            remaining_gst_payment.text =
+                df.format(invoiceDataItem?.remainingGSTPayment!!.toBigDecimal()).toString()
 
         }
 
@@ -97,8 +104,16 @@ class AddPaymentActivity : BaseActivity() {
 
     fun validation() {
         when {
+
+
             edtPaymentAmount.isEmpty() && tilPaymentAmount.isVisible -> {
                 root.showSnackBar("Enter Payment Amount")
+                edtPaymentAmount.requestFocus()
+            }
+
+            tilPaymentAmount.isVisible && edtPaymentAmount.getValue()
+                .toBigDecimal() > invoiceDataItem?.totalAmount!!.toBigDecimal() -> {
+                root.showSnackBar("enter less then or equal to ${invoiceDataItem?.totalAmount!!.toBigDecimal()}")
                 edtPaymentAmount.requestFocus()
             }
             edtGSTAmount.isEmpty() && tilGSTAmount.isVisible -> {

@@ -214,4 +214,27 @@ interface APIInterface {
         @Part("InspectionID") FirstName: RequestBody
     ): Observable<Response<CommonAddModal>>
 
+
+    @POST("service/")
+    fun getInspectionList(@Body body: RequestBody): Observable<Response<InspectionListModel>>
+
+    @POST("service/")
+    fun getUserbyTypeList(@Body body: RequestBody): Observable<Response<GetUserByType>>
+
+    @POST("service/")
+    fun AddInspection(@Body body: RequestBody): Observable<Response<CommonAddModal>>
+
+
+    @Multipart
+    @POST("service/")
+    fun AddInspectionImage(
+        @Part ImageData: MultipartBody.Part,
+        @Part("method") method: RequestBody,
+        @Part("InspectionID") FirstName: RequestBody
+    ): Observable<Response<CommonAddModal>>
+
+
+    @POST("service/")
+    fun getPaneltyList(@Body body: RequestBody): Observable<Response<PenaltyListModel>>
+
 }

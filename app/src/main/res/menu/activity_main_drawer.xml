@@ -13,6 +13,16 @@
             android:icon="@drawable/ic_visitor"
             android:title="@string/nav_visitor" />
 
+        <item
+            android:id="@+id/nav_site"
+            android:icon="@drawable/ic_user_profile"
+            android:title="@string/nav_site" />
+
+
+        <item
+            android:id="@+id/nav_quotation"
+            android:icon="@drawable/ic_user_profile"
+            android:title="@string/nav_quotations" />
 
         <item
             android:id="@+id/nav_customer"
@@ -20,23 +30,26 @@
             android:title="@string/customer" />
 
         <item
-            android:id="@+id/nav_employee"
-            android:icon="@drawable/ic_employee"
-            android:title="@string/nav_employee" />
+            android:id="@+id/nav_attendance"
+            android:icon="@drawable/ic_user_profile"
+            android:title="@string/nav_attendance" />
 
-        <item
-            android:id="@+id/nav_quotation"
-            android:icon="@drawable/ic_user_profile"
-            android:title="@string/nav_quotations" />
-        <item
-            android:id="@+id/nav_site"
-            android:icon="@drawable/ic_user_profile"
-            android:title="@string/nav_site" />
 
         <item
             android:id="@+id/nav_invoice"
             android:icon="@drawable/ic_invoice"
             android:title="@string/nav_invoice" />
+
+
+        <item
+            android:id="@+id/nav_payment"
+            android:icon="@drawable/ic_user_profile"
+            android:title="@string/nav_payment" />
+
+        <item
+            android:id="@+id/nav_employee"
+            android:icon="@drawable/ic_employee"
+            android:title="@string/nav_employee" />
 
 
         <item
@@ -54,15 +67,8 @@
             android:icon="@drawable/ic_user_profile"
             android:title="@string/menu_profile"
             android:visible="false" />
-        <item
-            android:id="@+id/nav_attendance"
-            android:icon="@drawable/ic_user_profile"
-            android:title="@string/nav_attendance" />
 
-        <item
-            android:id="@+id/nav_payment"
-            android:icon="@drawable/ic_user_profile"
-            android:title="@string/nav_payment" />
+
         <item
             android:id="@+id/nav_ticket"
             android:icon="@drawable/ic_user_profile"
