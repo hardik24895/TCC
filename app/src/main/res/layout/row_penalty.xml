@@ -67,10 +67,10 @@
             app:layout_constraintTop_toBottomOf="@+id/imgProfile" />
 
         <com.tcc.app.customview.TextviewReguler
-            android:id="@+id/txtStartDate"
+            android:id="@+id/txtReason"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_comment_white"
+            android:drawableStart="@drawable/ic_reason"
             android:drawablePadding="@dimen/_10sdp"
             android:paddingTop="@dimen/_5sdp"
             android:text="Late Comming, Misbehave"
@@ -84,29 +84,11 @@
             android:paddingTop="@dimen/_5sdp"
             android:text="@string/employee_list"
             app:layout_constraintStart_toStartOf="@+id/imgProfile"
-            app:layout_constraintTop_toBottomOf="@+id/txtStartDate" />
-
-
-        <com.tcc.app.customview.TextviewReguler
-            android:id="@+id/txtEmployeenName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/_5sdp"
-            android:text="Hardik kanzariya"
-            app:layout_constraintStart_toStartOf="@+id/imgProfile"
-            app:layout_constraintTop_toBottomOf="@+id/txtEmployeeTitle" />
-
-        <com.tcc.app.customview.TextviewReguler
-            android:id="@+id/txtAmount"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/_5sdp"
-            android:text="\u20b9 100"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtEmployeeTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/txtReason" />
 
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recPanelty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"

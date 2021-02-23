@@ -104,4 +104,5 @@ object Constant {
     const val METHOD_GET_INSPECTION = "getInspection"
     const val METHOD_GET_USER_BY_TYPE = "getUserByUserType"
     const val METHOD_ADD_INSPECTION = "addInspection"
+    const val METHOD_GET_PANELTLY = "getPenalty"
 }

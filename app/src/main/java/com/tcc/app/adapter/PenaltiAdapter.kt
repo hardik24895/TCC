@@ -1,19 +1,21 @@
 package com.tcc.app.adapter
 
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.tcc.app.R
+import com.tcc.app.extention.getRandomMaterialColor
 import com.tcc.app.extention.visible
+import com.tcc.app.modal.PaneltyDataItem
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.row_invoice.*
+import kotlinx.android.synthetic.main.row_penalty.*
 
 class PenaltiAdapter(
     private val mContext: Context,
-    var list: MutableList<String> = mutableListOf(),
+    var list: MutableList<PaneltyDataItem> = mutableListOf(),
     private val listener: PenaltiAdapter.OnItemSelected
 ) : RecyclerView.Adapter<PenaltiAdapter.ItemHolder>() {
 
@@ -34,10 +36,17 @@ class PenaltiAdapter(
         val data = list[position]
 
         holder.bindData(mContext, data, listener)
+
+
+        val layoutManager = LinearLayoutManager(mContext)
+        holder.recPanelty.layoutManager = layoutManager
+        var adapter = PenaltyUserListAdapter(mContext, data.item)
+        holder.recPanelty.adapter = adapter
+
     }
 
     interface OnItemSelected {
-        fun onItemSelect(position: Int, data: String)
+        fun onItemSelect(position: Int, data: PaneltyDataItem)
     }
 
     class ItemHolder(override val containerView: View) :
@@ -47,52 +56,19 @@ class PenaltiAdapter(
 
         fun bindData(
             context: Context,
-            data: String,
+            data: PaneltyDataItem,
             listener: PenaltiAdapter.OnItemSelected
         ) {
-            /* var txtName = containerView.findViewById<TextView>(R.id.txtName)
-             txtName.text= data*/
-
-            //chips.text= data
-
-            /* if (data.user?.profileImage != null) {
-                 Glide.with(context)
-                     .load(data)
-                     .circleCrop()
-                     .placeholder(R.drawable.no_profile)
-                     .into(imgProfile);
-                 imgProfile.setColorFilter(null)
-                 txtIcon.invisible()
-             } else {
-                 imgProfile.setImageResource(R.drawable.bg_circle)
-                 imgProfile.setColorFilter(getRandomMaterialColor("400"))
-                 txtIcon.text = data.user?.firstName.toString().substring(0, 1)
-                 txtIcon.visible()
-             }*/
+            txtName.text = data.sitesName
+            txtReason.text = data.reason
             imgProfile.setImageResource(R.drawable.bg_circle)
-            imgProfile.setColorFilter(getRandomMaterialColor("400"))
-            txtIcon.text = "H"
+            imgProfile.setColorFilter(getRandomMaterialColor("400", context))
+            if (data.sitesName?.length!! > 1)
+                txtIcon.text = data.sitesName.toString().substring(0, 1)
+            else
+                txtIcon.text = " "
             txtIcon.visible()
             itemView.setOnClickListener { listener.onItemSelect(adapterPosition, data) }
-        }
-
-        /**
-         * chooses a random color from array.xml
-         */
-        private fun getRandomMaterialColor(typeColor: String): Int {
-            var returnColor = Color.GRAY
-            val arrayId = itemView.context.resources.getIdentifier(
-                "mdcolor_$typeColor",
-                "array",
-                itemView.context!!.packageName
-            )
-            if (arrayId != 0) {
-                val colors = itemView.context.resources.obtainTypedArray(arrayId)
-                val index = (Math.random() * colors.length()).toInt()
-                returnColor = colors.getColor(index, Color.GRAY)
-                colors.recycle()
-            }
-            return returnColor
         }
 
     }

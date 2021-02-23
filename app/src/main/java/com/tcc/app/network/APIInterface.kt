@@ -214,4 +214,8 @@ interface APIInterface {
         @Part("InspectionID") FirstName: RequestBody
     ): Observable<Response<CommonAddModal>>
 
+
+    @POST("service/")
+    fun getPaneltyList(@Body body: RequestBody): Observable<Response<PenaltyListModel>>
+
 }
