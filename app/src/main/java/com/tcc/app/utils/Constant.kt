@@ -8,6 +8,7 @@ object Constant {
     const val EMP_PROFILE = "${BASE_URL}assets/uploads/user/"
     const val PDF_INVOICE_URL = "${BASE_URL}assets/uploads/invoice/"
     const val PDF_QUOTATION_URL = "${BASE_URL}assets/uploads/estimation/"
+    const val PDF_INSPECTION_URL = "${BASE_URL}assets/uploads/inspection/"
 
     const val OVERTIME = "overtime"
     const val LATEFINE = "latefine"
@@ -96,4 +97,7 @@ object Constant {
     const val METHOD_ADD_SALARY = "addSalary"
     const val METHOD_GET_SALARY_DATA = "getSalaryUserData"
     const val METHOD_GET_TICKET = "getTicket"
+    const val METHOD_GET_INSPECTION = "getInspection"
+    const val METHOD_GET_USER_BY_TYPE = "getUserByUserType"
+    const val METHOD_ADD_INSPECTION = "addInspection"
 }

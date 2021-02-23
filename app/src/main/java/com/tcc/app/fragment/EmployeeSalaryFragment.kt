@@ -8,13 +8,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.tcc.app.R
-import com.tcc.app.activity.CustomerDetailActivity
-import com.tcc.app.activity.SalaryDetailActivity
 import com.tcc.app.activity.AddSalaryActivity
+import com.tcc.app.activity.SalaryDetailActivity
 import com.tcc.app.adapter.SalaryAdapter
 import com.tcc.app.dialog.AddAdavanceDailog
-import com.tcc.app.dialog.AddSalaryDailog
-import com.tcc.app.extention.goToActivity
 import com.tcc.app.extention.invisible
 import com.tcc.app.extention.showAlert
 import com.tcc.app.extention.visible
@@ -57,8 +54,13 @@ class EmployeeSalaryFragment() : BaseFragment(), SalaryAdapter.OnItemSelected {
         super.onViewCreated(view, savedInstanceState)
 
         txtAdavance.setOnClickListener { showAdavanceDialog() }
-        txtSalary.setOnClickListener { goToActivity<AddSalaryActivity>() }
+        txtSalary.setOnClickListener {
 
+            val intent = Intent(requireContext(), AddSalaryActivity::class.java)
+            intent.putExtra(Constant.DATA, empItemData)
+            startActivity(intent)
+
+        }
         recyclerView.setLoadMoreListener(object : LoadMoreListener {
             override fun onLoadMore() {
                 if (hasNextPage && !recyclerView.isLoading) {

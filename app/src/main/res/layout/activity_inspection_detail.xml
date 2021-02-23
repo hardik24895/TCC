@@ -14,216 +14,210 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_8sdp"
-        app:cardBackgroundColor="#E6EFEFEF"
-        app:cardCornerRadius="@dimen/scale_5dp"
-        app:cardUseCompatPadding="true"
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/_8sdp">
+            android:layout_margin="@dimen/_8sdp"
+            app:cardBackgroundColor="#E6EFEFEF"
+            app:cardCornerRadius="@dimen/scale_5dp"
+            app:cardUseCompatPadding="true">
 
-            <com.tcc.app.customview.TextviewBold
-                android:id="@+id/txtSiteNameTitle"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/site_name"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:padding="@dimen/_8sdp">
 
-            <com.tcc.app.customview.TextviewReguler
-                android:id="@+id/txtSiteName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sontorini Square"
-                android:textColor="@color/txtgray"
-                android:textSize="@dimen/_14sdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtSiteNameTitle" />
+                <com.tcc.app.customview.TextviewBold
+                    android:id="@+id/txtSiteNameTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/site_name"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <View
-                android:id="@+id/view1"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_1sdp"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:background="@color/txtgray"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtSiteName" />
+                <com.tcc.app.customview.TextviewReguler
+                    android:id="@+id/txtSiteName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sontorini Square"
+                    android:textColor="@color/txtgray"
+                    android:textSize="@dimen/_14sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtSiteNameTitle" />
 
-            <com.tcc.app.customview.TextviewBold
-                android:id="@+id/txtEmployeeNameTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:text="@string/employee_name"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view1" />
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:background="@color/txtgray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtSiteName" />
 
-            <com.tcc.app.customview.TextviewReguler
-                android:id="@+id/txtEmployeeName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Hardik Kanzariya"
-                android:textColor="@color/txtgray"
-                android:textSize="@dimen/_14sdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtEmployeeNameTitle" />
+                <com.tcc.app.customview.TextviewBold
+                    android:id="@+id/txtEmployeeNameTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:text="@string/employee_name"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view1" />
 
-
-            <View
-                android:id="@+id/view2"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_1sdp"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:background="@color/txtgray"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtEmployeeName" />
+                <com.tcc.app.customview.TextviewReguler
+                    android:id="@+id/txtEmployeeName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hardik Kanzariya"
+                    android:textColor="@color/txtgray"
+                    android:textSize="@dimen/_14sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtEmployeeNameTitle" />
 
 
-            <com.tcc.app.customview.TextviewBold
-                android:id="@+id/txtEmployeeTypeTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:text="@string/employee_type"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view2" />
-
-            <com.tcc.app.customview.TextviewReguler
-                android:id="@+id/txtEmployeeType"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Admin"
-                android:textColor="@color/txtgray"
-                android:textSize="@dimen/_14sdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtEmployeeTypeTitle" />
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:background="@color/txtgray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtEmployeeName" />
 
 
-            <View
-                android:id="@+id/view3"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_1sdp"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:background="@color/txtgray"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtEmployeeType" />
+                <com.tcc.app.customview.TextviewBold
+                    android:id="@+id/txtEmployeeTypeTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:text="@string/employee_type"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+                <com.tcc.app.customview.TextviewReguler
+                    android:id="@+id/txtEmployeeType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Admin"
+                    android:textColor="@color/txtgray"
+                    android:textSize="@dimen/_14sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtEmployeeTypeTitle" />
 
 
-            <com.tcc.app.customview.TextviewBold
-                android:id="@+id/txtInspectionDateTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:text="@string/inspection_date"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view3" />
-
-            <com.tcc.app.customview.TextviewReguler
-                android:id="@+id/txtInspectionDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="26-12-2021 18:06:00"
-                android:textColor="@color/txtgray"
-                android:textSize="@dimen/_14sdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtInspectionDateTitle" />
-
-            <View
-                android:id="@+id/view4"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_1sdp"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:background="@color/txtgray"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtInspectionDate" />
+                <View
+                    android:id="@+id/view3"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:background="@color/txtgray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtEmployeeType" />
 
 
-            <com.tcc.app.customview.TextviewBold
-                android:id="@+id/txtIRemarksTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:text="@string/remarks"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view4" />
+                <com.tcc.app.customview.TextviewBold
+                    android:id="@+id/txtInspectionDateTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:text="@string/inspection_date"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view3" />
 
-            <com.tcc.app.customview.TextviewReguler
-                android:id="@+id/txtIRemarks"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Inspection Done"
-                android:textColor="@color/txtgray"
-                android:textSize="@dimen/_14sdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtIRemarksTitle" />
+                <com.tcc.app.customview.TextviewReguler
+                    android:id="@+id/txtInspectionDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="26-12-2021 18:06:00"
+                    android:textColor="@color/txtgray"
+                    android:textSize="@dimen/_14sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtInspectionDateTitle" />
 
-            <View
-                android:id="@+id/view5"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_1sdp"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:background="@color/txtgray"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtIRemarks" />
-
-
-            <com.tcc.app.customview.TextviewBold
-                android:id="@+id/txtQuestionTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:text="@string/which_age_category_do_you_fall_into"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view5" />
-
-            <com.tcc.app.customview.TextviewReguler
-                android:id="@+id/txtQuestion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="25-40"
-                android:textColor="@color/txtgray"
-                android:textSize="@dimen/_14sdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtQuestionTitle" />
+                <View
+                    android:id="@+id/view4"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:background="@color/txtgray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtInspectionDate" />
 
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/ivUpload"
-                android:layout_width="@dimen/_56sdp"
-                android:layout_height="@dimen/_56sdp"
-                android:src="@drawable/ic_profile"
-                app:civ_border_color="@color/colorPrimary"
-                app:civ_border_width="@dimen/_2ssp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtQuestionTitle" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <com.tcc.app.customview.TextviewBold
+                    android:id="@+id/txtIRemarksTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:text="@string/remarks"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view4" />
 
-    </androidx.cardview.widget.CardView>
+                <com.tcc.app.customview.TextviewReguler
+                    android:id="@+id/txtIRemarks"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Inspection Done"
+                    android:textColor="@color/txtgray"
+                    android:textSize="@dimen/_14sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtIRemarksTitle" />
+
+                <View
+                    android:id="@+id/view5"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:background="@color/txtgray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtIRemarks" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recPreview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:nestedScrollingEnabled="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view5" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/ivUpload"
+                    android:layout_width="@dimen/_56sdp"
+                    android:layout_height="@dimen/_56sdp"
+                    app:civ_border_color="@color/colorPrimary"
+                    app:civ_border_width="@dimen/_2ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/recPreview" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

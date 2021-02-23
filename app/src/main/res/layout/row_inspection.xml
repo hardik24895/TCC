@@ -62,15 +62,25 @@
 
 
         <com.tcc.app.customview.TextviewReguler
-            android:id="@+id/txtSiteName"
+            android:id="@+id/txtCompanyName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8sdp"
             android:drawableStart="@drawable/ic_site"
             android:drawablePadding="@dimen/_10sdp"
-            android:text="Santorini Squire, Ahmedabad"
             app:layout_constraintStart_toStartOf="@+id/imgProfile"
             app:layout_constraintTop_toBottomOf="@+id/imgProfile" />
+
+
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtSiteName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_site"
+            android:drawablePadding="@dimen/_10sdp"
+            android:paddingTop="@dimen/_5sdp"
+            app:layout_constraintStart_toStartOf="@+id/imgProfile"
+            app:layout_constraintTop_toBottomOf="@+id/txtCompanyName" />
 
 
         <com.tcc.app.customview.TextviewReguler
@@ -80,7 +90,6 @@
             android:drawableStart="@drawable/ic_start_date"
             android:drawablePadding="@dimen/_10sdp"
             android:paddingTop="@dimen/_5sdp"
-            android:text="06-02-2021 16:03:00"
             app:layout_constraintStart_toStartOf="@+id/imgProfile"
             app:layout_constraintTop_toBottomOf="@+id/txtSiteName" />
 

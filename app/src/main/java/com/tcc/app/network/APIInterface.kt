@@ -1,5 +1,6 @@
 package com.tcc.app.network
 
+import com.tcc.app.adapter.InspectionListModel
 import com.tcc.app.modal.*
 import io.reactivex.Observable
 import okhttp3.MultipartBody
@@ -172,4 +173,23 @@ interface APIInterface {
 
     @POST("service/")
     fun getTicketList(@Body body: RequestBody): Observable<Response<TicketListMdal>>
+
+    @POST("service/")
+    fun getInspectionList(@Body body: RequestBody): Observable<Response<InspectionListModel>>
+
+    @POST("service/")
+    fun getUserbyTypeList(@Body body: RequestBody): Observable<Response<GetUserByType>>
+
+    @POST("service/")
+    fun AddInspection(@Body body: RequestBody): Observable<Response<CommonAddModal>>
+
+
+    @Multipart
+    @POST("service/")
+    fun AddInspectionImage(
+        @Part ImageData: MultipartBody.Part,
+        @Part("method") method: RequestBody,
+        @Part("InspectionID") FirstName: RequestBody
+    ): Observable<Response<CommonAddModal>>
+
 }

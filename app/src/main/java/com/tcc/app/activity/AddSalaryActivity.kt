@@ -3,6 +3,7 @@ package com.tcc.app.activity
 import android.os.Bundle
 import com.tcc.app.R
 import com.tcc.app.extention.*
+import com.tcc.app.modal.EmployeeDataItem
 import com.tcc.app.modal.GetUserSalaryDetail
 import com.tcc.app.modal.SalaryListModal
 import com.tcc.app.network.CallbackObserver
@@ -14,18 +15,18 @@ import com.tcc.app.utils.TimeStamp.formatDateFromString
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_add_salary.*
-import kotlinx.android.synthetic.main.activity_add_salary.edtEndDate
-import kotlinx.android.synthetic.main.activity_add_salary.edtStartDate
-import kotlinx.android.synthetic.main.dialog_date_filter.*
-import kotlinx.android.synthetic.main.reclerview_swipelayout.*
+import kotlinx.android.synthetic.main.activity_add_salary.btnSubmit
+import kotlinx.android.synthetic.main.activity_add_salary.root
+import kotlinx.android.synthetic.main.activity_attendance.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
-import kotlinx.android.synthetic.main.toolbar_with_back_arrow.txtTitle
 import org.json.JSONException
 import org.json.JSONObject
+import java.text.DecimalFormat
 
 
 class AddSalaryActivity : BaseActivity() {
 
+    var employeeDataItem: EmployeeDataItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +34,10 @@ class AddSalaryActivity : BaseActivity() {
         setContentView(R.layout.activity_add_salary)
         txtTitle.text = "Salary"
         imgBack.visible()
+        if (intent.hasExtra(Constant.DATA)) {
+            employeeDataItem = intent.getSerializableExtra(Constant.DATA) as EmployeeDataItem
+            calendarView.invisible()
+        }
 
         imgBack.setOnClickListener {
             finish()
@@ -49,6 +54,18 @@ class AddSalaryActivity : BaseActivity() {
         edtEndDate.setOnClickListener { showDateTimePicker(this@AddSalaryActivity, edtEndDate) }
 
         GetUserSalaryDetail()
+
+
+
+        btnSubmit.setOnClickListener {
+            if (edtPayment.getValue().isEmpty()) {
+                root.showSnackBar("Please enter Payable amount")
+                edtPayment.requestFocus()
+            } else {
+                AddSalary()
+            }
+        }
+
     }
 
     fun GetUserSalaryDetail() {
@@ -80,13 +97,14 @@ class AddSalaryActivity : BaseActivity() {
                 override fun onSuccess(response: GetUserSalaryDetail) {
                     hideProgressbar()
                     if (response.error == 200) {
-
-                        //  edtSalary.setText(response.data.get(0).salary)
-                        //  edtPerDaySalary.setText(response.data.get(0))
-                        //  edtAbsent.setText(response.data.get(0).salary)
-                        //  edtHalfDay.setText(response.data.get(0).salary)
-                        //  edtHalfDayOt.setText(response.data.get(0).salary)
-                        //  edtFullDay.setText(response.data.get(0).salary)
+                        var df = DecimalFormat("##.##")
+                        edtSalary.setText(response.data.get(0).salary)
+                        edtPerDaySalary.setText(df.format((response.data.get(0).salary?.toFloat()!! / 30)))
+                        edtPresent.setText(response.data.get(0).presentCount)
+                        edtAbsent.setText(response.data.get(0).absentCount)
+                        edtHalfDay.setText(response.data.get(0).halfDayCount)
+                        edtHalfDayOt.setText(response.data.get(0).halfOverTime)
+                        edtFullDay.setText(response.data.get(0).fullOverTime)
 
 
                     } else {
@@ -112,17 +130,17 @@ class AddSalaryActivity : BaseActivity() {
         var result = ""
         try {
             val jsonBody = JSONObject()
-            jsonBody.put("UserID", Constant.PAGE_SIZE)
-            jsonBody.put("EmployeeID", Constant.PAGE_SIZE)
-            jsonBody.put("SalaryDate", Constant.PAGE_SIZE)
-            jsonBody.put("StartDate", Constant.PAGE_SIZE)
-            jsonBody.put("EndDate", Constant.PAGE_SIZE)
-            jsonBody.put("Present", Constant.PAGE_SIZE)
-            jsonBody.put("Absent", Constant.PAGE_SIZE)
-            jsonBody.put("HalfDay", Constant.PAGE_SIZE)
-            jsonBody.put("HalfOverTime", Constant.PAGE_SIZE)
-            jsonBody.put("FullOverTime", Constant.PAGE_SIZE)
-            jsonBody.put("Rate", Constant.PAGE_SIZE)
+            jsonBody.put("UserID", session.user.data?.userID)
+            jsonBody.put("EmployeeID", employeeDataItem?.userID.toString())
+            jsonBody.put("SalaryDate", formatDateFromString(getCurrentDate()))
+            jsonBody.put("StartDate", formatDateFromString(edtStartDate.getValue()))
+            jsonBody.put("EndDate", formatDateFromString(edtEndDate.getValue()))
+            jsonBody.put("Present", edtPresent.getValue())
+            jsonBody.put("Absent", edtAbsent.getValue())
+            jsonBody.put("HalfDay", edtHalfDay.getValue())
+            jsonBody.put("HalfOverTime", edtHalfDayOt.getValue())
+            jsonBody.put("FullOverTime", edtFullDay.getValue())
+            jsonBody.put("Rate", edtPayment.getValue())
             result = Networking.setParentJsonData(
                 Constant.METHOD_ADD_SALARY,
                 jsonBody
@@ -142,7 +160,11 @@ class AddSalaryActivity : BaseActivity() {
             .subscribeWith(object : CallbackObserver<SalaryListModal>() {
                 override fun onSuccess(response: SalaryListModal) {
                     hideProgressbar()
+                    if (response.error == 200) {
 
+                    } else {
+                        showAlert(response.message.toString())
+                    }
 
                 }
 
