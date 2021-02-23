@@ -1,5 +1,6 @@
 package com.tcc.app.network
 
+import com.tcc.app.adapter.InspectionListModel
 import com.tcc.app.modal.*
 import io.reactivex.Observable
 import okhttp3.MultipartBody
@@ -129,4 +130,88 @@ interface APIInterface {
 
     @POST("service/")
     fun AddPayment(@Body body: RequestBody): Observable<Response<CommonAddModal>>
+
+    @POST("service/")
+    fun AddSite(@Body body: RequestBody): Observable<Response<SiteListModal>>
+
+    @POST("service/")
+    fun getCustomerAttendanceList(@Body body: RequestBody): Observable<Response<CustomerAttendanceListModal>>
+
+    @POST("service/")
+    fun getTeamDefinationList(@Body body: RequestBody): Observable<Response<TeamDefinitionListModel>>
+
+    @POST("service/")
+    fun getAvailableEmployeeList(@Body body: RequestBody): Observable<Response<AvailableEmployeeListModel>>
+
+    @POST("service/")
+    fun AddTeamDefinition(@Body body: RequestBody): Observable<Response<CommonAddModal>>
+
+    @POST("service/")
+    fun getAttendenceList(@Body body: RequestBody): Observable<Response<AttendanceListModel>>
+
+
+    @POST("service/")
+    fun AddAttendence(@Body body: RequestBody): Observable<Response<CommonAddModal>>
+
+    @POST("service/")
+    fun getLeadReminder(@Body body: RequestBody): Observable<Response<LeadReminderListModal>>
+
+    @POST("service/")
+    fun getAllEmpList(@Body body: RequestBody): Observable<Response<AllEmpAttendanceListModel>>
+
+    @POST("service/")
+    fun getEmpListWiseAttendance(@Body body: RequestBody): Observable<Response<EmployeeAttendanceListModel>>
+
+    @POST("service/")
+    fun getInvoiceAttedanceList(@Body body: RequestBody): Observable<Response<InvoiceAttendanceListModal>>
+
+    @POST("service/")
+    fun getSalaryList(@Body body: RequestBody): Observable<Response<SalaryListModal>>
+
+    @POST("service/")
+    fun getUserSalaryList(@Body body: RequestBody): Observable<Response<GetUserSalaryDetail>>
+
+    @POST("service/")
+    fun getTicketList(@Body body: RequestBody): Observable<Response<TicketListMdal>>
+
+
+    @Multipart
+    @POST("service/")
+    fun AddTicket(
+        @Part ImageData: MultipartBody.Part,
+        @Part("method") method: RequestBody,
+        @Part("UserID") UserID: RequestBody,
+        @Part("Title") Title: RequestBody,
+        @Part("Description") Description: RequestBody,
+        @Part("Priority") Priority: RequestBody,
+        @Part("CityID") CityID: RequestBody
+    ): Observable<Response<CommonAddModal>>
+
+    @POST("service/")
+    fun getDashBoardCount(@Body body: RequestBody): Observable<Response<HomeCounterModal>>
+
+    @POST("service/")
+    fun getDashBoardLead(@Body body: RequestBody): Observable<Response<DashBoardLeadModal>>
+
+    @POST("service/")
+    fun getLeadFollowupList(@Body body: RequestBody): Observable<Response<LeadFollowUpListModal>>
+
+    @POST("service/")
+    fun getInspectionList(@Body body: RequestBody): Observable<Response<InspectionListModel>>
+
+    @POST("service/")
+    fun getUserbyTypeList(@Body body: RequestBody): Observable<Response<GetUserByType>>
+
+    @POST("service/")
+    fun AddInspection(@Body body: RequestBody): Observable<Response<CommonAddModal>>
+
+
+    @Multipart
+    @POST("service/")
+    fun AddInspectionImage(
+        @Part ImageData: MultipartBody.Part,
+        @Part("method") method: RequestBody,
+        @Part("InspectionID") FirstName: RequestBody
+    ): Observable<Response<CommonAddModal>>
+
 }

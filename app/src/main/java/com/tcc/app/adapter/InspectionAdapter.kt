@@ -1,19 +1,21 @@
 package com.tcc.app.adapter
 
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.tcc.app.R
-import com.tcc.app.extention.visible
+import com.tcc.app.extention.invisible
+import com.tcc.app.utils.Constant
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.row_invoice.*
+import kotlinx.android.synthetic.main.row_inspection.*
+
 
 class InspectionAdapter(
     private val mContext: Context,
-    var list: MutableList<String> = mutableListOf(),
+    var list: MutableList<InspectionDataItem> = mutableListOf(),
     private val listener: InspectionAdapter.OnItemSelected
 ) : RecyclerView.Adapter<InspectionAdapter.ItemHolder>() {
 
@@ -37,7 +39,7 @@ class InspectionAdapter(
     }
 
     interface OnItemSelected {
-        fun onItemSelect(position: Int, data: String)
+        fun onItemSelect(position: Int, data: InspectionDataItem)
     }
 
     class ItemHolder(override val containerView: View) :
@@ -47,53 +49,22 @@ class InspectionAdapter(
 
         fun bindData(
             context: Context,
-            data: String,
+            data: InspectionDataItem,
             listener: InspectionAdapter.OnItemSelected
         ) {
-            /* var txtName = containerView.findViewById<TextView>(R.id.txtName)
-             txtName.text= data*/
+            txtName.text = data.employeeName
+            txtCompanyName.text = data.companyName
+            txtUserType.text = data.userType
+            txtSiteName.text = data.sitesName
+            txtDate.text = data.inspectionDate
+            Glide.with(context).load(Constant.PDF_INSPECTION_URL + data.image)
+                .placeholder(R.drawable.ic_profile).into(imgProfile)
+            txtIcon.text = data.employeeName.toString().substring(0, 1)
+            txtIcon.invisible()
 
-            //chips.text= data
-
-            /* if (data.user?.profileImage != null) {
-                 Glide.with(context)
-                     .load(data)
-                     .circleCrop()
-                     .placeholder(R.drawable.no_profile)
-                     .into(imgProfile);
-                 imgProfile.setColorFilter(null)
-                 txtIcon.invisible()
-             } else {
-                 imgProfile.setImageResource(R.drawable.bg_circle)
-                 imgProfile.setColorFilter(getRandomMaterialColor("400"))
-                 txtIcon.text = data.user?.firstName.toString().substring(0, 1)
-                 txtIcon.visible()
-             }*/
-            imgProfile.setImageResource(R.drawable.bg_circle)
-            imgProfile.setColorFilter(getRandomMaterialColor("400"))
-            txtIcon.text = "H"
-            txtIcon.visible()
             itemView.setOnClickListener { listener.onItemSelect(adapterPosition, data) }
         }
 
-        /**
-         * chooses a random color from array.xml
-         */
-        private fun getRandomMaterialColor(typeColor: String): Int {
-            var returnColor = Color.GRAY
-            val arrayId = itemView.context.resources.getIdentifier(
-                "mdcolor_$typeColor",
-                "array",
-                itemView.context!!.packageName
-            )
-            if (arrayId != 0) {
-                val colors = itemView.context.resources.obtainTypedArray(arrayId)
-                val index = (Math.random() * colors.length()).toInt()
-                returnColor = colors.getColor(index, Color.GRAY)
-                colors.recycle()
-            }
-            return returnColor
-        }
 
     }
 }

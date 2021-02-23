@@ -55,7 +55,7 @@ class InvoiceUnPaidFragment : BaseFragment(), InvoicePaidAdapter.OnItemSelected 
             override fun onLoadMore() {
                 if (hasNextPage && !recyclerView.isLoading) {
                     progressbar.visible()
-                    getInvoiceList(page)
+                    getInvoiceList(++page)
                 }
             }
         })

@@ -1,5 +1,6 @@
 package com.tcc.app.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -18,7 +19,7 @@ import com.tcc.app.utils.Constant
 import com.tcc.app.utils.Logger
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_add_visitor.*
+import kotlinx.android.synthetic.main.activity_add_lead.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 import org.json.JSONException
 import org.json.JSONObject
@@ -42,7 +43,7 @@ class AddLeadActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
-        setContentView(R.layout.activity_add_visitor)
+        setContentView(R.layout.activity_add_lead)
         rbHot.isChecked = true
         getBundleData()
         imgBack.visible()
@@ -287,7 +288,7 @@ class AddLeadActivity : BaseActivity() {
                 if (leadItem == null)
                     addLead(rbLead?.text.toString(), flag)
                 else
-                    editLead(rbLead?.text.toString())
+                    editLead(rbLead?.text.toString(), flag)
             }
 
         }
@@ -329,8 +330,12 @@ class AddLeadActivity : BaseActivity() {
                     hideProgressbar()
                     if (response.error == 200) {
                         root.showSnackBar(response.message.toString())
-                        if (flag)
-                            goToActivity<AddSiteActivity>()
+                        if (flag) {
+                            val intent = Intent(this@AddLeadActivity, AddSiteActivity::class.java)
+                            intent.putExtra(Constant.VISITOR_ID, data.get(0).iD.toString())
+                            intent.putExtra(Constant.CUSTOMER_ID, "0")
+                            startActivity(intent)
+                        }
 
                         finish()
 
@@ -347,7 +352,7 @@ class AddLeadActivity : BaseActivity() {
             }).addTo(autoDisposable)
     }
 
-    fun editLead(leadType: String?) {
+    fun editLead(leadType: String?, flag: Boolean) {
         var result = ""
         showProgressbar()
         try {
@@ -384,6 +389,14 @@ class AddLeadActivity : BaseActivity() {
                     hideProgressbar()
                     if (response.error == 200) {
                         root.showSnackBar(response.message.toString())
+                        if (flag) {
+                            val intent = Intent(this@AddLeadActivity, AddSiteActivity::class.java)
+                            intent.putExtra(Constant.VISITOR_ID, data.get(0).iD.toString())
+                            intent.putExtra(Constant.CUSTOMER_ID, "0")
+                            startActivity(intent)
+                        }
+
+
                         finish()
                     } else {
                         showAlert(response.message.toString())

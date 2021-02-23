@@ -45,7 +45,6 @@ class AddQuotationActivity : BaseActivity() {
     var adaptercompany: ArrayAdapter<String>? = null
     var companyIteams: List<SearchableItem>? = null
 
-
     var serviceNameList: ArrayList<String> = ArrayList()
     var adapterService: ArrayAdapter<String>? = null
     var serviceListArray: ArrayList<ServiceDataItem> = ArrayList()
@@ -124,6 +123,18 @@ class AddQuotationActivity : BaseActivity() {
             }
         })
 
+        edtDays.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                setUpdatedTotal()
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+        })
+
         btnSubmit.setOnClickListener {
             validation()
         }
@@ -150,6 +161,10 @@ class AddQuotationActivity : BaseActivity() {
 
     fun validation() {
         when {
+            edtDays.isEmpty() -> {
+                root.showSnackBar("Enter Days")
+                edtDays.requestFocus()
+            }
             edAddress1.isEmpty() -> {
                 root.showSnackBar("Enter Address 1")
                 edAddress1.requestFocus()
@@ -162,6 +177,7 @@ class AddQuotationActivity : BaseActivity() {
                 root.showSnackBar("Select Pincode")
                 edPincode.requestFocus()
             }
+
 
             else -> {
                 AddQuotation()
@@ -329,6 +345,7 @@ class AddQuotationActivity : BaseActivity() {
         var edHSNChild: EditText = rowView.findViewById(R.id.edHSNChild)
         var edQtyChild: EditText = rowView.findViewById(R.id.edQtyChild)
         var edRateChild: EditText = rowView.findViewById(R.id.edRateChild)
+        var edDaysChild: EditText = rowView.findViewById(R.id.edtChildDays)
         // userTypeChildId.add("")
         // Log.e("TAG", "onAddField:      "+userTypeChildId.size )
 
@@ -389,6 +406,18 @@ class AddQuotationActivity : BaseActivity() {
             }
         })
         edQtyChild.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                setUpdatedTotal()
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+        })
+
+        edDaysChild.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 setUpdatedTotal()
             }
@@ -670,11 +699,13 @@ class AddQuotationActivity : BaseActivity() {
         var CGST: Float = 0f
         var SGST: Float = 0f
         var IGST: Float = 0f
+        var DAYS: Float = 0f
 
 
-        if (!edQty.isEmpty() && !edRate.isEmpty()) {
+        if (!edQty.isEmpty() && !edRate.isEmpty() && !edtDays.isEmpty()) {
 
-            TotalAmount = TotalAmount + (edQty.getValue().toFloat() * edRate.getValue().toFloat())
+            TotalAmount = TotalAmount + (edQty.getValue().toFloat() * edRate.getValue()
+                .toFloat()) * edtDays.getValue().toFloat()
 
         }
 
@@ -682,10 +713,12 @@ class AddQuotationActivity : BaseActivity() {
             for (item in 0 until lin_add_user.childCount) {
                 if (!lin_add_user.getChildAt(item).edQtyChild.isEmpty() && !lin_add_user.getChildAt(
                         item
-                    ).edRateChild.isEmpty()
+                    ).edRateChild.isEmpty() && !lin_add_user.getChildAt(item).edtChildDays.isEmpty()
                 ) {
                     TotalAmount = TotalAmount + (lin_add_user.getChildAt(item).edQtyChild.getValue()
-                        .toFloat() * lin_add_user.getChildAt(item).edRateChild.getValue().toFloat())
+                        .toFloat() * lin_add_user.getChildAt(item).edRateChild.getValue()
+                        .toFloat() * lin_add_user.getChildAt(item).edtChildDays.getValue()
+                        .toFloat())
 
                 }
 
@@ -729,6 +762,7 @@ class AddQuotationActivity : BaseActivity() {
             val jsonArray = JSONArray()
 
             jsonBody.put("SitesID", siteListItem?.sitesID)
+
             jsonBody.put("CompanyID", compnyID)
             jsonBody.put("EstimateDate", formatDateFromString(edEstimationDate.getValue()))
             jsonBody.put("Address", edAddress1.getValue())
@@ -744,6 +778,9 @@ class AddQuotationActivity : BaseActivity() {
             if (leadItem != null) {
                 jsonBody.put("VisitorID", leadItem?.visitorID)
                 jsonBody.put("CustomerID", leadItem?.customerID)
+            } else if (siteListItem != null) {
+                jsonBody.put("VisitorID", siteListItem?.visitorID)
+                jsonBody.put("CustomerID", siteListItem?.customerID)
             } else {
                 jsonBody.put("VisitorID", siteListItem?.visitorID)
                 jsonBody.put("CustomerID", siteListItem?.customerID)
@@ -756,6 +793,7 @@ class AddQuotationActivity : BaseActivity() {
                 jsonObj.put("UsertypeID", usertypeId)
                 jsonObj.put("Qty", edQty.getValue())
                 jsonObj.put("Rate", edRate.getValue())
+                jsonObj.put("Days", edtDays.getValue())
 
                 jsonArray.put(jsonObj)
             }
@@ -773,6 +811,7 @@ class AddQuotationActivity : BaseActivity() {
                         )
                         jsonObj.put("Qty", lin_add_user.getChildAt(item).edQtyChild.getValue())
                         jsonObj.put("Rate", lin_add_user.getChildAt(item).edRateChild.getValue())
+                        jsonBody.put("Days", lin_add_user.getChildAt(item).edtChildDays.getValue())
                         jsonArray.put(jsonObj)
 
                     }

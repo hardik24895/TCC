@@ -1,5 +1,6 @@
 package com.tcc.app.activity
 
+import android.app.DatePickerDialog
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
@@ -32,6 +33,8 @@ import tech.hibk.searchablespinnerlibrary.SearchableDialog
 import tech.hibk.searchablespinnerlibrary.SearchableItem
 import tech.hibk.searchablespinnerlibrary.SearchableSpinner
 import java.text.DecimalFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class AddInvoiceActivity : BaseActivity() {
@@ -52,6 +55,9 @@ class AddInvoiceActivity : BaseActivity() {
     var userTypeListArray: ArrayList<UserTypeDataItem>? = null
     var itemUserType: List<SearchableItem>? = null
     var usertypeId: String = ""
+
+    var invoiceAttedanceList: ArrayList<InvoiceAttendanceDataItem> = ArrayList()
+
     //  var usertypeChildId: String = ""
 
 
@@ -99,17 +105,79 @@ class AddInvoiceActivity : BaseActivity() {
         }
 
         edStartDate.setOnClickListener {
-            showDateTimePicker(
+            /*showDateTimePicker(
                 this@AddInvoiceActivity,
                 edStartDate
+            )*/
+
+            val c = Calendar.getInstance()
+            val year = c.get(Calendar.YEAR)
+            val month = c.get(Calendar.MONTH)
+            val day = c.get(Calendar.DAY_OF_MONTH)
+
+            val dpd = DatePickerDialog(
+                this,
+                { view, year, monthOfYear, dayOfMonth ->
+
+                    var selectedMonth: String = ""
+                    var selectedDay: String = ""
+                    if (dayOfMonth < 10) {
+                        selectedDay = "0" + dayOfMonth
+                    } else
+                        selectedDay = dayOfMonth.toString()
+
+                    if (month < 10) {
+                        selectedMonth = "0" + (month + 1)
+                    } else
+                        selectedMonth = month.toString()
+
+                    edStartDate.setText("" + selectedDay + "/" + selectedMonth + "/" + year)
+                    getInvoiceAttedanceList()
+
+                },
+                year,
+                month,
+                day
             )
+            dpd.show()
         }
 
         edEndDate.setOnClickListener {
-            showDateTimePicker(
-                this@AddInvoiceActivity,
-                edEndDate
+            /*  showDateTimePicker(
+                  this@AddInvoiceActivity,
+                  edEndDate
+              )*/
+            val c = Calendar.getInstance()
+            val year = c.get(Calendar.YEAR)
+            val month = c.get(Calendar.MONTH)
+            val day = c.get(Calendar.DAY_OF_MONTH)
+
+            val dpd = DatePickerDialog(
+                this,
+                { view, year, monthOfYear, dayOfMonth ->
+
+                    var selectedMonth: String = ""
+                    var selectedDay: String = ""
+                    if (dayOfMonth < 10) {
+                        selectedDay = "0" + dayOfMonth
+                    } else
+                        selectedDay = dayOfMonth.toString()
+
+                    if (month < 10) {
+                        selectedMonth = "0" + (month + 1)
+                    } else
+                        selectedMonth = month.toString()
+
+                    edEndDate.setText("" + selectedDay + "/" + selectedMonth + "/" + year)
+                    getInvoiceAttedanceList()
+
+                },
+                year,
+                month,
+                day
             )
+            dpd.show()
+
         }
 
         edRate.addTextChangedListener(object : TextWatcher {
@@ -191,13 +259,30 @@ class AddInvoiceActivity : BaseActivity() {
                 id: Long
             ) {
                 if (position != -1 && userTypeListArray!!.size > position) {
-                    usertypeId = userTypeListArray!!.get(position).usertypeID.toString()
-                    edHSN.setText(userTypeListArray!!.get(position).hSNNo)
-                    edQty.setText("1")
-                    edRate.setText(userTypeListArray!!.get(position).rate)
-                    setUpdatedTotal()
+                    if (position != -1 && invoiceAttedanceList!!.size > position) {
+
+                        for (iteam in invoiceAttedanceList.indices) {
+                            if (userTypeListArray!!.get(position).usertypeID.toString()
+                                    .equals(invoiceAttedanceList.get(iteam).usertypeID)
+                            ) {
+                                usertypeId = invoiceAttedanceList!!.get(iteam).usertypeID.toString()
+                                edHSN.setText(invoiceAttedanceList!!.get(iteam).hSNNo)
+                                edQty.setText(invoiceAttedanceList!!.get(iteam).qty)
+                                edRate.setText(invoiceAttedanceList!!.get(iteam).rate)
+                                setUpdatedTotal()
+                            }
+                        }
+                    } else {
+                        usertypeId = userTypeListArray!!.get(position).usertypeID.toString()
+                        edHSN.setText(userTypeListArray!!.get(position).hSNNo)
+                        edQty.setText("1")
+                        edRate.setText(userTypeListArray!!.get(position).rate)
+                        setUpdatedTotal()
+                    }
+
 
                 }
+
 
             }
         }
@@ -251,10 +336,26 @@ class AddInvoiceActivity : BaseActivity() {
                     )
                     //               userTypeChildId.set((lin_add_user as ViewGroup).indexOfChild(spUserTypeChild), userTypeListArray!!.get(position).usertypeID.toString())
                     // usertypeChildId =
-                    edHSNChild.setText(userTypeListArray!!.get(position).hSNNo)
-                    edQtyChild.setText("1")
-                    edRateChild.setText(userTypeListArray!!.get(position).rate)
-                    setUpdatedTotal()
+
+                    if (position != -1 && invoiceAttedanceList!!.size > position) {
+
+                        for (iteam in invoiceAttedanceList.indices) {
+                            if (userTypeListArray!!.get(position).usertypeID.toString()
+                                    .equals(invoiceAttedanceList.get(iteam).usertypeID)
+                            ) {
+                                edHSNChild.setText(invoiceAttedanceList!!.get(position).hSNNo)
+                                edQtyChild.setText(invoiceAttedanceList!!.get(position).qty)
+                                edRateChild.setText(invoiceAttedanceList!!.get(position).rate)
+                                setUpdatedTotal()
+                            }
+                        }
+                    } else {
+                        edHSNChild.setText(userTypeListArray!!.get(position).hSNNo)
+                        edQtyChild.setText("1")
+                        edRateChild.setText(userTypeListArray!!.get(position).rate)
+                        setUpdatedTotal()
+                    }
+
                 }
 
             }
@@ -332,30 +433,35 @@ class AddInvoiceActivity : BaseActivity() {
                     )
                     spUserType.setAdapter(adapterUserType)
 
-                    for (iteam in quotationIteam?.item!!.indices) {
-                        if (iteam == 0) {
-                            for (i in userTypeListArray!!.indices) {
-                                if (quotationIteam!!.item.get(iteam).usertypeID.equals(
-                                        userTypeListArray!!.get(i).usertypeID
-                                    )
-                                ) {
-                                    spUserType.setSelection(i)
-                                }
-                            }
-                        } else {
-                            onAddField()
-                            for (i in userTypeListArray!!.indices) {
-                                if (quotationIteam!!.item.get(iteam).usertypeID.equals(
-                                        userTypeListArray!!.get(i).usertypeID
-                                    )
-                                ) {
-                                    lin_add_user.getChildAt(iteam - 1).spUserTypeChild.setSelection(
-                                        i
-                                    )
-                                }
-                            }
-                        }
 
+                    if (quotationIteam?.isFixCost?.equals("No")!!) {
+                        getInvoiceAttedanceList()
+                    } else {
+                        for (iteam in quotationIteam?.item!!.indices) {
+                            if (iteam == 0) {
+                                for (i in userTypeListArray!!.indices) {
+                                    if (quotationIteam!!.item.get(iteam).usertypeID.equals(
+                                            userTypeListArray!!.get(i).usertypeID
+                                        )
+                                    ) {
+                                        spUserType.setSelection(i)
+                                    }
+                                }
+                            } else {
+                                onAddField()
+                                for (i in userTypeListArray!!.indices) {
+                                    if (quotationIteam!!.item.get(iteam).usertypeID.equals(
+                                            userTypeListArray!!.get(i).usertypeID
+                                        )
+                                    ) {
+                                        lin_add_user.getChildAt(iteam - 1).spUserTypeChild.setSelection(
+                                            i
+                                        )
+                                    }
+                                }
+                            }
+
+                        }
                     }
 
 
@@ -363,6 +469,100 @@ class AddInvoiceActivity : BaseActivity() {
 
                 override fun onFailed(code: Int, message: String) {
 
+                    showAlert(message)
+
+                }
+
+            }).addTo(autoDisposable)
+    }
+
+
+    fun getInvoiceAttedanceList() {
+
+        showProgressbar()
+        invoiceAttedanceList.clear()
+        lin_add_user.removeAllViews()
+        //   setUpdatedTotal()
+        var result = ""
+        try {
+            val jsonBody = JSONObject()
+            jsonBody.put("QuotationID", quotationIteam?.quotationID)
+            jsonBody.put("StartDate", formatDateFromString(edStartDate.getValue()))
+            jsonBody.put("EndDate", formatDateFromString(edEndDate.getValue()))
+
+            result =
+                Networking.setParentJsonData(Constant.METHOD_GET_INVOICE_ATTEDANCE_LIST, jsonBody)
+
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+        Networking
+            .with(this@AddInvoiceActivity)
+            .getServices()
+            .getInvoiceAttedanceList(Networking.wrapParams(result))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : CallbackObserver<InvoiceAttendanceListModal>() {
+                override fun onSuccess(response: InvoiceAttendanceListModal) {
+                    hideProgressbar()
+                    val data = response.data
+                    invoiceAttedanceList.addAll(data)
+                    if (invoiceAttedanceList.size > 0) {
+                        for (iteam in invoiceAttedanceList!!.indices) {
+                            if (iteam == 0) {
+                                for (i in userTypeListArray!!.indices) {
+                                    if (invoiceAttedanceList.get(iteam).usertypeID.equals(
+                                            userTypeListArray!!.get(i).usertypeID
+                                        )
+                                    ) {
+
+                                        usertypeId =
+                                            invoiceAttedanceList!!.get(iteam).usertypeID.toString()
+                                        edHSN.setText(invoiceAttedanceList!!.get(iteam).hSNNo)
+                                        edQty.setText(invoiceAttedanceList!!.get(iteam).qty)
+                                        edRate.setText(invoiceAttedanceList!!.get(iteam).rate)
+                                        setUpdatedTotal()
+
+                                        spUserType.setSelection(i)
+                                    }
+
+
+                                }
+                            } else {
+                                onAddField()
+                                for (i in userTypeListArray!!.indices) {
+                                    if (invoiceAttedanceList.get(iteam).usertypeID.equals(
+                                            userTypeListArray!!.get(i).usertypeID
+                                        )
+                                    ) {
+                                        lin_add_user.getChildAt(iteam - 1).spUserTypeChild.setSelection(
+                                            i
+                                        )
+                                        lin_add_user.getChildAt(iteam - 1).edHSNChild.setText(
+                                            invoiceAttedanceList!!.get(iteam).hSNNo
+                                        )
+                                        lin_add_user.getChildAt(iteam - 1).edQtyChild.setText(
+                                            invoiceAttedanceList!!.get(iteam).qty
+                                        )
+                                        lin_add_user.getChildAt(iteam - 1).edRateChild.setText(
+                                            invoiceAttedanceList!!.get(iteam).rate
+                                        )
+                                        setUpdatedTotal()
+
+                                    }
+                                }
+                            }
+
+                        }
+                    } else {
+                        lin_add_user.removeAllViews()
+                    }
+
+
+                }
+
+                override fun onFailed(code: Int, message: String) {
+                    hideProgressbar()
                     showAlert(message)
 
                 }

@@ -11,18 +11,29 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingEnd="@dimen/_5ssp"
         android:layout_margin="@dimen/_5sdp">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgProfile"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:src="@mipmap/new_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.tcc.app.customview.TextviewSemiBold
             android:id="@+id/txtTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
             android:layout_marginTop="@dimen/_2sdp"
             android:text="Ticket Title"
             android:textColor="@color/black"
             android:textSize="@dimen/_12sdp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imgProfile"
+            app:layout_constraintTop_toTopOf="@id/imgProfile" />
 
 
         <com.tcc.app.customview.TextviewReguler
@@ -32,8 +43,9 @@
             android:layout_marginTop="@dimen/_2sdp"
             android:text="@string/loremupsome"
             android:textColor="@color/txtgray"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtTitle" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/imgProfile"
+            app:layout_constraintTop_toBottomOf="@+id/imgProfile" />
 
         <com.tcc.app.customview.TextviewSemiBold
             android:id="@+id/txtCGSTtitle"
@@ -43,7 +55,7 @@
             android:text="@string/name"
             android:textColor="@color/black"
             android:textSize="@dimen/_12sdp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/imgProfile"
             app:layout_constraintTop_toBottomOf="@+id/view" />
 
 
@@ -54,7 +66,7 @@
             android:layout_marginTop="@dimen/_2sdp"
             android:text="Hardik Kanzariya"
             android:textColor="@color/txtgray"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/imgProfile"
             app:layout_constraintTop_toBottomOf="@+id/txtCGSTtitle" />
 
         <View

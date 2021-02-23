@@ -7,13 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tcc.app.R
+import com.tcc.app.extention.getRandomMaterialColor
 import com.tcc.app.extention.visible
+import com.tcc.app.modal.DashBoardLeadDataItem
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.row_invoice.*
+import kotlinx.android.synthetic.main.row_home_service.*
+
 
 class HomeServiceAdapter(
     private val mContext: Context,
-    var list: MutableList<String> = mutableListOf(),
+    var list: MutableList<DashBoardLeadDataItem> = mutableListOf(),
     private val listener: HomeServiceAdapter.OnItemSelected
 ) : RecyclerView.Adapter<HomeServiceAdapter.ItemHolder>() {
 
@@ -38,7 +41,7 @@ class HomeServiceAdapter(
     }
 
     interface OnItemSelected {
-        fun onItemSelect(position: Int, data: String)
+        fun onItemSelect(position: Int, data: DashBoardLeadDataItem)
     }
 
     class ItemHolder(override val containerView: View) :
@@ -48,34 +51,24 @@ class HomeServiceAdapter(
 
         fun bindData(
             context: Context,
-            data: String,
+            data: DashBoardLeadDataItem,
             listener: HomeServiceAdapter.OnItemSelected
         ) {
 
+            txtName.text = data.name
+            txtConatct.text = data.mobileNo
+            txtAddress.text = data.address
+            txtLeadType.text = data.leadType
 
             imgProfile.setImageResource(R.drawable.bg_circle)
-            imgProfile.setColorFilter(getRandomMaterialColor("400"))
-            txtIcon.text = "H"
+            imgProfile.setColorFilter(getRandomMaterialColor("400",context))
+            txtIcon.text = data.name.toString().substring(0, 1)
             txtIcon.visible()
             itemView.setOnClickListener { listener.onItemSelect(adapterPosition, data) }
         }
 
 
-        private fun getRandomMaterialColor(typeColor: String): Int {
-            var returnColor = Color.GRAY
-            val arrayId = itemView.context.resources.getIdentifier(
-                "mdcolor_$typeColor",
-                "array",
-                itemView.context!!.packageName
-            )
-            if (arrayId != 0) {
-                val colors = itemView.context.resources.obtainTypedArray(arrayId)
-                val index = (Math.random() * colors.length()).toInt()
-                returnColor = colors.getColor(index, Color.GRAY)
-                colors.recycle()
-            }
-            return returnColor
-        }
+
     }
 
 }

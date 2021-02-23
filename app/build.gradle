@@ -3,8 +3,8 @@ plugins {
     id 'kotlin-android'
     id "kotlin-kapt"
     id 'kotlin-android-extensions'
-    // id 'com.google.gms.google-services'
-    // id 'com.google.firebase.crashlytics'
+     id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
 }
 
 android {
@@ -105,9 +105,7 @@ dependencies {
 //    implementation project(path: ':LIB_BlurLockView')
     // implementation 'com.nightonke:blurlockview:1.0.0'
 
-    // add these lines in your app build.gradle
-    implementation 'com.google.android.gms:play-services-auth:19.0.0'
-    implementation 'com.google.android.gms:play-services-auth-api-phone:17.5.0'
+
 
     //run time permission
     implementation 'com.github.florent37:runtime-permission-kotlin:1.1.2'
@@ -140,4 +138,13 @@ dependencies {
     implementation 'com.akexorcist:snap-time-picker:1.0.1'
 
     implementation 'com.github.yalantis:ucrop:2.2.4'
+
+    // Import the BoM for the Firebase platform
+    implementation platform('com.google.firebase:firebase-bom:26.5.0')
+
+    // Declare the dependencies for the Firebase Cloud Messaging and Analytics libraries
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation 'com.google.firebase:firebase-messaging-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
 }

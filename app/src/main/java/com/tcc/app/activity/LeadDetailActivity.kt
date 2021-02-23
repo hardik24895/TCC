@@ -10,6 +10,7 @@ import com.tcc.app.extention.invisible
 import com.tcc.app.extention.visible
 import com.tcc.app.fragment.CustomerSiteFragment
 import com.tcc.app.fragment.LeadInfofoFragment
+import com.tcc.app.fragment.LeadReminderFragment
 import com.tcc.app.fragment.QuotationFragment
 import com.tcc.app.modal.LeadItem
 import com.tcc.app.utils.Constant
@@ -21,7 +22,7 @@ class LeadDetailActivity : BaseActivity() {
     var leadItem: LeadItem? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_visitor_detail)
+        setContentView(R.layout.activity_lead_detail)
         leadItem = intent.getSerializableExtra(Constant.DATA) as LeadItem
         txtTitle.text = leadItem?.name
         imgBack.visible()
@@ -40,13 +41,17 @@ class LeadDetailActivity : BaseActivity() {
 
             if (viewPager.currentItem == 1) {
                 val i = Intent(this, AddSiteActivity::class.java)
-                i.putExtra(Constant.ID, leadItem?.visitorID.toString())
+                i.putExtra(Constant.VISITOR_ID, leadItem?.visitorID.toString())
+                intent.putExtra(Constant.CUSTOMER_ID, "0")
+                startActivity(i)
+                Animatoo.animateCard(this)
+            } else if (viewPager.currentItem == 3) {
+                val i = Intent(this, AddLeadReminderActivity::class.java)
+                i.putExtra(Constant.VISITOR_ID, leadItem?.visitorID.toString())
+                intent.putExtra(Constant.CUSTOMER_ID, "0")
                 startActivity(i)
                 Animatoo.animateCard(this)
             }
-//            } else {
-//                goToActivity<AddQuotationActivity>()
-//            }
         }
 
     }
@@ -82,6 +87,7 @@ class LeadDetailActivity : BaseActivity() {
         viewPageradapter?.addFragment(LeadInfofoFragment.getInstance(args), "Detail")
         viewPageradapter?.addFragment(CustomerSiteFragment.getInstance(args), "Sites")
         viewPageradapter?.addFragment(QuotationFragment.getInstance(args), "Quotation")
+        viewPageradapter?.addFragment(LeadReminderFragment.getInstance(args), "Reminder")
 
         viewPager.adapter = viewPageradapter
         tabs.setupWithViewPager(viewPager, true)
@@ -89,10 +95,10 @@ class LeadDetailActivity : BaseActivity() {
 
         tabs!!.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-                if (tab.position != 1) {
-                    imgAdd.invisible()
-                } else {
+                if (tab.position == 1 || tab.position == 3) {
                     imgAdd.visible()
+                } else {
+                    imgAdd.invisible()
                 }
 
 

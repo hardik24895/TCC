@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.tcc.app.R
+import com.tcc.app.activity.AddAttendanceActivity
 import com.tcc.app.activity.AddInvoiceActivity
+import com.tcc.app.activity.TeamDefinitionListActivity
 import com.tcc.app.adapter.QuotationAdapter
 import com.tcc.app.dialog.AcceptReasonDailog
 import com.tcc.app.dialog.RejectReasonDailog
@@ -74,19 +76,11 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
             setHomeScreenTitle(requireActivity(), getString(R.string.nav_quotations))
         }
 
-        page = 1
-        list.clear()
-        hasNextPage = true
-        swipeRefreshLayout.isRefreshing = true
-        setupRecyclerView()
-        recyclerView.isLoading = true
-        getQuotationList(page, status)
-
         recyclerView.setLoadMoreListener(object : LoadMoreListener {
             override fun onLoadMore() {
                 if (hasNextPage && !recyclerView.isLoading) {
                     progressbar.visible()
-                    getQuotationList(page, status)
+                    getQuotationList(++page, status)
                 }
             }
         })
@@ -128,6 +122,17 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
             refershList(status)
         }
 
+    }
+
+    override fun onResume() {
+        page = 1
+        list.clear()
+        hasNextPage = true
+        swipeRefreshLayout.isRefreshing = true
+        setupRecyclerView()
+        recyclerView.isLoading = true
+        getQuotationList(page, status)
+        super.onResume()
     }
 
     fun refershList(status: String) {
@@ -183,6 +188,10 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
         } else if (action.equals("REJECT")) {
             showRejectDialog(data, position)
         } else if (action.equals("TEAM-DEFINATION")) {
+            val i = Intent(requireContext(), TeamDefinitionListActivity::class.java)
+            i.putExtra(Constant.DATA, data)
+            startActivity(i)
+            Animatoo.animateCard(requireContext())
 
         } else if (action.equals("INVOICE")) {
             val i = Intent(requireContext(), AddInvoiceActivity::class.java)
@@ -193,6 +202,11 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
             Animatoo.animateCard(requireContext())
 
         } else if (action.equals("ATTENDANCE")) {
+
+            val i = Intent(requireContext(), AddAttendanceActivity::class.java)
+            i.putExtra(Constant.DATA, data)
+            startActivity(i)
+            Animatoo.animateCard(requireContext())
         }
 
     }

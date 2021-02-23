@@ -53,7 +53,7 @@ class EmployeeRoomAllocationFragment() : BaseFragment(), RoomAllocationAdapter.O
             override fun onLoadMore() {
                 if (hasNextPage && !recyclerView.isLoading) {
                     progressbar.visible()
-                    getRoomAAllocationList(page)
+                    getRoomAAllocationList(++page)
                 }
             }
         })

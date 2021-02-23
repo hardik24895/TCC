@@ -51,7 +51,7 @@ class EmployeeUniformFragment() : BaseFragment(), UniformAdapter.OnItemSelected 
             override fun onLoadMore() {
                 if (hasNextPage && !recyclerView.isLoading) {
                     progressbar.visible()
-                    getUniformList(page)
+                    getUniformList(++page)
                 }
             }
         })

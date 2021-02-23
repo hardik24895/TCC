@@ -12,6 +12,7 @@ import com.tcc.app.extention.setHomeScreenTitle
 import com.tcc.app.extention.showAlert
 import com.tcc.app.extention.visible
 import com.tcc.app.interfaces.LoadMoreListener
+import com.tcc.app.modal.CustomerDataItem
 import com.tcc.app.modal.LeadItem
 import com.tcc.app.modal.PaymentListDataItem
 import com.tcc.app.modal.PaymentListModel
@@ -27,6 +28,13 @@ import org.json.JSONObject
 
 
 class PaymentListFragment() : BaseFragment(), PaymentListAdapter.OnItemSelected {
+    var customerId: Int? = -1
+    var visitorId: Int? = -1
+
+    constructor(customerData: CustomerDataItem?) : this() {
+        customerId = customerData?.customerID?.toInt()
+        visitorId = customerData?.visitorID?.toInt()
+    }
 
     var adapter: PaymentListAdapter? = null
     private val list: MutableList<PaymentListDataItem> = mutableListOf()
@@ -45,12 +53,13 @@ class PaymentListFragment() : BaseFragment(), PaymentListAdapter.OnItemSelected 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setHomeScreenTitle(requireActivity(), getString(R.string.nav_payment))
+        if (customerId == -1)
+            setHomeScreenTitle(requireActivity(), getString(R.string.nav_payment))
         recyclerView.setLoadMoreListener(object : LoadMoreListener {
             override fun onLoadMore() {
                 if (hasNextPage && !recyclerView.isLoading) {
                     progressbar.visible()
-                    getSiteList(page)
+                    getSiteList(++page)
                 }
             }
         })

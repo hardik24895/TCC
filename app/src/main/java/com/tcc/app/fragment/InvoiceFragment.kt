@@ -8,12 +8,23 @@ import com.google.android.material.tabs.TabLayout
 import com.tcc.app.R
 import com.tcc.app.adapter.ViewPagerPagerAdapter
 import com.tcc.app.extention.setHomeScreenTitle
+import com.tcc.app.modal.CustomerDataItem
 import kotlinx.android.synthetic.main.fragment_invoice.*
 
-class InvoiceFragment : BaseFragment() {
+class InvoiceFragment() : BaseFragment() {
+
+    var customerId: Int? = -1
+    var visitorId: Int? = -1
+
+    constructor(customerData: CustomerDataItem?) : this() {
+        customerId = customerData?.customerID?.toInt()
+        visitorId = customerData?.visitorID?.toInt()
+    }
+
     lateinit var mParent: View
 
     var viewPageradapter: ViewPagerPagerAdapter? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,7 +38,9 @@ class InvoiceFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setHomeScreenTitle(requireActivity(), getString(R.string.nav_invoice))
+
+        if (customerId == -1)
+            setHomeScreenTitle(requireActivity(), getString(R.string.nav_invoice))
         setStatePageAdapter()
         tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
@@ -63,4 +76,6 @@ class InvoiceFragment : BaseFragment() {
         tabs.setupWithViewPager(viewPager, true)
 
     }
+
+
 }

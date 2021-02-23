@@ -10,6 +10,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:paddingEnd="@dimen/_5ssp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_5sdp">
 
@@ -18,7 +19,7 @@
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginStart="@dimen/_5sdp"
-            android:src="@mipmap/ic_launcher"
+            android:src="@mipmap/new_icon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

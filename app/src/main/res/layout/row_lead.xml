@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/_5sdp"
+    android:elevation="5dp"
+    app:cardCornerRadius="8dp"
+    app:cardUseCompatPadding="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_5sdp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgProfile"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:src="@mipmap/new_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.tcc.app.customview.TextviewSemiBold
+            android:id="@+id/txtName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="Hardik Kanzariya"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintEnd_toStartOf="@+id/imageView2"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/imgProfile"
+            app:layout_constraintTop_toTopOf="@+id/imgProfile" />
+
+        <com.tcc.app.customview.TextviewBold
+            android:id="@+id/txtIcon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="A"
+            android:textAllCaps="true"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_extra_large"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/imgProfile"
+            app:layout_constraintEnd_toEndOf="@+id/imgProfile"
+            app:layout_constraintStart_toStartOf="@+id/imgProfile"
+            app:layout_constraintTop_toTopOf="@+id/imgProfile" />
+
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:text="test@gmail.com"
+            app:layout_constraintStart_toStartOf="@+id/txtName"
+            app:layout_constraintTop_toBottomOf="@+id/txtName" />
+
+        <ImageView
+            android:id="@+id/imgEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_5sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txtName"
+            app:srcCompat="@drawable/ic_edit" />
+
+        <com.tcc.app.customview.TextviewSemiBold
+            android:id="@+id/txtContacttitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="@string/contact"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="@+id/imgProfile"
+            app:layout_constraintTop_toBottomOf="@+id/imgProfile" />
+
+
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtContact"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="9999999999"
+            android:textColor="@color/txtgray"
+            app:layout_constraintStart_toStartOf="@+id/imgProfile"
+            app:layout_constraintTop_toBottomOf="@+id/txtContacttitle" />
+
+
+        <com.tcc.app.customview.TextviewSemiBold
+            android:id="@+id/txtLeadTypeTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:text="@string/lead_type"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txtContacttitle" />
+
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtLeadType"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Cold"
+            android:textColor="@color/txtgray"
+            app:layout_constraintEnd_toEndOf="@+id/txtLeadTypeTitle"
+            app:layout_constraintTop_toBottomOf="@+id/txtLeadTypeTitle" />
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:background="@color/light_grey"
+            android:scaleY="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtContact" />
+
+
+        <com.tcc.app.customview.TextviewSemiBold
+            android:id="@+id/txtNoOfSiteTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:text="@string/total_site"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="@+id/imgProfile"
+            app:layout_constraintTop_toBottomOf="@+id/view1" />
+
+
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtNoOfSite"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="23"
+            android:textColor="@color/txtgray"
+            app:layout_constraintStart_toStartOf="@+id/imgProfile"
+            app:layout_constraintTop_toBottomOf="@+id/txtNoOfSiteTitle" />
+
+
+        <com.tcc.app.customview.TextviewSemiBold
+            android:id="@+id/txtStatusTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/status"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="@+id/txtLeadTypeTitle"
+            app:layout_constraintTop_toTopOf="@+id/txtNoOfSiteTitle" />
+
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtStatus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Convert"
+            android:textColor="@color/txtgray"
+            app:layout_constraintEnd_toEndOf="@+id/txtLeadTypeTitle"
+            app:layout_constraintTop_toBottomOf="@+id/txtStatusTitle" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:background="@color/light_grey"
+            android:scaleY="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtNoOfSite" />
+
+
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtCity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:drawableStart="@drawable/ic_location"
+            android:drawablePadding="@dimen/_10sdp"
+            android:gravity="center_vertical"
+            android:paddingTop="@dimen/_5sdp"
+            android:text="Ahmedabad"
+            app:layout_constraintStart_toStartOf="@+id/imgProfile"
+            app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+
+        <View
+            android:id="@+id/view3"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:background="@color/light_grey"
+            android:scaleY="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtCity" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/txtStatus"
+            app:layout_constraintStart_toStartOf="@+id/txtCity"
+            app:layout_constraintTop_toBottomOf="@+id/view3">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/linbtnCall"
+                style="@style/CustomPressButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toStartOf="@+id/linbtnSMS"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <com.tcc.app.customview.TextviewReguler
+                    android:id="@+id/btnCall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_call_white"
+                    android:drawablePadding="@dimen/_4sdp"
+                    android:paddingVertical="@dimen/_6sdp"
+                    android:text="@string/call"
+                    android:textAllCaps="true"
+                    android:textColor="@drawable/custom_button_press_text_bg"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/linbtnSMS"
+                style="@style/CustomPressButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_4ssp"
+                app:layout_constraintEnd_toStartOf="@+id/linbtnEmail"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/linbtnCall"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <com.tcc.app.customview.TextviewReguler
+                    android:id="@+id/btnSMS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_8sdp"
+                    android:drawableStart="@drawable/ic_comment_white"
+                    android:drawablePadding="@dimen/_4sdp"
+                    android:paddingVertical="@dimen/_6sdp"
+                    android:text="@string/sms"
+                    android:textAllCaps="true"
+                    android:textColor="@drawable/custom_button_press_text_bg"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/linbtnEmail"
+                style="@style/CustomPressButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_mail_white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/linbtnSMS"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <com.tcc.app.customview.TextviewReguler
+                    android:id="@+id/btnEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_mail_white"
+                    android:drawablePadding="@dimen/_4sdp"
+                    android:paddingVertical="@dimen/_6sdp"
+                    android:text="@string/email"
+                    android:textAllCaps="true"
+                    android:textColor="@drawable/custom_button_press_text_bg"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

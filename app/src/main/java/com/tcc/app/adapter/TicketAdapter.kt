@@ -5,12 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.tcc.app.R
+import com.tcc.app.modal.TicketDataItem
+import com.tcc.app.utils.Constant
 import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.row_ticket.*
+import kotlinx.android.synthetic.main.row_ticket.imgProfile
 
 class TicketAdapter(
     private val mContext: Context,
-    var list: MutableList<String> = mutableListOf(),
+    var list: MutableList<TicketDataItem> = mutableListOf(),
     private val listener: TicketAdapter.OnItemSelected
 ) : RecyclerView.Adapter<TicketAdapter.ItemHolder>() {
 
@@ -35,7 +40,7 @@ class TicketAdapter(
     }
 
     interface OnItemSelected {
-        fun onItemSelect(position: Int, data: String)
+        fun onItemSelect(position: Int, data: TicketDataItem)
     }
 
     class ItemHolder(override val containerView: View) :
@@ -45,10 +50,14 @@ class TicketAdapter(
 
         fun bindData(
             context: Context,
-            data: String,
+            data: TicketDataItem,
             listener: TicketAdapter.OnItemSelected
         ) {
-
+            Glide.with(context).load(Constant.TICKET_IMG + data.image).placeholder(R.drawable.ic_profile).into(imgProfile)
+            txtTitle.text = data.title
+            txtDescription.text = data.description
+            txtCGST.text = data.firstName + " " + data.lastName
+            txtSGST.text = data.priority
         }
 
     }

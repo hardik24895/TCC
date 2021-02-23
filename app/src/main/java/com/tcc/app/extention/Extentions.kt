@@ -3,6 +3,7 @@ package com.tcc.app.extention
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.Uri
@@ -184,6 +185,19 @@ fun getRandomMaterialColor(typeColor: String, context: Context): Int {
     return returnColor
 }
 
+fun checkUserRight(context: Context, role: String, view: View): Boolean {
+
+    if (role.equals("1")) {
+
+        return true
+    } else {
+        view.showSnackBar(context.getString(R.string.you_dont_have_a_rights))
+        return false
+    }
+
+}
+
+
 fun sendEmail(context: Context, email: String) {
     val emailIntent = Intent(
         Intent.ACTION_SENDTO, Uri.fromParts(
@@ -199,6 +213,34 @@ fun callPhone(context: Context, phone: String) {
     val intent = Intent(Intent.ACTION_DIAL)
     intent.data = Uri.parse("tel:${phone}")
     context.startActivity(intent)
+}
+
+fun openPDF(url: String?, context: Context) {
+
+    val browserIntent1 = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+    context.startActivity(browserIntent1)
+
+
+}
+
+fun isActivityForIntentAvailable(
+    context: Context,
+    intent: Intent?
+): Boolean {
+    val packageManager = context.packageManager
+    val list: List<*> =
+        packageManager.queryIntentActivities(intent!!, PackageManager.MATCH_DEFAULT_ONLY)
+    return list.size > 0
+}
+
+
+fun convertIntoTowDigit(value: Int): String {
+    var finalValue = value.toString()
+    if (value < 10) {
+        finalValue = "0" + value.toString()
+    }
+
+    return finalValue
 }
 
 inline val AppCompatActivity.connectivityManager: ConnectivityManager

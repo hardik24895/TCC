@@ -1,41 +1,24 @@
 package com.tcc.app.utils
 
 object Constant {
+    const val VISITOR_ID = "visitor_id"
+    const val CUSTOMER_ID = "customer_id"
+    const val BASE_URL = "http://societyfy.in/tcc_new/"
+    const val API_URL = "${BASE_URL}api/"
+    const val EMP_PROFILE = "${BASE_URL}assets/uploads/user/"
+    const val TICKET_IMG = "${BASE_URL}assets/uploads/ticket/"
+    const val PDF_INVOICE_URL = "${BASE_URL}assets/uploads/invoice/"
+    const val PDF_QUOTATION_URL = "${BASE_URL}assets/uploads/estimation/"
+    const val PDF_INSPECTION_URL = "${BASE_URL}assets/uploads/inspection/"
 
     const val OVERTIME = "overtime"
     const val LATEFINE = "latefine"
     const val PAGE_SIZE = 10
 
-    const val IS_REFREESH = "is_refresh"
-    const val LATITUDE = "latitude"
-    const val LONGITUDE = "longitude"
-    const val LAST_LATITUDE = "last_latitude"
-    const val LAST_LONGITUDE = "last_longitude"
-    const val MY_EVENT_ID = "my_eventid"
-    const val DISTANCE = "distance"
-    const val STEPS = "steps"
-    const val CAT_ID = "catID"
-    const val ID = "id"
-    const val BUSNESSNAME = "busnessname"
-    const val SORTNAME = "sortname"
-    const val ADDRESS1 = "address1"
-    const val ADDRESS2 = "address2"
-    const val ZIPCODE = "zipcode"
-    const val EVENT_END_TIME = "event_end_time"
-    const val BROADCAST_CODES = "code"
-    const val TOTAL_KM = "total_km"
-    const val TOTAL_TIME = "total_time"
-    const val EVENT_REGISTERED = "event_registered"
     const val TITLE = "title"
-    const val HOME_SYNC_TIME = "home_sync_time"
-    const val EVENT_SYNC_TIME = "event_sync_time"
-    const val PROFILE_SYNC_TIME = "profile_sync_time"
+
     const val TEN_MILISEC = 600000
 
-    const val IS_SERVICE_RUNNING = "service_runnig"
-    const val IS_PRACTICE_RUNNING = "practice_runnig"
-
-    const val TIME = "time"
     const val TEXT = "text"
 
     // Common Params
@@ -48,73 +31,13 @@ object Constant {
     const val DATA1 = "data1"
 
 
-    //---URL Image Load---//
-    const val IMG_URL = "http://demo.sprinters.club"
-
     // ---Server Date Time--//
     const val DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss"
 
 
-    //---- List Of Data----//
-    const val LIST_EVENTSTATICS = "list_eventstatics"
-    const val LIST_EVENTCATEGORY = "list_eventcategory"
-
-
     const val MOBILE = "mobile"
-    const val PHONE_CODE = "phone_code"
-    const val KEY_STEP_COUNT = "steps"
-    const val KEY_DATE = "date"
-    const val KEY_DISTANCE = "distence"
     const val UNAUTHORIZED = "unauthorized"
-    const val EVENT_ID = "event_id"
-    const val COUNTRY_ID = "countryId"
-    const val STATE_ID = "stateId"
-    const val ENABLE = "visible"
-    const val USER_ID = "userId"
-    const val POSITION = "position"
-    const val VIEW_POSITION = "view_position"
-    const val HOME = "home"
-    const val TOTAL_VOTE = "totalvotes"
-    const val PROFILE_PIC = "profilePic"
-    const val NAME = "name"
-    const val FNAME = "fname"
-    const val LNAME = "lname"
-    const val EMAIL = "email"
-    const val COUNTRY = "country"
-    const val STATE = "state"
-    const val CITY = "city"
-    const val URI = "uri"
-    const val GLOBAL = "global"
-    const val TYPE = "type"
-    const val AS_HOST: String = "asHost"
-    const val NOTIFICATION_TYPE = "notificationType"
-    const val HOURS = "hours"
-    const val LOGIN_COUNT = "logincount"
-    const val MEDIA_ID = "mediaId"
-    const val FILTER = "filter"
-    const val PROFILE_PHOTO = "profilePhoto"
-    const val COVER_PHOTO = "coverPhoto"
-    const val BUCKET_NAME = "contestee"
-    const val BUCKET_ACCESS_KEY = "AKIAJBM3XU4HNVVTAOXA"
-    const val BUCKET_SECRETE_KEY = "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"
 
-
-    //------User Profile Dialog Option---
-
-    const val IMAGE = "image"
-    const val VIDEO = "video"
-    const val WATCH = "watch"
-    const val WATCH_IMAGE = "watch_image"
-    const val WATCH_ADD = "watch_add"
-
-
-    //----Post Option-----
-
-    const val LIKE = "Like"
-    const val SAVE = "Save"
-    const val SHARE = "Share"
-    const val REPORT = "Report"
-    const val DELETE = "Delete"
 
     //----- Lead Type-----
     const val HOT = "Hot"
@@ -160,4 +83,25 @@ object Constant {
     const val METHOD_ADD_INVOICE = "addInvoice"
     const val METHOD_GET_INVOICE = "getInvoice"
     const val METHOD_ADD_PAYMENT = "addPayment"
+    const val METHOD_TEAM_DEFINITION_LIST = "getTeamDefination"
+    const val METHOD_AVAILABLE_EMPLOYEE_LIST = "getAvailableEmployee"
+    const val METHOD_ADD_TEAM_DEFINITION = "addTeamDefination"
+    const val METHOD_GETCUSTOMER_ATTEDANCE = "getAttendance"
+    const val METHOD_ADD_ATTEDANCE_LIST = "getaddAttendaneEmployee"
+    const val METHOD_GET_LEAD_REMINDER = "getVisitorReminder"
+    const val METHOD_ADD_LEAD_REMINDER = "addVisitorReminder"
+    const val METHOD_ADD_EMPLOYEE_ATTENDENCE = "addAttendance"
+    const val METHOD_ADD_ALL_EMPLOYEE_ATTENDENCE = "getAttendanceMenu"
+    const val METHOD_ADD_EMPLOYEE_WISE_ATTENDENCE = "getEmployeeAttendance"
+    const val METHOD_GET_INVOICE_ATTEDANCE_LIST = "getInvoiceAttendance"
+    const val METHOD_GET_SLARYY = "getSalary"
+    const val METHOD_ADD_SALARY = "addSalary"
+    const val METHOD_GET_SALARY_DATA = "getSalaryUserData"
+    const val METHOD_GET_TICKET = "getTicket"
+    const val METHOD_ADD_TICKET = "addTicket"
+    const val METHOD_GET_DASHBOARD = "getDashboard"
+    const val METHOD_GET_DASHBOARD_LEAD = "getDashboardLead"
+    const val METHOD_GET_INSPECTION = "getInspection"
+    const val METHOD_GET_USER_BY_TYPE = "getUserByUserType"
+    const val METHOD_ADD_INSPECTION = "addInspection"
 }
