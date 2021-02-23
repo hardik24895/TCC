@@ -160,4 +160,26 @@ interface APIInterface {
 
     @POST("service/")
     fun getTicketList(@Body body: RequestBody): Observable<Response<TicketListMdal>>
+
+
+    @Multipart
+    @POST("service/")
+    fun AddTicket(
+        @Part ImageData: MultipartBody.Part,
+        @Part("method") method: RequestBody,
+        @Part("UserID") UserID: RequestBody,
+        @Part("Title") Title: RequestBody,
+        @Part("Description") Description: RequestBody,
+        @Part("Priority") Priority: RequestBody,
+        @Part("CityID") CityID: RequestBody
+    ): Observable<Response<CommonAddModal>>
+
+    @POST("service/")
+    fun getDashBoardCount(@Body body: RequestBody): Observable<Response<HomeCounterModal>>
+
+    @POST("service/")
+    fun getDashBoardLead(@Body body: RequestBody): Observable<Response<DashBoardLeadModal>>
+
+    @POST("service/")
+    fun getLeadFollowupList(@Body body: RequestBody): Observable<Response<LeadFollowUpListModal>>
 }

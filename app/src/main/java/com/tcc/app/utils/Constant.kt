@@ -6,6 +6,7 @@ object Constant {
     const val BASE_URL = "http://societyfy.in/tcc_new/"
     const val API_URL = "${BASE_URL}api/"
     const val EMP_PROFILE = "${BASE_URL}assets/uploads/user/"
+    const val TICKET_IMG = "${BASE_URL}assets/uploads/ticket/"
     const val PDF_INVOICE_URL = "${BASE_URL}assets/uploads/invoice/"
     const val PDF_QUOTATION_URL = "${BASE_URL}assets/uploads/estimation/"
 
@@ -89,4 +90,7 @@ object Constant {
     const val METHOD_GET_INVOICE_ATTEDANCE_LIST = "getInvoiceAttendance"
     const val METHOD_GET_SLARYY = "getSalary"
     const val METHOD_GET_TICKET = "getTicket"
+    const val METHOD_ADD_TICKET = "addTicket"
+    const val METHOD_GET_DASHBOARD = "getDashboard"
+    const val METHOD_GET_DASHBOARD_LEAD = "getDashboardLead"
 }
