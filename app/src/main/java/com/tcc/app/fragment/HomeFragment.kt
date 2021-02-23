@@ -46,7 +46,6 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
     var itens: List<SearchableItem>? = null
     var autoImageSliderAdapter: AutoImageSliderAdapter? = null
     lateinit var parent: View
-
     var page: Int = 1
     var hasNextPage: Boolean = true
 
@@ -66,7 +65,7 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
         cityNameList = ArrayList()
         getCityList()
         setuprvHomeCounterMarchant()
-        recyclerView.setNestedScrollingEnabled(true);
+        // recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setLoadMoreListener(object : LoadMoreListener {
             override fun onLoadMore() {
                 if (hasNextPage && !recyclerView.isLoading) {
@@ -119,14 +118,14 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
         rg.setOnCheckedChangeListener { group, checkedId -> // checkedId is the RadioButton selected
             val rb = parent.findViewById(checkedId) as RadioButton
             getDashBoardCount(rb.text.toString())
+            leadList.clear()
             getDashBoardLead(page)
         }
 
     }
 
 
-    fun setuprvHomeCounterMarchant() {
-
+    fun setSlider() {
         autoImageSliderAdapter = AutoImageSliderAdapter(mContext!!, list, this)
         rvHomeCounter.setSliderAdapter(autoImageSliderAdapter!!)
         rvHomeCounter.setIndicatorAnimation(IndicatorAnimationType.SLIDE)
@@ -135,9 +134,13 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
         rvHomeCounter.setIndicatorUnselectedColor(Color.WHITE)
         rvHomeCounter.setScrollTimeInSec(4)
         rvHomeCounter.startAutoCycle()
+    }
+
+    fun setuprvHomeCounterMarchant() {
 
 
-        val layoutManager1 = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        val layoutManager1 =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = layoutManager1
         adapterLead = HomeServiceAdapter(requireContext(), leadList, this)
         recyclerView.adapter = adapterLead
@@ -234,7 +237,7 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
             .subscribeWith(object : CallbackObserver<HomeCounterModal>() {
                 override fun onSuccess(response: HomeCounterModal) {
                     list.addAll(response.data)
-                    autoImageSliderAdapter?.notifyDataSetChanged()
+                    setSlider()
 
                 }
 
@@ -295,6 +298,7 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
 
             }).addTo(autoDisposable)
     }
+
     private fun refreshData(msg: String?) {
         recyclerView.setLoadedCompleted()
         adapterLead?.notifyDataSetChanged()
@@ -308,6 +312,7 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
             recyclerView.invisible()
         }
     }
+
     override fun onItemSelect(position: Int, data: DashBoardLeadDataItem) {
 
     }

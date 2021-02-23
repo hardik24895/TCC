@@ -10,6 +10,7 @@ object Constant {
     const val PDF_INVOICE_URL = "${BASE_URL}assets/uploads/invoice/"
     const val PDF_QUOTATION_URL = "${BASE_URL}assets/uploads/estimation/"
     const val PDF_INSPECTION_URL = "${BASE_URL}assets/uploads/inspection/"
+    const val CMS_URL ="${API_URL}service/getPage?PageName="
 
     const val OVERTIME = "overtime"
     const val LATEFINE = "latefine"

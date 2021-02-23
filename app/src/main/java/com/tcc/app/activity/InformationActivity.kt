@@ -27,7 +27,7 @@ class InformationActivity : AppCompatActivity() {
                 return true
             }
         }
-        webview.loadUrl("http://www.google.com")
+        intent.getStringExtra("Desc")?.let { webview.loadUrl(it) }
         // webview.loadUrl(infoURL + intent.getStringExtra("Desc"))
     }
 }
