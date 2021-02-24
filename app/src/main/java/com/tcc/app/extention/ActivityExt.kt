@@ -18,6 +18,7 @@ import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.tcc.app.R
 import com.tcc.app.customview.TextviewBold
 import com.tcc.app.utils.Constant
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -174,6 +175,15 @@ fun getCurrentDate(): String {
     date = "" + selectedDay + "/" + selectedMonth + "/" + year
 
     return date.toString()
+}
+
+
+fun getCurrentDateTime(): String {
+
+    val sdf = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
+    val currentDate = sdf.format(Date())
+
+    return currentDate.toString()
 }
 
 fun showDateTimePicker(requireActivity: Activity, edittext: EditText) {

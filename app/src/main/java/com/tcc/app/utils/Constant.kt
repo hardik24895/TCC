@@ -113,4 +113,6 @@ object Constant {
     const val METHOD_REMOVE_CUSTOMER_SITE_DOCUMENT = "removeCustomerSitesDocument"
     const val METHOD_ADD_PANELTLY = "addPenalty"
     const val METHOD_GET_CHECK_IN_OUT = "getCheckinout"
+    const val METHOD_ADD_CHECK_IN = "addCheckIN"
+    const val METHOD_ADD_CHECK_OUT = "addCheckOUT"
 }

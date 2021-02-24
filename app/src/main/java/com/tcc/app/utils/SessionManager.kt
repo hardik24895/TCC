@@ -143,5 +143,6 @@ class SessionManager(val context: Context) {
         const val EVENT_DETAIL_BANNER = "eventDetailBanner"
         const val EVENT_LIST = "eventList"
         const val KEY_CITY_ID = "cityId"
+        const val KEY_CHECKIN_ID = "checkIn"
     }
 }

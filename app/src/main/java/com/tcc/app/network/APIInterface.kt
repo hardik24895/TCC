@@ -223,6 +223,13 @@ interface APIInterface {
     @POST("service/")
     fun getCheckInOutList(@Body body: RequestBody): Observable<Response<CheckInOutListModel>>
 
+    @POST("service/")
+    fun AddCheckIn(@Body body: RequestBody): Observable<Response<CommonAddModal>>
+
+
+    @POST("service/")
+    fun AddCheckOut(@Body body: RequestBody): Observable<Response<CommonAddModal>>
+
     @Multipart
     @POST("service/")
     fun AddCustomerSiteDocument(
