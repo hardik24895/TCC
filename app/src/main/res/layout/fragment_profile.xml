@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/swipe_view_bg"
@@ -23,6 +24,7 @@
     <ImageView
         android:id="@+id/ivUpload"
         android:layout_width="@dimen/_16sdp"
+        android:visibility="gone"
         android:layout_height="@dimen/_16sdp"
         app:layout_constraintBottom_toBottomOf="@+id/imgProfile"
         app:layout_constraintEnd_toEndOf="@+id/imgProfile"
@@ -182,7 +184,7 @@
 
 
             <com.tcc.app.customview.ButtonReguler
-                android:id="@+id/btnLogin"
+                android:id="@+id/btnSubmit"
                 style="@style/CustomPressButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

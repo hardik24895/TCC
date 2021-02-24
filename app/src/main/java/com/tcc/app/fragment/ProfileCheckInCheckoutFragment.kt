@@ -18,38 +18,42 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.florent37.runtimepermission.kotlin.askPermission
 import com.tcc.app.R
 import com.tcc.app.adapter.CheckInOutAdapter
-import com.tcc.app.extention.invisible
-import com.tcc.app.extention.showAlert
-import com.tcc.app.extention.visible
+import com.tcc.app.extention.*
 import com.tcc.app.interfaces.LoadMoreListener
 import com.tcc.app.modal.CheckInOutDataItem
 import com.tcc.app.modal.CheckInOutListModel
+import com.tcc.app.modal.CommonAddModal
 import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
 import com.tcc.app.utils.GpsTracker
+import com.tcc.app.utils.SessionManager
 import com.tcc.app.utils.Utils
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.fragment_checkinout.*
 import kotlinx.android.synthetic.main.reclerview_swipelayout.*
 import org.json.JSONException
 import org.json.JSONObject
 
 
-class ProfileCheckInCheckoutFragment : BaseFragment(), CheckInOutAdapter.OnItemSelected ,
-    LocationListener{
+class ProfileCheckInCheckoutFragment : BaseFragment(), CheckInOutAdapter.OnItemSelected,
+    LocationListener {
     private val REQUEST_LOCATION = 1
     private val list: MutableList<CheckInOutDataItem> = mutableListOf()
     var page: Int = 1
     var hasNextPage: Boolean = true
     var adapter: CheckInOutAdapter? = null
 
-    private  var locationManager: LocationManager?=null
+    private var locationManager: LocationManager? = null
 
 
     var latitude: Double? = 0.0
     var longitude: Double? = 0.0
+    var isBtnClick: Boolean = false
+    var address: String = ""
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -70,7 +74,7 @@ class ProfileCheckInCheckoutFragment : BaseFragment(), CheckInOutAdapter.OnItemS
                 }
             }
         })
-
+        isBtnClick = false
         swipeRefreshLayout.setOnRefreshListener {
             page = 1
             list.clear()
@@ -80,34 +84,17 @@ class ProfileCheckInCheckoutFragment : BaseFragment(), CheckInOutAdapter.OnItemS
             getCheckinoutList(page)
         }
 
-        //checkPermission()
-    }
-
-   /* private fun checkLocationPermission() {
-        if (ContextCompat.checkSelfPermission(
-                requireActivity(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                requireActivity(),
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                REQUEST_LOCATION
-            )
+        if (session.getDataByKey(SessionManager.KEY_CHECKIN_ID).equals("")) {
+            btnCHeckout.text = "Check In"
         } else {
-            locationManager =
-                requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
-
-            if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                //Write Function To enable gps
-                gpsEnable()
-            } else {
-                //GPS is already On then
-                getLocation()
-            }
+            btnCHeckout.text = "Check Out"
         }
-
-    }*/
+        btnCHeckout.setOnClickListener {
+            isBtnClick = true
+            checkPermission()
+        }
+        checkPermission()
+    }
 
 
     fun setCurrentLocation() {
@@ -146,13 +133,14 @@ class ProfileCheckInCheckoutFragment : BaseFragment(), CheckInOutAdapter.OnItemS
         val alert: AlertDialog = builder.create()
         alert.show()
     }
+
     fun checkPermission() {
         askPermission(
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION
         ) {
             //getLocation()
-             setCurrentLocation()
+            setCurrentLocation()
             //Request location updates:
         }.onDeclined { e ->
             if (e.hasDenied()) {
@@ -174,18 +162,6 @@ class ProfileCheckInCheckoutFragment : BaseFragment(), CheckInOutAdapter.OnItemS
         }
     }
 
-    private fun gpsEnable() {
-        val builder = AlertDialog.Builder(requireActivity())
-        builder.setMessage("Enable GPS")
-            .setCancelable(false)
-            .setPositiveButton("YES")
-            { dialog, which ->
-                requireActivity().startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
-            }
-
-        val alertDialog = builder.create()
-        alertDialog.show()
-    }
 
     fun setupRecyclerView() {
         val layoutManager = LinearLayoutManager(requireContext())
@@ -261,6 +237,7 @@ class ProfileCheckInCheckoutFragment : BaseFragment(), CheckInOutAdapter.OnItemS
     }
 
     override fun onResume() {
+
         page = 1
         list.clear()
         hasNextPage = true
@@ -268,7 +245,7 @@ class ProfileCheckInCheckoutFragment : BaseFragment(), CheckInOutAdapter.OnItemS
         setupRecyclerView()
         recyclerView.isLoading = true
         getCheckinoutList(page)
-        checkPermission()
+
         super.onResume()
     }
 
@@ -277,81 +254,41 @@ class ProfileCheckInCheckoutFragment : BaseFragment(), CheckInOutAdapter.OnItemS
     }
 
 
-   /* private fun getLocation() {
-        //create locationListener
-        locationManager = requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    fun getCurrentLocation() {
 
-        if (ActivityCompat.checkSelfPermission(
-                requireActivity(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                requireActivity(),
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                REQUEST_LOCATION
-            )
-        } else {
-            val LocationGps = locationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-            val LocationNetwork =
-                locationManager?.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
-            val LocationPassive =
-                locationManager?.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER)
-            if (LocationGps != null) {
-                val lat = LocationGps.latitude
-                val longi = LocationGps.longitude
-                latitude = lat.toString()
-                longitude = longi.toString()
-            } *//*else if (LocationNetwork != null) {
-                val lat = LocationNetwork.latitude
-                val longi = LocationNetwork.longitude
-                latitude = lat.toString()
-                longitude = longi.toString()
-            } else if (LocationPassive != null) {
-                val lat = LocationPassive.latitude
-                val longi = LocationPassive.longitude
-                latitude = lat.toString()
-                longitude = longi.toString()
-            }*//* else {
-                Toast.makeText(activity, "Can't Get Your Location", Toast.LENGTH_SHORT).show()
-            }
-            showAlert("$latitude    $longitude")
-
-        }
-    }*/
-
-    fun getCurrentLocation(){
-
-        //Start the qr scan activity
         val locationManager =
             requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
-            // getLocation();
-           var gpsTracker = GpsTracker(requireContext())
-            if (gpsTracker.canGetLocation()) {
-                latitude = gpsTracker.getLatitude()
-                longitude = gpsTracker.getLongitude()
-                if (latitude != 0.0 && longitude != 0.0) {
-                    showAlert(latitude.toString() + " " + longitude.toString())
-                   // getCurrentLocation()
-                } else {
-                    showAlert(latitude.toString() + " " + longitude.toString())
-                    Toast.makeText(requireContext(), "Getting Location...", Toast.LENGTH_SHORT)
-                        .show()
+        // getLocation();
+        var gpsTracker = GpsTracker(requireContext())
+        if (gpsTracker.canGetLocation()) {
+            latitude = gpsTracker.getLatitude()
+            longitude = gpsTracker.getLongitude()
+            address = gpsTracker.getAddress()
+
+            if (latitude != 0.0 && longitude != 0.0) {
+                if (isBtnClick) {
+                    if (session.getDataByKey(SessionManager.KEY_CHECKIN_ID).equals("")) {
+                        CheckInApi()
+                    } else {
+                        CheckOutApi()
+                    }
                 }
+
+            } else {
+                showAlert(latitude.toString() + " " + longitude.toString())
+                Toast.makeText(requireContext(), "Getting Location...", Toast.LENGTH_SHORT)
+                    .show()
             }
-             else {
-                gpsTracker.showSettingsAlert()
-            }
+        } else {
+            gpsTracker.showSettingsAlert()
+        }
 
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-       checkPermission()
+        checkPermission()
         super.onActivityResult(requestCode, resultCode, data)
     }
 
@@ -361,10 +298,100 @@ class ProfileCheckInCheckoutFragment : BaseFragment(), CheckInOutAdapter.OnItemS
         grantResults: IntArray
     ) {
 
-       checkPermission()
+        checkPermission()
     }
 
     override fun onLocationChanged(location: Location) {
-       showAlert(location.latitude.toString() + " " + location.longitude.toString())
+        showAlert(location.latitude.toString() + " " + location.longitude.toString())
+    }
+
+    fun CheckInApi() {
+        showProgressbar()
+        var result = ""
+        try {
+            val jsonBody = JSONObject()
+            jsonBody.put("UserID", session.user.data?.userID)
+            jsonBody.put("Checkintime", getCurrentDateTime())
+            jsonBody.put("Inlatitude", latitude)
+            jsonBody.put("Inlongitude", longitude)
+            jsonBody.put("InAddress", address)
+            result = Networking.setParentJsonData(
+                Constant.METHOD_ADD_CHECK_IN,
+                jsonBody
+            )
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+        Networking
+            .with(requireContext())
+            .getServices()
+            .AddCheckIn(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : CallbackObserver<CommonAddModal>() {
+                override fun onSuccess(response: CommonAddModal) {
+                    hideProgressbar()
+                    if (response.error == 200) {
+                        root.showSnackBar(response.message.toString())
+                        session.storeDataByKey(
+                            SessionManager.KEY_CHECKIN_ID,
+                            response.data.get(0).iD.toString()
+                        )
+                        btnCHeckout.text = "Check Out"
+                    } else {
+                        showAlert(response.message.toString())
+                    }
+                }
+
+                override fun onFailed(code: Int, message: String) {
+                    hideProgressbar()
+                    showAlert(message)
+                }
+            }).addTo(autoDisposable)
+    }
+
+    fun CheckOutApi() {
+        showProgressbar()
+        var result = ""
+        try {
+            val jsonBody = JSONObject()
+            jsonBody.put("UserID", session.user.data?.userID)
+            jsonBody.put("Checkouttime", getCurrentDateTime())
+            jsonBody.put("Outlatitude", latitude)
+            jsonBody.put("Outlongitude", longitude)
+            jsonBody.put("CheckincheckoutID", session.getDataByKey(SessionManager.KEY_CHECKIN_ID))
+            jsonBody.put("OutAddress", address)
+            result = Networking.setParentJsonData(
+                Constant.METHOD_ADD_CHECK_OUT,
+                jsonBody
+            )
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+        Networking
+            .with(requireContext())
+            .getServices()
+            .AddCheckOut(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : CallbackObserver<CommonAddModal>() {
+                override fun onSuccess(response: CommonAddModal) {
+                    hideProgressbar()
+                    if (response.error == 200) {
+                        root.showSnackBar(response.message.toString())
+                        session.storeDataByKey(
+                            SessionManager.KEY_CHECKIN_ID, ""
+                        )
+                        btnCHeckout.text = "Check In"
+                    } else {
+                        showAlert(response.message.toString())
+                    }
+                }
+
+                override fun onFailed(code: Int, message: String) {
+                    hideProgressbar()
+                    showAlert(message)
+                }
+            }).addTo(autoDisposable)
     }
 }
