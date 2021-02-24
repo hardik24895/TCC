@@ -108,7 +108,7 @@ class AttendanceListFragment() : BaseFragment(), AttendanceListAdapter.OnItemSel
         filter.setVisible(true)
 
         val add = menu.findItem(R.id.action_add)
-        add.setVisible(false)
+        add.setVisible(true)
 
         super.onCreateOptionsMenu(menu, inflater)
     }

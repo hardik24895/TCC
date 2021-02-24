@@ -249,4 +249,7 @@ interface APIInterface {
     @POST("service/")
     fun getCheckInOutList(@Body body: RequestBody): Observable<Response<CheckInOutListModel>>
 
+    @POST("service/")
+    fun getGloablAttendanceList(@Body body: RequestBody): Observable<Response<GlobalEmployeeAttedanceListModal>>
+
 }

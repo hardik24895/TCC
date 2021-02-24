@@ -1,5 +1,4 @@
 package com.tcc.app.fragment
-
 import android.Manifest
 import android.content.Context
 import android.content.DialogInterface
@@ -117,6 +116,7 @@ class ProfileCheckInCheckoutFragment : BaseFragment(), CheckInOutAdapter.OnItemS
             alertbox("Gps Status", "Your Device's GPS is Disable")
         }
     }
+
 
     /*----------Method to create an AlertBox ------------- */
     protected fun alertbox(title: String?, mymessage: String?) {
@@ -330,7 +330,7 @@ class ProfileCheckInCheckoutFragment : BaseFragment(), CheckInOutAdapter.OnItemS
             requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
             // getLocation();
-           var gpsTracker = GpsTracker(requireContext())
+        val gpsTracker = GpsTracker(requireContext())
             if (gpsTracker.canGetLocation()) {
                 latitude = gpsTracker.getLatitude()
                 longitude = gpsTracker.getLongitude()
