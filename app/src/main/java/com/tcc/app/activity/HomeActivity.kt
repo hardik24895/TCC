@@ -3,7 +3,6 @@ package com.tcc.app.activity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -20,8 +19,6 @@ import com.tcc.app.R
 import com.tcc.app.extention.addFragment
 import com.tcc.app.fragment.ProfileMainFragment
 import com.tcc.app.utils.SessionManager
-
-
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -36,7 +33,7 @@ class HomeActivity : AppCompatActivity() {
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         var headerview: View = navView.getHeaderView(0)
-        var nav_main: ConstraintLayout = headerview?.findViewById(R.id.nav_main);
+        var nav_main: ConstraintLayout = headerview.findViewById(R.id.nav_main);
         nav_main.setOnClickListener {
             addFragment(ProfileMainFragment(), R.id.nav_host_fragment)
             drawerLayout.closeDrawers()
@@ -103,8 +100,6 @@ class HomeActivity : AppCompatActivity() {
             navView.getMenu().findItem(R.id.nav_visitor).setVisible(false)
             navView.invalidate()
         }
-
-
 
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {

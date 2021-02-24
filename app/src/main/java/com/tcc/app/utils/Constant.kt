@@ -10,6 +10,7 @@ object Constant {
     const val PDF_INVOICE_URL = "${BASE_URL}assets/uploads/invoice/"
     const val PDF_QUOTATION_URL = "${BASE_URL}assets/uploads/estimation/"
     const val PDF_INSPECTION_URL = "${BASE_URL}assets/uploads/inspection/"
+    const val DOCUMENT_URL = "${BASE_URL}assets/uploads/document/"
     const val CMS_URL ="${API_URL}service/getPage?PageName="
 
     const val OVERTIME = "overtime"
@@ -102,11 +103,12 @@ object Constant {
     const val METHOD_ADD_TICKET = "addTicket"
     const val METHOD_GET_DASHBOARD = "getDashboard"
     const val METHOD_GET_DASHBOARD_LEAD = "getDashboardLead"
-    const val METHOD_GET_INSPECTION = "getInspection"
-    const val METHOD_GET_USER_BY_TYPE = "getUserByUserType"
-    const val METHOD_ADD_INSPECTION = "addInspection"
     const val METHOD_GET_PANELTLY = "getPenalty"
     const val METHOD_GET_INSPECTION = "getInspection"
     const val METHOD_GET_USER_BY_TYPE = "getUserByUserType"
     const val METHOD_ADD_INSPECTION = "addInspection"
+    const val METHOD_ADD_CUSTOMER_SITE_DOCUMENT = "addCustomerSitesDocument"
+    const val METHOD_GET_DOCUMENT_LIST = "getCustomerSitesDocument"
+    const val METHOD_EDIT_CUSTOMER_SITE_DOCUMENT = "editCustomerSitesDocument"
+    const val METHOD_REMOVE_CUSTOMER_SITE_DOCUMENT = "removeCustomerSitesDocument"
 }

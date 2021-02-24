@@ -205,7 +205,6 @@ interface APIInterface {
     @POST("service/")
     fun AddInspection(@Body body: RequestBody): Observable<Response<CommonAddModal>>
 
-
     @Multipart
     @POST("service/")
     fun AddInspectionImage(
@@ -213,28 +212,34 @@ interface APIInterface {
         @Part("method") method: RequestBody,
         @Part("InspectionID") FirstName: RequestBody
     ): Observable<Response<CommonAddModal>>
-
-
-    @POST("service/")
-    fun getInspectionList(@Body body: RequestBody): Observable<Response<InspectionListModel>>
-
-    @POST("service/")
-    fun getUserbyTypeList(@Body body: RequestBody): Observable<Response<GetUserByType>>
-
-    @POST("service/")
-    fun AddInspection(@Body body: RequestBody): Observable<Response<CommonAddModal>>
-
-
-    @Multipart
-    @POST("service/")
-    fun AddInspectionImage(
-        @Part ImageData: MultipartBody.Part,
-        @Part("method") method: RequestBody,
-        @Part("InspectionID") FirstName: RequestBody
-    ): Observable<Response<CommonAddModal>>
-
 
     @POST("service/")
     fun getPaneltyList(@Body body: RequestBody): Observable<Response<PenaltyListModel>>
 
+    @Multipart
+    @POST("service/")
+    fun AddCustomerSiteDocument(
+        @Part ImageData: MultipartBody.Part,
+        @Part("method") method: RequestBody,
+        @Part("UserID") UserID: RequestBody,
+        @Part("Title") Title: RequestBody,
+        @Part("SitesID") Description: RequestBody
+    ): Observable<Response<CommonAddModal>>
+
+    @POST("service/")
+    fun getDocumentList(@Body body: RequestBody): Observable<Response<DocumentListModal>>
+
+    @Multipart
+    @POST("service/")
+    fun EditCustomerSiteDocument(
+        @Part ImageData: MultipartBody.Part,
+        @Part("method") method: RequestBody,
+        @Part("UserID") UserID: RequestBody,
+        @Part("Title") Title: RequestBody,
+        @Part("SitesID") Description: RequestBody,
+        @Part("CustomerSitesDocumentID") DocumentID: RequestBody
+    ): Observable<Response<CommonAddModal>>
+
+    @POST("service/")
+    fun deleteDocument(@Body body: RequestBody): Observable<Response<CommonAddModal>>
 }

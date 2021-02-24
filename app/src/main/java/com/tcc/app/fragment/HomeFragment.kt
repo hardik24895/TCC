@@ -63,6 +63,7 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
         setHomeScreenTitle(requireActivity(), getString(R.string.menu_home))
         cityListArray = ArrayList()
         cityNameList = ArrayList()
+        setSlider()
         getCityList()
         setuprvHomeCounterMarchant()
         // recyclerView.setNestedScrollingEnabled(false);
@@ -76,9 +77,11 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
         })
 
 
+
+
         rbDaly.isChecked = true
 
-        getDashBoardCount(rbDaly.text.toString())
+        //getDashBoardCount(rbDaly.text.toString())
 
         spCity.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -221,7 +224,7 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
             val jsonBody = JSONObject()
             jsonBody.put("CityID", session.getDataByKey(SessionManager.KEY_CITY_ID))
             jsonBody.put("FilterType", filter)
-            jsonBody.put("UserID", -1)
+            jsonBody.put("UserID", session.user.data?.userID)
 
             result = Networking.setParentJsonData(Constant.METHOD_GET_DASHBOARD, jsonBody)
 
@@ -289,7 +292,7 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
                 }
 
                 override fun onFailed(code: Int, message: String) {
-                    if (list.size > 0) {
+                    if (leadList.size > 0) {
                         progressbar.invisible()
                     }
                     showAlert(message)
