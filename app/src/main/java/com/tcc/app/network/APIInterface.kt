@@ -218,12 +218,6 @@ interface APIInterface {
 
 
     @POST("service/")
-    fun addPanelty(@Body body: RequestBody): Observable<Response<CommonAddModal>>
-
-    @POST("service/")
-    fun getCheckInOutList(@Body body: RequestBody): Observable<Response<CheckInOutListModel>>
-
-    @POST("service/")
     fun AddCheckIn(@Body body: RequestBody): Observable<Response<CommonAddModal>>
 
 
@@ -256,5 +250,14 @@ interface APIInterface {
 
     @POST("service/")
     fun deleteDocument(@Body body: RequestBody): Observable<Response<CommonAddModal>>
+
+    @POST("service/")
+    fun addPanelty(@Body body: RequestBody): Observable<Response<CommonAddModal>>
+
+    @POST("service/")
+    fun getCheckInOutList(@Body body: RequestBody): Observable<Response<CheckInOutListModel>>
+
+    @POST("service/")
+    fun getGloablAttendanceList(@Body body: RequestBody): Observable<Response<GlobalEmployeeAttedanceListModal>>
 
 }

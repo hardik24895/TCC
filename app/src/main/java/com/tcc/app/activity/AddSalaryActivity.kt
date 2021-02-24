@@ -15,9 +15,6 @@ import com.tcc.app.utils.TimeStamp.formatDateFromString
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_add_salary.*
-import kotlinx.android.synthetic.main.activity_add_salary.btnSubmit
-import kotlinx.android.synthetic.main.activity_add_salary.root
-import kotlinx.android.synthetic.main.activity_attendance.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 import org.json.JSONException
 import org.json.JSONObject
@@ -36,7 +33,7 @@ class AddSalaryActivity : BaseActivity() {
         imgBack.visible()
         if (intent.hasExtra(Constant.DATA)) {
             employeeDataItem = intent.getSerializableExtra(Constant.DATA) as EmployeeDataItem
-            calendarView.invisible()
+
         }
 
         imgBack.setOnClickListener {
