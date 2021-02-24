@@ -2,8 +2,10 @@ package com.tcc.app.fragment
 
 import android.Manifest
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
-import android.content.pm.PackageManager.PERMISSION_GRANTED
+import android.location.Location
+import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
@@ -12,9 +14,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.github.florent37.runtimepermission.kotlin.askPermission
 import com.tcc.app.R
 import com.tcc.app.adapter.CheckInOutAdapter
 import com.tcc.app.extention.invisible
@@ -27,6 +28,8 @@ import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
+import com.tcc.app.utils.GpsTracker
+import com.tcc.app.utils.Utils
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.reclerview_swipelayout.*
@@ -34,18 +37,19 @@ import org.json.JSONException
 import org.json.JSONObject
 
 
-class ProfileCheckInCheckoutFragment : BaseFragment(), CheckInOutAdapter.OnItemSelected {
+class ProfileCheckInCheckoutFragment : BaseFragment(), CheckInOutAdapter.OnItemSelected ,
+    LocationListener{
     private val REQUEST_LOCATION = 1
     private val list: MutableList<CheckInOutDataItem> = mutableListOf()
     var page: Int = 1
     var hasNextPage: Boolean = true
     var adapter: CheckInOutAdapter? = null
 
-    private lateinit var locationManager: LocationManager
+    private  var locationManager: LocationManager?=null
 
 
-    var latitude: String? = ""
-    var longitude: String? = ""
+    var latitude: Double? = 0.0
+    var longitude: Double? = 0.0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -76,10 +80,10 @@ class ProfileCheckInCheckoutFragment : BaseFragment(), CheckInOutAdapter.OnItemS
             getCheckinoutList(page)
         }
 
-        checkLocationPermission()
+        //checkPermission()
     }
 
-    private fun checkLocationPermission() {
+   /* private fun checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(
                 requireActivity(),
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -103,6 +107,71 @@ class ProfileCheckInCheckoutFragment : BaseFragment(), CheckInOutAdapter.OnItemS
             }
         }
 
+    }*/
+
+
+    fun setCurrentLocation() {
+        if (Utils.displayGpsStatus(requireContext())) {
+            getCurrentLocation()
+        } else {
+            alertbox("Gps Status", "Your Device's GPS is Disable")
+        }
+    }
+
+    /*----------Method to create an AlertBox ------------- */
+    protected fun alertbox(title: String?, mymessage: String?) {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
+        builder.setMessage("Your Device's GPS is Disable")
+            .setCancelable(false)
+            .setTitle("** Gps Status **")
+            .setPositiveButton("Gps On",
+                object : DialogInterface.OnClickListener {
+                    override fun onClick(dialog: DialogInterface, id: Int) {
+                        // finish the current activity
+                        // AlertBoxAdvance.this.finish();
+                        val myIntent = Intent(
+                            Settings.ACTION_LOCATION_SOURCE_SETTINGS
+                        )
+                        startActivity(myIntent)
+                        dialog.cancel()
+                    }
+                })
+            .setNegativeButton("Cancel",
+                object : DialogInterface.OnClickListener {
+                    override fun onClick(dialog: DialogInterface, id: Int) {
+                        // cancel the dialog box
+                        dialog.cancel()
+                    }
+                })
+        val alert: AlertDialog = builder.create()
+        alert.show()
+    }
+    fun checkPermission() {
+        askPermission(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ) {
+            //getLocation()
+             setCurrentLocation()
+            //Request location updates:
+        }.onDeclined { e ->
+            if (e.hasDenied()) {
+
+                AlertDialog.Builder(requireContext()).setMessage("Please accept our permissions")
+                    .setPositiveButton("yes") { dialog, which ->
+                        e.askAgain();
+                    } //ask again
+                    .show();
+            }
+
+            if (e.hasForeverDenied()) {
+                AlertDialog.Builder(requireContext()).setMessage("Please accept our permissions")
+                    .setPositiveButton("yes") { dialog, which ->
+                        e.goToSettings()
+                    } //ask again
+                    .show();
+            }
+        }
     }
 
     private fun gpsEnable() {
@@ -199,6 +268,7 @@ class ProfileCheckInCheckoutFragment : BaseFragment(), CheckInOutAdapter.OnItemS
         setupRecyclerView()
         recyclerView.isLoading = true
         getCheckinoutList(page)
+        checkPermission()
         super.onResume()
     }
 
@@ -207,7 +277,10 @@ class ProfileCheckInCheckoutFragment : BaseFragment(), CheckInOutAdapter.OnItemS
     }
 
 
-    private fun getLocation() {
+   /* private fun getLocation() {
+        //create locationListener
+        locationManager = requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
         if (ActivityCompat.checkSelfPermission(
                 requireActivity(),
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -222,17 +295,17 @@ class ProfileCheckInCheckoutFragment : BaseFragment(), CheckInOutAdapter.OnItemS
                 REQUEST_LOCATION
             )
         } else {
-            val LocationGps = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+            val LocationGps = locationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)
             val LocationNetwork =
-                locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+                locationManager?.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
             val LocationPassive =
-                locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER)
+                locationManager?.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER)
             if (LocationGps != null) {
                 val lat = LocationGps.latitude
                 val longi = LocationGps.longitude
                 latitude = lat.toString()
                 longitude = longi.toString()
-            } else if (LocationNetwork != null) {
+            } *//*else if (LocationNetwork != null) {
                 val lat = LocationNetwork.latitude
                 val longi = LocationNetwork.longitude
                 latitude = lat.toString()
@@ -242,17 +315,43 @@ class ProfileCheckInCheckoutFragment : BaseFragment(), CheckInOutAdapter.OnItemS
                 val longi = LocationPassive.longitude
                 latitude = lat.toString()
                 longitude = longi.toString()
-            } else {
+            }*//* else {
                 Toast.makeText(activity, "Can't Get Your Location", Toast.LENGTH_SHORT).show()
             }
             showAlert("$latitude    $longitude")
 
         }
+    }*/
+
+    fun getCurrentLocation(){
+
+        //Start the qr scan activity
+        val locationManager =
+            requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
+            // getLocation();
+           var gpsTracker = GpsTracker(requireContext())
+            if (gpsTracker.canGetLocation()) {
+                latitude = gpsTracker.getLatitude()
+                longitude = gpsTracker.getLongitude()
+                if (latitude != 0.0 && longitude != 0.0) {
+                    showAlert(latitude.toString() + " " + longitude.toString())
+                   // getCurrentLocation()
+                } else {
+                    showAlert(latitude.toString() + " " + longitude.toString())
+                    Toast.makeText(requireContext(), "Getting Location...", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+             else {
+                gpsTracker.showSettingsAlert()
+            }
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-        checkLocationPermission()
+       checkPermission()
         super.onActivityResult(requestCode, resultCode, data)
     }
 
@@ -262,6 +361,10 @@ class ProfileCheckInCheckoutFragment : BaseFragment(), CheckInOutAdapter.OnItemS
         grantResults: IntArray
     ) {
 
-        checkLocationPermission()
+       checkPermission()
+    }
+
+    override fun onLocationChanged(location: Location) {
+       showAlert(location.latitude.toString() + " " + location.longitude.toString())
     }
 }
