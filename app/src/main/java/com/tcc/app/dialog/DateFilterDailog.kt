@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.LifecycleOwner
 import com.tcc.app.R
+import com.tcc.app.extention.getCurrentDate
 import com.tcc.app.extention.getValue
 import com.tcc.app.extention.showDateTimePicker
 import com.tcc.app.network.AutoDisposable
@@ -67,7 +68,7 @@ class DateFilterDailog(context: Context) : BlurDialogFragment(), LifecycleOwner 
         }
 
         edtStartDate.setText(TimeStamp.getStartDateRange())
-        edtEndDate.setText(TimeStamp.getEndDateRange())
+        edtEndDate.setText(getCurrentDate())
 
         edtStartDate.setOnClickListener { showDateTimePicker(requireActivity(), edtStartDate) }
 

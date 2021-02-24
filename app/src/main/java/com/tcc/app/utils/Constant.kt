@@ -111,6 +111,7 @@ object Constant {
     const val METHOD_GET_DOCUMENT_LIST = "getCustomerSitesDocument"
     const val METHOD_EDIT_CUSTOMER_SITE_DOCUMENT = "editCustomerSitesDocument"
     const val METHOD_REMOVE_CUSTOMER_SITE_DOCUMENT = "removeCustomerSitesDocument"
+    const val MOTHED_EDIT_PROFILE ="editProfile"
     const val METHOD_ADD_PANELTLY = "addPenalty"
     const val METHOD_GET_CHECK_IN_OUT = "getCheckinout"
     const val METHOD_ADD_CHECK_IN = "addCheckIN"

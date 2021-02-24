@@ -256,4 +256,5 @@ interface APIInterface {
 
     @POST("service/")
     fun deleteDocument(@Body body: RequestBody): Observable<Response<CommonAddModal>>
+
 }
