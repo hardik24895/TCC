@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Window
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import com.tcc.app.R
 import com.tcc.app.extention.*
 import com.tcc.app.modal.GetRoleModal
@@ -33,10 +35,10 @@ class LoginActivity : BaseActivity() {
         txtForgotpwd.setOnClickListener {
             goToActivity<ForgotPasswordActivity>()
         }
-
         btnLogin.setOnClickListener {
             validation()
         }
+
         getStateList()
 
     }
@@ -61,7 +63,22 @@ class LoginActivity : BaseActivity() {
             }
 
             else -> {
-                login("")
+                FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        Log.w("", "Fetching FCM registration token failed", task.exception)
+                        return@OnCompleteListener
+                    }
+
+                    // Get new FCM registration token
+                    val token = task.result
+
+                    login( token.toString())
+                    // Log and toast
+                    // val msg = getString(R.string.msg_token_fmt, token)
+                    Log.d("token", token.toString())
+                    //  Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+                })
+
             }
 
         }

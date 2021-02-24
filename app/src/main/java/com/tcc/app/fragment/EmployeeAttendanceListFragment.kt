@@ -124,7 +124,6 @@ class EmployeeAttendanceListFragment() : BaseFragment(),
             jsonBody.put("CurrentPage", page)
             jsonBody.put("UserID", empItemData?.userID)
 
-
             result = Networking.setParentJsonData(
                 Constant.METHOD_ADD_EMPLOYEE_WISE_ATTENDENCE,
                 jsonBody

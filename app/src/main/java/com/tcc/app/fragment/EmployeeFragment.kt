@@ -17,6 +17,7 @@ import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
+import com.tcc.app.utils.SessionManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.reclerview_swipelayout.*
@@ -120,7 +121,7 @@ class EmployeeFragment : BaseFragment(), EmployeeAdapter.OnItemSelected {
             jsonBody.put("CurrentPage", page)
             jsonBody.put("Name", "")
             jsonBody.put("EmailID", "")
-            jsonBody.put("CityID", "-1")
+            jsonBody.put("CityID", session.getDataByKey(SessionManager.KEY_CITY_ID))
             jsonBody.put("UsertypeID", "-1")
 
 

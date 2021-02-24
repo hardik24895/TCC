@@ -34,9 +34,9 @@ class AddAttendanceActivity : BaseActivity(), AttendanceAdapter.OnItemSelected {
     var page: Int = 1
     var hasNextPage: Boolean = true
     var selectedDateStr: String = getCurrentDate()
-
     var adapter: AttendanceAdapter? = null
     var quotationItem: QuotationItem? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
@@ -56,9 +56,7 @@ class AddAttendanceActivity : BaseActivity(), AttendanceAdapter.OnItemSelected {
         }
 
         btnSubmit.setOnClickListener {
-
             AddAttendence()
-
         }
 
 
@@ -225,13 +223,10 @@ class AddAttendanceActivity : BaseActivity(), AttendanceAdapter.OnItemSelected {
             jsonBody.put("CustomerID", quotationItem?.customerID)
             jsonBody.put("QuotationID", quotationItem?.quotationID)
             jsonBody.put("AttendanceDate", formatDateFromString(selectedDateStr!!))
-
-
             result = Networking.setParentJsonData(
                 Constant.METHOD_ADD_ATTEDANCE_LIST,
                 jsonBody
             )
-
         } catch (e: JSONException) {
             e.printStackTrace()
         }
