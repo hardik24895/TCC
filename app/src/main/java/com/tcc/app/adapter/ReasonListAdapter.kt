@@ -6,16 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tcc.app.R
-import com.tcc.app.modal.PaleltyUserListItem
+import com.tcc.app.modal.RejectReasonDataItem
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.row_panelty_user.*
+import kotlinx.android.synthetic.main.row_inspection_answer_checkbox.*
 
-class PenaltyUserListAdapter(
+
+class ReasonListAdapter(
     private val mContext: Context,
-    var list: List<PaleltyUserListItem> = mutableListOf(),
-
-
-    ) : RecyclerView.Adapter<PenaltyUserListAdapter.ItemHolder>() {
+    var list: MutableList<RejectReasonDataItem> = mutableListOf(),
+    private val listener: OnItemSelected
+) : RecyclerView.Adapter<ReasonListAdapter.ItemHolder>() {
 
     override fun getItemCount(): Int {
         return list.size
@@ -24,7 +24,7 @@ class PenaltyUserListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         return ItemHolder(
             LayoutInflater.from(mContext).inflate(
-                R.layout.row_panelty_user,
+                R.layout.row_inspection_answer_checkbox,
                 parent, false
             )
         )
@@ -33,27 +33,29 @@ class PenaltyUserListAdapter(
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         val data = list[position]
 
-        holder.bindData(mContext, data)
+        holder.bindData(mContext, data, listener)
+
     }
 
     interface OnItemSelected {
-        fun onItemSelect(position: Int, data: String)
+        fun onItemSelect(position: Int, data: RejectReasonDataItem, flag: Boolean)
     }
 
     class ItemHolder(override val containerView: View) :
         RecyclerView.ViewHolder(containerView),
         LayoutContainer {
 
+
         fun bindData(
-            context: Context,
-            data: PaleltyUserListItem,
+            context: Context, data: RejectReasonDataItem, listener: OnItemSelected
         ) {
-            txtQuestionTitle.text = data.employeeName
-            txtAns.text = "${context.getText(R.string.RS)}  ${data.penalty}"
+            cbAnswer.setText(data.reason)
+            cbAnswer.setOnClickListener {
+                listener.onItemSelect(adapterPosition, data, cbAnswer.isChecked)
+            }
 
         }
 
+
     }
-
-
 }

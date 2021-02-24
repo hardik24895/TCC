@@ -56,26 +56,15 @@
 
 
         <com.tcc.app.customview.TextviewReguler
-            android:id="@+id/txtSiteName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_location"
-            android:drawablePadding="@dimen/_10sdp"
-            android:paddingTop="@dimen/_10sdp"
-            android:text="508, Sentorini Square, Jodhpur Cross Road Ahmedabad"
-            app:layout_constraintStart_toStartOf="@+id/imgProfile"
-            app:layout_constraintTop_toBottomOf="@+id/imgProfile" />
-
-        <com.tcc.app.customview.TextviewReguler
             android:id="@+id/txtReason"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_reason"
             android:drawablePadding="@dimen/_10sdp"
-            android:paddingTop="@dimen/_5sdp"
+            android:paddingTop="@dimen/_10sdp"
             android:text="Late Comming, Misbehave"
             app:layout_constraintStart_toStartOf="@+id/imgProfile"
-            app:layout_constraintTop_toBottomOf="@+id/txtSiteName" />
+            app:layout_constraintTop_toBottomOf="@+id/imgProfile" />
 
         <com.tcc.app.customview.TextviewBold
             android:id="@+id/txtEmployeeTitle"

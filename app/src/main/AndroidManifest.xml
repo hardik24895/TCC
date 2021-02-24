@@ -7,6 +7,9 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
@@ -18,11 +21,11 @@
         android:allowBackup="true"
         android:icon="@mipmap/new_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/new_icon"
         android:requestLegacyExternalStorage="true"
+        android:roundIcon="@mipmap/new_icon"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.RMEnterPrise">
+        android:theme="@style/Theme.RMEnterPrise"
+        android:usesCleartextTraffic="true">
         <activity android:name="com.tcc.app.activity.AddEmployeeActivity" />
         <activity android:name="com.tcc.app.activity.CustomerDetailActivity" />
         <activity

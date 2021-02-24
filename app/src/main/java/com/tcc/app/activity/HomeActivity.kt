@@ -3,7 +3,6 @@ package com.tcc.app.activity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -37,9 +36,9 @@ class HomeActivity : AppCompatActivity() {
         val navView: NavigationView = findViewById(R.id.nav_view)
 
         var headerview: View = navView.getHeaderView(0)
-        var nav_main: ConstraintLayout = headerview?.findViewById(R.id.nav_main);
+        var nav_main: ConstraintLayout = headerview.findViewById(R.id.nav_main);
         nav_main.setOnClickListener {
-            addFragment(ProfileMainFragment(), R.id.nav_host_fragment)
+            this.addFragment(ProfileMainFragment(), R.id.nav_host_fragment)
             drawerLayout.closeDrawers()
         }
 
@@ -134,6 +133,12 @@ class HomeActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    override fun onBackPressed() {
+
+
+        super.onBackPressed()
     }
 
 }

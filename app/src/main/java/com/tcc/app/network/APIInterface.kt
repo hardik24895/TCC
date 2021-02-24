@@ -218,4 +218,11 @@ interface APIInterface {
     @POST("service/")
     fun getPaneltyList(@Body body: RequestBody): Observable<Response<PenaltyListModel>>
 
+
+    @POST("service/")
+    fun addPanelty(@Body body: RequestBody): Observable<Response<CommonAddModal>>
+
+    @POST("service/")
+    fun getCheckInOutList(@Body body: RequestBody): Observable<Response<CheckInOutListModel>>
+
 }

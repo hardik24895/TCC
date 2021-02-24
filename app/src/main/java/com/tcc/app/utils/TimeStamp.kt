@@ -105,6 +105,46 @@ object TimeStamp {
         return outputDate
     }
 
+    fun getDateFromCheckInTime(Checkindate: String): String {
+
+
+        var parsed: Date? = null
+        var outputDate = ""
+
+        val dfInput = SimpleDateFormat("dd-MM-yyyy hh:mm:ss", Locale.getDefault())
+        val dfOutput = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+
+        try {
+            parsed = dfInput.parse(Checkindate)
+            outputDate = dfOutput.format(parsed)
+
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        return outputDate
+
+    }
+
+    fun getTimeFromCheckInOUtTime(Checkindate: String): String {
+
+
+        var parsed: Date? = null
+        var outputDate = ""
+
+        val dfInput = SimpleDateFormat("dd-MM-yyyy hh:mm:ss", Locale.getDefault())
+        val dfOutput = SimpleDateFormat("hh:mm:ss", Locale.getDefault())
+
+        try {
+            parsed = dfInput.parse(Checkindate)
+            outputDate = dfOutput.format(parsed)
+
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        return outputDate
+
+    }
+
 
     fun getLocalfromUtc(utc_data: String, inputPattern: String, outputPattern: String): String {
         var formattedDate = ""

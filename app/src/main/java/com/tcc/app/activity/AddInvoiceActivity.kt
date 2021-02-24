@@ -397,7 +397,6 @@ class AddInvoiceActivity : BaseActivity() {
         lin_add_user!!.addView(rowView)
     }
 
-
     fun getUserTypeList() {
         var result = ""
         try {
@@ -475,7 +474,6 @@ class AddInvoiceActivity : BaseActivity() {
 
             }).addTo(autoDisposable)
     }
-
 
     fun getInvoiceAttedanceList() {
 
@@ -570,7 +568,6 @@ class AddInvoiceActivity : BaseActivity() {
             }).addTo(autoDisposable)
     }
 
-
     fun setUpdatedTotal() {
 
         var TotalAmount: Float = 0f
@@ -626,7 +623,6 @@ class AddInvoiceActivity : BaseActivity() {
             }
         }
     }
-
 
     fun AddInvoice() {
         var result = ""
