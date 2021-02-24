@@ -242,4 +242,11 @@ interface APIInterface {
 
     @POST("service/")
     fun deleteDocument(@Body body: RequestBody): Observable<Response<CommonAddModal>>
+
+    @POST("service/")
+    fun addPanelty(@Body body: RequestBody): Observable<Response<CommonAddModal>>
+
+    @POST("service/")
+    fun getCheckInOutList(@Body body: RequestBody): Observable<Response<CheckInOutListModel>>
+
 }

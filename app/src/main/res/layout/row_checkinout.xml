@@ -22,7 +22,6 @@
             android:drawablePadding="@dimen/_10sdp"
             android:paddingTop="@dimen/_10sdp"
             android:text="Date"
-
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
