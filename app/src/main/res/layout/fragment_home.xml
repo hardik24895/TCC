@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/swipe_view_bg"
     android:id="@+id/scroll"
-    android:fillViewport="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent">
@@ -95,7 +95,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:paddingHorizontal="@dimen/_8sdp"
-
                     android:paddingVertical="@dimen/_5sdp"
                     android:scrollbars="none"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -192,53 +191,51 @@
             app:layout_constraintTop_toBottomOf="@id/txtService">
 
 
+            <com.tcc.app.widgets.LoadMoreRecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:clipToPadding="false"
+                app:layout_constraintBottom_toTopOf="@+id/progressbar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                tools:listitem="@layout/row_customer" />
 
+            <com.tcc.app.customview.TextviewSemiBold
+                android:id="@+id/tvInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="?actionBarSize"
+                android:layout_marginEnd="32dp"
+                android:drawablePadding="20dp"
 
-                <com.tcc.app.widgets.LoadMoreRecyclerView
-                    android:id="@+id/recyclerView"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:clipToPadding="false"
-                    android:nestedScrollingEnabled="false"
-                    app:layout_constraintBottom_toTopOf="@+id/progressbar"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                android:gravity="center"
+                android:lineSpacingExtra="2.5dp"
+                android:padding="25dp"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <com.tcc.app.customview.TextviewSemiBold
-                    android:id="@+id/tvInfo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="?actionBarSize"
-                    android:layout_marginEnd="32dp"
-                    android:drawablePadding="20dp"
+            <ProgressBar
+                android:id="@+id/progressbar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-                    android:gravity="center"
-                    android:lineSpacingExtra="2.5dp"
-                    android:padding="25dp"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ProgressBar
-                    android:id="@+id/progressbar"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:indeterminate="true"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </androidx.core.widget.NestedScrollView>

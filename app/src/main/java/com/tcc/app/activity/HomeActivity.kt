@@ -19,8 +19,6 @@ import com.tcc.app.R
 import com.tcc.app.extention.addFragment
 import com.tcc.app.fragment.ProfileMainFragment
 import com.tcc.app.utils.SessionManager
-
-
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -34,7 +32,6 @@ class HomeActivity : AppCompatActivity() {
         session = SessionManager(this)
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
-
         var headerview: View = navView.getHeaderView(0)
         var nav_main: ConstraintLayout = headerview.findViewById(R.id.nav_main);
         nav_main.setOnClickListener {
@@ -104,8 +101,6 @@ class HomeActivity : AppCompatActivity() {
             navView.invalidate()
         }
 
-
-
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
                 Log.w("", "Fetching FCM registration token failed", task.exception)
@@ -116,9 +111,9 @@ class HomeActivity : AppCompatActivity() {
             val token = task.result
 
             // Log and toast
-           // val msg = getString(R.string.msg_token_fmt, token)
+            // val msg = getString(R.string.msg_token_fmt, token)
             Log.d("token", token.toString())
-          //  Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+            //  Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
         })
 
     }

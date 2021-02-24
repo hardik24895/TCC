@@ -217,4 +217,7 @@
     <string name="medium">Medium</string>
     <string name="low">Low</string>
     <string name="default_notification_channel_id">tcc_v1</string>
+    <string name="upload_document">Upload Document</string>
+    <string name="alert">Alert</string>
+    <string name="msg_delete">Are you want to sure Delete ?</string>
 </resources>

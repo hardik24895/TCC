@@ -24,6 +24,7 @@ import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
+import com.tcc.app.utils.TimeStamp.formatDateFromString
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_quotation.*
@@ -376,9 +377,13 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
             val jsonBody = JSONObject()
             jsonBody.put("UserID", session.user.data?.userID)
             jsonBody.put("QuotationID", QuotationId)
-            jsonBody.put("StartDate", startDate)
-            jsonBody.put("EndDate", endDate)
+            jsonBody.put("StartDate", formatDateFromString(startDate) )
+            jsonBody.put("EndDate", formatDateFromString(endDate))
             jsonBody.put("CustomerID", customerId)
+            if (leadItem != null)
+                jsonBody.put("VisitorID", leadItem?.visitorID.toString())
+            else
+                jsonBody.put("VisitorID", visitorId.toString())
 
             result = Networking.setParentJsonData(
                 Constant.METHOD_ACCEPT_REASON,

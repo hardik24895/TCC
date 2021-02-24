@@ -89,8 +89,10 @@ class QuotationAdapter(
             }
             if (data.service?.equals("Deep cleaning")!! || data.service?.equals("Sanetize")!!) {
                 btnAttencence.invisible()
+                btnTeamDefination.invisible()
             } else {
                 btnAttencence.visible()
+                btnTeamDefination.visible()
             }
 
             btnAttencence.setOnClickListener {

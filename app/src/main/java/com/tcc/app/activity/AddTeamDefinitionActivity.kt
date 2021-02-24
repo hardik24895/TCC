@@ -220,7 +220,7 @@ class AddTeamDefinitionActivity : BaseActivity() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeWith(object : CallbackObserver<CommonAddModal>() {
                 override fun onSuccess(response: CommonAddModal) {
-
+                           hideProgressbar()
                     if (response.error == 200) {
                         root.showSnackBar(response.message.toString())
                         finish()

@@ -52,7 +52,6 @@ class TeamDefinitionListActivity : BaseActivity(), TeamDefinitionListAdapter.OnI
         }
 
         imgAdd.setOnClickListener {
-            goToActivity<AddTeamDefinitionActivity>()
             val i = Intent(this@TeamDefinitionListActivity, AddTeamDefinitionActivity::class.java)
             i.putExtra(Constant.DATA, quotationItem)
             startActivity(i)

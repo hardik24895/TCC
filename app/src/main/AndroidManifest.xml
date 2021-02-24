@@ -65,6 +65,9 @@
         <activity android:name=".activity.TeamDefinitionListActivity" />
         <activity android:name=".activity.AddLeadReminderActivity" />
         <activity android:name=".activity.AddSalaryActivity" />
+        <activity android:name=".activity.AddUploadDocument"/>
+        <activity android:name=".activity.EditUploadDocument"/>
+        <activity android:name=".activity.DocumentListActivity"/>
 
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"

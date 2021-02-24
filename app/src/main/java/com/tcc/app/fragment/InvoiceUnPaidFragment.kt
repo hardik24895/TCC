@@ -44,13 +44,7 @@ class InvoiceUnPaidFragment : BaseFragment(), InvoicePaidAdapter.OnItemSelected 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        page = 1
-        list.clear()
-        hasNextPage = true
-        swipeRefreshLayout.isRefreshing = true
-        setupRecyclerView()
-        recyclerView.isLoading = true
-        getInvoiceList(page)
+
         recyclerView.setLoadMoreListener(object : LoadMoreListener {
             override fun onLoadMore() {
                 if (hasNextPage && !recyclerView.isLoading) {
@@ -69,6 +63,17 @@ class InvoiceUnPaidFragment : BaseFragment(), InvoicePaidAdapter.OnItemSelected 
             getInvoiceList(page)
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        page = 1
+        list.clear()
+        hasNextPage = true
+        swipeRefreshLayout.isRefreshing = true
+        setupRecyclerView()
+        recyclerView.isLoading = true
+        getInvoiceList(page)
     }
 
     fun setupRecyclerView() {

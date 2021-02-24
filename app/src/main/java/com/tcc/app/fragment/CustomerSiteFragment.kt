@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.tcc.app.R
 import com.tcc.app.activity.AddQuotationActivity
+import com.tcc.app.activity.DocumentListActivity
 import com.tcc.app.adapter.SiteListAdapter
 import com.tcc.app.extention.invisible
 import com.tcc.app.extention.setHomeScreenTitle
@@ -116,6 +117,13 @@ class CustomerSiteFragment() : BaseFragment(), SiteListAdapter.OnItemSelected {
         startActivity(i)
         Animatoo.animateCard(requireContext())
 
+    }
+
+    override fun onDocumentClick(position: Int, data: SiteListItem) {
+        val i = Intent(requireContext(), DocumentListActivity::class.java)
+        i.putExtra(Constant.DATA, data)
+        startActivity(i)
+        Animatoo.animateCard(requireContext())
     }
 
     fun getSiteList(page: Int) {

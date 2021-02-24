@@ -46,7 +46,6 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
     var itens: List<SearchableItem>? = null
     var autoImageSliderAdapter: AutoImageSliderAdapter? = null
     lateinit var parent: View
-
     var page: Int = 1
     var hasNextPage: Boolean = true
 
@@ -64,9 +63,10 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
         setHomeScreenTitle(requireActivity(), getString(R.string.menu_home))
         cityListArray = ArrayList()
         cityNameList = ArrayList()
+        setSlider()
         getCityList()
         setuprvHomeCounterMarchant()
-        recyclerView.setNestedScrollingEnabled(true);
+        // recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setLoadMoreListener(object : LoadMoreListener {
             override fun onLoadMore() {
                 if (hasNextPage && !recyclerView.isLoading) {
@@ -77,9 +77,11 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
         })
 
 
+
+
         rbDaly.isChecked = true
 
-        getDashBoardCount(rbDaly.text.toString())
+        //getDashBoardCount(rbDaly.text.toString())
 
         spCity.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -119,14 +121,14 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
         rg.setOnCheckedChangeListener { group, checkedId -> // checkedId is the RadioButton selected
             val rb = parent.findViewById(checkedId) as RadioButton
             getDashBoardCount(rb.text.toString())
+            leadList.clear()
             getDashBoardLead(page)
         }
 
     }
 
 
-    fun setuprvHomeCounterMarchant() {
-
+    fun setSlider() {
         autoImageSliderAdapter = AutoImageSliderAdapter(mContext!!, list, this)
         rvHomeCounter.setSliderAdapter(autoImageSliderAdapter!!)
         rvHomeCounter.setIndicatorAnimation(IndicatorAnimationType.SLIDE)
@@ -135,9 +137,13 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
         rvHomeCounter.setIndicatorUnselectedColor(Color.WHITE)
         rvHomeCounter.setScrollTimeInSec(4)
         rvHomeCounter.startAutoCycle()
+    }
+
+    fun setuprvHomeCounterMarchant() {
 
 
-        val layoutManager1 = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        val layoutManager1 =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = layoutManager1
         adapterLead = HomeServiceAdapter(requireContext(), leadList, this)
         recyclerView.adapter = adapterLead
@@ -218,7 +224,7 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
             val jsonBody = JSONObject()
             jsonBody.put("CityID", session.getDataByKey(SessionManager.KEY_CITY_ID))
             jsonBody.put("FilterType", filter)
-            jsonBody.put("UserID", -1)
+            jsonBody.put("UserID", session.user.data?.userID)
 
             result = Networking.setParentJsonData(Constant.METHOD_GET_DASHBOARD, jsonBody)
 
@@ -234,7 +240,7 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
             .subscribeWith(object : CallbackObserver<HomeCounterModal>() {
                 override fun onSuccess(response: HomeCounterModal) {
                     list.addAll(response.data)
-                    autoImageSliderAdapter?.notifyDataSetChanged()
+                    setSlider()
 
                 }
 
@@ -286,7 +292,7 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
                 }
 
                 override fun onFailed(code: Int, message: String) {
-                    if (list.size > 0) {
+                    if (leadList.size > 0) {
                         progressbar.invisible()
                     }
                     showAlert(message)
@@ -295,6 +301,7 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
 
             }).addTo(autoDisposable)
     }
+
     private fun refreshData(msg: String?) {
         recyclerView.setLoadedCompleted()
         adapterLead?.notifyDataSetChanged()
@@ -308,6 +315,7 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
             recyclerView.invisible()
         }
     }
+
     override fun onItemSelect(position: Int, data: DashBoardLeadDataItem) {
 
     }

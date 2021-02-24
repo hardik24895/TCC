@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tcc.app.R
 import com.tcc.app.extention.getRandomMaterialColor
+import com.tcc.app.extention.invisible
 import com.tcc.app.extention.visible
 import com.tcc.app.modal.SiteListItem
 import kotlinx.android.extensions.LayoutContainer
@@ -34,12 +35,12 @@ class SiteListAdapter(
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         val data = list[position]
-
         holder.bindData(mContext, data, listener)
     }
 
     interface OnItemSelected {
         fun onItemSelect(position: Int, data: SiteListItem)
+        fun onDocumentClick(position: Int, data: SiteListItem)
     }
 
     class ItemHolder(override val containerView: View) :
@@ -64,10 +65,18 @@ class SiteListAdapter(
                 txtAddress.text = data.address + "," + data.address2
             else
                 txtAddress.text = data.address
+
+            if (data.customerID.toString() == "0" || data.customerID.toString() == ""){
+                btnAddDocument.invisible()
+            }else{
+                btnAddDocument.visible()
+            }
+
             imgProfile.setImageResource(R.drawable.bg_circle)
             imgProfile.setColorFilter(getRandomMaterialColor("400", context))
             txtIcon.text = data.siteName.toString().substring(0, 1)
             txtIcon.visible()
+            btnAddDocument.setOnClickListener { listener.onDocumentClick(adapterPosition, data) }
             btnAddQuotation.setOnClickListener { listener.onItemSelect(adapterPosition, data) }
         }
 

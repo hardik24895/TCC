@@ -11,8 +11,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingEnd="@dimen/_5ssp"
-        android:layout_margin="@dimen/_5sdp">
+        android:layout_margin="@dimen/_5sdp"
+        android:paddingEnd="@dimen/_5ssp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imgProfile"
@@ -238,11 +238,23 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_5sdp"
             android:text="@string/add_quation"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+
+            app:layout_constraintEnd_toStartOf="@+id/btnAddDocument"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtAddress" />
 
+        <com.tcc.app.customview.ButtonReguler
+            android:id="@+id/btnAddDocument"
+            style="@style/CustomPressButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            android:text="@string/document"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btnAddQuotation"
+            app:layout_constraintTop_toBottomOf="@+id/txtAddress" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
