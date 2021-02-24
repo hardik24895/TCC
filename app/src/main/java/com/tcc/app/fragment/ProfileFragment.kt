@@ -93,7 +93,6 @@ class ProfileFragment : BaseFragment() {
         setHomeScreenTitle(requireActivity(), getString(R.string.menu_home))
     }
 
-
     fun UpdateProfile() {
         showProgressbar()
         var result = ""
