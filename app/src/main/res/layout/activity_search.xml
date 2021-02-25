@@ -97,6 +97,7 @@
         android:layout_marginTop="@dimen/_8sdp"
         android:background="@drawable/bg_spinner"
         android:orientation="vertical"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inName">
@@ -110,7 +111,7 @@
             android:clickable="false"
             android:focusable="false"
             android:padding="@dimen/_5sdp"
-            android:visibility="gone"
+
             app:cancelButtonColor="@color/black"
             app:cancelButtontext="CLOSE"
             app:dialogTitle="@+id/spUserType"
