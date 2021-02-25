@@ -33,7 +33,6 @@ class AddSalaryActivity : BaseActivity() {
         imgBack.visible()
         if (intent.hasExtra(Constant.DATA)) {
             employeeDataItem = intent.getSerializableExtra(Constant.DATA) as EmployeeDataItem
-
         }
 
         imgBack.setOnClickListener {

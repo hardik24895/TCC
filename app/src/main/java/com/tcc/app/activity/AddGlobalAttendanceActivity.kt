@@ -11,7 +11,6 @@ import com.tcc.app.interfaces.LoadMoreListener
 import com.tcc.app.modal.CommonAddModal
 import com.tcc.app.modal.GlobalEmployeeAttedanceDataItem
 import com.tcc.app.modal.GlobalEmployeeAttedanceListModal
-import com.tcc.app.modal.QuotationItem
 import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
@@ -39,7 +38,7 @@ class AddGlobalAttendanceActivity : BaseActivity(), GlobalAttendanceAdapter.OnIt
     var hasNextPage: Boolean = true
     var selectedDateStr: String = getCurrentDate()
     var adapter: GlobalAttendanceAdapter? = null
-    var quotationItem: QuotationItem? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -103,7 +102,13 @@ class AddGlobalAttendanceActivity : BaseActivity(), GlobalAttendanceAdapter.OnIt
         horizontalCalendar.calendarListener = object : HorizontalCalendarListener() {
             override fun onDateSelected(date: Calendar?, position: Int) {
                 selectedDateStr = DateFormat.format("dd/MM/yyyy", date).toString()
-
+                page = 1
+                list.clear()
+                hasNextPage = true
+                swipeRefreshLayout.isRefreshing = true
+                setupRecyclerView()
+                recyclerView.isLoading = true
+                getGloablAttendanceList(page)
 
             }
         }
@@ -229,7 +234,7 @@ class AddGlobalAttendanceActivity : BaseActivity(), GlobalAttendanceAdapter.OnIt
             jsonBody.put("CityID", session.getDataByKey(SessionManager.KEY_CITY_ID))
             jsonBody.put("AttendanceDate", formatDateFromString(selectedDateStr!!))
             result = Networking.setParentJsonData(
-                Constant.METHOD_ADD_ATTEDANCE_LIST,
+                Constant.METHOD_GLOBAL_EMPLOYEE_LIST,
                 jsonBody
             )
         } catch (e: JSONException) {
@@ -295,8 +300,8 @@ class AddGlobalAttendanceActivity : BaseActivity(), GlobalAttendanceAdapter.OnIt
             }
 
             jsonBody.put("AttendanceDate", formatDateFromString(selectedDateStr))
-            jsonBody.put("SitesID", quotationItem?.sitesID)
-            jsonBody.put("QuotationID", quotationItem?.quotationID)
+            jsonBody.put("SitesID", "0")
+            jsonBody.put("QuotationID", "0")
             jsonBody.put("UserID", session.user.data?.userID)
             jsonBody.put("Item", jsonArray)
 

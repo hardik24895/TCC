@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:id="@+id/root"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/_16ssp">
 
@@ -40,6 +41,31 @@
 
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/date"
+                app:hintTextColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txtTitle">
+
+                <EditText
+                    android:id="@+id/edtDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorWhite"
+                    android:fontFamily="@font/opensans_regular"
+                    android:focusable="false"
+                    android:maxLength="10"
+                    android:inputType="date"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -48,7 +74,7 @@
                 app:hintTextColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/txtTitle">
+                app:layout_constraintTop_toBottomOf="@id/til3">
 
                 <EditText
                     android:id="@+id/edtAmount"
@@ -58,7 +84,7 @@
                     android:digits="1234567890"
                     android:fontFamily="@font/opensans_regular"
                     android:inputType="number"
-                    android:maxLength="10"
+                    android:maxLength="20"
                     android:singleLine="true"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black" />
@@ -66,9 +92,10 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til2"
+                android:hint="@string/remark"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="@string/remark"
+                android:visibility="gone"
                 app:hintTextColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -87,28 +114,32 @@
                     android:textColorHint="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:hint="@string/date"
-                app:hintTextColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/til2">
 
-                <EditText
-                    android:id="@+id/edtDate"
-                    android:layout_width="match_parent"
+            <RadioGroup
+                android:id="@+id/rg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="@+id/til1"
+                app:layout_constraintStart_toStartOf="@+id/til1"
+                app:layout_constraintTop_toBottomOf="@+id/til1">
+
+                <RadioButton
+                    android:id="@+id/rbReceived"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorWhite"
-                    android:fontFamily="@font/opensans_regular"
-                    android:inputType="date"
-                    android:maxLength="10"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_weight="1"
+                    android:text="Received" />
+
+                <RadioButton
+                    android:id="@+id/rbPaid"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Paid" />
+
+            </RadioGroup>
 
 
             <com.tcc.app.customview.ButtonReguler
@@ -122,7 +153,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/til3" />
+                app:layout_constraintTop_toBottomOf="@+id/rg" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </FrameLayout>

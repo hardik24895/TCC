@@ -4,20 +4,18 @@ import android.os.Bundle
 import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tcc.app.R
-import com.tcc.app.activity.AddGlobalAttendanceActivity
-import com.tcc.app.adapter.AttendanceListAdapter
-import com.tcc.app.dialog.DateFilterDailog
-import com.tcc.app.extention.*
+import com.tcc.app.adapter.RoomAllocationAdapter
+import com.tcc.app.extention.invisible
+import com.tcc.app.extention.showAlert
+import com.tcc.app.extention.visible
 import com.tcc.app.interfaces.LoadMoreListener
-import com.tcc.app.modal.AllEmpAttendanceDataItem
-import com.tcc.app.modal.AllEmpAttendanceListModel
 import com.tcc.app.modal.EmployeeDataItem
+import com.tcc.app.modal.RoomAllocationListModel
+import com.tcc.app.modal.RoomDataItem
 import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
-import com.tcc.app.utils.TimeStamp.formatDateFromString
-import com.tcc.app.utils.TimeStamp.getStartDateRange
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.reclerview_swipelayout.*
@@ -25,24 +23,19 @@ import org.json.JSONException
 import org.json.JSONObject
 
 
-class AttendanceListFragment() : BaseFragment(), AttendanceListAdapter.OnItemSelected {
-    constructor(b: Boolean, empData: EmployeeDataItem?) : this() {
-        this.b = b
-        this.empItemData = empData
-    }
+class EmployeeAdvanceListFragment() : BaseFragment(), RoomAllocationAdapter.OnItemSelected {
 
-    private val list: MutableList<AllEmpAttendanceDataItem> = mutableListOf()
+    var empItemData: EmployeeDataItem? = null
+    var adapter: RoomAllocationAdapter? = null
+    private val list: MutableList<RoomDataItem> = mutableListOf()
     var page: Int = 1
     var hasNextPage: Boolean = true
 
-    var empItemData: EmployeeDataItem? = null
-    var adapter: AttendanceListAdapter? = null
-    var b: Boolean? = true
-    var startDate: String = getStartDateRange()
-    var endDate: String = getCurrentDate()
+    constructor(employeeData: EmployeeDataItem?) : this() {
+        this.empItemData = employeeData
 
+    }
 
-    lateinit var chipArray: ArrayList<String>
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -52,27 +45,15 @@ class AttendanceListFragment() : BaseFragment(), AttendanceListAdapter.OnItemSel
         return root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        if (b == true)
-            setHomeScreenTitle(requireActivity(), getString(R.string.nav_attendance))
-
-
-
-        page = 1
-        list.clear()
-        hasNextPage = true
-        swipeRefreshLayout.isRefreshing = true
-        setupRecyclerView()
-        recyclerView.isLoading = true
-        getAttendenceList(page)
 
         recyclerView.setLoadMoreListener(object : LoadMoreListener {
             override fun onLoadMore() {
                 if (hasNextPage && !recyclerView.isLoading) {
                     progressbar.visible()
-                    getAttendenceList(++page)
+                    getRoomAAllocationList(++page)
                 }
             }
         })
@@ -83,78 +64,38 @@ class AttendanceListFragment() : BaseFragment(), AttendanceListAdapter.OnItemSel
             hasNextPage = true
             recyclerView.isLoading = true
             adapter?.notifyDataSetChanged()
-            getAttendenceList(page)
+            getRoomAAllocationList(page)
         }
 
-    }
-
-
-    fun setupRecyclerView() {
-
-        val layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.layoutManager = layoutManager
-        adapter = AttendanceListAdapter(requireContext(), list, this)
-        recyclerView.adapter = adapter
 
     }
 
-    override fun onItemSelect(position: Int, data: AllEmpAttendanceDataItem) {
-
+    override fun onResume() {
+        page = 1
+        list.clear()
+        hasNextPage = true
+        swipeRefreshLayout.isRefreshing = true
+        setupRecyclerView()
+        recyclerView.isLoading = true
+        getRoomAAllocationList(page)
+        super.onResume()
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.home, menu)
-        val filter = menu.findItem(R.id.action_filter)
-        filter.setVisible(true)
-
-        val add = menu.findItem(R.id.action_add)
-        add.setVisible(true)
-
         super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_add -> {
-                goToActivity<AddGlobalAttendanceActivity>()
-                return true
-            }
-            R.id.action_filter -> {
-                showDateFilteryDialog()
+                //   goToActivity<AddEmployeeActivity>()
+
                 return true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
-
-
-    fun showDateFilteryDialog() {
-        val dialog = DateFilterDailog.newInstance(requireContext(),
-            object : DateFilterDailog.onItemClick {
-                override fun onItemCLicked(strdate: String, enddate: String) {
-                    startDate = strdate
-                    endDate = enddate
-
-                    page = 1
-                    list.clear()
-                    hasNextPage = true
-                    swipeRefreshLayout.isRefreshing = true
-                    recyclerView.isLoading = true
-                    getAttendenceList(page)
-
-                }
-            })
-        val bundle = Bundle()
-        bundle.putString(Constant.TITLE, getString(R.string.app_name))
-//        bundle.putString(
-//            Constant.TEXT,
-//            getString(R.string.msg_get_data_from_server)
-//        )
-        dialog.arguments = bundle
-        dialog.show(childFragmentManager, "YesNO")
-    }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -162,33 +103,40 @@ class AttendanceListFragment() : BaseFragment(), AttendanceListAdapter.OnItemSel
     }
 
 
-    fun getAttendenceList(page: Int) {
+    fun setupRecyclerView() {
+
+        val layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.layoutManager = layoutManager
+        adapter = RoomAllocationAdapter(requireContext(), list, this)
+        recyclerView.adapter = adapter
+
+    }
+
+    override fun onItemSelect(position: Int, data: RoomDataItem) {
+
+    }
+
+    fun getRoomAAllocationList(page: Int) {
         var result = ""
         try {
             val jsonBody = JSONObject()
             jsonBody.put("PageSize", Constant.PAGE_SIZE)
             jsonBody.put("CurrentPage", page)
-            jsonBody.put("StartDate", formatDateFromString(startDate))
-            jsonBody.put("EndDate", formatDateFromString(endDate))
+            jsonBody.put("EmployeeID", empItemData?.userID)
 
-
-            result = Networking.setParentJsonData(
-                Constant.METHOD_ADD_ALL_EMPLOYEE_ATTENDENCE,
-                jsonBody
-            )
+            result = Networking.setParentJsonData(Constant.METHOD_ROOM_LIST, jsonBody)
 
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-
         Networking
             .with(requireContext())
             .getServices()
-            .getAllEmpList(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
+            .getRoomAllocationList(Networking.wrapParams(result))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeWith(object : CallbackObserver<AllEmpAttendanceListModel>() {
-                override fun onSuccess(response: AllEmpAttendanceListModel) {
+            .subscribeWith(object : CallbackObserver<RoomAllocationListModel>() {
+                override fun onSuccess(response: RoomAllocationListModel) {
                     if (list.size > 0) {
                         progressbar.invisible()
                     }
@@ -232,4 +180,6 @@ class AttendanceListFragment() : BaseFragment(), AttendanceListAdapter.OnItemSel
             recyclerView.invisible()
         }
     }
+
+
 }

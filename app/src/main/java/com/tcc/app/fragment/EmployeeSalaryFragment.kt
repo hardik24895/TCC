@@ -183,10 +183,10 @@ class EmployeeSalaryFragment() : BaseFragment(), SalaryAdapter.OnItemSelected {
             })
         val bundle = Bundle()
         bundle.putString(Constant.TITLE, getString(R.string.app_name))
-//        bundle.putString(
-//            Constant.TEXT,
-//            getString(R.string.msg_get_data_from_server)
-//        )
+        bundle.putString(
+            Constant.DATA,
+            empItemData?.userID.toString()
+        )
         dialog.arguments = bundle
         dialog.show(childFragmentManager, "YesNO")
     }

@@ -45,7 +45,7 @@ class EmployeeAttendanceListFragment() : BaseFragment(),
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_employee_wise_list, container, false)
+        val root = inflater.inflate(R.layout.fragment_emp_attedance_wise_list, container, false)
         return root
     }
 

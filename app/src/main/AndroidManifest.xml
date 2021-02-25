@@ -68,6 +68,7 @@
         <activity android:name=".activity.AddUploadDocument"/>
         <activity android:name=".activity.EditUploadDocument"/>
         <activity android:name=".activity.DocumentListActivity"/>
+        <activity android:name=".activity.AddGlobalAttendanceActivity" />
 
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"

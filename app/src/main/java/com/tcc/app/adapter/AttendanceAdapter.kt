@@ -79,7 +79,7 @@ class AttendanceAdapter(
             holder.txtOvertimeHalfDay.isEnabled = false
             holder.txtOvertimeFullDay.isEnabled = false
         }
-        if (data.attendance.equals("")) {
+        if (data.attendance.equals("-1") || data.attendance.equals("")) {
             holder.txtPresent.isSelected = false
             holder.txtHalfDay.isSelected = false
             holder.txtAbsent.isSelected = false
