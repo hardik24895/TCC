@@ -16,36 +16,42 @@ data class GetUserSalaryDetail(
 
 data class GetSalaryDataItem(
 
-	@field:SerializedName("StartDate")
-	val startDate: String? = null,
+    @field:SerializedName("StartDate")
+    val startDate: String? = null,
 
-	@field:SerializedName("MobileNo")
-	val mobileNo: String? = null,
+    @field:SerializedName("MobileNo")
+    val mobileNo: String? = null,
 
-	@field:SerializedName("AbsentCount")
-	val absentCount: String? = null,
+    @field:SerializedName("AbsentCount")
+    val absentCount: String? = null,
 
-	@field:SerializedName("Salary")
-	val salary: String? = null,
+    @field:SerializedName("Salary")
+    val salary: String? = null,
 
-	@field:SerializedName("UserID")
-	val userID: String? = null,
+    @field:SerializedName("UserID")
+    val userID: String? = null,
 
-	@field:SerializedName("HalfOverTime")
-	val halfOverTime: String? = null,
+    @field:SerializedName("HalfOverTime")
+    val halfOverTime: String? = null,
 
-	@field:SerializedName("FullOverTime")
-	val fullOverTime: String? = null,
+    @field:SerializedName("FullOverTime")
+    val fullOverTime: String? = null,
 
-	@field:SerializedName("PresentCount")
-	val presentCount: String? = null,
+    @field:SerializedName("PresentCount")
+    val presentCount: String? = null,
 
-	@field:SerializedName("EndDate")
-	val endDate: String? = null,
+    @field:SerializedName("EndDate")
+    val endDate: String? = null,
 
-	@field:SerializedName("EmployeeName")
-	val employeeName: String? = null,
+    @field:SerializedName("EmployeeName")
+    val employeeName: String? = null,
 
-	@field:SerializedName("HalfDayCount")
-	val halfDayCount: String? = null
+    @field:SerializedName("HalfDayCount")
+    val halfDayCount: String? = null,
+
+    @field:SerializedName("Penalty")
+    val penalty: String? = null,
+
+    @field:SerializedName("Advance")
+    val advance: String? = null
 )

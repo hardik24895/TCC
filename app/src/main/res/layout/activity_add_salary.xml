@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
     android:id="@+id/root"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
@@ -282,6 +282,118 @@
             </com.google.android.material.textfield.TextInputLayout>
 
 
+            <com.tcc.app.customview.TextviewSemiBold
+                android:id="@+id/adavance_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:text="@string/advance"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til10" />
+
+
+            <RadioGroup
+                android:id="@+id/rg"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="@+id/til10"
+                app:layout_constraintTop_toBottomOf="@+id/adavance_title">
+
+                <com.tcc.app.customview.RadioButtonReguler
+                    android:id="@+id/rbReceived"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:checked="true"
+                    android:text="@string/received" />
+
+                <com.tcc.app.customview.RadioButtonReguler
+                    android:id="@+id/rbPaid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:text="@string/paid" />
+
+                <com.tcc.app.customview.RadioButtonReguler
+                    android:id="@+id/rbNone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:text="@string/none" />
+
+            </RadioGroup>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til11"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/advance_amount"
+                app:hintTextColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rg">
+
+                <EditText
+                    android:id="@+id/edtAdvanceAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorWhite"
+                    android:fontFamily="@font/opensans_regular"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.tcc.app.customview.TextviewSemiBold
+                android:id="@+id/adavance_amount_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/advance_amount"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til11" />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til12"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:hint="@string/panalty_amount"
+                app:hintTextColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/adavance_amount_title">
+
+                <EditText
+                    android:id="@+id/edtPanaltyAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorWhite"
+                    android:fontFamily="@font/opensans_regular"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.tcc.app.customview.TextviewSemiBold
+                android:id="@+id/penalty_amount_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/panalty_amount"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til12" />
+
             <com.tcc.app.customview.ButtonReguler
                 android:id="@+id/btnSubmit"
                 style="@style/CustomPressButton"
@@ -293,7 +405,7 @@
                 android:text="@string/submit"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/til10" />
+                app:layout_constraintTop_toBottomOf="@+id/penalty_amount_title" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
