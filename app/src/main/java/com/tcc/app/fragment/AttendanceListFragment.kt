@@ -102,7 +102,6 @@ class AttendanceListFragment() : BaseFragment(), AttendanceListAdapter.OnItemSel
 
     }
 
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.home, menu)
         val filter = menu.findItem(R.id.action_filter)
@@ -129,6 +128,11 @@ class AttendanceListFragment() : BaseFragment(), AttendanceListAdapter.OnItemSel
     }
 
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     fun showDateFilteryDialog() {
         val dialog = DateFilterDailog.newInstance(requireContext(),
             object : DateFilterDailog.onItemClick {
@@ -154,13 +158,6 @@ class AttendanceListFragment() : BaseFragment(), AttendanceListAdapter.OnItemSel
         dialog.arguments = bundle
         dialog.show(childFragmentManager, "YesNO")
     }
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
-
 
     fun getAttendenceList(page: Int) {
         var result = ""

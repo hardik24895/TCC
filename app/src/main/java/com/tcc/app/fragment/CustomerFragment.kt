@@ -80,7 +80,6 @@ class CustomerFragment : BaseFragment(), CustomerListAdapter.OnItemSelected {
     }
 
     fun setupRecyclerView() {
-
         val layoutManager = LinearLayoutManager(requireContext())
         recyclerView.layoutManager = layoutManager
         adapter = CustomerListAdapter(requireContext(), list, this)
