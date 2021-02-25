@@ -82,7 +82,7 @@
                     android:id="@+id/txtEmployeeName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Hardik Kanzariya"
+
                     android:textColor="@color/txtgray"
                     android:textSize="@dimen/_14sdp"
                     app:layout_constraintStart_toStartOf="parent"

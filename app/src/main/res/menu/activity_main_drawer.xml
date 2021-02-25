@@ -8,6 +8,7 @@
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_home"
             android:title="@string/menu_home" />
+
         <item
             android:id="@+id/nav_visitor"
             android:icon="@drawable/ic_visitor"
@@ -15,13 +16,13 @@
 
         <item
             android:id="@+id/nav_site"
-            android:icon="@drawable/ic_user_profile"
+            android:icon="@drawable/ic_site"
             android:title="@string/nav_site" />
 
 
         <item
             android:id="@+id/nav_quotation"
-            android:icon="@drawable/ic_user_profile"
+            android:icon="@drawable/ic_quotation"
             android:title="@string/nav_quotations" />
 
         <item
@@ -31,7 +32,7 @@
 
         <item
             android:id="@+id/nav_attendance"
-            android:icon="@drawable/ic_user_profile"
+            android:icon="@drawable/ic_attendance"
             android:title="@string/nav_attendance" />
 
 
@@ -43,7 +44,7 @@
 
         <item
             android:id="@+id/nav_payment"
-            android:icon="@drawable/ic_user_profile"
+            android:icon="@drawable/ic_payment"
             android:title="@string/nav_payment" />
 
         <item
@@ -68,10 +69,9 @@
             android:title="@string/menu_profile"
             android:visible="false" />
 
-
         <item
             android:id="@+id/nav_ticket"
-            android:icon="@drawable/ic_user_profile"
+            android:icon="@drawable/ic_ticket"
             android:title="@string/ticket" />
 
         <item

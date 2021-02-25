@@ -26,49 +26,121 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RMEnterPrise"
         android:usesCleartextTraffic="true">
-        <activity android:name="com.tcc.app.activity.AddEmployeeActivity" />
-        <activity android:name="com.tcc.app.activity.CustomerDetailActivity" />
+
         <activity
             android:name="com.tcc.app.activity.HomeActivity"
             android:label="@string/title_activity_home"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.RMEnterPrise.NoActionBar" />
-        <activity android:name="com.tcc.app.activity.ForgotPasswordActivity" />
-        <activity android:name="com.tcc.app.activity.LoginActivity" />
-        <activity android:name="com.tcc.app.activity.SplashActivity">
+
+        <activity
+            android:name="com.tcc.app.activity.SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.tcc.app.activity.MainActivity" />
-        <activity android:name="com.tcc.app.activity.EmployeeDetailActivity" />
-        <activity android:name="com.tcc.app.activity.AddInspectionActivity" />
-        <activity android:name="com.tcc.app.activity.AddPenaltyActivity" />
-        <activity android:name="com.tcc.app.activity.AddLeadActivity" />
-        <activity android:name="com.tcc.app.activity.AddSiteActivity" />
-        <activity android:name="com.tcc.app.activity.LeadDetailActivity" />
-        <activity android:name="com.tcc.app.activity.AddQuotationActivity" />
-        <activity android:name="com.tcc.app.activity.SalaryDetailActivity" />
-        <activity android:name="com.tcc.app.activity.InspectionDetailActivity" />
-        <activity android:name="com.tcc.app.activity.NotificationActivity" />
-        <activity android:name="com.tcc.app.activity.InformationActivity" />
-        <activity android:name="com.tcc.app.activity.ChangePasswordActivity" />
-        <activity android:name="com.tcc.app.activity.AddRoomAllocationActivity" />
-        <activity android:name="com.tcc.app.activity.AddUniformActivity" />
-        <activity android:name="com.tcc.app.activity.AddTrainingActivity" />
-        <activity android:name="com.tcc.app.activity.AddAttendanceActivity" />
-        <activity android:name="com.tcc.app.activity.AddTicketActivity" />
-        <activity android:name=".activity.AddInvoiceActivity" />
-        <activity android:name="com.tcc.app.activity.AddPaymentActivity" />
-        <activity android:name=".activity.AddTeamDefinitionActivity" />
-        <activity android:name=".activity.TeamDefinitionListActivity" />
-        <activity android:name=".activity.AddLeadReminderActivity" />
-        <activity android:name=".activity.AddSalaryActivity" />
-        <activity android:name=".activity.AddUploadDocument"/>
-        <activity android:name=".activity.EditUploadDocument"/>
-        <activity android:name=".activity.DocumentListActivity"/>
-        <activity android:name=".activity.AddGlobalAttendanceActivity" />
+        <activity
+            android:name="com.tcc.app.activity.ForgotPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.tcc.app.activity.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.tcc.app.activity.AddEmployeeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.tcc.app.activity.CustomerDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.tcc.app.activity.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.tcc.app.activity.EmployeeDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.tcc.app.activity.AddInspectionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.tcc.app.activity.AddPenaltyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.tcc.app.activity.AddLeadActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.tcc.app.activity.AddSiteActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.tcc.app.activity.LeadDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.tcc.app.activity.AddQuotationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.tcc.app.activity.SalaryDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.tcc.app.activity.InspectionDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.tcc.app.activity.NotificationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.tcc.app.activity.InformationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.tcc.app.activity.ChangePasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.tcc.app.activity.AddRoomAllocationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.tcc.app.activity.AddUniformActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.tcc.app.activity.AddTrainingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.tcc.app.activity.AddAttendanceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.tcc.app.activity.AddTicketActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AddInvoiceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.tcc.app.activity.AddPaymentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AddTeamDefinitionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.TeamDefinitionListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AddLeadReminderActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AddSalaryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AddUploadDocument"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.EditUploadDocument"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.DocumentListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AddGlobalAttendanceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SearchActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"

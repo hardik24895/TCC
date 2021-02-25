@@ -32,22 +32,7 @@ class CustomerDetailActivity : BaseActivity() {
         clickEvent()
         txtTitle.text = "Customer Details"
         setStatePageAdapter()
-        // val bottomSheet: View = findViewById(R.id.view_pager)
-        // val behavior: BottomSheetBehavior<*> = BottomSheetBehavior.from(bottomSheet)
-//        val displayMetrics = DisplayMetrics()
-//        windowManager.defaultDisplay.getMetrics(displayMetrics)
-//
-//        var height = displayMetrics.heightPixels
-//
-//
-//        main_view.post(Runnable { //height is ready
-//            System.out.println(
-//                "imageview width:" + main_view.getWidth()
-//                    .toString() + " height:" + main_view.getHeight()
-//            )
-//            behavior.peekHeight = (height)
-//
-//        })
+
     }
 
     private fun clickEvent() {
@@ -75,10 +60,12 @@ class CustomerDetailActivity : BaseActivity() {
         viewPageradapter?.addFragment(CustomerSiteFragment(customerData), "Sites")
         viewPageradapter?.addFragment(CustomerProcessFragment(customerData), "Process")
         viewPageradapter?.addFragment(QuotationFragment(customerData), "Quotation")
+        viewPageradapter?.addFragment(TeamDefinitionListFragment(customerData), "Team Defination")
+        viewPageradapter?.addFragment(CustomerAttendanceListFragment(customerData), "Attendance")
         viewPageradapter?.addFragment(InvoiceFragment(customerData), "Invoice")
         viewPageradapter?.addFragment(PaymentListFragment(customerData), "Payment")
-        viewPageradapter?.addFragment(QuotationFragment(customerData), "Team Defination")
-        viewPageradapter?.addFragment(CustomerAttendanceListFragment(customerData), "Attendace")
+
+
         view_pager.adapter = viewPageradapter
         tabs.setupWithViewPager(view_pager, true)
 

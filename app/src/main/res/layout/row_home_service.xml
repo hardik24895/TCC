@@ -46,7 +46,6 @@
             android:layout_marginStart="@dimen/_8sdp"
             android:drawableLeft="@drawable/ic_user_type"
             android:drawablePadding="@dimen/_8sdp"
-            android:text="Hardik Kanzariya"
             android:textColor="@color/black"
             android:textSize="@dimen/_14sdp"
             app:layout_constraintStart_toEndOf="@+id/imgProfile"
