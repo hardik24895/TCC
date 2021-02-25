@@ -225,4 +225,5 @@
     <string name="paid">Paid</string>
     <string name="none">None</string>
     <string name="filter">Filter</string>
+    <string name="email_or_mobile">Email or Mobile</string>
 </resources>

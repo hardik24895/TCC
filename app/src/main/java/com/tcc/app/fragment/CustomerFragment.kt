@@ -2,13 +2,12 @@ package com.tcc.app.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.tcc.app.R
 import com.tcc.app.activity.CustomerDetailActivity
+import com.tcc.app.activity.SearchActivity
 import com.tcc.app.adapter.CustomerListAdapter
 import com.tcc.app.extention.invisible
 import com.tcc.app.extention.setHomeScreenTitle
@@ -35,6 +34,12 @@ class CustomerFragment : BaseFragment(), CustomerListAdapter.OnItemSelected {
     var list: MutableList<CustomerDataItem> = mutableListOf()
     var page: Int = 1
     var hasNextPage: Boolean = true
+
+    companion object {
+        var email: String = ""
+        var name: String = ""
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -51,13 +56,7 @@ class CustomerFragment : BaseFragment(), CustomerListAdapter.OnItemSelected {
         //  swipeRefreshLayout.isRefreshing = true
         setHomeScreenTitle(requireActivity(), getString(R.string.customer))
 
-        page = 1
-        list.clear()
-        hasNextPage = true
-        swipeRefreshLayout.isRefreshing = true
-        setupRecyclerView()
-        recyclerView.isLoading = true
-        getCustomerList(page)
+
 
         recyclerView.setLoadMoreListener(object : LoadMoreListener {
             override fun onLoadMore() {
@@ -69,6 +68,8 @@ class CustomerFragment : BaseFragment(), CustomerListAdapter.OnItemSelected {
         })
 
         swipeRefreshLayout.setOnRefreshListener {
+            email = ""
+            name = ""
             page = 1
             list.clear()
             hasNextPage = true
@@ -101,8 +102,8 @@ class CustomerFragment : BaseFragment(), CustomerListAdapter.OnItemSelected {
             val jsonBody = JSONObject()
             jsonBody.put("PageSize", Constant.PAGE_SIZE)
             jsonBody.put("CurrentPage", page)
-            jsonBody.put("Name", "")
-            jsonBody.put("EmailID", "")
+            jsonBody.put("Name", name)
+            jsonBody.put("EmailID", email)
             jsonBody.put("CityID", session.getDataByKey(SessionManager.KEY_CITY_ID))
             result = Networking.setParentJsonData(
                 Constant.METHOD_CUSTOMER_LIST,
@@ -163,8 +164,51 @@ class CustomerFragment : BaseFragment(), CustomerListAdapter.OnItemSelected {
     }
 
     override fun onResume() {
+        page = 1
+        list.clear()
+        hasNextPage = true
+        swipeRefreshLayout.isRefreshing = true
+        setupRecyclerView()
+        recyclerView.isLoading = true
+        getCustomerList(page)
         super.onResume()
+    }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.home, menu)
+        val filter = menu.findItem(R.id.action_filter)
+        filter.setVisible(true)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_filter -> {
+                val intent = Intent(context, SearchActivity::class.java)
+                intent.putExtra(Constant.DATA, Constant.CUSTOMER)
+                startActivity(intent)
+                Animatoo.animateCard(context)
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onDestroyView() {
+        email = ""
+        name = ""
+        super.onDestroyView()
+    }
+
+    override fun onDestroy() {
+        email = ""
+        name = ""
+        super.onDestroy()
     }
 
 }
