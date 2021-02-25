@@ -21,7 +21,11 @@ import com.tcc.app.utils.Logger
 import com.tcc.app.utils.TimeStamp.formatDateFromString
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_add_payment.*
+import kotlinx.android.synthetic.main.activity_add_salary.*
 import kotlinx.android.synthetic.main.activity_add_team_definition.*
+import kotlinx.android.synthetic.main.activity_add_team_definition.btnSubmit
+import kotlinx.android.synthetic.main.activity_add_team_definition.root
 import kotlinx.android.synthetic.main.row_dynamic_user_team_definition.view.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 import org.json.JSONArray
@@ -65,6 +69,7 @@ class AddTeamDefinitionActivity : BaseActivity() {
 
         edStartDate.setText(getCurrentDate())
         edEndDate.setText(getCurrentDate())
+
 
 
         getUserTypeList()
@@ -133,6 +138,10 @@ class AddTeamDefinitionActivity : BaseActivity() {
             )
             dpd.show()
         }
+
+        rgType.setOnCheckedChangeListener({ group, checkedId ->
+            getUserTypeList()
+        })
         btnAddUser.setOnClickListener { onAddField() }
         btnSubmit.setOnClickListener { AddTeamDefinitionList() }
 
@@ -298,10 +307,14 @@ class AddTeamDefinitionActivity : BaseActivity() {
             userTypeListArray.clear()
             userTypeNameList.clear()
             var result = ""
+
+
+            val rbType = findViewById<View>(rgType.getCheckedRadioButtonId()) as? RadioButton
             try {
                 val jsonBody = JSONObject()
                 jsonBody.put("StartDate", formatDateFromString(edStartDate.getValue()))
                 jsonBody.put("EndDate", formatDateFromString(edEndDate.getValue()))
+                jsonBody.put("Type", rbType?.text.toString())
 
                 result =
                     Networking.setParentJsonData(Constant.METHOD_AVAILABLE_EMPLOYEE_LIST, jsonBody)
@@ -360,7 +373,7 @@ class AddTeamDefinitionActivity : BaseActivity() {
         view2.setOnClickListener {
             SearchableDialog(this@AddTeamDefinitionActivity,
                 itemUserType!!,
-                getString(R.string.select_usertype), { item, _ ->
+                getString(R.string.select_employee), { item, _ ->
                     spUserType.setSelection(item.id.toInt())
                 }).show()
         }

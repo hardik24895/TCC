@@ -55,6 +55,6 @@ data class AvailableEmployeeDataItem(
     @field:SerializedName("LastName")
     val lastName: String? = null,
 
-    @field:SerializedName("UserType")
+    @field:SerializedName("Usertype")
     val userType: String? = null
 )

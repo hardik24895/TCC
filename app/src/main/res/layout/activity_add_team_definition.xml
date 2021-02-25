@@ -233,16 +233,17 @@
                             android:layout_marginBottom="@dimen/_8sdp"
                             android:clickable="false"
                             android:focusable="false"
-                            android:padding="@dimen/_5sdp"
+                            android:paddingHorizontal="@dimen/_5sdp"
+                            android:paddingVertical="@dimen/_2sdp"
                             android:paddingEnd="@dimen/_18ssp"
                             app:cancelButtonColor="@color/black"
                             app:cancelButtontext="CLOSE"
-                            app:dialogTitle="@+id/spUserType"
+                            app:dialogTitle="@string/select_employee"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:nothingSelectedText="Select UserType"
+                            app:nothingSelectedText="@string/select_employee"
                             app:onlyLightTheme="true" />
 
                         <View

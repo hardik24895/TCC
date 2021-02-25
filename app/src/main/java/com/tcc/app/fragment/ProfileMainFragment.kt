@@ -1,9 +1,7 @@
 package com.tcc.app.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.google.android.material.tabs.TabLayout
 import com.tcc.app.R
 import com.tcc.app.adapter.ViewPagerPagerAdapter
@@ -49,28 +47,28 @@ class ProfileMainFragment : BaseFragment() {
     }
 
 
-    /*  override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-          inflater.inflate(R.menu.home, menu)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.home, menu)
 
-          val add = menu.findItem(R.id.action_add)
-          add.setVisible(false)
+        val add = menu.findItem(R.id.action_add)
+        add.setVisible(false)
 
-          super.onCreateOptionsMenu(menu, inflater)
-      }
-  */
-    /* override fun onOptionsItemSelected(item: MenuItem): Boolean {
-         return when (item.itemId) {
-             R.id.action_add -> {
-                 goToActivity<AddGlobalAttendanceActivity>()
-                 return true
-             }
-             R.id.action_filter -> {
-                 showDateFilteryDialog()
-                 return true
-             }
-             else -> super.onOptionsItemSelected(item)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_add -> {
+
+                return true
+            }
+            R.id.action_filter -> {
+
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
          }
-     }*/
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
