@@ -9,10 +9,7 @@ import com.tcc.app.R
 import com.tcc.app.extention.getValue
 import com.tcc.app.extention.showAlert
 import com.tcc.app.extention.visible
-import com.tcc.app.fragment.CustomerFragment
-import com.tcc.app.fragment.EmployeeFragment
-import com.tcc.app.fragment.LeadFragment
-import com.tcc.app.fragment.TicketListFragment
+import com.tcc.app.fragment.*
 import com.tcc.app.modal.UserTypeDataItem
 import com.tcc.app.modal.UserTypeListModel
 import com.tcc.app.network.CallbackObserver
