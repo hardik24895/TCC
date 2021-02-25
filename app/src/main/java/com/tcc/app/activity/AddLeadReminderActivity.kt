@@ -21,7 +21,6 @@ import org.json.JSONObject
 
 class AddLeadReminderActivity : BaseActivity() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
@@ -52,9 +51,7 @@ class AddLeadReminderActivity : BaseActivity() {
                     Logger.d("time", hour.toString() + ":" + minute.toString())
                     var edStartTime1: EditText = findViewById(R.id.edtReminderTime)
                     edStartTime1.setText(
-                        convertIntoTowDigit(hour) + ":" + convertIntoTowDigit(
-                            minute
-                        )
+                        convertIntoTowDigit(hour) + ":" + convertIntoTowDigit(minute)
                     )
 
                 }
@@ -67,7 +64,6 @@ class AddLeadReminderActivity : BaseActivity() {
             }.build().apply {
                 setListener { hour, minute ->
                     Logger.d("time", hour.toString() + ":" + minute.toString())
-
 
                     var edEndTime1: EditText = findViewById(R.id.edtProcessTime)
                     edEndTime1.setText(convertIntoTowDigit(hour) + ":" + convertIntoTowDigit(minute))

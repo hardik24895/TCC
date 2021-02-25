@@ -124,7 +124,6 @@ class EmployeeSalaryFragment() : BaseFragment(), SalaryAdapter.OnItemSelected {
             e.printStackTrace()
         }
 
-
         Networking
             .with(requireContext())
             .getServices()

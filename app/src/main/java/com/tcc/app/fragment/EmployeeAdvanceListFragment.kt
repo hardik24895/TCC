@@ -4,14 +4,14 @@ import android.os.Bundle
 import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tcc.app.R
-import com.tcc.app.adapter.RoomAllocationAdapter
+import com.tcc.app.adapter.AdvanceListAdapter
 import com.tcc.app.extention.invisible
 import com.tcc.app.extention.showAlert
 import com.tcc.app.extention.visible
 import com.tcc.app.interfaces.LoadMoreListener
+import com.tcc.app.modal.AdvanceListDataItem
+import com.tcc.app.modal.AdvanceListModal
 import com.tcc.app.modal.EmployeeDataItem
-import com.tcc.app.modal.RoomAllocationListModel
-import com.tcc.app.modal.RoomDataItem
 import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
@@ -23,17 +23,16 @@ import org.json.JSONException
 import org.json.JSONObject
 
 
-class EmployeeAdvanceListFragment() : BaseFragment(), RoomAllocationAdapter.OnItemSelected {
+class EmployeeAdvanceListFragment() : BaseFragment(), AdvanceListAdapter.OnItemSelected {
 
     var empItemData: EmployeeDataItem? = null
-    var adapter: RoomAllocationAdapter? = null
-    private val list: MutableList<RoomDataItem> = mutableListOf()
+    var adapter: AdvanceListAdapter? = null
+    private val list: MutableList<AdvanceListDataItem> = mutableListOf()
     var page: Int = 1
     var hasNextPage: Boolean = true
 
     constructor(employeeData: EmployeeDataItem?) : this() {
         this.empItemData = employeeData
-
     }
 
     override fun onCreateView(
@@ -41,10 +40,9 @@ class EmployeeAdvanceListFragment() : BaseFragment(), RoomAllocationAdapter.OnIt
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.reclerview_swipelayout, container, false)
+        val root = inflater.inflate(R.layout.fragment_emp_advance_list, container, false)
         return root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -53,7 +51,7 @@ class EmployeeAdvanceListFragment() : BaseFragment(), RoomAllocationAdapter.OnIt
             override fun onLoadMore() {
                 if (hasNextPage && !recyclerView.isLoading) {
                     progressbar.visible()
-                    getRoomAAllocationList(++page)
+                    getAdvanceList(++page)
                 }
             }
         })
@@ -64,7 +62,7 @@ class EmployeeAdvanceListFragment() : BaseFragment(), RoomAllocationAdapter.OnIt
             hasNextPage = true
             recyclerView.isLoading = true
             adapter?.notifyDataSetChanged()
-            getRoomAAllocationList(page)
+            getAdvanceList(page)
         }
 
 
@@ -77,7 +75,7 @@ class EmployeeAdvanceListFragment() : BaseFragment(), RoomAllocationAdapter.OnIt
         swipeRefreshLayout.isRefreshing = true
         setupRecyclerView()
         recyclerView.isLoading = true
-        getRoomAAllocationList(page)
+        getAdvanceList(page)
         super.onResume()
     }
 
@@ -107,24 +105,23 @@ class EmployeeAdvanceListFragment() : BaseFragment(), RoomAllocationAdapter.OnIt
 
         val layoutManager = LinearLayoutManager(requireContext())
         recyclerView.layoutManager = layoutManager
-        adapter = RoomAllocationAdapter(requireContext(), list, this)
+        adapter = AdvanceListAdapter(requireContext(), list, this)
         recyclerView.adapter = adapter
 
     }
 
-    override fun onItemSelect(position: Int, data: RoomDataItem) {
-
+    override fun onItemSelect(position: Int, data: AdvanceListDataItem) {
     }
 
-    fun getRoomAAllocationList(page: Int) {
+    fun getAdvanceList(page: Int) {
         var result = ""
         try {
             val jsonBody = JSONObject()
             jsonBody.put("PageSize", Constant.PAGE_SIZE)
             jsonBody.put("CurrentPage", page)
-            jsonBody.put("EmployeeID", empItemData?.userID)
+            jsonBody.put("UserID", empItemData?.userID)
 
-            result = Networking.setParentJsonData(Constant.METHOD_ROOM_LIST, jsonBody)
+            result = Networking.setParentJsonData(Constant.METHOD_GET_ADVANCE, jsonBody)
 
         } catch (e: JSONException) {
             e.printStackTrace()
@@ -132,11 +129,11 @@ class EmployeeAdvanceListFragment() : BaseFragment(), RoomAllocationAdapter.OnIt
         Networking
             .with(requireContext())
             .getServices()
-            .getRoomAllocationList(Networking.wrapParams(result))
+            .getAdvanceList(Networking.wrapParams(result))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeWith(object : CallbackObserver<RoomAllocationListModel>() {
-                override fun onSuccess(response: RoomAllocationListModel) {
+            .subscribeWith(object : CallbackObserver<AdvanceListModal>() {
+                override fun onSuccess(response: AdvanceListModal) {
                     if (list.size > 0) {
                         progressbar.invisible()
                     }

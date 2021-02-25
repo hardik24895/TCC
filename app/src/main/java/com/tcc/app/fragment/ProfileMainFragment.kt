@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import com.google.android.material.tabs.TabLayout
 import com.tcc.app.R
 import com.tcc.app.adapter.ViewPagerPagerAdapter
-import com.tcc.app.extention.setHomeScreenTitle
 import kotlinx.android.synthetic.main.fragment_invoice.*
 
 class ProfileMainFragment : BaseFragment() {
@@ -19,14 +18,13 @@ class ProfileMainFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         mParent = inflater.inflate(R.layout.fragment_invoice, container, false)
         return mParent
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setHomeScreenTitle(requireActivity(), getString(R.string.nav_invoice))
+      //  setHomeScreenTitle(requireActivity(), getString(R.string.nav_invoice))
         setStatePageAdapter()
         tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
@@ -42,17 +40,43 @@ class ProfileMainFragment : BaseFragment() {
 
             override fun onTabUnselected(tab: TabLayout.Tab) {
                 // setAdapter();
-
-
             }
 
             override fun onTabReselected(tab: TabLayout.Tab) {
-
                 //   viewPager.notifyAll();
             }
         })
     }
 
+
+    /*  override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+          inflater.inflate(R.menu.home, menu)
+
+          val add = menu.findItem(R.id.action_add)
+          add.setVisible(false)
+
+          super.onCreateOptionsMenu(menu, inflater)
+      }
+  */
+    /* override fun onOptionsItemSelected(item: MenuItem): Boolean {
+         return when (item.itemId) {
+             R.id.action_add -> {
+                 goToActivity<AddGlobalAttendanceActivity>()
+                 return true
+             }
+             R.id.action_filter -> {
+                 showDateFilteryDialog()
+                 return true
+             }
+             else -> super.onOptionsItemSelected(item)
+         }
+     }*/
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     private fun setStatePageAdapter() {
         viewPageradapter = ViewPagerPagerAdapter(childFragmentManager)

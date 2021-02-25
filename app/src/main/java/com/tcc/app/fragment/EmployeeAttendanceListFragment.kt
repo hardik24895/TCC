@@ -34,7 +34,6 @@ class EmployeeAttendanceListFragment() : BaseFragment(),
     private val list: MutableList<EmployeeWiseDataItem> = mutableListOf()
     var page: Int = 1
     var hasNextPage: Boolean = true
-
     var empItemData: EmployeeDataItem? = null
     var adapter: EmpWiseAttendanceListAdapter? = null
     var b: Boolean? = true

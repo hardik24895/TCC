@@ -260,4 +260,7 @@ interface APIInterface {
     @POST("service/")
     fun getGloablAttendanceList(@Body body: RequestBody): Observable<Response<GlobalEmployeeAttedanceListModal>>
 
+    @POST("service/")
+    fun getAdvanceList(@Body body: RequestBody): Observable<Response<AdvanceListModal>>
+
 }
