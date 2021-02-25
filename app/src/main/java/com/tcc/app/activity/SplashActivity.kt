@@ -12,6 +12,7 @@ import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
+import com.tcc.app.utils.SessionManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_add_quotation.*
@@ -35,9 +36,13 @@ class SplashActivity : BaseActivity() {
     }
 
     private fun validateRedirection() {
-        if (session.isLoggedIn)
-            goToActivityAndClearTask<HomeActivity>()
-        else
+        if (session.isLoggedIn) {
+            if (session.getDataByKeyBoolean(SessionManager.IsFirst, true)) {
+                goToActivityAndClearTask<WelComeActivity>()
+            } else {
+                goToActivityAndClearTask<HomeActivity>()
+            }
+        } else
             goToActivityAndClearTask<LoginActivity>()
     }
 

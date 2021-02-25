@@ -3,7 +3,6 @@ package com.tcc.app.activity
 import android.os.Bundle
 import android.util.Log
 import android.view.Window
-import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.tcc.app.R
@@ -18,6 +17,7 @@ import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
 import com.tcc.app.utils.DeviceUtils
 import com.tcc.app.utils.SessionManager
+import com.tcc.app.utils.SessionManager.Companion.IsFirst
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_login.*
@@ -72,7 +72,7 @@ class LoginActivity : BaseActivity() {
                     // Get new FCM registration token
                     val token = task.result
 
-                    login( token.toString())
+                    login(token.toString())
                     // Log and toast
                     // val msg = getString(R.string.msg_token_fmt, token)
                     Log.d("token", token.toString())
@@ -228,8 +228,12 @@ class LoginActivity : BaseActivity() {
             }
             Log.d("json", jsonData.toString())
             session.storeDataByKey(SessionManager.KEY_ROLE_DATA, jsonData.toString())
-            Animatoo.animateCard(this@LoginActivity)
-            goToActivityAndClearTask<HomeActivity>()
+
+            if (session.getDataByKeyBoolean(IsFirst, true)) {
+                goToActivityAndClearTask<WelComeActivity>()
+            } else {
+                goToActivityAndClearTask<HomeActivity>()
+            }
         } catch (e: Exception) {
         }
     }

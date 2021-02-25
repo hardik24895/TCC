@@ -1,16 +1,17 @@
 package com.tcc.app.fragment
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.tcc.app.R
 import com.tcc.app.activity.AddTicketActivity
-import com.tcc.app.adapter.PaymentListAdapter
+import com.tcc.app.activity.SearchActivity
 import com.tcc.app.adapter.TicketAdapter
 import com.tcc.app.extention.*
 import com.tcc.app.interfaces.LoadMoreListener
-import com.tcc.app.modal.PaymentListDataItem
-import com.tcc.app.modal.PaymentListModel
 import com.tcc.app.modal.TicketDataItem
 import com.tcc.app.modal.TicketListMdal
 import com.tcc.app.network.CallbackObserver
@@ -40,12 +41,14 @@ class TicketListFragment() : BaseFragment(), TicketAdapter.OnItemSelected {
         return root
     }
 
-
+    companion object {
+        var Ticket: String = ""
+    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-            setHomeScreenTitle(requireActivity(), getString(R.string.ticket))
+        setHomeScreenTitle(requireActivity(), getString(R.string.ticket))
 
         recyclerView.setLoadMoreListener(object : LoadMoreListener {
             override fun onLoadMore() {
@@ -57,6 +60,7 @@ class TicketListFragment() : BaseFragment(), TicketAdapter.OnItemSelected {
         })
 
         swipeRefreshLayout.setOnRefreshListener {
+            Ticket = ""
             page = 1
             list.clear()
             hasNextPage = true
@@ -76,14 +80,14 @@ class TicketListFragment() : BaseFragment(), TicketAdapter.OnItemSelected {
     }
 
 
-
     fun getTicketList(page: Int) {
         var result = ""
         try {
             val jsonBody = JSONObject()
             jsonBody.put("PageSize", Constant.PAGE_SIZE)
             jsonBody.put("CurrentPage", page)
-            jsonBody.put("UserID", session?.user?.data?.userID)
+            jsonBody.put("UserID", session.user.data?.userID)
+            jsonBody.put("Name", Ticket)
 
             result = Networking.setParentJsonData(
                 Constant.METHOD_GET_TICKET,
@@ -155,10 +159,10 @@ class TicketListFragment() : BaseFragment(), TicketAdapter.OnItemSelected {
     }
 
 
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.home, menu)
-
+        val filter = menu.findItem(R.id.action_filter)
+        filter.setVisible(true)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -166,6 +170,13 @@ class TicketListFragment() : BaseFragment(), TicketAdapter.OnItemSelected {
         return when (item.itemId) {
             R.id.action_add -> {
                 goToActivity<AddTicketActivity>()
+                return true
+            }
+            R.id.action_filter -> {
+                val intent = Intent(context, SearchActivity::class.java)
+                intent.putExtra(Constant.DATA, Constant.TICKET)
+                startActivity(intent)
+                Animatoo.animateCard(context)
                 return true
             }
             else -> super.onOptionsItemSelected(item)
@@ -179,6 +190,26 @@ class TicketListFragment() : BaseFragment(), TicketAdapter.OnItemSelected {
 
     override fun onItemSelect(position: Int, data: TicketDataItem) {
 
+    }
+
+    override fun onDestroy() {
+        Ticket = ""
+        super.onDestroy()
+    }
+
+    override fun onDestroyView() {
+        Ticket = ""
+        super.onDestroyView()
+    }
+
+    override fun onAttach(context: Context) {
+        Ticket = ""
+        super.onAttach(context)
+    }
+
+    override fun onPause() {
+        Ticket = ""
+        super.onPause()
     }
 
 }

@@ -1,15 +1,15 @@
 package com.tcc.app.fragment
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.tcc.app.R
 import com.tcc.app.activity.AddQuotationActivity
 import com.tcc.app.activity.DocumentListActivity
+import com.tcc.app.activity.SearchActivity
 import com.tcc.app.adapter.SiteListAdapter
 import com.tcc.app.extention.invisible
 import com.tcc.app.extention.setHomeScreenTitle
@@ -41,6 +41,7 @@ class CustomerSiteFragment() : BaseFragment(), SiteListAdapter.OnItemSelected {
         visitorId = customerData?.visitorID?.toInt()
     }
 
+
     var adapter: SiteListAdapter? = null
     private val list: MutableList<SiteListItem> = mutableListOf()
     var page: Int = 1
@@ -49,9 +50,12 @@ class CustomerSiteFragment() : BaseFragment(), SiteListAdapter.OnItemSelected {
 
 
     companion object {
+
+        var name: String = ""
         fun getInstance(bundle: Bundle): CustomerSiteFragment {
             val fragment = CustomerSiteFragment()
             fragment.arguments = bundle
+
             return fragment
         }
     }
@@ -83,6 +87,7 @@ class CustomerSiteFragment() : BaseFragment(), SiteListAdapter.OnItemSelected {
 
         swipeRefreshLayout.setOnRefreshListener {
             page = 1
+            name = ""
             list.clear()
             hasNextPage = true
             recyclerView.isLoading = true
@@ -134,7 +139,7 @@ class CustomerSiteFragment() : BaseFragment(), SiteListAdapter.OnItemSelected {
             jsonBody.put("CurrentPage", page)
             jsonBody.put("VisitorID", visitorId.toString())
             jsonBody.put("CustomerID", customerId)
-            jsonBody.put("SiteName", "")
+            jsonBody.put("SiteName", name)
             result = Networking.setParentJsonData(
                 Constant.METHOD_SITE_LIST,
                 jsonBody
@@ -156,13 +161,16 @@ class CustomerSiteFragment() : BaseFragment(), SiteListAdapter.OnItemSelected {
                     if (list.size > 0) {
                         progressbar.invisible()
                     }
-                    swipeRefreshLayout.isRefreshing = false
-                    list.addAll(response.data)
-                    adapter?.notifyItemRangeInserted(
-                        list.size.minus(response.data.size),
-                        list.size
-                    )
-                    hasNextPage = list.size < response.rowcount!!
+                    if (response.error == 200) {
+                        swipeRefreshLayout.isRefreshing = false
+                        list.addAll(response.data)
+
+                        adapter?.notifyItemRangeInserted(
+                            list.size.minus(response.data.size),
+                            list.size
+                        )
+                        hasNextPage = list.size < response.rowcount!!
+                    }
 
                     refreshData(getString(R.string.no_data_found))
                 }
@@ -202,6 +210,52 @@ class CustomerSiteFragment() : BaseFragment(), SiteListAdapter.OnItemSelected {
         recyclerView.isLoading = true
         getSiteList(page)
         super.onResume()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.home, menu)
+        val filter = menu.findItem(R.id.action_filter)
+        filter.setVisible(true)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+
+            R.id.action_filter -> {
+                val intent = Intent(context, SearchActivity::class.java)
+                intent.putExtra(Constant.DATA, Constant.SITE)
+                startActivity(intent)
+                Animatoo.animateCard(context)
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onDestroy() {
+        name = ""
+        super.onDestroy()
+    }
+
+    override fun onDestroyView() {
+        name = ""
+        super.onDestroyView()
+    }
+
+    override fun onAttach(context: Context) {
+        name = ""
+        super.onAttach(context)
+    }
+
+    override fun onPause() {
+        name = ""
+        super.onPause()
     }
 
 }

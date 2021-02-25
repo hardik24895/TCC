@@ -6,7 +6,9 @@ import com.tcc.app.R
 import com.tcc.app.extention.getValue
 import com.tcc.app.extention.visible
 import com.tcc.app.fragment.CustomerFragment
+import com.tcc.app.fragment.CustomerSiteFragment
 import com.tcc.app.fragment.LeadFragment
+import com.tcc.app.fragment.TicketListFragment
 import com.tcc.app.utils.Constant
 import kotlinx.android.synthetic.main.activity_search.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
@@ -38,6 +40,12 @@ class SearchActivity : BaseActivity() {
             inEmail.visible()
             inName.visible()
         }
+        if (type.equals(Constant.SITE)) {
+            inSiteName.visible()
+        }
+        if (type.equals(Constant.TICKET)) {
+            inTicket.visible()
+        }
     }
 
     fun filter() {
@@ -51,6 +59,13 @@ class SearchActivity : BaseActivity() {
             CustomerFragment.name = edtName.getValue()
             finish()
         }
-
+        if (type.equals(Constant.SITE)) {
+            CustomerSiteFragment.name = edtSiteName.getValue()
+            finish()
+        }
+        if (type.equals(Constant.TICKET)) {
+            TicketListFragment.Ticket = edtTicketName.getValue()
+            finish()
+        }
     }
 }

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    tools:context=".activity.WelComeActivity">
+
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager_wel_come"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/linear_wel_come_bottom_view" />
+
+    <LinearLayout
+        android:id="@+id/linear_wel_come_bottom_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/linear_wel_come_dot_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/scale_10dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:visibility="gone" />
+
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout_wel_come"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/scale_10dp"
+            app:tabBackground="@drawable/tab_selector"
+            app:tabGravity="center"
+            app:tabIndicatorHeight="0dp" />
+
+        <com.tcc.app.customview.TextviewSemiBold
+            android:id="@+id/text_wel_come_skip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_margin="@dimen/scale_15dp"
+            android:text="Skip"
+            android:textSize="@dimen/_11sdp" />
+
+        <com.tcc.app.customview.ButtonReguler
+            android:id="@+id/button_wel_come_get_started"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/scale_10dp"
+            android:background="@color/colorPrimary"
+            android:text="@string/action_get_started"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -16,6 +16,7 @@ import com.tcc.app.extention.goToActivityAndClearTask
 import com.tcc.app.extention.setHomeScreenTitle
 import com.tcc.app.utils.Constant
 import com.tcc.app.utils.Constant.CMS_URL
+import com.tcc.app.utils.SessionManager
 import kotlinx.android.synthetic.main.fragment_setting.*
 
 
@@ -60,8 +61,8 @@ class SettingsFragment : BaseFragment() {
                         //   val mobile=  session.getDataByKey(Constant.MOBILE)
                         //    val code=  session.getDataByKey(Constant.PHONE_CODE)
                         session.clearSession()
-                        //  session.storeDataByKey(Constant.USER_ID, mobile)
-                        //  session.storeDataByKey(Constant.PHONE_CODE, code)
+                        session.storeDataByKey(SessionManager.IsFirst, false)
+
                         goToActivityAndClearTask<LoginActivity>()
                     }
                 })

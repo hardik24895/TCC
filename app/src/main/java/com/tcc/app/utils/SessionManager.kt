@@ -144,5 +144,8 @@ class SessionManager(val context: Context) {
         const val EVENT_LIST = "eventList"
         const val KEY_CITY_ID = "cityId"
         const val KEY_CHECKIN_ID = "checkIn"
+        const val WELCOME_FLAG = "welcome"
+        const val IsFirst = "IsFirst"
+
     }
 }
