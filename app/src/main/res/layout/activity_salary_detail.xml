@@ -192,6 +192,7 @@
                 app:layout_constraintTop_toTopOf="@+id/txtOverTime" />
 
             <View
+                android:visibility="gone"
                 android:id="@+id/view4"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/_1ssp"
@@ -203,6 +204,7 @@
 
             <com.tcc.app.customview.TextviewSemiBold
                 android:id="@+id/txtAdvance"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_8sdp"
@@ -215,6 +217,7 @@
 
             <com.tcc.app.customview.TextviewReguler
                 android:id="@+id/txtAdvanceAmount"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/_4sdp"
