@@ -811,7 +811,7 @@ class AddQuotationActivity : BaseActivity() {
                         )
                         jsonObj.put("Qty", lin_add_user.getChildAt(item).edQtyChild.getValue())
                         jsonObj.put("Rate", lin_add_user.getChildAt(item).edRateChild.getValue())
-                        jsonBody.put("Days", lin_add_user.getChildAt(item).edtChildDays.getValue())
+                        jsonObj.put("Days", lin_add_user.getChildAt(item).edtChildDays.getValue())
                         jsonArray.put(jsonObj)
 
                     }

@@ -8,6 +8,7 @@ import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.tcc.app.R
 import com.tcc.app.activity.AddLeadActivity
 import com.tcc.app.activity.LeadDetailActivity
+import com.tcc.app.activity.SearchActivity
 import com.tcc.app.adapter.LeadAdapter
 import com.tcc.app.dialog.AddVisitorDailog
 import com.tcc.app.extention.*
@@ -34,6 +35,11 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
     var page: Int = 1
     var hasNextPage: Boolean = true
 
+    companion object {
+        var email: String = ""
+        var name: String = ""
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -56,6 +62,8 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
         })
 
         swipeRefreshLayout.setOnRefreshListener {
+            email = ""
+            name = ""
             page = 1
             list.clear()
             hasNextPage = true
@@ -111,6 +119,8 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.home, menu)
+        val filter = menu.findItem(R.id.action_filter)
+        filter.setVisible(true)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -124,6 +134,13 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
                     )
                 )
                     showDialog()
+                return true
+            }
+            R.id.action_filter -> {
+                val intent = Intent(context, SearchActivity::class.java)
+                intent.putExtra(Constant.DATA, Constant.LEAD)
+                startActivity(intent)
+                Animatoo.animateCard(context)
                 return true
             }
             else -> super.onOptionsItemSelected(item)
@@ -170,8 +187,8 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
             val jsonBody = JSONObject()
             jsonBody.put("PageSize", Constant.PAGE_SIZE)
             jsonBody.put("CurrentPage", page)
-            jsonBody.put("Name", "")
-            jsonBody.put("EmailID", "")
+            jsonBody.put("Name", name)
+            jsonBody.put("EmailID", email)
             jsonBody.put("CityID", session.getDataByKey(SessionManager.KEY_CITY_ID))
             result = Networking.setParentJsonData(
                 Constant.METHOD_LEADLIST,
@@ -278,5 +295,17 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
             tvInfo.visible()
             recyclerView.invisible()
         }
+    }
+
+    override fun onDestroyView() {
+        email = ""
+        name = ""
+        super.onDestroyView()
+    }
+
+    override fun onDestroy() {
+        email = ""
+        name = ""
+        super.onDestroy()
     }
 }

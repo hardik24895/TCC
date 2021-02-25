@@ -13,12 +13,13 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til1"
+        android:id="@+id/inEmail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_16sdp"
         android:layout_marginTop="@dimen/_20ssp"
-        android:hint="@string/email"
+        android:hint="@string/email_or_mobile"
+        android:visibility="gone"
         app:hintTextColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,15 +39,16 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til2"
+        android:id="@+id/inMobile"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_16sdp"
         android:hint="@string/mobile_no"
+        android:visibility="gone"
         app:hintTextColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/til1">
+        app:layout_constraintTop_toBottomOf="@+id/inEmail">
 
         <EditText
             android:id="@+id/edtMobile"
@@ -62,15 +64,16 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til3"
+        android:id="@+id/inName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_16sdp"
         android:hint="@string/name"
+        android:visibility="gone"
         app:hintTextColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/til2">
+        app:layout_constraintTop_toBottomOf="@+id/inMobile">
 
         <EditText
             android:id="@+id/edtName"
@@ -96,7 +99,7 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/til3">
+        app:layout_constraintTop_toBottomOf="@+id/inName">
 
 
         <tech.hibk.searchablespinnerlibrary.SearchableSpinner
@@ -107,6 +110,7 @@
             android:clickable="false"
             android:focusable="false"
             android:padding="@dimen/_5sdp"
+            android:visibility="gone"
             app:cancelButtonColor="@color/black"
             app:cancelButtontext="CLOSE"
             app:dialogTitle="@+id/spUserType"
@@ -128,11 +132,12 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til4"
+        android:id="@+id/inSiteName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_16sdp"
         android:hint="@string/site_name"
+        android:visibility="gone"
         app:hintTextColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -154,15 +159,16 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til5"
+        android:id="@+id/inTicket"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_16sdp"
         android:hint="@string/ticket"
         app:hintTextColor="@color/black"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/til4">
+        app:layout_constraintTop_toBottomOf="@+id/inSiteName">
 
         <EditText
             android:id="@+id/edtTicketName"

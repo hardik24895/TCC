@@ -1,6 +1,9 @@
 package com.tcc.app.utils
 
 object Constant {
+    const val LEAD = "lead"
+    const val CUSTOMER = "customer"
+    const val EMPLOYEE = "employee"
     const val VISITOR_ID = "visitor_id"
     const val CUSTOMER_ID = "customer_id"
     const val BASE_URL = "http://societyfy.in/tcc_new/"
