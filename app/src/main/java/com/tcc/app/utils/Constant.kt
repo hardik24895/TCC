@@ -119,4 +119,5 @@ object Constant {
     const val METHOD_EDIT_PROFILE = "editProfile"
     const val METHOD_GLOBAL_EMPLOYEE_LIST = "getEmployeeForGlobalAttendance"
     const val METHOD_ADD_ADVANCE = "addAdvance"
+    const val METHOD_GET_ADVANCE = "getAdvance"
 }

@@ -133,8 +133,8 @@ class AddAdavanceDailog(context: Context) : BlurDialogFragment(), LifecycleOwner
         var result = ""
         try {
             val jsonBody = JSONObject()
-            jsonBody.put("UserID", empID)
-            // jsonBody.put("UserID", session.user.data?.userID)
+            jsonBody.put("EmployeeID", empID)
+            jsonBody.put("UserID", session.user.data?.userID)
             jsonBody.put("Amount", edtAmount.getValue())
             jsonBody.put("AdvanceDate", TimeStamp.formatDateFromString(edtDate.getValue()))
             jsonBody.put("Type", rbType?.text.toString())

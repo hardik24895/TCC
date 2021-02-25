@@ -6,6 +6,7 @@ import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.google.android.material.tabs.TabLayout
 import com.tcc.app.R
 import com.tcc.app.adapter.ViewPagerPagerAdapter
+import com.tcc.app.dialog.AddAdavanceDailog
 import com.tcc.app.dialog.DateFilterDailog
 import com.tcc.app.extention.invisible
 import com.tcc.app.extention.visible
@@ -59,6 +60,8 @@ class EmployeeDetailActivity : BaseActivity() {
                 Animatoo.animateCard(this@EmployeeDetailActivity)
             } else if (viewPager.currentItem == 4) {
                 showDateFilteryDialog()
+            } else if (viewPager.currentItem == 5) {
+                showAdavanceDialog()
             }
 
 
@@ -121,6 +124,7 @@ class EmployeeDetailActivity : BaseActivity() {
             "Room Allocation"
         )
         viewPageradapter?.addFragment(EmployeeSalaryFragment(employeeData), "Salary")
+        viewPageradapter?.addFragment(EmployeeAdvanceListFragment(employeeData), "Advance")
         viewPager.adapter = viewPageradapter
         tabs.setupWithViewPager(viewPager, true)
 
@@ -152,4 +156,19 @@ class EmployeeDetailActivity : BaseActivity() {
 
     }
 
+
+    fun showAdavanceDialog() {
+        val dialog = AddAdavanceDailog.newInstance(this,
+            object : AddAdavanceDailog.onItemClick {
+                override fun onItemCLicked() {
+
+                }
+
+            })
+        val bundle = Bundle()
+        bundle.putString(Constant.TITLE, getString(R.string.app_name))
+        bundle.putString(Constant.DATA, employeeData?.userID.toString())
+        dialog.arguments = bundle
+        dialog.show(supportFragmentManager, "YesNO")
+    }
 }
