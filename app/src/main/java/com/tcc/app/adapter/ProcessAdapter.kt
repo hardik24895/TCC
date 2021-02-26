@@ -7,13 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tcc.app.R
+import com.tcc.app.extention.getRandomMaterialColor
 import com.tcc.app.extention.visible
+import com.tcc.app.modal.ProcessListDataItem
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.row_invoice.*
+import kotlinx.android.synthetic.main.row_process.*
 
 class ProcessAdapter(
     private val mContext: Context,
-    var list: MutableList<String> = mutableListOf(),
+    var list: MutableList<ProcessListDataItem> = mutableListOf(),
     private val listener: ProcessAdapter.OnItemSelected
 ) : RecyclerView.Adapter<ProcessAdapter.ItemHolder>() {
 
@@ -37,7 +39,7 @@ class ProcessAdapter(
     }
 
     interface OnItemSelected {
-        fun onItemSelect(position: Int, data: String)
+        fun onItemSelect(position: Int, data: ProcessListDataItem)
     }
 
     class ItemHolder(override val containerView: View) :
@@ -46,53 +48,20 @@ class ProcessAdapter(
 
         fun bindData(
             context: Context,
-            data: String,
+            data: ProcessListDataItem,
             listener: ProcessAdapter.OnItemSelected
         ) {
-            /* var txtName = containerView.findViewById<TextView>(R.id.txtName)
-             txtName.text= data*/
+            txtName.text = data.visitorName
+            txtDate.text = data.createdDate
+            txtDesc.text = data.discription
 
-            //chips.text= data
-
-            /* if (data.user?.profileImage != null) {
-                 Glide.with(context)
-                     .load(data)
-                     .circleCrop()
-                     .placeholder(R.drawable.no_profile)
-                     .into(imgProfile);
-                 imgProfile.setColorFilter(null)
-                 txtIcon.invisible()
-             } else {
-                 imgProfile.setImageResource(R.drawable.bg_circle)
-                 imgProfile.setColorFilter(getRandomMaterialColor("400"))
-                 txtIcon.text = data.user?.firstName.toString().substring(0, 1)
-                 txtIcon.visible()
-             }*/
             imgProfile.setImageResource(R.drawable.bg_circle)
-            imgProfile.setColorFilter(getRandomMaterialColor("400"))
-            txtIcon.text = "H"
+            imgProfile.setColorFilter(getRandomMaterialColor("400", context))
+            txtIcon.text = data.visitorName.toString().substring(0, 1)
             txtIcon.visible()
             itemView.setOnClickListener { listener.onItemSelect(adapterPosition, data) }
         }
 
-        /**
-         * chooses a random color from array.xml
-         */
-        private fun getRandomMaterialColor(typeColor: String): Int {
-            var returnColor = Color.GRAY
-            val arrayId = itemView.context.resources.getIdentifier(
-                "mdcolor_$typeColor",
-                "array",
-                itemView.context!!.packageName
-            )
-            if (arrayId != 0) {
-                val colors = itemView.context.resources.obtainTypedArray(arrayId)
-                val index = (Math.random() * colors.length()).toInt()
-                returnColor = colors.getColor(index, Color.GRAY)
-                colors.recycle()
-            }
-            return returnColor
-        }
 
     }
 }

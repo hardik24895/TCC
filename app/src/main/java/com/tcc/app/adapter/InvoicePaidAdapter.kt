@@ -67,7 +67,10 @@ class InvoicePaidAdapter(
             txtTerms.text = data.terms
 
             if (isPaid) {
+                txtNotes.invisible()
                 btnPay.invisible()
+            } else {
+                txtNotes.visible()
             }
 
             imgProfile.setImageResource(R.drawable.bg_circle)

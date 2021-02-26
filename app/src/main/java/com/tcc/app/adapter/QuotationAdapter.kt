@@ -87,12 +87,20 @@ class QuotationAdapter(
             btnInvoice.setOnClickListener {
                 listener.onItemSelect(adapterPosition, data, "INVOICE")
             }
+
+
             if (data.service?.equals("Deep cleaning")!! || data.service?.equals("Sanetize")!!) {
                 btnAttencence.invisible()
                 btnTeamDefination.invisible()
             } else {
                 btnAttencence.visible()
                 btnTeamDefination.visible()
+            }
+
+            if (data.teamSize.equals("0")) {
+                btnAttencence.invisible()
+            } else {
+                btnAttencence.visible()
             }
 
             btnAttencence.setOnClickListener {

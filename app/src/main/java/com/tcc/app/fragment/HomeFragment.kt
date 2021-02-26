@@ -288,7 +288,7 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
                     )
                     hasNextPage = leadList.size < response.rowcount!!
 
-                    refreshData(getString(R.string.no_data_found))
+                   refreshData(getString(R.string.no_data_found))
                 }
 
                 override fun onFailed(code: Int, message: String) {
@@ -308,10 +308,12 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
 
         if (leadList.size > 0) {
             tvInfo.invisible()
+            txtService.visible()
             recyclerView.visible()
         } else {
             tvInfo.text = msg
-            tvInfo.visible()
+            tvInfo.invisible()
+            txtService.invisible()
             recyclerView.invisible()
         }
     }

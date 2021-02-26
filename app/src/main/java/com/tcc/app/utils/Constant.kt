@@ -1,6 +1,7 @@
 package com.tcc.app.utils
 
 object Constant {
+    const val NA = "NA"
     const val LEAD = "lead"
     const val SITE = "site"
     const val TICKET = "ticket"
@@ -125,4 +126,5 @@ object Constant {
     const val METHOD_GLOBAL_EMPLOYEE_LIST = "getEmployeeForGlobalAttendance"
     const val METHOD_ADD_ADVANCE = "addAdvance"
     const val METHOD_GET_ADVANCE = "getAdvance"
+    const val METHOD_GET_PROCRESS = "getCustomerProcess"
 }

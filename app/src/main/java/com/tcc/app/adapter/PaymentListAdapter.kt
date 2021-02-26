@@ -9,6 +9,7 @@ import com.tcc.app.R
 import com.tcc.app.extention.getRandomMaterialColor
 import com.tcc.app.extention.visible
 import com.tcc.app.modal.PaymentListDataItem
+import com.tcc.app.utils.Constant
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.row_payment_list.*
 
@@ -56,18 +57,80 @@ class PaymentListAdapter(
             imgProfile.setColorFilter(getRandomMaterialColor("400", context))
             txtIcon.text = data.siteUserFrindlyName.toString().substring(0, 1)
             txtIcon.visible()
-            txtCompanyName.setText(data.siteUserFrindlyName)
-            txtInvoiceNo.setText(data.invoiceNo)
-            txtPaymentDate.setText(data.paymentDate)
-            txtPaymentAmount.setText(data.paymentAmount)
-            txtPaymentMode.setText(data.paymentMode)
-            txtAmountType.setText(data.amountType)
-            txtGSTAmount.setText(data.gSTAmount)
-            txtChequeNo.setText(data.chequeNo)
-            txtIFSCCode.setText(data.iFCCode)
-            txtAccountNo.setText(data.accountNo)
-            txtBankName.setText(data.bankName)
-            txtBranchName.setText(data.branchName)
+
+
+
+            if (data.siteUserFrindlyName.toString().isEmpty()) {
+                txtCompanyName.setText(Constant.NA)
+            } else {
+                txtCompanyName.setText(data.siteUserFrindlyName)
+            }
+
+            if (data.invoiceNo.toString().equals("")) {
+                txtInvoiceNo.setText(Constant.NA)
+            } else {
+                txtInvoiceNo.setText(data.invoiceNo)
+            }
+
+            if (data.paymentDate.toString().isEmpty()) {
+                txtPaymentDate.setText(Constant.NA)
+            } else {
+                txtPaymentDate.setText(data.paymentDate)
+            }
+
+            if (data.paymentAmount.toString().isEmpty()) {
+                txtPaymentAmount.setText(Constant.NA)
+            } else {
+                txtPaymentAmount.setText(data.paymentAmount)
+            }
+
+            if (data.paymentMode.toString().isEmpty()) {
+                txtPaymentMode.setText(Constant.NA)
+            } else {
+                txtPaymentMode.setText(data.paymentMode)
+            }
+
+            if (data.amountType.toString().isEmpty()) {
+                txtAmountType.setText(Constant.NA)
+            } else {
+                txtAmountType.setText(data.amountType)
+            }
+
+            if (data.gSTAmount.toString().isEmpty()) {
+                txtGSTAmount.setText(Constant.NA)
+            } else {
+                txtGSTAmount.setText(data.gSTAmount)
+            }
+
+            if (data.chequeNo.toString().isEmpty()) {
+                txtChequeNo.setText(Constant.NA)
+            } else {
+                txtChequeNo.setText(data.chequeNo)
+            }
+
+            if (data.iFCCode.toString().isEmpty()) {
+                txtIFSCCode.setText(Constant.NA)
+            } else {
+                txtIFSCCode.setText(data.iFCCode)
+            }
+
+            if (data.accountNo.toString().isEmpty()) {
+                txtAccountNo.setText(Constant.NA)
+            } else {
+                txtAccountNo.setText(data.accountNo)
+            }
+
+            if (data.bankName.toString().isEmpty()) {
+                txtBankName.setText(Constant.NA)
+            } else {
+                txtBankName.setText(data.bankName)
+            }
+
+            if (data.branchName.toString().isEmpty()) {
+                txtBranchName.setText(Constant.NA)
+            } else {
+                txtBranchName.setText(data.branchName)
+            }
 
 
         }

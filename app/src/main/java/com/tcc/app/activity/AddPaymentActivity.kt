@@ -82,17 +82,20 @@ class AddPaymentActivity : BaseActivity() {
         rgPaymentMode.setOnCheckedChangeListener({ group, checkedId ->
             val radio: RadioButton = findViewById(checkedId)
             if (radio.text.equals(getString(R.string.cheque))) {
+                tilAccountNo.visible()
                 tilChequeNo.visible()
                 tilIFSC.invisible()
                 tilBankName.visible()
                 tilBranchName.visible()
 
             } else if (radio.text.equals(getString(R.string.online))) {
+                tilAccountNo.visible()
                 tilChequeNo.invisible()
                 tilIFSC.visible()
                 tilBankName.visible()
                 tilBranchName.visible()
             } else {
+                tilAccountNo.invisible()
                 tilChequeNo.invisible()
                 tilIFSC.invisible()
                 tilBankName.invisible()
@@ -112,8 +115,8 @@ class AddPaymentActivity : BaseActivity() {
             }
 
             tilPaymentAmount.isVisible && edtPaymentAmount.getValue()
-                .toBigDecimal() > invoiceDataItem?.totalAmount!!.toBigDecimal() -> {
-                root.showSnackBar("enter less then or equal to ${invoiceDataItem?.totalAmount!!.toBigDecimal()}")
+                .toBigDecimal() > invoiceDataItem?.remainingPayment!!.toBigDecimal() -> {
+                root.showSnackBar("Enter less than or equal to ${invoiceDataItem?.remainingPayment!!.toBigDecimal()}")
                 edtPaymentAmount.requestFocus()
             }
             edtGSTAmount.isEmpty() && tilGSTAmount.isVisible -> {

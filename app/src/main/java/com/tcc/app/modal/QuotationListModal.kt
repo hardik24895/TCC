@@ -147,5 +147,10 @@ data class QuotationItem(
     val cityID: String? = null,
 
     @field:SerializedName("Total")
-    val total: String? = null
+    val total: String? = null,
+
+    @field:SerializedName("TeamSize")
+    val teamSize: String? = null
+
+
 ) : Serializable

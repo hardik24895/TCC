@@ -263,4 +263,9 @@ interface APIInterface {
     @POST("service/")
     fun getAdvanceList(@Body body: RequestBody): Observable<Response<AdvanceListModal>>
 
+
+    @POST("service/")
+    fun getProcessList(@Body body: RequestBody): Observable<Response<ProcessListModal>>
+
+
 }

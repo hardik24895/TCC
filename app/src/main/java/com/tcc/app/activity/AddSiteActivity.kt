@@ -1,5 +1,6 @@
 package com.tcc.app.activity
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -18,6 +19,7 @@ import com.tcc.app.utils.Constant
 import com.tcc.app.utils.GSTINValidator.validGSTIN
 import com.tcc.app.utils.Logger
 import com.tcc.app.utils.TimeStamp
+import com.tcc.app.utils.TimeStamp.getCountOfDays
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_add_site.*
@@ -68,7 +70,88 @@ class AddSiteActivity : BaseActivity() {
         edtSdate.setOnClickListener { showDateTimePicker(this@AddSiteActivity, edtSdate) }
         edtEdate.setOnClickListener { showDateTimePicker(this@AddSiteActivity, edtEdate) }
         edtPdate.setOnClickListener { showDateTimePicker(this@AddSiteActivity, edtPdate) }
+
+        // edtWorkingDays.setText(getCountOfDays(edtSdate.getValue(), edtEdate.getValue()).toString())
     }
+
+    fun showStartDateCalender() {
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
+
+        val dpd = DatePickerDialog(
+            this,
+            { view, year, monthOfYear, dayOfMonth ->
+
+                var selectedMonth: String = ""
+                var selectedDay: String = ""
+                if (dayOfMonth < 10) {
+                    selectedDay = "0" + dayOfMonth
+                } else
+                    selectedDay = dayOfMonth.toString()
+
+
+                if (month < 10) {
+                    selectedMonth = "0" + (month + 1)
+                } else
+                    selectedMonth = month.toString()
+
+                edtSdate.setText("" + selectedDay + "/" + selectedMonth + "/" + year)
+
+                edtWorkingDays.setText(
+                    getCountOfDays(
+                        edtSdate.getValue(),
+                        edtEdate.getValue()
+                    ).toString()
+                )
+            },
+            year,
+            month,
+            day
+        )
+        dpd.show()
+    }
+
+    fun showEndDateCalender() {
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
+
+        val dpd = DatePickerDialog(
+            this,
+            { view, year, monthOfYear, dayOfMonth ->
+
+                var selectedMonth: String = ""
+                var selectedDay: String = ""
+                if (dayOfMonth < 10) {
+                    selectedDay = "0" + dayOfMonth
+                } else
+                    selectedDay = dayOfMonth.toString()
+
+
+                if (month < 10) {
+                    selectedMonth = "0" + (month + 1)
+                } else
+                    selectedMonth = month.toString()
+
+                edtEdate.setText("" + selectedDay + "/" + selectedMonth + "/" + year)
+
+                edtWorkingDays.setText(
+                    getCountOfDays(
+                        edtSdate.getValue(),
+                        edtEdate.getValue()
+                    ).toString()
+                )
+            },
+            year,
+            month,
+            day
+        )
+        dpd.show()
+    }
+
 
     fun stateSpinnerListner() {
         spState.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {

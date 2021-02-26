@@ -47,35 +47,6 @@ class ProfileMainFragment : BaseFragment() {
     }
 
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.home, menu)
-
-        val add = menu.findItem(R.id.action_add)
-        add.setVisible(false)
-
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_add -> {
-
-                return true
-            }
-            R.id.action_filter -> {
-
-                return true
-            }
-            else -> super.onOptionsItemSelected(item)
-         }
-    }
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
-
     private fun setStatePageAdapter() {
         viewPageradapter = ViewPagerPagerAdapter(childFragmentManager)
         viewPageradapter?.addFragment(ProfileFragment(), "Profile")

@@ -25,7 +25,6 @@
         android:layout_marginTop="?actionBarSize"
         android:layout_marginEnd="32dp"
         android:drawablePadding="20dp"
-
         android:gravity="center"
         android:lineSpacingExtra="2.5dp"
         android:padding="25dp"
@@ -35,6 +34,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imgNodata"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/nodata"
+        android:visibility="gone" />
 
     <ProgressBar
         android:id="@+id/progressbar"

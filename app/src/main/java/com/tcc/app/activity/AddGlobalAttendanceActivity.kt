@@ -263,7 +263,7 @@ class AddGlobalAttendanceActivity : BaseActivity(), GlobalAttendanceAdapter.OnIt
                         hasNextPage = list.size < response.rowcount!!
                     }
 
-                    refreshData(getString(R.string.no_data_found))
+                  refreshData(getString(R.string.no_data_found), 1)
                 }
 
                 override fun onFailed(code: Int, message: String) {
@@ -271,7 +271,7 @@ class AddGlobalAttendanceActivity : BaseActivity(), GlobalAttendanceAdapter.OnIt
                         progressbar.invisible()
                     }
                     showAlert(message)
-                    refreshData(message)
+                    refreshData(message, code)
                 }
 
             }).addTo(autoDisposable)
@@ -340,17 +340,20 @@ class AddGlobalAttendanceActivity : BaseActivity(), GlobalAttendanceAdapter.OnIt
             }).addTo(autoDisposable)
     }
 
-    private fun refreshData(msg: String?) {
+    private fun refreshData(msg: String?, code: Int) {
         recyclerView.setLoadedCompleted()
         swipeRefreshLayout.isRefreshing = false
         adapter?.notifyDataSetChanged()
 
         if (list.size > 0) {
-            tvInfo.invisible()
+            imgNodata.invisible()
             recyclerView.visible()
         } else {
-            tvInfo.text = msg
-            tvInfo.visible()
+            imgNodata.visible()
+            if (code == 0)
+                imgNodata.setImageResource(R.drawable.no_internet_bg)
+            else
+                imgNodata.setImageResource(R.drawable.nodata)
             recyclerView.invisible()
         }
     }
