@@ -36,6 +36,7 @@
     <string name="select_site">Select Site</string>
     <string name="select_field_operator">Select Field Operator</string>
     <string name="select_operation_manager">Select Operation Manager</string>
+    <string name="select_material">Select Material</string>
     <string name="select_quality_manager">Select Quality Manager</string>
     <string name="add_employee">Add Employee</string>
     <string name="submit">Submit</string>
@@ -228,4 +229,5 @@
     <string name="filter">Filter</string>
     <string name="email_or_mobile">Email or Mobile</string>
     <string name="action_get_started">Let\'s Stated</string>
+    <string name="add_material">Add Material</string>
 </resources>
