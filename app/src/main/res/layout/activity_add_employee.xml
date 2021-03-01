@@ -395,7 +395,6 @@
                     android:inputType="textCapCharacters"
                     android:maxLength="15"
                     android:singleLine="true"
-                    android:text="@string/gst_dummy_no"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>

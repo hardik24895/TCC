@@ -296,7 +296,7 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
                         list.size.minus(response.data.size),
                         list.size
                     )
-                    hasNextPage = list.size < response.rowcount
+                    hasNextPage = list.size < response.rowcount!!
 
                     refreshData(getString(R.string.no_data_found), 1)
                 }

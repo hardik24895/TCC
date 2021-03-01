@@ -357,7 +357,7 @@
                     android:fontFamily="@font/opensans_regular"
                     android:inputType="textCapCharacters"
                     android:maxLength="15"
-                    android:text="@string/gst_dummy_no"
+
                     android:textAllCaps="true"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black" />

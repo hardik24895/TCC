@@ -274,13 +274,15 @@ class AddEmployeeActivity : BaseActivity() {
                 root.showSnackBar("Enter Working Hrs")
                 edtWorkingHours.requestFocus()
             }
-            edtGST.isEmpty() -> {
-                root.showSnackBar("Enter GST")
-                edtGST.requestFocus()
-            }
-            !GSTINValidator.validGSTIN(edtGST.getValue()) -> {
-                root.showSnackBar("Enter Valid GST No.")
-                edtGST.requestFocus()
+            !edtGST.isEmpty() -> {
+                /*  root.showSnackBar("Enter GST")
+                  edtGST.requestFocus()*/
+                if (!GSTINValidator.validGSTIN(edtGST.getValue())) {
+                    root.showSnackBar("Enter Valid GST No.")
+                    edtGST.requestFocus()
+                }
+
+
             }
 
 

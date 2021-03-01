@@ -333,14 +333,13 @@ class AddSiteActivity : BaseActivity() {
                 root.showSnackBar("Enter Valid Pincode")
                 edtPincode.requestFocus()
             }
-            edtGST.isEmpty() -> {
-                root.showSnackBar("Enter GST No.")
-                edtGST.requestFocus()
+            !edtGST.isEmpty() -> {
+                if (!validGSTIN(edtGST.getValue())) {
+                    root.showSnackBar("Enter Valid GST No.")
+                    edtGST.requestFocus()
+                }
             }
-            !validGSTIN(edtGST.getValue()) -> {
-                root.showSnackBar("Enter Valid GST No.")
-                edtGST.requestFocus()
-            }
+
 
             else -> {
                 addSite(rbLead?.text.toString(), flag)

@@ -87,10 +87,10 @@ class LeadDetailActivity : BaseActivity() {
         args.putSerializable(Constant.DATA, leadItem)
 
         viewPageradapter = ViewPagerPagerAdapter(supportFragmentManager)
-        viewPageradapter?.addFragment(LeadInfofoFragment.getInstance(args), "Detail")
+        viewPageradapter?.addFragment(LeadInfofoFragment.getInstance(args), "Details")
         viewPageradapter?.addFragment(CustomerSiteFragment.getInstance(args), "Sites")
-        viewPageradapter?.addFragment(QuotationFragment.getInstance(args), "Quotation")
-        viewPageradapter?.addFragment(LeadReminderFragment.getInstance(args), "Reminder")
+        viewPageradapter?.addFragment(QuotationFragment.getInstance(args), "Quotations")
+        viewPageradapter?.addFragment(LeadReminderFragment.getInstance(args), "Reminders")
 
         viewPager.adapter = viewPageradapter
         tabs.setupWithViewPager(viewPager, true)
