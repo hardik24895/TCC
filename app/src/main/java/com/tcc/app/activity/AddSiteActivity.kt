@@ -1,17 +1,16 @@
 package com.tcc.app.activity
 
-import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.RadioButton
 import com.tcc.app.R
 import com.tcc.app.extention.*
-import com.tcc.app.modal.CityDataItem
-import com.tcc.app.modal.CityListModel
-import com.tcc.app.modal.SiteListModal
+import com.tcc.app.modal.*
 import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
@@ -19,7 +18,6 @@ import com.tcc.app.utils.Constant
 import com.tcc.app.utils.GSTINValidator.validGSTIN
 import com.tcc.app.utils.Logger
 import com.tcc.app.utils.TimeStamp
-import com.tcc.app.utils.TimeStamp.getCountOfDays
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_add_site.*
@@ -42,6 +40,9 @@ class AddSiteActivity : BaseActivity() {
     var adapterCity: ArrayAdapter<String>? = null
     var cityIteams: List<SearchableItem>? = null
     var siteType: String = ""
+    var customerData: CustomerDataItem? = null
+
+    var leadItem: LeadItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +55,22 @@ class AddSiteActivity : BaseActivity() {
         }
         txtTitle.text = "Site"
         btnSubmit.setOnClickListener { validation(false) }
+        if (intent.hasExtra(Constant.DATA)) {
+            customerData = intent.getSerializableExtra(Constant.DATA) as CustomerDataItem
+
+            edtCompanyName.setText(customerData!!.name)
+        }
+
+        if (intent.hasExtra(Constant.DATA_LEAD)) {
+            leadItem = intent.getSerializableExtra(Constant.DATA_LEAD) as LeadItem
+
+            edtCompanyName.setText(leadItem!!.name)
+        }
+
+        if (intent.hasExtra(Constant.CUSTOMER_NAME)) {
+
+            edtCompanyName.setText(intent.getStringExtra(Constant.CUSTOMER_NAME))
+        }
 
         btnAddQuatation.setOnClickListener { validation(true) }
         getStateSppinerData()
@@ -67,89 +84,34 @@ class AddSiteActivity : BaseActivity() {
         edtEdate.setText(getCurrentDate())
         edtPdate.setText(getCurrentDate())
 
+
         edtSdate.setOnClickListener { showDateTimePicker(this@AddSiteActivity, edtSdate) }
-        edtEdate.setOnClickListener { showDateTimePicker(this@AddSiteActivity, edtEdate) }
+        edtEdate.setOnClickListener {
+            showNextFromStartDateTimePicker(
+                this@AddSiteActivity,
+                edtEdate,
+                edtSdate.getValue()
+            )
+        }
         edtPdate.setOnClickListener { showDateTimePicker(this@AddSiteActivity, edtPdate) }
 
-        // edtWorkingDays.setText(getCountOfDays(edtSdate.getValue(), edtEdate.getValue()).toString())
-    }
 
-    fun showStartDateCalender() {
-        val c = Calendar.getInstance()
-        val year = c.get(Calendar.YEAR)
-        val month = c.get(Calendar.MONTH)
-        val day = c.get(Calendar.DAY_OF_MONTH)
+        edtSdate.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                edtEdate.setText(edtSdate.getValue())
+            }
 
-        val dpd = DatePickerDialog(
-            this,
-            { view, year, monthOfYear, dayOfMonth ->
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
 
-                var selectedMonth: String = ""
-                var selectedDay: String = ""
-                if (dayOfMonth < 10) {
-                    selectedDay = "0" + dayOfMonth
-                } else
-                    selectedDay = dayOfMonth.toString()
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+        })
 
 
-                if (month < 10) {
-                    selectedMonth = "0" + (month + 1)
-                } else
-                    selectedMonth = month.toString()
-
-                edtSdate.setText("" + selectedDay + "/" + selectedMonth + "/" + year)
-
-                edtWorkingDays.setText(
-                    getCountOfDays(
-                        edtSdate.getValue(),
-                        edtEdate.getValue()
-                    ).toString()
-                )
-            },
-            year,
-            month,
-            day
-        )
-        dpd.show()
-    }
-
-    fun showEndDateCalender() {
-        val c = Calendar.getInstance()
-        val year = c.get(Calendar.YEAR)
-        val month = c.get(Calendar.MONTH)
-        val day = c.get(Calendar.DAY_OF_MONTH)
-
-        val dpd = DatePickerDialog(
-            this,
-            { view, year, monthOfYear, dayOfMonth ->
-
-                var selectedMonth: String = ""
-                var selectedDay: String = ""
-                if (dayOfMonth < 10) {
-                    selectedDay = "0" + dayOfMonth
-                } else
-                    selectedDay = dayOfMonth.toString()
+//         edtWorkingDays.setText(getCountOfDays(edtSdate.getValue(), edtEdate.getValue()).toString())
 
 
-                if (month < 10) {
-                    selectedMonth = "0" + (month + 1)
-                } else
-                    selectedMonth = month.toString()
-
-                edtEdate.setText("" + selectedDay + "/" + selectedMonth + "/" + year)
-
-                edtWorkingDays.setText(
-                    getCountOfDays(
-                        edtSdate.getValue(),
-                        edtEdate.getValue()
-                    ).toString()
-                )
-            },
-            year,
-            month,
-            day
-        )
-        dpd.show()
     }
 
 

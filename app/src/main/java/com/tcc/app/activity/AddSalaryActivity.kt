@@ -1,6 +1,8 @@
 package com.tcc.app.activity
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.RadioButton
 import com.tcc.app.R
@@ -20,10 +22,14 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_add_payment.*
 import kotlinx.android.synthetic.main.activity_add_salary.*
 import kotlinx.android.synthetic.main.activity_add_salary.btnSubmit
+import kotlinx.android.synthetic.main.activity_add_salary.edtEndDate
+import kotlinx.android.synthetic.main.activity_add_salary.edtStartDate
 import kotlinx.android.synthetic.main.activity_add_salary.rg
 import kotlinx.android.synthetic.main.activity_add_salary.root
+import kotlinx.android.synthetic.main.dialog_accept_reason.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
+import kotlinx.android.synthetic.main.toolbar_with_back_arrow.txtTitle
 import org.json.JSONException
 import org.json.JSONObject
 import java.text.DecimalFormat
@@ -57,9 +63,29 @@ class AddSalaryActivity : BaseActivity() {
 
         edtEndDate.setOnClickListener { showDateTimePicker(this@AddSalaryActivity, edtEndDate) }
 
+
+        edtEndDate.setOnClickListener {
+            showNextFromStartDateTimePicker(
+                this@AddSalaryActivity,
+                edtEndDate,
+                edtStartDate.getValue()
+            )
+        }
+
+        edtStartDate.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                edtEndDate.setText(edtStartDate.getValue())
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+        })
+
+
         GetUserSalaryDetail()
-
-
 
         btnSubmit.setOnClickListener {
             if (edtPayment.getValue().isEmpty()) {

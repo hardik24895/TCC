@@ -205,10 +205,10 @@ fun showDateTimePicker(requireActivity: Activity, edittext: EditText) {
                 selectedDay = dayOfMonth.toString()
 
 
-            if (month < 10) {
-                selectedMonth = "0" + (month + 1)
+            if (monthOfYear < 10) {
+                selectedMonth = "0" + (monthOfYear + 1)
             } else
-                selectedMonth = month.toString()
+                selectedMonth = monthOfYear.toString()
 
             edittext.setText("" + selectedDay + "/" + selectedMonth + "/" + year)
         },
@@ -217,8 +217,86 @@ fun showDateTimePicker(requireActivity: Activity, edittext: EditText) {
         day
     )
     dpd.show()
+}
 
 
+fun showPastDateTimePicker(requireActivity: Activity, edittext: EditText) {
+
+    val c = Calendar.getInstance()
+    val year = c.get(Calendar.YEAR)
+    val month = c.get(Calendar.MONTH)
+    val day = c.get(Calendar.DAY_OF_MONTH)
+
+    val dpd = DatePickerDialog(
+        requireActivity,
+        { view, year, monthOfYear, dayOfMonth ->
+
+            var selectedMonth: String = ""
+            var selectedDay: String = ""
+            if (dayOfMonth < 10) {
+                selectedDay = "0" + dayOfMonth
+            } else
+                selectedDay = dayOfMonth.toString()
+
+
+            if (monthOfYear < 10) {
+                selectedMonth = "0" + (monthOfYear + 1)
+            } else
+                selectedMonth = monthOfYear.toString()
+
+            edittext.setText("" + selectedDay + "/" + selectedMonth + "/" + year)
+        },
+        year,
+        month,
+        day
+    )
+    dpd.getDatePicker().setMaxDate(c.getTimeInMillis())
+    //  dpd.getDatePicker().setMinDate(c.getTimeInMillis())
+    dpd.show()
+}
+
+
+fun showNextFromStartDateTimePicker(
+    requireActivity: Activity,
+    edittext: EditText,
+    startDate: String
+) {
+
+    val c = Calendar.getInstance()
+    val year = c.get(Calendar.YEAR)
+    val month = c.get(Calendar.MONTH)
+    val day = c.get(Calendar.DAY_OF_MONTH)
+
+    val dpd = DatePickerDialog(
+        requireActivity,
+        { view, year, monthOfYear, dayOfMonth ->
+
+            var selectedMonth: String = ""
+            var selectedDay: String = ""
+            if (dayOfMonth < 10) {
+                selectedDay = "0" + dayOfMonth
+            } else
+                selectedDay = dayOfMonth.toString()
+
+
+            if (monthOfYear < 10) {
+                selectedMonth = "0" + (monthOfYear + 1)
+            } else
+                selectedMonth = monthOfYear.toString()
+
+            edittext.setText("" + selectedDay + "/" + selectedMonth + "/" + year)
+        },
+        year,
+        month,
+        day
+    )
+
+    val f = SimpleDateFormat("dd/MM/yyyy")
+    val d = f.parse(startDate)
+
+    dpd.getDatePicker().setMinDate(d.time)
+
+    dpd.show()
 }
 
 fun Context.getColorCompat(@ColorRes colorId: Int) = ContextCompat.getColor(this, colorId)

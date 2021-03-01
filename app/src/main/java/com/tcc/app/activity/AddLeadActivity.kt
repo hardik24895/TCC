@@ -338,6 +338,7 @@ class AddLeadActivity : BaseActivity() {
                             val intent = Intent(this@AddLeadActivity, AddSiteActivity::class.java)
                             intent.putExtra(Constant.VISITOR_ID, data.get(0).iD.toString())
                             intent.putExtra(Constant.CUSTOMER_ID, "0")
+                            intent.putExtra(Constant.CUSTOMER_NAME, edtName.getValue())
                             startActivity(intent)
                         }
 
@@ -397,6 +398,7 @@ class AddLeadActivity : BaseActivity() {
                             val intent = Intent(this@AddLeadActivity, AddSiteActivity::class.java)
                             intent.putExtra(Constant.VISITOR_ID, data.get(0).iD.toString())
                             intent.putExtra(Constant.CUSTOMER_ID, "0")
+                            intent.putExtra(Constant.CUSTOMER_NAME, edtName.getValue())
                             startActivity(intent)
                         }
 

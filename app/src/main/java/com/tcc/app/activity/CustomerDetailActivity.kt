@@ -46,6 +46,7 @@ class CustomerDetailActivity : BaseActivity() {
                     val i = Intent(this, AddSiteActivity::class.java)
                     i.putExtra(Constant.VISITOR_ID, customerData?.visitorID.toString())
                     i.putExtra(Constant.CUSTOMER_ID, customerData?.customerID.toString())
+                    i.putExtra(Constant.DATA, customerData)
                     startActivity(i)
                     Animatoo.animateCard(this)
                 }
@@ -69,8 +70,7 @@ class CustomerDetailActivity : BaseActivity() {
         viewPageradapter?.addFragment(TeamDefinitionListFragment(customerData), "Team Defination")
         if (checkUserRole(session.roleData.data?.attendance?.isView.toString(), this)) {
             viewPageradapter?.addFragment(
-                CustomerAttendanceListFragment(customerData),
-                "Attendance"
+                CustomerAttendanceListFragment(customerData), "Attendance"
             )
         }
         if (checkUserRole(session.roleData.data?.invoice?.isView.toString(), this)) {
@@ -79,7 +79,6 @@ class CustomerDetailActivity : BaseActivity() {
         if (checkUserRole(session.roleData.data?.payment?.isView.toString(), this)) {
             viewPageradapter?.addFragment(PaymentListFragment(customerData), "Payment")
         }
-
 
         view_pager.adapter = viewPageradapter
         tabs.setupWithViewPager(view_pager, true)

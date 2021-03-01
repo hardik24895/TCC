@@ -4,10 +4,8 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
@@ -82,6 +80,11 @@ class AddQuotationActivity : BaseActivity() {
 
         if (intent.hasExtra(Constant.DATA)) {
             siteListItem = intent.getSerializableExtra(Constant.DATA) as SiteListItem
+
+
+            edAddress1.setText(siteListItem?.address.toString())
+            edAddress2.setText(siteListItem?.address2.toString())
+            edPincode.setText(siteListItem?.pinCode.toString())
         }
         if (intent.hasExtra(Constant.DATA1)) {
             leadItem = intent.getSerializableExtra(Constant.DATA1) as LeadItem
@@ -375,15 +378,6 @@ class AddQuotationActivity : BaseActivity() {
             ) {
                 if (position != -1 && userTypeListArray!!.size > position) {
 
-
-                    Log.e(
-                        "TAG",
-                        "onAddField:      " + (lin_add_user as ViewGroup).indexOfChild(
-                            spUserTypeChild
-                        )
-                    )
-                    //               userTypeChildId.set((lin_add_user as ViewGroup).indexOfChild(spUserTypeChild), userTypeListArray!!.get(position).usertypeID.toString())
-                    // usertypeChildId =
                     edHSNChild.setText(userTypeListArray!!.get(position).hSNNo)
                     edQtyChild.setText("1")
                     edRateChild.setText(userTypeListArray!!.get(position).rate)
@@ -621,15 +615,30 @@ class AddQuotationActivity : BaseActivity() {
         adapterState = ArrayAdapter(this, R.layout.custom_spinner_item, stateNameList)
         spState.setAdapter(adapterState)
 
-        for (i in session.stetList.indices) {
-            if (session.stetList.get(i).stateID.toString().equals(stateID)) {
-                spState.setSelection(i)
+        if (siteListItem != null) {
+
+            for (i in session.stetList.indices) {
+                if (session.stetList.get(i).stateID.toString().equals(siteListItem!!.stateID)) {
+                    spState.setSelection(i)
+                    break
+                }
+
             }
 
-        }
+        } else {
 
-        if (stateID.equals("")) {
-            spState.setSelection(11)
+            for (i in session.stetList.indices) {
+                if (session.stetList.get(i).stateID.toString().equals(stateID)) {
+                    spState.setSelection(i)
+                    break
+                }
+
+            }
+
+
+            if (stateID.equals("")) {
+                spState.setSelection(11)
+            }
         }
     }
 
@@ -670,14 +679,30 @@ class AddQuotationActivity : BaseActivity() {
                     )
                     spCity.setAdapter(adapterCity)
 
-                    for (i in response.data.indices) {
-                        if (response.data.get(i).cityID.equals(cityID)) {
-                            spCity.setSelection(i)
-                        }
-                    }
+                    if (siteListItem != null) {
 
-                    if (cityID.equals("")) {
-                        spCity.setSelection(-1)
+                        for (i in response.data.indices) {
+                            if (response.data.get(i).cityID.toString()
+                                    .equals(siteListItem!!.cityID)
+                            ) {
+                                spState.setSelection(i)
+                                break
+                            }
+
+                        }
+
+                    } else {
+
+
+                        for (i in response.data.indices) {
+                            if (response.data.get(i).cityID.equals(cityID)) {
+                                spCity.setSelection(i)
+                            }
+                        }
+
+                        if (cityID.equals("")) {
+                            spCity.setSelection(-1)
+                        }
                     }
 
 
@@ -745,10 +770,18 @@ class AddQuotationActivity : BaseActivity() {
                 edCGST.setText(df.format(CGST))
                 edSGST.setText(df.format(SGST))
                 edIGST.setText("")
+
+                edCGST.isEnabled = true
+                edSGST.isEnabled = true
+                edIGST.isEnabled = false
             } else {
                 edCGST.setText("")
                 edSGST.setText("")
                 edIGST.setText(df.format(IGST))
+
+                edCGST.isEnabled = false
+                edSGST.isEnabled = false
+                edIGST.isEnabled = true
             }
         }
     }

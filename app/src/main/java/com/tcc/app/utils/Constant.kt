@@ -9,6 +9,7 @@ object Constant {
     const val EMPLOYEE = "employee"
     const val VISITOR_ID = "visitor_id"
     const val CUSTOMER_ID = "customer_id"
+    const val CUSTOMER_NAME = "customer_name"
     const val BASE_URL = "http://societyfy.in/tcc_new/"
     const val API_URL = "${BASE_URL}api/"
     const val EMP_PROFILE = "${BASE_URL}assets/uploads/user/"
@@ -37,6 +38,7 @@ object Constant {
     const val ROW_COUNT = "rowCount"
     const val DATA = "data"
     const val DATA1 = "data1"
+    const val DATA_LEAD = "data_lead"
 
 
     // ---Server Date Time--//
