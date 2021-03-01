@@ -238,7 +238,6 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_5sdp"
             android:text="@string/add_quation"
-
             app:layout_constraintEnd_toStartOf="@+id/btnAddDocument"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"

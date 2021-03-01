@@ -16,6 +16,7 @@ import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
+import com.tcc.app.utils.SessionManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.reclerview_swipelayout.*
@@ -121,7 +122,7 @@ class EmployeeUniformFragment() : BaseFragment(), UniformAdapter.OnItemSelected 
             jsonBody.put("PageSize", Constant.PAGE_SIZE)
             jsonBody.put("CurrentPage", page)
             jsonBody.put("EmployeeID", empItemData?.userID)
-
+            jsonBody.put("CityID", session.getDataByKey(SessionManager.KEY_CITY_ID))
             result = Networking.setParentJsonData(Constant.METHOD_UNIFORM_LIST, jsonBody)
 
         } catch (e: JSONException) {

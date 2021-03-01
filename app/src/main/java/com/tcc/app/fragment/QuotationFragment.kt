@@ -14,16 +14,14 @@ import com.tcc.app.activity.TeamDefinitionListActivity
 import com.tcc.app.adapter.QuotationAdapter
 import com.tcc.app.dialog.AcceptReasonDailog
 import com.tcc.app.dialog.RejectReasonDailog
-import com.tcc.app.extention.invisible
-import com.tcc.app.extention.setHomeScreenTitle
-import com.tcc.app.extention.showAlert
-import com.tcc.app.extention.visible
+import com.tcc.app.extention.*
 import com.tcc.app.interfaces.LoadMoreListener
 import com.tcc.app.modal.*
 import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
+import com.tcc.app.utils.SessionManager
 import com.tcc.app.utils.TimeStamp.formatDateFromString
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -177,7 +175,7 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
     fun setupRecyclerView() {
         val layoutManager = LinearLayoutManager(requireContext())
         recyclerView.layoutManager = layoutManager
-        adapter = QuotationAdapter(requireContext(), list, status, this)
+        adapter = QuotationAdapter(requireContext(), list, status, session, this)
         recyclerView.adapter = adapter
 
     }
@@ -203,11 +201,17 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
             Animatoo.animateCard(requireContext())
 
         } else if (action.equals("ATTENDANCE")) {
+            if (checkUserRole(
+                    session.roleData.data?.attendance?.isInsert.toString(),
+                    requireContext()
+                )
+            ) {
+                val i = Intent(requireContext(), AddAttendanceActivity::class.java)
+                i.putExtra(Constant.DATA, data)
+                startActivity(i)
+                Animatoo.animateCard(requireContext())
+            }
 
-            val i = Intent(requireContext(), AddAttendanceActivity::class.java)
-            i.putExtra(Constant.DATA, data)
-            startActivity(i)
-            Animatoo.animateCard(requireContext())
         }
 
     }
@@ -215,7 +219,8 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
     private fun showAcceptDialog(data: QuotationItem, position: Int) {
         AcceptReasonDailog(requireContext())
         var data: QuotationItem = data
-        val dialog = AcceptReasonDailog.newInstance(requireContext(),
+        val dialog = AcceptReasonDailog.newInstance(
+            requireContext(),
             object : AcceptReasonDailog.onItemClick {
                 override fun onItemCLicked(startDate: String, endDate: String) {
                     AcceptQuotation(
@@ -263,6 +268,7 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
             jsonBody.put("CustomerID", customerId)
             jsonBody.put("SitesID", -1)
             jsonBody.put("QoutationStatus", status)
+            jsonBody.put("CityID", session.getDataByKey(SessionManager.KEY_CITY_ID))
             result = Networking.setParentJsonData(
                 Constant.METHOD_QUOTATION_LIST,
                 jsonBody
@@ -292,7 +298,7 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
                     )
                     hasNextPage = list.size < response.rowcount
 
-                  refreshData(getString(R.string.no_data_found), 1)
+                    refreshData(getString(R.string.no_data_found), 1)
                 }
 
                 override fun onFailed(code: Int, message: String) {
@@ -380,7 +386,7 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
             val jsonBody = JSONObject()
             jsonBody.put("UserID", session.user.data?.userID)
             jsonBody.put("QuotationID", QuotationId)
-            jsonBody.put("StartDate", formatDateFromString(startDate) )
+            jsonBody.put("StartDate", formatDateFromString(startDate))
             jsonBody.put("EndDate", formatDateFromString(endDate))
             jsonBody.put("CustomerID", customerId)
             if (leadItem != null)

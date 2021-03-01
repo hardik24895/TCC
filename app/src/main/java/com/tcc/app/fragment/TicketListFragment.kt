@@ -18,6 +18,7 @@ import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
+import com.tcc.app.utils.SessionManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.reclerview_swipelayout.*
@@ -88,7 +89,7 @@ class TicketListFragment() : BaseFragment(), TicketAdapter.OnItemSelected {
             jsonBody.put("CurrentPage", page)
             jsonBody.put("UserID", session.user.data?.userID)
             jsonBody.put("Name", Ticket)
-
+            jsonBody.put("CityID", session.getDataByKey(SessionManager.KEY_CITY_ID))
             result = Networking.setParentJsonData(
                 Constant.METHOD_GET_TICKET,
                 jsonBody
@@ -172,7 +173,13 @@ class TicketListFragment() : BaseFragment(), TicketAdapter.OnItemSelected {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_add -> {
-                goToActivity<AddTicketActivity>()
+                if (checkUserRole(
+                        session.roleData.data?.tickets?.isInsert.toString(),
+                        requireContext()
+                    )
+                ) {
+                    goToActivity<AddTicketActivity>()
+                }
                 return true
             }
             R.id.action_filter -> {

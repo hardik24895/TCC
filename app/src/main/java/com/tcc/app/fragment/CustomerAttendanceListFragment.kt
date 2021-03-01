@@ -18,6 +18,7 @@ import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
+import com.tcc.app.utils.SessionManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.reclerview_swipelayout.*
@@ -100,7 +101,7 @@ class CustomerAttendanceListFragment() : BaseFragment(),
             jsonBody.put("SitesID", -1)
             jsonBody.put("QuotationID", -1)
             jsonBody.put("CustomerID", empItemData?.customerID.toString())
-
+            jsonBody.put("CityID", session.getDataByKey(SessionManager.KEY_CITY_ID))
             result = Networking.setParentJsonData(
                 Constant.METHOD_GETCUSTOMER_ATTEDANCE,
                 jsonBody

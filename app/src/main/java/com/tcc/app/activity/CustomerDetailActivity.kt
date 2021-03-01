@@ -6,6 +6,7 @@ import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.google.android.material.tabs.TabLayout
 import com.tcc.app.R
 import com.tcc.app.adapter.ViewPagerPagerAdapter
+import com.tcc.app.extention.checkUserRole
 import com.tcc.app.extention.invisible
 import com.tcc.app.extention.visible
 import com.tcc.app.fragment.*
@@ -41,11 +42,13 @@ class CustomerDetailActivity : BaseActivity() {
         imgAdd.setOnClickListener {
 
             if (view_pager.currentItem == 1) {
-                val i = Intent(this, AddSiteActivity::class.java)
-                i.putExtra(Constant.VISITOR_ID, customerData?.visitorID.toString())
-                i.putExtra(Constant.CUSTOMER_ID, customerData?.customerID.toString())
-                startActivity(i)
-                Animatoo.animateCard(this)
+                if (checkUserRole(session.roleData.data?.sites?.isInsert.toString(), this)) {
+                    val i = Intent(this, AddSiteActivity::class.java)
+                    i.putExtra(Constant.VISITOR_ID, customerData?.visitorID.toString())
+                    i.putExtra(Constant.CUSTOMER_ID, customerData?.customerID.toString())
+                    startActivity(i)
+                    Animatoo.animateCard(this)
+                }
             }
 //            } else {
 //                goToActivity<AddQuotationActivity>()
@@ -57,13 +60,25 @@ class CustomerDetailActivity : BaseActivity() {
     private fun setStatePageAdapter() {
         viewPageradapter = ViewPagerPagerAdapter(supportFragmentManager)
         viewPageradapter?.addFragment(CustomerInfoFragment(customerData), "Information")
-        viewPageradapter?.addFragment(CustomerSiteFragment(customerData), "Sites")
+        if (checkUserRole(session.roleData.data?.sites?.isView.toString(), this)) {
+            viewPageradapter?.addFragment(CustomerSiteFragment(customerData), "Sites")
+        }
+
         viewPageradapter?.addFragment(CustomerProcessFragment(customerData), "Process")
         viewPageradapter?.addFragment(QuotationFragment(customerData), "Quotation")
         viewPageradapter?.addFragment(TeamDefinitionListFragment(customerData), "Team Defination")
-        viewPageradapter?.addFragment(CustomerAttendanceListFragment(customerData), "Attendance")
-        viewPageradapter?.addFragment(InvoiceFragment(customerData), "Invoice")
-        viewPageradapter?.addFragment(PaymentListFragment(customerData), "Payment")
+        if (checkUserRole(session.roleData.data?.attendance?.isView.toString(), this)) {
+            viewPageradapter?.addFragment(
+                CustomerAttendanceListFragment(customerData),
+                "Attendance"
+            )
+        }
+        if (checkUserRole(session.roleData.data?.invoice?.isView.toString(), this)) {
+            viewPageradapter?.addFragment(InvoiceFragment(customerData), "Invoice")
+        }
+        if (checkUserRole(session.roleData.data?.payment?.isView.toString(), this)) {
+            viewPageradapter?.addFragment(PaymentListFragment(customerData), "Payment")
+        }
 
 
         view_pager.adapter = viewPageradapter

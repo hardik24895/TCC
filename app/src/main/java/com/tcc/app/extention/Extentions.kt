@@ -1,5 +1,6 @@
 package com.tcc.app.extention
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
@@ -185,17 +186,6 @@ fun getRandomMaterialColor(typeColor: String, context: Context): Int {
     return returnColor
 }
 
-fun checkUserRight(context: Context, role: String, view: View): Boolean {
-
-    if (role.equals("1")) {
-
-        return true
-    } else {
-        view.showSnackBar(context.getString(R.string.you_dont_have_a_rights))
-        return false
-    }
-
-}
 
 
 fun sendEmail(context: Context, email: String) {
@@ -241,6 +231,42 @@ fun convertIntoTowDigit(value: Int): String {
     }
 
     return finalValue
+}
+
+fun checkUserRole(Role: String, context: Activity): Boolean {
+
+    if (Role.equals("1")) {
+        return true
+    } else {
+        dialog = AlertDialog.Builder(context)
+            .setMessage(context.getString(R.string.you_dont_have_a_rights))
+            .setCancelable(false)
+            .setPositiveButton(
+                context.getString(R.string.ok)
+            ) { dialog, which -> dialog.dismiss() }
+            .create()
+        dialog?.show()
+    }
+
+    return false
+}
+
+fun checkUserRole(Role: String, context: Context): Boolean {
+
+    if (Role.equals("1")) {
+        return true
+    } else {
+        dialog = AlertDialog.Builder(context)
+            .setMessage(context.getString(R.string.you_dont_have_a_rights))
+            .setCancelable(false)
+            .setPositiveButton(
+                context.getString(R.string.ok)
+            ) { dialog, which -> dialog.dismiss() }
+            .create()
+        dialog?.show()
+    }
+
+    return false
 }
 
 inline val AppCompatActivity.connectivityManager: ConnectivityManager

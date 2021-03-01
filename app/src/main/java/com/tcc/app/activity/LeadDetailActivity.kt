@@ -6,6 +6,7 @@ import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.google.android.material.tabs.TabLayout
 import com.tcc.app.R
 import com.tcc.app.adapter.ViewPagerPagerAdapter
+import com.tcc.app.extention.checkUserRole
 import com.tcc.app.extention.invisible
 import com.tcc.app.extention.visible
 import com.tcc.app.fragment.CustomerSiteFragment
@@ -40,11 +41,13 @@ class LeadDetailActivity : BaseActivity() {
         imgAdd.setOnClickListener {
 
             if (viewPager.currentItem == 1) {
-                val i = Intent(this, AddSiteActivity::class.java)
-                i.putExtra(Constant.VISITOR_ID, leadItem?.visitorID.toString())
-                intent.putExtra(Constant.CUSTOMER_ID, "0")
-                startActivity(i)
-                Animatoo.animateCard(this)
+                if (checkUserRole(session.roleData.data?.sites?.isInsert.toString(), this)) {
+                    val i = Intent(this, AddSiteActivity::class.java)
+                    i.putExtra(Constant.VISITOR_ID, leadItem?.visitorID.toString())
+                    intent.putExtra(Constant.CUSTOMER_ID, "0")
+                    startActivity(i)
+                    Animatoo.animateCard(this)
+                }
             } else if (viewPager.currentItem == 3) {
                 val i = Intent(this, AddLeadReminderActivity::class.java)
                 i.putExtra(Constant.VISITOR_ID, leadItem?.visitorID.toString())

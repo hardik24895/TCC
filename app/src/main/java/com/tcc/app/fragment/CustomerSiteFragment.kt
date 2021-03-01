@@ -24,6 +24,7 @@ import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
+import com.tcc.app.utils.SessionManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.reclerview_swipelayout.*
@@ -140,6 +141,7 @@ class CustomerSiteFragment() : BaseFragment(), SiteListAdapter.OnItemSelected {
             jsonBody.put("VisitorID", visitorId.toString())
             jsonBody.put("CustomerID", customerId)
             jsonBody.put("SiteName", name)
+            jsonBody.put("CityID", session.getDataByKey(SessionManager.KEY_CITY_ID))
             result = Networking.setParentJsonData(
                 Constant.METHOD_SITE_LIST,
                 jsonBody
@@ -172,7 +174,7 @@ class CustomerSiteFragment() : BaseFragment(), SiteListAdapter.OnItemSelected {
                         hasNextPage = list.size < response.rowcount!!
                     }
 
-                  refreshData(getString(R.string.no_data_found), 1)
+                    refreshData(getString(R.string.no_data_found), 1)
                 }
 
                 override fun onFailed(code: Int, message: String) {

@@ -13,6 +13,7 @@ import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
+import com.tcc.app.utils.SessionManager
 import com.tcc.app.utils.TimeStamp.formatDateFromString
 import devs.mulham.horizontalcalendar.HorizontalCalendar
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener
@@ -41,7 +42,7 @@ class AddAttendanceActivity : BaseActivity(), AttendanceAdapter.OnItemSelected {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
         setContentView(R.layout.activity_attendance)
-        txtTitle.text = "Attendance"
+        txtTitle.text = getString(R.string.nav_attendance)
         imgBack.visible()
         imgBack.setOnClickListener {
             finish()
@@ -90,7 +91,6 @@ class AddAttendanceActivity : BaseActivity(), AttendanceAdapter.OnItemSelected {
     }
 
     fun horizontalCalender() {
-
 
         val startDate: Calendar = Calendar.getInstance()
         startDate.add(Calendar.MONTH, -1)
@@ -222,7 +222,8 @@ class AddAttendanceActivity : BaseActivity(), AttendanceAdapter.OnItemSelected {
             jsonBody.put("SitesID", quotationItem?.sitesID)
             jsonBody.put("CustomerID", quotationItem?.customerID)
             jsonBody.put("QuotationID", quotationItem?.quotationID)
-            jsonBody.put("AttendanceDate", formatDateFromString(selectedDateStr!!))
+            jsonBody.put("AttendanceDate", formatDateFromString(selectedDateStr))
+            jsonBody.put("CityID", session.getDataByKey(SessionManager.KEY_CITY_ID))
             result = Networking.setParentJsonData(
                 Constant.METHOD_ADD_ATTEDANCE_LIST,
                 jsonBody

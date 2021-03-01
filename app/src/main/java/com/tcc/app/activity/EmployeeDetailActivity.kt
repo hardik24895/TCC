@@ -8,6 +8,7 @@ import com.tcc.app.R
 import com.tcc.app.adapter.ViewPagerPagerAdapter
 import com.tcc.app.dialog.AddAdavanceDailog
 import com.tcc.app.dialog.DateFilterDailog
+import com.tcc.app.extention.checkUserRole
 import com.tcc.app.extention.invisible
 import com.tcc.app.extention.visible
 import com.tcc.app.fragment.*
@@ -44,18 +45,25 @@ class EmployeeDetailActivity : BaseActivity() {
         imgAdd.setOnClickListener {
             var intent: Intent? = null
             if (viewPager.currentItem == 0) {
-                intent = Intent(this@EmployeeDetailActivity, AddTrainingActivity::class.java)
-                intent?.putExtra(Constant.DATA, employeeData)
-                startActivity(intent)
+                if (checkUserRole(session.roleData.data?.training?.isInsert.toString(), this)) {
+                    intent = Intent(this@EmployeeDetailActivity, AddTrainingActivity::class.java)
+                    intent.putExtra(Constant.DATA, employeeData)
+                    startActivity(intent)
+                }
                 Animatoo.animateCard(this@EmployeeDetailActivity)
             } else if (viewPager.currentItem == 1) {
-                intent = Intent(this@EmployeeDetailActivity, AddUniformActivity::class.java)
-                intent?.putExtra(Constant.DATA, employeeData)
-                startActivity(intent)
-                Animatoo.animateCard(this@EmployeeDetailActivity)
+
+                if (checkUserRole(session.roleData.data?.uniform?.isInsert.toString(), this)) {
+                    intent = Intent(this@EmployeeDetailActivity, AddUniformActivity::class.java)
+                    intent?.putExtra(Constant.DATA, employeeData)
+                    startActivity(intent)
+                    Animatoo.animateCard(this@EmployeeDetailActivity)
+                }
             } else if (viewPager.currentItem == 3) {
-                intent = Intent(this@EmployeeDetailActivity, AddRoomAllocationActivity::class.java)
-                intent?.putExtra(Constant.DATA, employeeData)
+
+                intent =
+                    Intent(this@EmployeeDetailActivity, AddRoomAllocationActivity::class.java)
+                intent.putExtra(Constant.DATA, employeeData)
                 startActivity(intent)
                 Animatoo.animateCard(this@EmployeeDetailActivity)
             } else if (viewPager.currentItem == 4) {
@@ -116,9 +124,17 @@ class EmployeeDetailActivity : BaseActivity() {
         args.putSerializable(Constant.DATA, employeeData)
 
         viewPageradapter = ViewPagerPagerAdapter(supportFragmentManager)
-        viewPageradapter?.addFragment(EmployeeTrainingFragment(employeeData), "Training")
-        viewPageradapter?.addFragment(EmployeeUniformFragment(employeeData), "Uniform")
-        viewPageradapter?.addFragment(EmployeeAttendanceListFragment(employeeData), "Attendace")
+        if (checkUserRole(session.roleData.data?.training?.isView.toString(), this)) {
+            viewPageradapter?.addFragment(EmployeeTrainingFragment(employeeData), "Training")
+        }
+
+        if (checkUserRole(session.roleData.data?.uniform?.isView.toString(), this)) {
+            viewPageradapter?.addFragment(EmployeeUniformFragment(employeeData), "Uniform")
+        }
+
+        if (checkUserRole(session.roleData.data?.attendance?.isInsert.toString(), this)) {
+            viewPageradapter?.addFragment(EmployeeAttendanceListFragment(employeeData), "Attendace")
+        }
         viewPageradapter?.addFragment(
             EmployeeRoomAllocationFragment(employeeData),
             "Room Allocation"

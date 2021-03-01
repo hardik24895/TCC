@@ -20,6 +20,7 @@ import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
+import com.tcc.app.utils.SessionManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.reclerview_swipelayout.*
@@ -102,7 +103,7 @@ class PaymentListFragment() : BaseFragment(), PaymentListAdapter.OnItemSelected 
             jsonBody.put("CurrentPage", page)
             jsonBody.put("InvoiceID", -1)
             jsonBody.put("CustomerID", -1)
-
+            jsonBody.put("CityID", session.getDataByKey(SessionManager.KEY_CITY_ID))
             result = Networking.setParentJsonData(
                 Constant.METHOD_PAYMENT_LIST,
                 jsonBody

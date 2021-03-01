@@ -178,6 +178,7 @@ class AddPenaltyActivity : BaseActivity(), ReasonListAdapter.OnItemSelected {
             jsonBody.put("VisitorID", -1)
             jsonBody.put("CustomerID", -1)
             jsonBody.put("SiteName", "")
+            jsonBody.put("CityID", session.getDataByKey(SessionManager.KEY_CITY_ID))
             result = Networking.setParentJsonData(
                 Constant.METHOD_SITE_LIST,
                 jsonBody

@@ -10,6 +10,7 @@ import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.tcc.app.R
 import com.tcc.app.activity.AddPaymentActivity
 import com.tcc.app.adapter.InvoicePaidAdapter
+import com.tcc.app.extention.checkUserRole
 import com.tcc.app.extention.invisible
 import com.tcc.app.extention.showAlert
 import com.tcc.app.extention.visible
@@ -20,6 +21,7 @@ import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
+import com.tcc.app.utils.SessionManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.reclerview_swipelayout.*
@@ -85,10 +87,14 @@ class InvoiceUnPaidFragment : BaseFragment(), InvoicePaidAdapter.OnItemSelected 
     }
 
     override fun onItemSelect(position: Int, data: InvoiceDataItem) {
-        val intent = Intent(context, AddPaymentActivity::class.java)
-        intent.putExtra(Constant.DATA, data)
-        startActivity(intent)
-        Animatoo.animateCard(context)
+
+        if (checkUserRole(session.roleData.data?.invoice?.isInsert.toString(), requireContext())) {
+            val intent = Intent(context, AddPaymentActivity::class.java)
+            intent.putExtra(Constant.DATA, data)
+            startActivity(intent)
+            Animatoo.animateCard(context)
+        }
+
     }
 
     fun getInvoiceList(page: Int) {
@@ -101,6 +107,7 @@ class InvoiceUnPaidFragment : BaseFragment(), InvoicePaidAdapter.OnItemSelected 
             jsonBody.put("CustomerID", "-1")
             jsonBody.put("SitesID", "-1")
             jsonBody.put("FilterStatus", "NotPaid")
+            jsonBody.put("CityID", session.getDataByKey(SessionManager.KEY_CITY_ID))
             result = Networking.setParentJsonData(
                 Constant.METHOD_GET_INVOICE,
                 jsonBody
