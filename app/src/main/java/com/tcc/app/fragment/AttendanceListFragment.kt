@@ -16,6 +16,7 @@ import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
+import com.tcc.app.utils.SessionManager
 import com.tcc.app.utils.TimeStamp.formatDateFromString
 import com.tcc.app.utils.TimeStamp.getStartDateRange
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -116,7 +117,13 @@ class AttendanceListFragment() : BaseFragment(), AttendanceListAdapter.OnItemSel
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_add -> {
-                goToActivity<AddGlobalAttendanceActivity>()
+                if (checkUserRole(
+                        session.roleData.data?.attendance?.isInsert.toString(),
+                        requireContext()
+                    )
+                ) {
+                    goToActivity<AddGlobalAttendanceActivity>()
+                }
                 return true
             }
             R.id.action_filter -> {
@@ -168,7 +175,7 @@ class AttendanceListFragment() : BaseFragment(), AttendanceListAdapter.OnItemSel
             jsonBody.put("CurrentPage", page)
             jsonBody.put("StartDate", formatDateFromString(startDate))
             jsonBody.put("EndDate", formatDateFromString(endDate))
-
+            jsonBody.put("CityID", session.getDataByKey(SessionManager.KEY_CITY_ID))
 
             result = Networking.setParentJsonData(
                 Constant.METHOD_ADD_ALL_EMPLOYEE_ATTENDENCE,

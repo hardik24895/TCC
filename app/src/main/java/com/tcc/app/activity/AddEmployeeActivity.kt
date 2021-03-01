@@ -69,7 +69,7 @@ class AddEmployeeActivity : BaseActivity() {
         userTypeNameList = ArrayList()
         userTypeListArray = ArrayList()
 
-        txtTitle.text = "Employee"
+        txtTitle.text = getString(R.string.employee)
         edtJoiningDate.setText(getCurrentDate())
         edtJoiningDate.setOnClickListener {
             showDateTimePicker(this@AddEmployeeActivity, edtJoiningDate)

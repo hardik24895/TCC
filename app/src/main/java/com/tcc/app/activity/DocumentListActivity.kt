@@ -7,14 +7,21 @@ import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.tcc.app.R
 import com.tcc.app.adapter.DocumentListAdapter
 import com.tcc.app.dialog.LogoutDailog
-import com.tcc.app.extention.*
+import com.tcc.app.extention.invisible
+import com.tcc.app.extention.showAlert
+import com.tcc.app.extention.showSnackBar
+import com.tcc.app.extention.visible
 import com.tcc.app.interfaces.LoadMoreListener
-import com.tcc.app.modal.*
+import com.tcc.app.modal.CommonAddModal
+import com.tcc.app.modal.DocumentListDataItem
+import com.tcc.app.modal.DocumentListModal
+import com.tcc.app.modal.SiteListItem
 import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
 import com.tcc.app.utils.Logger
+import com.tcc.app.utils.SessionManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_document_list.*
@@ -22,7 +29,6 @@ import kotlinx.android.synthetic.main.reclerview_swipelayout.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 import org.json.JSONException
 import org.json.JSONObject
-
 
 
 class DocumentListActivity : BaseActivity(), DocumentListAdapter.OnItemSelected {
@@ -89,7 +95,7 @@ class DocumentListActivity : BaseActivity(), DocumentListAdapter.OnItemSelected 
             jsonBody.put("CurrentPage", page)
             jsonBody.put("SitesID", siteListItem?.sitesID)
             jsonBody.put("CustomerID", siteListItem?.customerID)
-
+            jsonBody.put("CityID", session.getDataByKey(SessionManager.KEY_CITY_ID))
             result = Networking.setParentJsonData(
                 Constant.METHOD_GET_DOCUMENT_LIST,
                 jsonBody

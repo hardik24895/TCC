@@ -5,7 +5,6 @@ import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tcc.app.R
 import com.tcc.app.activity.AddPenaltyActivity
-import com.tcc.app.activity.EmployeeDetailActivity
 import com.tcc.app.adapter.PenaltiAdapter
 import com.tcc.app.extention.*
 import com.tcc.app.interfaces.LoadMoreListener
@@ -16,6 +15,7 @@ import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
+import com.tcc.app.utils.SessionManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.reclerview_swipelayout.*
@@ -84,7 +84,13 @@ class PenaltyFragment : BaseFragment(), PenaltiAdapter.OnItemSelected {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_add -> {
-                goToActivity<AddPenaltyActivity>()
+
+                if (checkUserRole(
+                        session.roleData.data?.penlty?.isInsert.toString(),
+                        requireContext()
+                    )
+                )
+                    goToActivity<AddPenaltyActivity>()
                 return true
             }
             else -> super.onOptionsItemSelected(item)
@@ -97,7 +103,7 @@ class PenaltyFragment : BaseFragment(), PenaltiAdapter.OnItemSelected {
     }
 
     override fun onItemSelect(position: Int, data: PaneltyDataItem) {
-       // goToActivity<EmployeeDetailActivity>()
+        // goToActivity<EmployeeDetailActivity>()
     }
 
 
@@ -107,6 +113,8 @@ class PenaltyFragment : BaseFragment(), PenaltiAdapter.OnItemSelected {
             val jsonBody = JSONObject()
             jsonBody.put("PageSize", Constant.PAGE_SIZE)
             jsonBody.put("CurrentPage", page)
+            jsonBody.put("CityID", session.getDataByKey(SessionManager.KEY_CITY_ID))
+
 
             result = Networking.setParentJsonData(
                 Constant.METHOD_GET_PANELTLY,

@@ -20,6 +20,7 @@ import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
+import com.tcc.app.utils.SessionManager
 import com.tcc.app.utils.TimeStamp.formatDateFromString
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -762,7 +763,7 @@ class AddInvoiceActivity : BaseActivity() {
             jsonBody.put("QuotationID", quotationIteam?.quotationID)
             jsonBody.put("StartDate", formatDateFromString(edStartDate.getValue()))
             jsonBody.put("EndDate", formatDateFromString(edEndDate.getValue()))
-
+            jsonBody.put("CityID", session.getDataByKey(SessionManager.KEY_CITY_ID))
             result =
                 Networking.setParentJsonData(Constant.METHOD_GET_INVOICE_ATTEDANCE_LIST, jsonBody)
 

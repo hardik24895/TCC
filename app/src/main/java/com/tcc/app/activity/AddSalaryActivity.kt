@@ -5,13 +5,14 @@ import android.view.View
 import android.widget.RadioButton
 import com.tcc.app.R
 import com.tcc.app.extention.*
+import com.tcc.app.modal.CommonAddModal
 import com.tcc.app.modal.EmployeeDataItem
 import com.tcc.app.modal.GetUserSalaryDetail
-import com.tcc.app.modal.SalaryListModal
 import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
+import com.tcc.app.utils.SessionManager
 import com.tcc.app.utils.TimeStamp
 import com.tcc.app.utils.TimeStamp.formatDateFromString
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -91,7 +92,7 @@ class AddSalaryActivity : BaseActivity() {
             jsonBody.put("UserID", Constant.PAGE_SIZE)
             jsonBody.put("StartDate", edtStartDate.getValue())
             jsonBody.put("EndDate", formatDateFromString(edtEndDate.getValue()))
-
+            jsonBody.put("CityID", session.getDataByKey(SessionManager.KEY_CITY_ID))
             result = Networking.setParentJsonData(
                 Constant.METHOD_GET_SALARY_DATA,
                 jsonBody
@@ -220,11 +221,11 @@ class AddSalaryActivity : BaseActivity() {
         Networking
             .with(this@AddSalaryActivity)
             .getServices()
-            .getSalaryList(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
+            .addSalary(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeWith(object : CallbackObserver<SalaryListModal>() {
-                override fun onSuccess(response: SalaryListModal) {
+            .subscribeWith(object : CallbackObserver<CommonAddModal>() {
+                override fun onSuccess(response: CommonAddModal) {
                     hideProgressbar()
                     if (response.error == 200) {
 

@@ -179,6 +179,9 @@ class CustomerFragment : BaseFragment(), CustomerListAdapter.OnItemSelected {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.home, menu)
+
+        val add = menu.findItem(R.id.action_add)
+        add.setVisible(false)
         val filter = menu.findItem(R.id.action_filter)
         filter.setVisible(true)
         super.onCreateOptionsMenu(menu, inflater)

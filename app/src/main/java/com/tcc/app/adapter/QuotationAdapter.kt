@@ -12,6 +12,7 @@ import com.tcc.app.extention.openPDF
 import com.tcc.app.extention.visible
 import com.tcc.app.modal.QuotationItem
 import com.tcc.app.utils.Constant
+import com.tcc.app.utils.SessionManager
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.row_quoatation.*
 
@@ -19,6 +20,7 @@ class QuotationAdapter(
     private val mContext: Context,
     var list: MutableList<QuotationItem> = mutableListOf(),
     val isAccept: String,
+    val session: SessionManager,
     private val listener: OnItemSelected
 ) : RecyclerView.Adapter<QuotationAdapter.ItemHolder>() {
     override fun getItemCount(): Int {
@@ -43,6 +45,9 @@ class QuotationAdapter(
             holder.constrain_accepted.invisible()
             holder.constrain_pending.invisible()
         }
+
+        if (session.roleData.data?.invoice?.isInsert.toString().equals("0"))
+            holder.btnInvoice.invisible()
 
         holder.bindData(mContext, data, listener, isAccept)
     }

@@ -53,6 +53,10 @@ class AddLeadActivity : BaseActivity() {
         txtTitle.text = resources.getText(R.string.visitor)
 
         btnSubmit.setOnClickListener { validation(false) }
+
+        if (session.roleData.data?.sites?.isInsert.equals("0")) {
+            btnAddSite.invisible()
+        }
         btnAddSite.setOnClickListener { validation(true) }
         stateSpinnerListner()
         citySpinnerListner()

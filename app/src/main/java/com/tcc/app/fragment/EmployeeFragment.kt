@@ -87,7 +87,12 @@ class EmployeeFragment : BaseFragment(), EmployeeAdapter.OnItemSelected {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_add -> {
-                goToActivity<AddEmployeeActivity>()
+                if (checkUserRole(
+                        session.roleData.data?.employee?.isInsert.toString(),
+                        requireContext()
+                    )
+                )
+                    goToActivity<AddEmployeeActivity>()
 
                 return true
             }

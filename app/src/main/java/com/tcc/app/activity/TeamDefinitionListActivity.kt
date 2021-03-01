@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.tcc.app.R
 import com.tcc.app.adapter.TeamDefinitionListAdapter
-import com.tcc.app.extention.goToActivity
 import com.tcc.app.extention.invisible
 import com.tcc.app.extention.showAlert
 import com.tcc.app.extention.visible
@@ -18,6 +17,7 @@ import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
+import com.tcc.app.utils.SessionManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.reclerview_swipelayout.*
@@ -57,17 +57,6 @@ class TeamDefinitionListActivity : BaseActivity(), TeamDefinitionListAdapter.OnI
             startActivity(i)
             Animatoo.animateCard(this)
         }
-
-
-        page = 1
-        list.clear()
-        hasNextPage = true
-        swipeRefreshLayout.isRefreshing = true
-        setupRecyclerView()
-        recyclerView.isLoading = true
-        getTeamDefinition(page)
-
-
 
 
         recyclerView.setLoadMoreListener(object : LoadMoreListener {
@@ -115,6 +104,7 @@ class TeamDefinitionListActivity : BaseActivity(), TeamDefinitionListAdapter.OnI
             jsonBody.put("SitesID", quotationItem?.sitesID)
             jsonBody.put("QuotationID", quotationItem?.quotationID)
             jsonBody.put("CustomerID", quotationItem?.customerID)
+            jsonBody.put("CityID", session.getDataByKey(SessionManager.KEY_CITY_ID))
 
             result = Networking.setParentJsonData(
                 Constant.METHOD_TEAM_DEFINITION_LIST,
@@ -177,5 +167,16 @@ class TeamDefinitionListActivity : BaseActivity(), TeamDefinitionListAdapter.OnI
         }
     }
 
+    override fun onResume() {
+        page = 1
+        list.clear()
+        hasNextPage = true
+        swipeRefreshLayout.isRefreshing = true
+        setupRecyclerView()
+        recyclerView.isLoading = true
+        getTeamDefinition(page)
+
+        super.onResume()
+    }
 
 }

@@ -91,10 +91,9 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
             Animatoo.animateCard(context)
         } else {
 
-            if (checkUserRight(
-                    requireContext(),
-                    session.roleData.data?.visitor?.isEdit.toString(),
-                    swipeRefreshLayout
+            if (checkUserRole(
+                    session.roleData.data?.visitor?.isInsert.toString(),
+                    requireContext()
                 )
             ) {
                 val intent = Intent(context, AddLeadActivity::class.java)
@@ -127,10 +126,9 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_add -> {
-                if (checkUserRight(
-                        requireContext(),
+                if (checkUserRole(
                         session.roleData.data?.visitor?.isEdit.toString(),
-                        swipeRefreshLayout
+                        requireContext()
                     )
                 )
                     showDialog()

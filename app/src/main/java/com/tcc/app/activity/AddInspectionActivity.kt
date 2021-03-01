@@ -21,6 +21,7 @@ import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
 import com.tcc.app.utils.NoScrollLinearLayoutManager
+import com.tcc.app.utils.SessionManager
 import com.yalantis.ucrop.UCrop
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -280,6 +281,7 @@ class AddInspectionActivity : BaseActivity(), InspectionQuesiontAdapter.OnItemSe
             jsonBody.put("VisitorID", -1)
             jsonBody.put("CustomerID", -1)
             jsonBody.put("SiteName", "")
+            jsonBody.put("CityID", session.getDataByKey(SessionManager.KEY_CITY_ID))
             result = Networking.setParentJsonData(
                 Constant.METHOD_SITE_LIST,
                 jsonBody

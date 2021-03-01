@@ -18,6 +18,7 @@ import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
 import com.tcc.app.utils.Logger
+import com.tcc.app.utils.SessionManager
 import com.tcc.app.utils.TimeStamp.formatDateFromString
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -315,7 +316,7 @@ class AddTeamDefinitionActivity : BaseActivity() {
                 jsonBody.put("StartDate", formatDateFromString(edStartDate.getValue()))
                 jsonBody.put("EndDate", formatDateFromString(edEndDate.getValue()))
                 jsonBody.put("Type", rbType?.text.toString())
-
+                jsonBody.put("CityID", session.getDataByKey(SessionManager.KEY_CITY_ID))
                 result =
                     Networking.setParentJsonData(Constant.METHOD_AVAILABLE_EMPLOYEE_LIST, jsonBody)
 
