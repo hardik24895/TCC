@@ -5,6 +5,8 @@ import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +16,7 @@ import com.tcc.app.R
 import com.tcc.app.extention.getCurrentDate
 import com.tcc.app.extention.getValue
 import com.tcc.app.extention.showDateTimePicker
+import com.tcc.app.extention.showNextFromStartDateTimePicker
 import com.tcc.app.network.AutoDisposable
 import com.tcc.app.utils.BlurDialogFragment
 import com.tcc.app.utils.SessionManager
@@ -73,6 +76,27 @@ class DateFilterDailog(context: Context) : BlurDialogFragment(), LifecycleOwner 
         edtStartDate.setOnClickListener { showDateTimePicker(requireActivity(), edtStartDate) }
 
         edtEndDate.setOnClickListener { showDateTimePicker(requireActivity(), edtEndDate) }
+
+
+        edtEndDate.setOnClickListener {
+            showNextFromStartDateTimePicker(
+                requireActivity(),
+                edtEndDate,
+                edtStartDate.getValue()
+            )
+        }
+
+        edtStartDate.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                edtEndDate.setText(edtStartDate.getValue())
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+        })
 
     }
 

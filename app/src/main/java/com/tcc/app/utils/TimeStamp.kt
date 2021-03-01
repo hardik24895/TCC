@@ -1,6 +1,7 @@
 package com.tcc.app.utils
 
 import android.text.TextUtils
+import java.lang.Math.abs
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -298,55 +299,15 @@ object TimeStamp {
         createdDateString: String?,
         expireDateString: String?
     ): Int? {
-        val dateFormat =
-            SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        var createdConvertedDate: Date? = null
-        var expireCovertedDate: Date? = null
-        var todayWithZeroTime: Date? = null
-        try {
-            createdConvertedDate = dateFormat.parse(createdDateString)
-            expireCovertedDate = dateFormat.parse(expireDateString)
-            val today = Date()
-            todayWithZeroTime = dateFormat.parse(dateFormat.format(today))
-        } catch (e: ParseException) {
-            e.printStackTrace()
-        }
-        var cYear = 0
-        var cMonth = 0
-        var cDay = 0
-        if (createdConvertedDate!!.after(todayWithZeroTime)) {
-            val cCal = Calendar.getInstance()
-            cCal.time = createdConvertedDate
-            cYear = cCal[Calendar.YEAR]
-            cMonth = cCal[Calendar.MONTH]
-            cDay = cCal[Calendar.DAY_OF_MONTH]
-        } else {
-            val cCal = Calendar.getInstance()
-            cCal.time = todayWithZeroTime
-            cYear = cCal[Calendar.YEAR]
-            cMonth = cCal[Calendar.MONTH]
-            cDay = cCal[Calendar.DAY_OF_MONTH]
-        }
 
-
-        /*Calendar todayCal = Calendar.getInstance();
-    int todayYear = todayCal.get(Calendar.YEAR);
-    int today = todayCal.get(Calendar.MONTH);
-    int todayDay = todayCal.get(Calendar.DAY_OF_MONTH);
-    */
-        val eCal = Calendar.getInstance()
-        eCal.time = expireCovertedDate
-        val eYear = eCal[Calendar.YEAR]
-        val eMonth = eCal[Calendar.MONTH]
-        val eDay = eCal[Calendar.DAY_OF_MONTH]
-        val date1 = Calendar.getInstance()
-        val date2 = Calendar.getInstance()
-        date1.clear()
-        date1[cYear, cMonth] = cDay
-        date2.clear()
-        date2[eYear, eMonth] = eDay
-        val diff = date2.timeInMillis - date1.timeInMillis
-        val dayCount = diff.toFloat() / (24 * 60 * 60 * 1000)
-        return dayCount.toInt()
+        val date1: Date
+        val date2: Date
+        val dates = SimpleDateFormat("dd/MM/yyyy")
+        date1 = dates.parse(createdDateString)
+        date2 = dates.parse(expireDateString)
+        val difference: Long = abs(date1.time - date2.time)
+        val differenceDates = difference / (24 * 60 * 60 * 1000)
+        val dayDifference = differenceDates.toString()
+        return dayDifference.toInt()
     }
 }

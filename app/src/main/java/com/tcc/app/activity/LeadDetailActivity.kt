@@ -44,6 +44,7 @@ class LeadDetailActivity : BaseActivity() {
                 if (checkUserRole(session.roleData.data?.sites?.isInsert.toString(), this)) {
                     val i = Intent(this, AddSiteActivity::class.java)
                     i.putExtra(Constant.VISITOR_ID, leadItem?.visitorID.toString())
+                    i.putExtra(Constant.DATA_LEAD, leadItem)
                     intent.putExtra(Constant.CUSTOMER_ID, "0")
                     startActivity(i)
                     Animatoo.animateCard(this)
