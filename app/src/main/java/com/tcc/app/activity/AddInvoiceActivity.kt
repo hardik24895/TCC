@@ -24,6 +24,29 @@ import com.tcc.app.utils.TimeStamp.formatDateFromString
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_add_invoice.*
+import kotlinx.android.synthetic.main.activity_add_invoice.btnAddUser
+import kotlinx.android.synthetic.main.activity_add_invoice.btnSubmit
+import kotlinx.android.synthetic.main.activity_add_invoice.edCGST
+import kotlinx.android.synthetic.main.activity_add_invoice.edHSN
+import kotlinx.android.synthetic.main.activity_add_invoice.edIGST
+import kotlinx.android.synthetic.main.activity_add_invoice.edMaterialHSN
+import kotlinx.android.synthetic.main.activity_add_invoice.edMaterialQty
+import kotlinx.android.synthetic.main.activity_add_invoice.edMaterialRate
+import kotlinx.android.synthetic.main.activity_add_invoice.edQty
+import kotlinx.android.synthetic.main.activity_add_invoice.edRate
+import kotlinx.android.synthetic.main.activity_add_invoice.edSGST
+import kotlinx.android.synthetic.main.activity_add_invoice.edTotalAmount
+import kotlinx.android.synthetic.main.activity_add_invoice.edtMaterialDays
+import kotlinx.android.synthetic.main.activity_add_invoice.lin_add_material
+import kotlinx.android.synthetic.main.activity_add_invoice.lin_add_user
+import kotlinx.android.synthetic.main.activity_add_invoice.root
+import kotlinx.android.synthetic.main.activity_add_invoice.spMaterialType
+import kotlinx.android.synthetic.main.activity_add_invoice.spUserType
+import kotlinx.android.synthetic.main.activity_add_invoice.view2
+import kotlinx.android.synthetic.main.activity_add_invoice.view7
+import kotlinx.android.synthetic.main.activity_add_quotation.*
+
+
 import kotlinx.android.synthetic.main.row_dynamic_user.view.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 import org.json.JSONArray
@@ -43,7 +66,6 @@ class AddInvoiceActivity : BaseActivity() {
     var quotationIteam: QuotationItem? = null
     var leadItem: LeadItem? = null
 
-
     var serviceNameList: ArrayList<String> = ArrayList()
     var adapterService: ArrayAdapter<String>? = null
     var serviceListArray: ArrayList<ServiceDataItem> = ArrayList()
@@ -56,10 +78,13 @@ class AddInvoiceActivity : BaseActivity() {
     var itemUserType: List<SearchableItem>? = null
     var usertypeId: String = ""
 
+    var materialTypeNameList: ArrayList<String>? = null
+    var adapterMaterialType: ArrayAdapter<String>? = null
+    var materialTypeListArray: ArrayList<UserTypeDataItem>? = null
+    var itemMaterialType: List<SearchableItem>? = null
+    var materialtypeId: String = "-1"
+
     var invoiceAttedanceList: ArrayList<InvoiceAttendanceDataItem> = ArrayList()
-
-    //  var usertypeChildId: String = ""
-
 
     var stateNameList: ArrayList<String> = ArrayList()
     var adapterState: ArrayAdapter<String>? = null
@@ -90,6 +115,8 @@ class AddInvoiceActivity : BaseActivity() {
         }
         userTypeNameList = ArrayList()
         userTypeListArray = ArrayList()
+        materialTypeListArray = ArrayList()
+        materialTypeNameList = ArrayList()
 
         serviceNameList = ArrayList()
         serviceListArray = ArrayList()
@@ -206,11 +233,16 @@ class AddInvoiceActivity : BaseActivity() {
         btnSubmit.setOnClickListener {
             validation()
         }
-
+        getMaterialTypeList()
 
         getUserTypeList()
         userTypeSpinnerListner()
         userTypeViewClick()
+
+
+        materialTypeSpinnerListner()
+        materialTypeViewClick()
+
 
     }
 
@@ -241,6 +273,18 @@ class AddInvoiceActivity : BaseActivity() {
                 itemUserType!!,
                 getString(R.string.select_usertype), { item, _ ->
                     spUserType.setSelection(item.id.toInt())
+                }).show()
+        }
+
+    }
+
+    private fun materialTypeViewClick() {
+
+        view7.setOnClickListener {
+            SearchableDialog(this@AddInvoiceActivity,
+                itemMaterialType!!,
+                getString(R.string.select_material), { item, _ ->
+                    spMaterialType.setSelection(item.id.toInt())
                 }).show()
         }
 
@@ -475,6 +519,237 @@ class AddInvoiceActivity : BaseActivity() {
             }).addTo(autoDisposable)
     }
 
+    fun getMaterialTypeList() {
+        var result = ""
+        try {
+            val jsonBody = JSONObject()
+            jsonBody.put("IsMaterial", "1")
+
+            result = Networking.setParentJsonData(Constant.METHOD_USERTYPE_LIST, jsonBody)
+
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+        Networking
+            .with(this@AddInvoiceActivity)
+            .getServices()
+            .getUserTypeList(Networking.wrapParams(result))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : CallbackObserver<UserTypeListModel>() {
+                override fun onSuccess(response: UserTypeListModel) {
+                    materialTypeListArray!!.addAll(response.data)
+                    var myList: MutableList<SearchableItem> = mutableListOf()
+
+                    materialTypeNameList!!.add("Select Material Type")
+                    myList.add(
+                        SearchableItem(
+                            0,
+                            "Select Material Type"
+                        )
+                    )
+
+                    for (items in response.data.indices) {
+                        materialTypeNameList!!.add(response.data.get(items).usertype.toString())
+                        myList.add(
+                            SearchableItem(
+                                items.toLong() + 1,
+                                materialTypeNameList!!.get(items + 1)
+                            )
+                        )
+                    }
+
+                    itemMaterialType = myList
+                    adapterMaterialType = ArrayAdapter(
+                        this@AddInvoiceActivity,
+                        R.layout.custom_spinner_item,
+                        materialTypeNameList!!
+                    )
+                    spMaterialType.setAdapter(adapterMaterialType)
+
+                    for (iteam in quotationIteam?.item!!.indices) {
+                        if (iteam == 0) {
+                            for (i in materialTypeListArray!!.indices) {
+                                if (quotationIteam!!.item.get(iteam).usertypeID.equals(
+                                        materialTypeListArray!!.get(i).usertypeID
+                                    )
+                                ) {
+                                    spMaterialType.setSelection(i)
+                                }
+                            }
+                        } else {
+                            onAddMaterial()
+                            for (i in materialTypeListArray!!.indices) {
+                                if (quotationIteam!!.item.get(iteam).usertypeID.equals(
+                                        materialTypeListArray!!.get(i).usertypeID
+                                    )
+                                ) {
+                                    lin_add_material.getChildAt(iteam - 1).spUserTypeChild.setSelection(
+                                        i - 1
+                                    )
+                                }
+                            }
+                        }
+
+                    }
+
+
+                }
+
+                override fun onFailed(code: Int, message: String) {
+
+                    showAlert(message)
+
+                }
+
+            }).addTo(autoDisposable)
+    }
+
+    private fun materialTypeSpinnerListner() {
+        spMaterialType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                if (position != -1 && materialTypeListArray!!.size > position - 1) {
+
+                    if (position == 0) {
+                        materialtypeId = "-1"
+                        edMaterialHSN.setText("0")
+                        edMaterialQty.setText("0")
+                        edMaterialRate.setText("0")
+                        // edtDays.setText("0")
+                        setUpdatedTotal()
+                    } else {
+                        materialtypeId =
+                            materialTypeListArray!!.get(position - 1).usertypeID.toString()
+                        edMaterialHSN.setText(materialTypeListArray!!.get(position - 1).hSNNo)
+                        edMaterialQty.setText("1")
+                        edMaterialRate.setText(materialTypeListArray!!.get(position - 1).rate)
+                        setUpdatedTotal()
+                    }
+
+
+                }
+
+            }
+        }
+    }
+
+    fun onAddMaterial() {
+        val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val rowView: View = inflater.inflate(R.layout.row_dynamic_user, null, false)
+        var btnRemove: TextView = rowView.findViewById(R.id.btnRemoveUser)
+        var txtUserTitle: TextView = rowView.findViewById(R.id.txtUserTitle)
+        var spUserTypeChild: SearchableSpinner = rowView.findViewById(R.id.spUserTypeChild)
+        var viewChild: View = rowView.findViewById(R.id.viewUserTypeChild)
+        var edHSNChild: EditText = rowView.findViewById(R.id.edHSNChild)
+        var edQtyChild: EditText = rowView.findViewById(R.id.edQtyChild)
+        var edRateChild: EditText = rowView.findViewById(R.id.edRateChild)
+        var edDaysChild: EditText = rowView.findViewById(R.id.edtChildDays)
+        txtUserTitle.setText("Material")
+        // userTypeChildId.add("")
+        // Log.e("TAG", "onAddField:      "+userTypeChildId.size )
+
+
+        btnRemove.setOnClickListener {
+            lin_add_material.removeView(rowView)
+            //     userTypeChildId.removeAt((lin_add_user as ViewGroup).indexOfChild(btnRemove))
+            setUpdatedTotal()
+        }
+        adapterMaterialType = ArrayAdapter(
+            this@AddInvoiceActivity,
+            R.layout.custom_spinner_item,
+            materialTypeNameList!!
+        )
+        spUserTypeChild.setAdapter(adapterMaterialType)
+
+
+        spUserTypeChild.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                if (position != -1 && materialTypeListArray!!.size > position - 1) {
+                    if (position == 0) {
+                        edHSNChild.setText("0")
+                        edQtyChild.setText("0")
+                        edRateChild.setText("0")
+                        edDaysChild.setText("0")
+                        setUpdatedTotal()
+                    } else {
+                        edHSNChild.setText(materialTypeListArray!!.get(position - 1).hSNNo)
+                        edQtyChild.setText("1")
+                        edDaysChild.setText("1")
+                        edRateChild.setText(materialTypeListArray!!.get(position - 1).rate)
+                        setUpdatedTotal()
+                    }
+
+
+                }
+
+            }
+        }
+
+
+        edRateChild.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                setUpdatedTotal()
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+        })
+        edQtyChild.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                setUpdatedTotal()
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+        })
+
+        edDaysChild.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                setUpdatedTotal()
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+        })
+
+
+        viewChild.setOnClickListener {
+            SearchableDialog(
+                this@AddInvoiceActivity,
+                itemMaterialType!!,
+                getString(R.string.select_material),
+                { item, _ -> spUserTypeChild.setSelection(item.id.toInt()) }).show()
+        }
+
+        lin_add_material!!.addView(rowView)
+    }
+
     fun getInvoiceAttedanceList() {
 
         showProgressbar()
@@ -582,6 +857,14 @@ class AddInvoiceActivity : BaseActivity() {
 
         }
 
+        if (!edMaterialQty.isEmpty() && !edMaterialRate.isEmpty() && !edtMaterialDays.isEmpty()) {
+
+            TotalAmount =
+                TotalAmount + (edMaterialQty.getValue().toFloat() * edMaterialRate.getValue()
+                    .toFloat()) * edtMaterialDays.getValue().toFloat()
+
+        }
+
         if (lin_add_user.childCount > 0) {
             for (item in 0 until lin_add_user.childCount) {
                 if (!lin_add_user.getChildAt(item).edQtyChild.isEmpty() && !lin_add_user.getChildAt(
@@ -595,6 +878,23 @@ class AddInvoiceActivity : BaseActivity() {
 
             }
         }
+        if (lin_add_material.childCount > 0) {
+            for (item in 0 until lin_add_material.childCount) {
+                if (!lin_add_material.getChildAt(item).edQtyChild.isEmpty() && !lin_add_material.getChildAt(
+                        item
+                    ).edRateChild.isEmpty() && !lin_add_material.getChildAt(item).edtChildDays.isEmpty()
+                ) {
+                    TotalAmount =
+                        TotalAmount + (lin_add_material.getChildAt(item).edQtyChild.getValue()
+                            .toFloat() * lin_add_material.getChildAt(item).edRateChild.getValue()
+                            .toFloat() * lin_add_material.getChildAt(item).edtChildDays.getValue()
+                            .toFloat())
+
+                }
+
+            }
+        }
+
 
 
         if (TotalAmount == 0f) {
@@ -670,6 +970,15 @@ class AddInvoiceActivity : BaseActivity() {
 
                 jsonArray.put(jsonObj)
             }
+            if (!edMaterialQty.isEmpty() && !edMaterialRate.isEmpty()) {
+                val jsonObj = JSONObject()
+                jsonObj.put("UsertypeID", materialtypeId)
+                jsonObj.put("Qty", edMaterialQty.getValue())
+                jsonObj.put("Rate", edMaterialRate.getValue())
+                jsonObj.put("Days", edtMaterialDays.getValue())
+
+                jsonArray.put(jsonObj)
+            }
 
             if (lin_add_user.childCount > 0) {
                 for (item in 0 until lin_add_user.childCount) {
@@ -691,7 +1000,32 @@ class AddInvoiceActivity : BaseActivity() {
                 }
             }
 
+            if (lin_add_material.childCount > 0) {
+                for (item in 0 until lin_add_material.childCount) {
+                    if (!lin_add_material.getChildAt(item).edQtyChild.isEmpty() && !lin_add_material.getChildAt(
+                            item
+                        ).edRateChild.isEmpty()
+                    ) {
+                        val jsonObj = JSONObject()
+                        jsonObj.put(
+                            "UsertypeID",
+                            materialTypeListArray?.get(lin_add_material.getChildAt(item).spUserTypeChild.selectedItemPosition - 1)?.usertypeID
+                        )
+                        jsonObj.put("Qty", lin_add_material.getChildAt(item).edQtyChild.getValue())
+                        jsonObj.put(
+                            "Rate",
+                            lin_add_material.getChildAt(item).edRateChild.getValue()
+                        )
+                        jsonObj.put(
+                            "Days",
+                            lin_add_material.getChildAt(item).edtChildDays.getValue()
+                        )
+                        jsonArray.put(jsonObj)
 
+                    }
+
+                }
+            }
 
 
             result = Networking.setParentJsonData(Constant.METHOD_ADD_INVOICE, jsonBody)
