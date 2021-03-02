@@ -66,6 +66,7 @@ class ProfileCheckInCheckoutFragment : BaseFragment(), CheckInOutAdapter.OnItemS
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         recyclerView.setLoadMoreListener(object : LoadMoreListener {
             override fun onLoadMore() {
                 if (hasNextPage && !recyclerView.isLoading) {
@@ -74,6 +75,9 @@ class ProfileCheckInCheckoutFragment : BaseFragment(), CheckInOutAdapter.OnItemS
                 }
             }
         })
+
+        txtDate.append(" : ${getCurrentDate()}")
+
         isBtnClick = false
         swipeRefreshLayout.setOnRefreshListener {
             page = 1
@@ -171,6 +175,16 @@ class ProfileCheckInCheckoutFragment : BaseFragment(), CheckInOutAdapter.OnItemS
 
     }
 
+    fun callCheckInOutAPi() {
+        page = 1
+        list.clear()
+        hasNextPage = true
+        swipeRefreshLayout.isRefreshing = true
+        setupRecyclerView()
+        recyclerView.isLoading = true
+        getCheckinoutList(page)
+    }
+
 
     fun getCheckinoutList(page: Int) {
         var result = ""
@@ -207,7 +221,25 @@ class ProfileCheckInCheckoutFragment : BaseFragment(), CheckInOutAdapter.OnItemS
                     )
                     hasNextPage = list.size < response.rowcount!!
 
-                  refreshData(getString(R.string.no_data_found), 1)
+                    if (response.message.equals("") && response.message.equals("")) {
+                        txtCheckInTime.append(" : ${getCurrentDateTime()}")
+                        txtCheckOutTime.append(" : ${getCurrentDateTime()}")
+                        txtCheckInTime.invisible()
+                        txtCheckOutTime.invisible()
+                        btnCHeckout.visible()
+                    } else if (!response.message.equals("") && response.message.equals("")) {
+                        txtCheckInTime.append(" : ${getCurrentDateTime()}")
+                        txtCheckOutTime.append(" : ${getCurrentDateTime()}")
+                        txtCheckInTime.visible()
+                        txtCheckOutTime.invisible()
+                        btnCHeckout.visible()
+                    } else {
+                        btnCHeckout.invisible()
+                        txtCheckInTime.visible()
+                        txtCheckOutTime.visible()
+                    }
+
+                    refreshData(getString(R.string.no_data_found), 1)
                 }
 
                 override fun onFailed(code: Int, message: String) {
@@ -240,15 +272,7 @@ class ProfileCheckInCheckoutFragment : BaseFragment(), CheckInOutAdapter.OnItemS
     }
 
     override fun onResume() {
-
-        page = 1
-        list.clear()
-        hasNextPage = true
-        swipeRefreshLayout.isRefreshing = true
-        setupRecyclerView()
-        recyclerView.isLoading = true
-        getCheckinoutList(page)
-
+        callCheckInOutAPi()
         super.onResume()
     }
 
@@ -310,11 +334,12 @@ class ProfileCheckInCheckoutFragment : BaseFragment(), CheckInOutAdapter.OnItemS
 
     fun CheckInApi() {
         showProgressbar()
+        var currentTime = getCurrentDateTime()
         var result = ""
         try {
             val jsonBody = JSONObject()
             jsonBody.put("UserID", session.user.data?.userID)
-            jsonBody.put("Checkintime", getCurrentDateTime())
+            jsonBody.put("Checkintime", currentTime)
             jsonBody.put("Inlatitude", latitude)
             jsonBody.put("Inlongitude", longitude)
             jsonBody.put("InAddress", address)
@@ -340,7 +365,11 @@ class ProfileCheckInCheckoutFragment : BaseFragment(), CheckInOutAdapter.OnItemS
                             SessionManager.KEY_CHECKIN_ID,
                             response.data.get(0).iD.toString()
                         )
+
                         btnCHeckout.text = "Check Out"
+                        callCheckInOutAPi()
+
+
                     } else {
                         showAlert(response.message.toString())
                     }
@@ -382,10 +411,9 @@ class ProfileCheckInCheckoutFragment : BaseFragment(), CheckInOutAdapter.OnItemS
                     hideProgressbar()
                     if (response.error == 200) {
                         root.showSnackBar(response.message.toString())
-                        session.storeDataByKey(
-                            SessionManager.KEY_CHECKIN_ID, ""
-                        )
+                        session.storeDataByKey(SessionManager.KEY_CHECKIN_ID, "")
                         btnCHeckout.text = "Check In"
+                        callCheckInOutAPi()
                     } else {
                         showAlert(response.message.toString())
                     }

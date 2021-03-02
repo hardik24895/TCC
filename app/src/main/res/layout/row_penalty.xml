@@ -31,10 +31,9 @@
             android:layout_marginStart="@dimen/_5sdp"
             android:ellipsize="end"
             android:singleLine="true"
-
             android:textSize="@dimen/_14ssp"
             app:layout_constraintBottom_toBottomOf="@id/imgProfile"
-            app:layout_constraintEnd_toStartOf="@+id/imageView2"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/imgProfile"
             app:layout_constraintTop_toTopOf="@+id/imgProfile" />

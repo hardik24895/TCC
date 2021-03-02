@@ -11,8 +11,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingEnd="@dimen/_5ssp"
-        android:layout_margin="@dimen/_5sdp">
+        android:layout_margin="@dimen/_5sdp"
+        android:paddingEnd="@dimen/_5ssp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imgProfile"
@@ -228,6 +228,73 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txtSgst" />
 
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/crd_remaining"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@+id/imgProfile"
+            app:layout_constraintTop_toBottomOf="@+id/view3">
+
+
+            <com.tcc.app.customview.TextviewSemiBold
+                android:id="@+id/texRemainingPaymentTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:text="@string/remaining_payment"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.tcc.app.customview.TextviewReguler
+                android:id="@+id/texRemainingPayment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:text="05/02/2021"
+                android:textColor="@color/txtgray"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/texRemainingPaymentTitle" />
+
+
+            <com.tcc.app.customview.TextviewSemiBold
+                android:id="@+id/texRemainingGSTTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:text="@string/remaining_gst"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/texRemainingPaymentTitle" />
+
+
+            <com.tcc.app.customview.TextviewReguler
+                android:id="@+id/texRemainingGST"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:text="05/02/2021"
+                android:textColor="@color/txtgray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/texRemainingGSTTitle" />
+
+
+            <View
+                android:id="@+id/view4"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:background="@color/light_grey"
+                android:scaleY="0.5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/texRemainingGST" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <com.tcc.app.customview.TextviewReguler
             android:id="@+id/txtNotes"
             android:layout_width="0dp"
@@ -238,11 +305,10 @@
             android:text="508, Sontorini squre, jodhpur, Ahmedabad, 380015"
             android:textColor="@color/txtgray"
             app:layout_constraintStart_toStartOf="@+id/imgProfile"
-            app:layout_constraintTop_toBottomOf="@+id/view3" />
+            app:layout_constraintTop_toBottomOf="@+id/crd_remaining" />
 
         <com.tcc.app.customview.TextviewReguler
             android:id="@+id/txtTerms"
-            android:visibility="gone"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8sdp"
@@ -250,6 +316,7 @@
             android:drawablePadding="@dimen/_4sdp"
             android:text="508, Sontorini squre, jodhpur, Ahmedabad, 380015"
             android:textColor="@color/txtgray"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="@+id/imgProfile"
             app:layout_constraintTop_toBottomOf="@+id/txtNotes" />
 

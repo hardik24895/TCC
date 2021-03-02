@@ -19,6 +19,7 @@ class InvoicePaidAdapter(
     private val mContext: Context,
     var list: MutableList<InvoiceDataItem> = mutableListOf(),
     var isPaid: Boolean = false,
+    var flag: String,
     private val listener: InvoicePaidAdapter.OnItemSelected
 ) : RecyclerView.Adapter<InvoicePaidAdapter.ItemHolder>() {
 
@@ -38,7 +39,7 @@ class InvoicePaidAdapter(
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         val data = list[position]
 
-        holder.bindData(mContext, data, listener, isPaid)
+        holder.bindData(mContext, data, listener, isPaid, flag)
     }
 
     interface OnItemSelected {
@@ -54,7 +55,8 @@ class InvoicePaidAdapter(
             context: Context,
             data: InvoiceDataItem,
             listener: InvoicePaidAdapter.OnItemSelected,
-            isPaid: Boolean
+            isPaid: Boolean,
+            flag: String,
         ) {
 
             txtName.text = data.siteUserFrindlyName
@@ -65,6 +67,14 @@ class InvoicePaidAdapter(
             txtSgst.text = data.sGST
             txtNotes.text = data.notes
             txtTerms.text = data.terms
+
+            if (!flag.equals("Paid")) {
+                crd_remaining.visible()
+                texRemainingPayment.text = data.remainingPayment
+                texRemainingGST.text = data.remainingGSTPayment
+            } else {
+                crd_remaining.invisible()
+            }
 
             if (isPaid) {
                 txtNotes.invisible()

@@ -71,6 +71,7 @@ class InvoiceFragment() : BaseFragment() {
     private fun setStatePageAdapter() {
         viewPageradapter = ViewPagerPagerAdapter(childFragmentManager)
         viewPageradapter?.addFragment(InvoicePaidFragment(), "Paid")
+        viewPageradapter?.addFragment(PartiallyPaidFragment(), "Partially Paid")
         viewPageradapter?.addFragment(InvoiceUnPaidFragment(), "Unpaid")
         viewPager.adapter = viewPageradapter
         tabs.setupWithViewPager(viewPager, true)

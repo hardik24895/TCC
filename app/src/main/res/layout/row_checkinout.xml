@@ -50,6 +50,7 @@
 
         <com.tcc.app.customview.TextviewReguler
             android:id="@+id/txtLocation"
+            android:visibility="gone"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_location"

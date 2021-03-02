@@ -331,7 +331,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_8sdp"
-                    android:drawableStart="@drawable/ic_payment"
+                    android:drawableStart="@drawable/ic_payment_white"
                     android:drawablePadding="@dimen/_4sdp"
                     android:gravity="center"
                     android:lines="2"

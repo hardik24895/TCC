@@ -24,15 +24,39 @@
             android:padding="@dimen/_5sdp">
 
             <com.tcc.app.customview.TextviewReguler
-                android:id="@+id/txtStartDate"
+                android:id="@+id/txtDate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_start_date"
                 android:drawablePadding="@dimen/_10sdp"
                 android:paddingTop="@dimen/_5sdp"
-                android:text="Start Date"
+                android:text="@string/date"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <com.tcc.app.customview.TextviewReguler
+                android:id="@+id/txtCheckInTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_clock"
+                android:drawablePadding="@dimen/_10sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:text="@string/start_time"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txtDate" />
+
+            <com.tcc.app.customview.TextviewReguler
+                android:id="@+id/txtCheckOutTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_clock"
+                android:drawablePadding="@dimen/_10sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:text="@string/end_time"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txtCheckInTime" />
 
 
             <com.tcc.app.customview.ButtonReguler
@@ -48,7 +72,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtStartDate" />
+                app:layout_constraintTop_toBottomOf="@+id/txtCheckOutTime" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -3,6 +3,7 @@ package com.tcc.app.activity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -12,17 +13,27 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.messaging.FirebaseMessaging
 import com.tcc.app.R
 import com.tcc.app.extention.addFragment
 import com.tcc.app.fragment.ProfileMainFragment
+import com.tcc.app.utils.Constant
 import com.tcc.app.utils.SessionManager
+import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.android.synthetic.main.fragment_profile.*
+
+
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     lateinit var session: SessionManager
+    var txtName: TextView? = null
+    var txtEmail: TextView? = null
+    var profileImage: CircleImageView? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +44,39 @@ class HomeActivity : AppCompatActivity() {
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         var headerview: View = navView.getHeaderView(0)
-        var nav_main: ConstraintLayout = headerview.findViewById(R.id.nav_main);
+        var nav_main: ConstraintLayout = headerview.findViewById(R.id.nav_main)
+        txtName = headerview.findViewById(R.id.txtName)
+        txtEmail = headerview.findViewById(R.id.txtEmail)
+        profileImage = headerview.findViewById(R.id.circleImageView)
+        drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener {
+            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
+
+            }
+
+            override fun onDrawerOpened(drawerView: View) {
+                txtName!!.setText("${session.user.data?.firstName} ${session.user.data?.lastName}")
+                txtEmail!!.setText("${session.user.data?.emailID}")
+
+                Glide.with(this@HomeActivity)
+                    .load(Constant.EMP_PROFILE + session.user.data?.photoURL)
+                    .apply(
+                        com.bumptech.glide.request.RequestOptions().centerCrop()
+                            .placeholder(com.tcc.app.R.drawable.ic_profile)
+                    )
+                    .into(profileImage!!)
+            }
+
+            override fun onDrawerClosed(drawerView: View) {
+
+            }
+
+            override fun onDrawerStateChanged(newState: Int) {
+
+            }
+        })
+
+
+
         nav_main.setOnClickListener {
             this.addFragment(ProfileMainFragment(), R.id.nav_host_fragment)
             drawerLayout.closeDrawers()
@@ -42,8 +85,6 @@ class HomeActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
 
 
-// Passing each menu ID as a set of Ids because each
-// menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_home,
@@ -118,12 +159,20 @@ class HomeActivity : AppCompatActivity() {
 
     }
 
-// override fun onCreateOptionsMenu(menu: Menu): Boolean {
-//
-// menuInflater.inflate(R.menu.home, menu)
-// return true
-// }
+    override fun onResume() {
+        txtName!!.setText("${session.user.data?.firstName} ${session.user.data?.lastName}")
+        txtEmail!!.setText("${session.user.data?.emailID}")
 
+        Glide.with(this)
+            .load(Constant.EMP_PROFILE + session.user.data?.photoURL)
+            .apply(
+                com.bumptech.glide.request.RequestOptions().centerCrop()
+                    .placeholder(com.tcc.app.R.drawable.ic_profile)
+            )
+            .into(profileImage!!)
+
+        super.onResume()
+    }
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
@@ -135,5 +184,6 @@ class HomeActivity : AppCompatActivity() {
 
         super.onBackPressed()
     }
+
 
 }

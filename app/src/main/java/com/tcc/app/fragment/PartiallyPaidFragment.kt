@@ -1,12 +1,16 @@
 package com.tcc.app.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.tcc.app.R
+import com.tcc.app.activity.AddPaymentActivity
 import com.tcc.app.adapter.InvoicePaidAdapter
+import com.tcc.app.extention.checkUserRole
 import com.tcc.app.extention.invisible
 import com.tcc.app.extention.showAlert
 import com.tcc.app.extention.visible
@@ -24,8 +28,7 @@ import kotlinx.android.synthetic.main.reclerview_swipelayout.*
 import org.json.JSONException
 import org.json.JSONObject
 
-
-class InvoicePaidFragment : BaseFragment(), InvoicePaidAdapter.OnItemSelected {
+class PartiallyPaidFragment() : BaseFragment(), InvoicePaidAdapter.OnItemSelected {
 
     var adapter: InvoicePaidAdapter? = null
     private val list: MutableList<InvoiceDataItem> = mutableListOf()
@@ -63,15 +66,6 @@ class InvoicePaidFragment : BaseFragment(), InvoicePaidAdapter.OnItemSelected {
 
     }
 
-    fun setupRecyclerView() {
-        val layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.layoutManager = layoutManager
-        adapter = InvoicePaidAdapter(requireContext(), list, true, "Paid", this)
-        recyclerView.adapter = adapter
-
-    }
-
-
     override fun onResume() {
         super.onResume()
         page = 1
@@ -83,7 +77,22 @@ class InvoicePaidFragment : BaseFragment(), InvoicePaidAdapter.OnItemSelected {
         getInvoiceList(page)
     }
 
+    fun setupRecyclerView() {
+        val layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.layoutManager = layoutManager
+        adapter = InvoicePaidAdapter(requireContext(), list, false, "PartiallyPaid", this)
+        recyclerView.adapter = adapter
+
+    }
+
     override fun onItemSelect(position: Int, data: InvoiceDataItem) {
+
+        if (checkUserRole(session.roleData.data?.invoice?.isInsert.toString(), requireContext())) {
+            val intent = Intent(context, AddPaymentActivity::class.java)
+            intent.putExtra(Constant.DATA, data)
+            startActivity(intent)
+            Animatoo.animateCard(context)
+        }
 
     }
 
@@ -96,7 +105,7 @@ class InvoicePaidFragment : BaseFragment(), InvoicePaidAdapter.OnItemSelected {
             jsonBody.put("QuotationID", "-1")
             jsonBody.put("CustomerID", "-1")
             jsonBody.put("SitesID", "-1")
-            jsonBody.put("FilterStatus", "Paid")
+            jsonBody.put("FilterStatus", "PartialPaid")
             jsonBody.put("CityID", session.getDataByKey(SessionManager.KEY_CITY_ID))
             result = Networking.setParentJsonData(
                 Constant.METHOD_GET_INVOICE,
@@ -127,7 +136,7 @@ class InvoicePaidFragment : BaseFragment(), InvoicePaidAdapter.OnItemSelected {
                     )
                     hasNextPage = list.size < response.rowcount
 
-                  refreshData(getString(R.string.no_data_found), 1)
+                    refreshData(getString(R.string.no_data_found), 1)
                 }
 
                 override fun onFailed(code: Int, message: String) {

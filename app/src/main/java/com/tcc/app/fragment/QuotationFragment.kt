@@ -358,9 +358,10 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
                 override fun onSuccess(response: CommonAddModal) {
                     hideProgressbar()
                     if (response.error == 200) {
-                        list.removeAt(position.toInt())
-                        adapter?.notifyItemRemoved(position.toInt())
-                        adapter?.notifyDataSetChanged()
+//                        list.removeAt(position.toInt())
+//                        adapter?.notifyItemRemoved(position.toInt())
+//                        adapter?.notifyDataSetChanged()
+                        txtRejected.performClick()
                     }
                 }
 
@@ -413,9 +414,10 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
                 override fun onSuccess(response: CommonAddModal) {
                     hideProgressbar()
                     if (response.error == 200) {
-                        list.removeAt(position.toInt())
-                        adapter?.notifyItemRemoved(position.toInt())
-                        adapter?.notifyDataSetChanged()
+                        // list.removeAt(position.toInt())
+                        // adapter?.notifyItemRemoved(position.toInt())
+                        // adapter?.notifyDataSetChanged()
+                        txtAccepted.performClick()
                     }
                 }
 

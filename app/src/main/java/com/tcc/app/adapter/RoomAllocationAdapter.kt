@@ -49,7 +49,7 @@ class RoomAllocationAdapter(
                 listener: RoomAllocationAdapter.OnItemSelected
         ) {
 
-            txtRoomNo.text = data.rno
+            txtRoomNo.text = data.roomNo
             txtAddress.text = data.roomAddress
             txtStartDate.text = data.startDate
             txtEndDate.text = data.endDate

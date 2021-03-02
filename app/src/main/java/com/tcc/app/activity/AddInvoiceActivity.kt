@@ -976,6 +976,9 @@ class AddInvoiceActivity : BaseActivity() {
             edCGST.setText("")
             edSGST.setText("")
             edIGST.setText("")
+            edCGST.isEnabled = false
+            edSGST.isEnabled = false
+            edIGST.isEnabled = false
         } else {
 
             CGST = CGST + ((TotalAmount * session.configData.data?.cGST!!.toFloat()) / 100)
@@ -990,10 +993,17 @@ class AddInvoiceActivity : BaseActivity() {
                 edCGST.setText(df.format(CGST))
                 edSGST.setText(df.format(SGST))
                 edIGST.setText("")
+                edCGST.isEnabled = false
+                edSGST.isEnabled = false
+                edIGST.isEnabled = true
             } else {
                 edCGST.setText("")
                 edSGST.setText("")
                 edIGST.setText(df.format(IGST))
+
+                edCGST.isEnabled = true
+                edSGST.isEnabled = true
+                edIGST.isEnabled = false
             }
         }
     }

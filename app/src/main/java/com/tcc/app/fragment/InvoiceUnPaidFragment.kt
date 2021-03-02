@@ -81,7 +81,7 @@ class InvoiceUnPaidFragment : BaseFragment(), InvoicePaidAdapter.OnItemSelected 
     fun setupRecyclerView() {
         val layoutManager = LinearLayoutManager(requireContext())
         recyclerView.layoutManager = layoutManager
-        adapter = InvoicePaidAdapter(requireContext(), list, false, this)
+        adapter = InvoicePaidAdapter(requireContext(), list, false, "UnPaid", this)
         recyclerView.adapter = adapter
 
     }

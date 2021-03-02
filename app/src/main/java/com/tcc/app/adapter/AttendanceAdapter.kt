@@ -35,29 +35,22 @@ class AttendanceAdapter(
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         val data = list[position]
 
-//        holder.txtNone.isSelected = true
-//        holder.txtOvertimeHalfDay.isEnabled = false
-//        holder.txtOvertimeFullDay.isEnabled = false
         if (data.attendance.equals("1")) {
             holder.txtPresent.isSelected = true
-            holder.txtHalfDay.isSelected = false
-            holder.txtAbsent.isSelected = false
-            holder.txtNone.isSelected = false
             holder.txtOvertimeHalfDay.isEnabled = true
             holder.txtOvertimeFullDay.isEnabled = true
-
+            holder.txtAbsent.isSelected = false
+            holder.txtHalfDay.isSelected = false
+            holder.txtNone.isSelected = false
             if (data.overtime.equals("1")) {
-                holder.txtHalfDay.isSelected = false
-                holder.txtAbsent.isSelected = false
                 holder.txtOvertimeHalfDay.isSelected = false
                 holder.txtOvertimeFullDay.isSelected = true
-                holder.txtNone.isSelected = false
             } else if (data.overtime.equals("0.5")) {
-                holder.txtHalfDay.isSelected = false
-                holder.txtAbsent.isSelected = false
                 holder.txtOvertimeHalfDay.isSelected = true
                 holder.txtOvertimeFullDay.isSelected = false
-                holder.txtNone.isSelected = false
+            } else {
+                holder.txtOvertimeHalfDay.isSelected = false
+                holder.txtOvertimeFullDay.isSelected = false
             }
 
         } else if (data.attendance.equals("0.5")) {
@@ -67,8 +60,7 @@ class AttendanceAdapter(
             holder.txtOvertimeHalfDay.isSelected = false
             holder.txtOvertimeFullDay.isSelected = false
             holder.txtNone.isSelected = false
-            holder.txtOvertimeHalfDay.isEnabled = false
-            holder.txtOvertimeFullDay.isEnabled = false
+
         } else if (data.attendance.equals("0")) {
             holder.txtPresent.isSelected = false
             holder.txtAbsent.isSelected = true
@@ -76,8 +68,7 @@ class AttendanceAdapter(
             holder.txtOvertimeHalfDay.isSelected = false
             holder.txtOvertimeFullDay.isSelected = false
             holder.txtNone.isSelected = false
-            holder.txtOvertimeHalfDay.isEnabled = false
-            holder.txtOvertimeFullDay.isEnabled = false
+
         }
         if (data.attendance.equals("-1") || data.attendance.equals("")) {
             holder.txtPresent.isSelected = false
@@ -85,11 +76,8 @@ class AttendanceAdapter(
             holder.txtAbsent.isSelected = false
             holder.txtOvertimeHalfDay.isSelected = false
             holder.txtOvertimeFullDay.isSelected = false
-            holder.txtOvertimeHalfDay.isEnabled = false
-            holder.txtOvertimeFullDay.isEnabled = false
             holder.txtNone.isSelected = true
         }
-
 
         setselection(holder, position, list[position])
         holder.bindData(mContext, data, listener)

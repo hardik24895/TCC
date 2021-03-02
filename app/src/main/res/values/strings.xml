@@ -230,4 +230,6 @@
     <string name="email_or_mobile">Email or Mobile</string>
     <string name="action_get_started">Let\'s Stated</string>
     <string name="add_material">Add Material</string>
+    <string name="remaining_payment">Remaining Payment</string>
+    <string name="remaining_gst">Remaining GST</string>
 </resources>

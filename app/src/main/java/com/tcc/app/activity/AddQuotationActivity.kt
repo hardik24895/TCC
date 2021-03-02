@@ -21,7 +21,30 @@ import com.tcc.app.utils.Logger
 import com.tcc.app.utils.TimeStamp.formatDateFromString
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_add_invoice.*
 import kotlinx.android.synthetic.main.activity_add_quotation.*
+import kotlinx.android.synthetic.main.activity_add_quotation.btnAddMaterial
+import kotlinx.android.synthetic.main.activity_add_quotation.btnAddUser
+import kotlinx.android.synthetic.main.activity_add_quotation.btnSubmit
+import kotlinx.android.synthetic.main.activity_add_quotation.edCGST
+import kotlinx.android.synthetic.main.activity_add_quotation.edHSN
+import kotlinx.android.synthetic.main.activity_add_quotation.edIGST
+import kotlinx.android.synthetic.main.activity_add_quotation.edMaterialHSN
+import kotlinx.android.synthetic.main.activity_add_quotation.edMaterialQty
+import kotlinx.android.synthetic.main.activity_add_quotation.edMaterialRate
+import kotlinx.android.synthetic.main.activity_add_quotation.edQty
+import kotlinx.android.synthetic.main.activity_add_quotation.edRate
+import kotlinx.android.synthetic.main.activity_add_quotation.edSGST
+import kotlinx.android.synthetic.main.activity_add_quotation.edTotalAmount
+import kotlinx.android.synthetic.main.activity_add_quotation.edtMaterialDays
+import kotlinx.android.synthetic.main.activity_add_quotation.lin_add_material
+import kotlinx.android.synthetic.main.activity_add_quotation.lin_add_user
+import kotlinx.android.synthetic.main.activity_add_quotation.root
+import kotlinx.android.synthetic.main.activity_add_quotation.spMaterialType
+import kotlinx.android.synthetic.main.activity_add_quotation.spUserType
+import kotlinx.android.synthetic.main.activity_add_quotation.txtUserTitle
+import kotlinx.android.synthetic.main.activity_add_quotation.view2
+import kotlinx.android.synthetic.main.activity_add_quotation.view7
 import kotlinx.android.synthetic.main.row_dynamic_user.view.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 import org.json.JSONArray
@@ -1012,6 +1035,10 @@ class AddQuotationActivity : BaseActivity() {
             edCGST.setText("")
             edSGST.setText("")
             edIGST.setText("")
+
+            edCGST.isEnabled = false
+            edSGST.isEnabled = false
+            edIGST.isEnabled = false
         } else {
 
             CGST = CGST + ((TotalAmount * session.configData.data?.cGST!!.toFloat()) / 100)
