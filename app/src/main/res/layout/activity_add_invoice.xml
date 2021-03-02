@@ -736,8 +736,9 @@
                             android:backgroundTint="@color/colorWhite"
                             android:fontFamily="@font/opensans_regular"
                             android:inputType="textPostalAddress"
-                            android:maxLength="150"
-                            android:singleLine="true"
+                            android:lines="2"
+                            android:maxLength="500"
+                            android:maxLines="3"
                             android:textColor="@color/black"
                             android:textColorHint="@color/black" />
                     </com.google.android.material.textfield.TextInputLayout>

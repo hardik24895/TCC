@@ -5,65 +5,65 @@ import java.io.Serializable
 
 data class QuotationListModal(
 
-	@field:SerializedName("data")
-	val data: List<QuotationItem> = mutableListOf(),
+    @field:SerializedName("data")
+    val data: List<QuotationItem> = mutableListOf(),
 
-	@field:SerializedName("rowcount")
-	val rowcount: Int? = null,
+    @field:SerializedName("rowcount")
+    val rowcount: Int? = null,
 
-	@field:SerializedName("error")
-	val error: Int? = null,
+    @field:SerializedName("error")
+    val error: Int? = null,
 
-	@field:SerializedName("message")
-	val message: String? = null
+    @field:SerializedName("message")
+    val message: String? = null
 )
 
 data class MaterialItem(
 
-	@field:SerializedName("Status")
-	val status: String? = null,
+    @field:SerializedName("Status")
+    val status: String? = null,
 
-	@field:SerializedName("Usertype")
-	val usertype: String? = null,
+    @field:SerializedName("Usertype")
+    val usertype: String? = null,
 
-	@field:SerializedName("Rno")
-	val rno: String? = null,
+    @field:SerializedName("Rno")
+    val rno: String? = null,
 
-	@field:SerializedName("rowcount")
-	val rowcount: String? = null,
+    @field:SerializedName("rowcount")
+    val rowcount: String? = null,
 
-	@field:SerializedName("QuotationItemID")
-	val quotationItemID: String? = null,
+    @field:SerializedName("QuotationItemID")
+    val quotationItemID: String? = null,
 
-	@field:SerializedName("Rate")
-	val rate: String? = null,
+    @field:SerializedName("Rate")
+    val rate: String? = null,
 
-	@field:SerializedName("Qty")
-	val qty: String? = null,
+    @field:SerializedName("Qty")
+    val qty: String? = null,
 
-	@field:SerializedName("Days")
-	val days: String? = null,
+    @field:SerializedName("Days")
+    val days: String? = null,
 
-	@field:SerializedName("Amount")
-	val amount: String? = null,
+    @field:SerializedName("Amount")
+    val amount: String? = null,
 
-	@field:SerializedName("HSNNo")
-	val hSNNo: String? = null,
+    @field:SerializedName("HSNNo")
+    val hSNNo: String? = null,
 
-	@field:SerializedName("QuotationID")
-	val quotationID: String? = null,
+    @field:SerializedName("QuotationID")
+    val quotationID: String? = null,
 
-	@field:SerializedName("UsertypeID")
-	val usertypeID: String? = null
+    @field:SerializedName("UsertypeID")
+    val usertypeID: String? = null
 ) : Serializable
 
 data class Item(
 
-	@field:SerializedName("User")
-	val user: List<UserItem?>? = null,
+    @field:SerializedName("User")
+    val user: List<UserItem?>? = null,
 
-	@field:SerializedName("Material")
-	val material: List<MaterialItem?>? = null
+    @field:SerializedName("Material")
+    val material: List<MaterialItem?>? = null
 ) : Serializable
 
 data class QuotationItem(
@@ -164,7 +164,7 @@ data class QuotationItem(
     @field:SerializedName("TeamSize")
     val teamSize: String? = null,
 
-    @field:SerializedName("StartDate")
+    @field: SerializedName("StartDate")
     val startDate: String? = null,
 
     @field:SerializedName("EndDate")
@@ -175,39 +175,39 @@ data class QuotationItem(
 
 data class UserItem(
 
-	@field:SerializedName("Status")
-	val status: String? = null,
+    @field:SerializedName("Status")
+    val status: String? = null,
 
-	@field:SerializedName("Usertype")
-	val usertype: String? = null,
+    @field:SerializedName("Usertype")
+    val usertype: String? = null,
 
-	@field:SerializedName("Rno")
-	val rno: String? = null,
+    @field:SerializedName("Rno")
+    val rno: String? = null,
 
-	@field:SerializedName("rowcount")
-	val rowcount: String? = null,
+    @field:SerializedName("rowcount")
+    val rowcount: String? = null,
 
-	@field:SerializedName("QuotationItemID")
-	val quotationItemID: String? = null,
+    @field:SerializedName("QuotationItemID")
+    val quotationItemID: String? = null,
 
-	@field:SerializedName("Rate")
-	val rate: String? = null,
+    @field:SerializedName("Rate")
+    val rate: String? = null,
 
-	@field:SerializedName("Qty")
-	val qty: String? = null,
+    @field:SerializedName("Qty")
+    val qty: String? = null,
 
-	@field:SerializedName("Days")
-	val days: String? = null,
+    @field:SerializedName("Days")
+    val days: String? = null,
 
-	@field:SerializedName("Amount")
-	val amount: String? = null,
+    @field:SerializedName("Amount")
+    val amount: String? = null,
 
-	@field:SerializedName("HSNNo")
-	val hSNNo: String? = null,
+    @field:SerializedName("HSNNo")
+    val hSNNo: String? = null,
 
-	@field:SerializedName("QuotationID")
-	val quotationID: String? = null,
+    @field:SerializedName("QuotationID")
+    val quotationID: String? = null,
 
-	@field:SerializedName("UsertypeID")
-	val usertypeID: String? = null
+    @field:SerializedName("UsertypeID")
+    val usertypeID: String? = null
 ) : Serializable

@@ -3,9 +3,7 @@ package com.tcc.app.fragment
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.RadioButton
@@ -343,6 +341,32 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
         startActivity(intent)
         Animatoo.animateCard(context)
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.home, menu)
+        var filter = menu.findItem(R.id.action_filter)
+        filter?.setVisible(false)
+        var add = menu.findItem(R.id.action_add)
+        add?.setVisible(false)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_add -> {
+                return true
+            }
+            R.id.action_filter -> {
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
 }
