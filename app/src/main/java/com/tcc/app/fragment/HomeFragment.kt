@@ -1,16 +1,21 @@
 package com.tcc.app.fragment
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.RadioButton
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
 import com.smarteist.autoimageslider.SliderAnimations
 import com.smarteist.autoimageslider.SliderView
 import com.tcc.app.R
+import com.tcc.app.activity.LeadDetailActivity
 import com.tcc.app.adapter.AutoImageSliderAdapter
 import com.tcc.app.adapter.HomeServiceAdapter
 import com.tcc.app.extention.invisible
@@ -27,8 +32,6 @@ import com.tcc.app.utils.SessionManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_home.rg
-import kotlinx.android.synthetic.main.fragment_home.spCity
 import org.json.JSONException
 import org.json.JSONObject
 import tech.hibk.searchablespinnerlibrary.SearchableDialog
@@ -140,7 +143,6 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
     }
 
     fun setuprvHomeCounterMarchant() {
-
 
         val layoutManager1 =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
@@ -319,6 +321,27 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
     }
 
     override fun onItemSelect(position: Int, data: DashBoardLeadDataItem) {
+        var item = LeadItem(
+            data.mobileNo,
+            data.status,
+            data.visitorID,
+            data.emailID,
+            data.address,
+            data.rowcount,
+            data.stateID,
+            data.leadType,
+            data.cityName,
+            data.customerID,
+            data.name,
+            data.pinCode,
+            data.rno,
+            data.cityID,
+            data.userID
+        )
+        val intent = Intent(context, LeadDetailActivity::class.java)
+        intent.putExtra(Constant.DATA, item)
+        startActivity(intent)
+        Animatoo.animateCard(context)
 
     }
 

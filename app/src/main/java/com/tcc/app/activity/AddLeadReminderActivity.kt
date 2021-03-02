@@ -30,7 +30,7 @@ class AddLeadReminderActivity : BaseActivity() {
         imgBack.setOnClickListener {
             finish()
         }
-        txtTitle.text = getString(R.string.room_allocation)
+        txtTitle.text = getString(R.string.reminder)
 
         edtReminderDate.setOnClickListener {
             showDateTimePicker(this@AddLeadReminderActivity, edtReminderDate)

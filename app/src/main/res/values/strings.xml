@@ -232,4 +232,5 @@
     <string name="add_material">Add Material</string>
     <string name="remaining_payment">Remaining Payment</string>
     <string name="remaining_gst">Remaining GST</string>
+    <string name="reminder">Reminder</string>
 </resources>

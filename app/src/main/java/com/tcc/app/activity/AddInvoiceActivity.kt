@@ -1,18 +1,18 @@
 package com.tcc.app.activity
 
+
 import android.app.DatePickerDialog
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.TextView
+import com.google.android.material.textfield.TextInputLayout
 import com.tcc.app.R
 import com.tcc.app.extention.*
 import com.tcc.app.modal.*
@@ -25,29 +25,6 @@ import com.tcc.app.utils.TimeStamp.formatDateFromString
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_add_invoice.*
-import kotlinx.android.synthetic.main.activity_add_invoice.btnAddUser
-import kotlinx.android.synthetic.main.activity_add_invoice.btnSubmit
-import kotlinx.android.synthetic.main.activity_add_invoice.edCGST
-import kotlinx.android.synthetic.main.activity_add_invoice.edHSN
-import kotlinx.android.synthetic.main.activity_add_invoice.edIGST
-import kotlinx.android.synthetic.main.activity_add_invoice.edMaterialHSN
-import kotlinx.android.synthetic.main.activity_add_invoice.edMaterialQty
-import kotlinx.android.synthetic.main.activity_add_invoice.edMaterialRate
-import kotlinx.android.synthetic.main.activity_add_invoice.edQty
-import kotlinx.android.synthetic.main.activity_add_invoice.edRate
-import kotlinx.android.synthetic.main.activity_add_invoice.edSGST
-import kotlinx.android.synthetic.main.activity_add_invoice.edTotalAmount
-import kotlinx.android.synthetic.main.activity_add_invoice.edtMaterialDays
-import kotlinx.android.synthetic.main.activity_add_invoice.lin_add_material
-import kotlinx.android.synthetic.main.activity_add_invoice.lin_add_user
-import kotlinx.android.synthetic.main.activity_add_invoice.root
-import kotlinx.android.synthetic.main.activity_add_invoice.spMaterialType
-import kotlinx.android.synthetic.main.activity_add_invoice.spUserType
-import kotlinx.android.synthetic.main.activity_add_invoice.view2
-import kotlinx.android.synthetic.main.activity_add_invoice.view7
-import kotlinx.android.synthetic.main.activity_add_quotation.*
-
-
 import kotlinx.android.synthetic.main.row_dynamic_user.view.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 import org.json.JSONArray
@@ -96,6 +73,9 @@ class AddInvoiceActivity : BaseActivity() {
     var cityListArray: ArrayList<CityDataItem> = ArrayList()
     var adapterCity: ArrayAdapter<String>? = null
     var cityIteams: List<SearchableItem>? = null
+
+    var UserAmount: Float = 0f
+    var MaterialAmount: Float = 0f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -222,6 +202,30 @@ class AddInvoiceActivity : BaseActivity() {
         edQty.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 setUpdatedTotal()
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+        })
+
+
+        edMaterialRate.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                setMaterialTotal()
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+        })
+        edMaterialQty.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                setMaterialTotal()
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -361,7 +365,8 @@ class AddInvoiceActivity : BaseActivity() {
         var edQtyChild: EditText = rowView.findViewById(R.id.edQtyChild)
         var edRateChild: EditText = rowView.findViewById(R.id.edRateChild)
         var edtChildDays: EditText = rowView.findViewById(R.id.edtChildDays)
-        edtChildDays.invisible()
+        var til22: TextInputLayout = rowView.findViewById(R.id.til22)
+        til22.invisible()
         // userTypeChildId.add("")
         // Log.e("TAG", "onAddField:      "+userTypeChildId.size )
 
@@ -389,35 +394,70 @@ class AddInvoiceActivity : BaseActivity() {
                 position: Int,
                 id: Long
             ) {
+                /*   if (position != -1 && userTypeListArray!!.size > position) {
+
+
+
+
+                       if (position != -1 && invoiceAttedanceList!!.size > position) {
+
+                           for (iteam in invoiceAttedanceList.indices) {
+                               if (userTypeListArray!!.get(position).usertypeID.toString()
+                                       .equals(invoiceAttedanceList.get(iteam).usertypeID)
+                               ) {
+                                   edHSNChild.setText(invoiceAttedanceList!!.get(position).hSNNo)
+                                   edQtyChild.setText(invoiceAttedanceList!!.get(position).qty)
+                                   edRateChild.setText(invoiceAttedanceList!!.get(position).rate)
+                                   setUpdatedTotal()
+                               }
+                           }
+                       } else {
+                           edHSNChild.setText(userTypeListArray!!.get(position).hSNNo)
+                           edQtyChild.setText("1")
+                           edRateChild.setText(userTypeListArray!!.get(position).rate)
+                           setUpdatedTotal()
+                       }
+
+                   }*/
+
                 if (position != -1 && userTypeListArray!!.size > position) {
-
-
-                    Log.e(
-                        "TAG",
-                        "onAddField:      " + (lin_add_user as ViewGroup).indexOfChild(
-                            spUserTypeChild
-                        )
-                    )
-                    //               userTypeChildId.set((lin_add_user as ViewGroup).indexOfChild(spUserTypeChild), userTypeListArray!!.get(position).usertypeID.toString())
-                    // usertypeChildId =
-
                     if (position != -1 && invoiceAttedanceList!!.size > position) {
 
                         for (iteam in invoiceAttedanceList.indices) {
                             if (userTypeListArray!!.get(position).usertypeID.toString()
                                     .equals(invoiceAttedanceList.get(iteam).usertypeID)
                             ) {
-                                edHSNChild.setText(invoiceAttedanceList!!.get(position).hSNNo)
-                                edQtyChild.setText(invoiceAttedanceList!!.get(position).qty)
-                                edRateChild.setText(invoiceAttedanceList!!.get(position).rate)
+                                usertypeId = invoiceAttedanceList!!.get(iteam).usertypeID.toString()
+                                edHSNChild.setText(invoiceAttedanceList!!.get(iteam).hSNNo)
+                                edQtyChild.setText(invoiceAttedanceList!!.get(iteam).qty)
+                                edRateChild.setText(invoiceAttedanceList!!.get(iteam).rate)
                                 setUpdatedTotal()
                             }
                         }
                     } else {
+                        usertypeId = userTypeListArray!!.get(position).usertypeID.toString()
                         edHSNChild.setText(userTypeListArray!!.get(position).hSNNo)
                         edQtyChild.setText("1")
                         edRateChild.setText(userTypeListArray!!.get(position).rate)
                         setUpdatedTotal()
+                        for (i in quotationIteam?.item?.user!!.indices) {
+                            if (userTypeListArray!!.get(position).usertypeID.toString()
+                                    .equals(quotationIteam?.item?.user!!.get(i)!!.usertypeID)
+
+
+                            ) {
+                                usertypeId = userTypeListArray!!.get(position).usertypeID.toString()
+                                edHSNChild.setText(quotationIteam?.item?.user!!.get(i)!!.hSNNo)
+                                val qua =
+                                    quotationIteam?.item?.user!!.get(i)!!.qty!!.toInt() * quotationIteam?.item?.user!!.get(
+                                        i
+                                    )!!.days!!.toInt()
+                                edQtyChild.setText(qua.toString())
+                                edRateChild.setText(quotationIteam?.item?.user!!.get(i)!!.rate)
+                                setUpdatedTotal()
+                            }
+                        }
+
                     }
 
                 }
@@ -465,7 +505,7 @@ class AddInvoiceActivity : BaseActivity() {
         var result = ""
         try {
             val jsonBody = JSONObject()
-            jsonBody.put("StateID", "")
+
 
             result = Networking.setParentJsonData(Constant.METHOD_USERTYPE_LIST, jsonBody)
 
@@ -645,7 +685,7 @@ class AddInvoiceActivity : BaseActivity() {
                         edMaterialQty.setText("0")
                         edMaterialRate.setText("0")
                         // edtDays.setText("0")
-                        setUpdatedTotal()
+                        setMaterialTotal()
                     } else {
                         if (position != -1 && invoiceAttedanceList!!.size > position) {
 
@@ -658,7 +698,7 @@ class AddInvoiceActivity : BaseActivity() {
                                     edMaterialHSN.setText(invoiceAttedanceList!!.get(iteam).hSNNo)
                                     edMaterialQty.setText(invoiceAttedanceList!!.get(iteam).qty)
                                     edMaterialRate.setText(invoiceAttedanceList!!.get(iteam).rate)
-                                    setUpdatedTotal()
+                                    setMaterialTotal()
                                 }
                             }
                         } else {
@@ -667,7 +707,7 @@ class AddInvoiceActivity : BaseActivity() {
                             edMaterialHSN.setText(materialTypeListArray!!.get(position - 1).hSNNo)
                             edMaterialQty.setText("1")
                             edMaterialRate.setText(materialTypeListArray!!.get(position - 1).rate)
-                            setUpdatedTotal()
+                            setMaterialTotal()
                             for (i in quotationIteam?.item?.material!!.indices) {
                                 if (materialTypeListArray!!.get(position - 1).usertypeID.toString()
                                         .equals(quotationIteam?.item?.material!!.get(i)!!.usertypeID)
@@ -684,7 +724,7 @@ class AddInvoiceActivity : BaseActivity() {
                                         )!!.days!!.toInt()
                                     edMaterialQty.setText(qua.toString())
                                     edMaterialRate.setText(quotationIteam?.item?.material!!.get(i)!!.rate)
-                                    setUpdatedTotal()
+                                    setMaterialTotal()
                                 }
                             }
 
@@ -726,6 +766,8 @@ class AddInvoiceActivity : BaseActivity() {
         var edQtyChild: EditText = rowView.findViewById(R.id.edQtyChild)
         var edRateChild: EditText = rowView.findViewById(R.id.edRateChild)
         var edDaysChild: EditText = rowView.findViewById(R.id.edtChildDays)
+        var til22: TextInputLayout = rowView.findViewById(R.id.til22)
+        til22.invisible()
         edDaysChild.invisible()
         txtUserTitle.setText("Material")
         // userTypeChildId.add("")
@@ -761,13 +803,13 @@ class AddInvoiceActivity : BaseActivity() {
                         edQtyChild.setText("0")
                         edRateChild.setText("0")
                         edDaysChild.setText("0")
-                        setUpdatedTotal()
+                        setMaterialTotal()
                     } else {
                         edHSNChild.setText(materialTypeListArray!!.get(position - 1).hSNNo)
                         edQtyChild.setText("1")
                         edDaysChild.setText("1")
                         edRateChild.setText(materialTypeListArray!!.get(position - 1).rate)
-                        setUpdatedTotal()
+                        setMaterialTotal()
                     }
 
 
@@ -779,7 +821,7 @@ class AddInvoiceActivity : BaseActivity() {
 
         edRateChild.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                setUpdatedTotal()
+                setMaterialTotal()
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -790,7 +832,7 @@ class AddInvoiceActivity : BaseActivity() {
         })
         edQtyChild.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                setUpdatedTotal()
+                setMaterialTotal()
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -800,7 +842,7 @@ class AddInvoiceActivity : BaseActivity() {
             }
         })
 
-        edDaysChild.addTextChangedListener(object : TextWatcher {
+        /*edDaysChild.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 setUpdatedTotal()
             }
@@ -810,7 +852,7 @@ class AddInvoiceActivity : BaseActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
-        })
+        })*/
 
 
         viewChild.setOnClickListener {
@@ -918,12 +960,11 @@ class AddInvoiceActivity : BaseActivity() {
     }
 
     fun setUpdatedTotal() {
-
+        UserAmount = 0f
         var TotalAmount: Float = 0f
         var CGST: Float = 0f
         var SGST: Float = 0f
         var IGST: Float = 0f
-
 
         if (!edQty.isEmpty() && !edRate.isEmpty()) {
 
@@ -931,13 +972,7 @@ class AddInvoiceActivity : BaseActivity() {
 
         }
 
-        if (!edMaterialQty.isEmpty() && !edMaterialRate.isEmpty() && !edtMaterialDays.isEmpty()) {
 
-            TotalAmount =
-                TotalAmount + (edMaterialQty.getValue().toFloat() * edMaterialRate.getValue()
-                    .toFloat()) * edtMaterialDays.getValue().toFloat()
-
-        }
 
         if (lin_add_user.childCount > 0) {
             for (item in 0 until lin_add_user.childCount) {
@@ -952,6 +987,53 @@ class AddInvoiceActivity : BaseActivity() {
 
             }
         }
+
+        if (TotalAmount == 0f) {
+            edTotalAmount.setText("")
+            edCGST.setText("")
+            edSGST.setText("")
+            edIGST.setText("")
+        } else {
+
+            CGST = CGST + ((TotalAmount * session.configData.data?.cGST!!.toFloat()) / 100)
+            SGST = SGST + ((TotalAmount * session.configData.data?.sGST!!.toFloat()) / 100)
+            IGST = IGST + ((TotalAmount * session.configData.data?.iGST!!.toFloat()) / 100)
+
+            UserAmount = TotalAmount + MaterialAmount
+
+            edTotalAmount.setText(UserAmount.toString())
+
+            var df: DecimalFormat = DecimalFormat("##.##")
+
+            if (quotationIteam?.stateID?.toInt() == 12) {
+                edCGST.setText(df.format(CGST))
+                edSGST.setText(df.format(SGST))
+                edIGST.setText("")
+            } else {
+                edCGST.setText("")
+                edSGST.setText("")
+                edIGST.setText(df.format(IGST))
+            }
+        }
+    }
+
+    fun setMaterialTotal() {
+
+        MaterialAmount = 0f
+        var TotalAmount: Float = 0f
+        var CGST: Float = 0f
+        var SGST: Float = 0f
+        var IGST: Float = 0f
+
+
+        if (!edMaterialQty.isEmpty() && !edMaterialRate.isEmpty() && !edtMaterialDays.isEmpty()) {
+
+            TotalAmount =
+                TotalAmount + (edMaterialQty.getValue().toFloat() * edMaterialRate.getValue()
+                    .toFloat()) * edtMaterialDays.getValue().toFloat()
+
+        }
+
         if (lin_add_material.childCount > 0) {
             for (item in 0 until lin_add_material.childCount) {
                 if (!lin_add_material.getChildAt(item).edQtyChild.isEmpty() && !lin_add_material.getChildAt(
@@ -985,7 +1067,9 @@ class AddInvoiceActivity : BaseActivity() {
             SGST = SGST + ((TotalAmount * session.configData.data?.sGST!!.toFloat()) / 100)
             IGST = IGST + ((TotalAmount * session.configData.data?.iGST!!.toFloat()) / 100)
 
-            edTotalAmount.setText(TotalAmount.toString())
+            MaterialAmount = TotalAmount + UserAmount
+
+            edTotalAmount.setText(MaterialAmount.toString())
 
             var df: DecimalFormat = DecimalFormat("##.##")
 
