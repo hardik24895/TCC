@@ -87,10 +87,16 @@ class AddInvoiceActivity : BaseActivity() {
             finish()
         }
         txtTitle.text = getString(R.string.invoice)
+
+        edStartDate.setText(getCurrentDate())
+        edEndDate.setText(getCurrentDate())
         btnAddUser.setOnClickListener { onAddField() }
 
         if (intent.hasExtra(Constant.DATA)) {
             quotationIteam = intent.getSerializableExtra(Constant.DATA) as QuotationItem
+
+            edStartDate.setText(quotationIteam!!.startDate)
+            edEndDate.setText(quotationIteam!!.endDate)
         }
         if (intent.hasExtra(Constant.DATA1)) {
             leadItem = intent.getSerializableExtra(Constant.DATA1) as LeadItem
@@ -104,8 +110,7 @@ class AddInvoiceActivity : BaseActivity() {
         serviceListArray = ArrayList()
 
         edtInvoiceDate.setText(getCurrentDate())
-        edStartDate.setText(quotationIteam?.startDate)
-        edEndDate.setText(quotationIteam?.endDate)
+
         edtInvoiceDate.setOnClickListener {
             showDateTimePicker(
                 this@AddInvoiceActivity,

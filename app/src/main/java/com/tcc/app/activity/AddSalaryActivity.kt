@@ -115,8 +115,8 @@ class AddSalaryActivity : BaseActivity() {
         var result = ""
         try {
             val jsonBody = JSONObject()
-            jsonBody.put("UserID", Constant.PAGE_SIZE)
-            jsonBody.put("StartDate", edtStartDate.getValue())
+            jsonBody.put("UserID", employeeDataItem?.userID)
+            jsonBody.put("StartDate", formatDateFromString(edtStartDate.getValue()))
             jsonBody.put("EndDate", formatDateFromString(edtEndDate.getValue()))
             jsonBody.put("CityID", session.getDataByKey(SessionManager.KEY_CITY_ID))
             result = Networking.setParentJsonData(
@@ -147,8 +147,8 @@ class AddSalaryActivity : BaseActivity() {
                         edtHalfDay.setText(response.data.get(0).halfDayCount)
                         edtHalfDayOt.setText(response.data.get(0).halfOverTime)
                         edtFullDay.setText(response.data.get(0).fullOverTime)
-                        edtAdvanceAmount.setText("0")
-                        edtPanaltyAmount.setText("0")
+                        edtAdvanceAmount.setText(response.data.get(0).advance)
+                        edtPanaltyAmount.setText(response.data.get(0).penalty)
                         penalty_amount_title.append(
                             " : ${getString(R.string.RS)} ${
                                 response.data.get(

@@ -60,6 +60,8 @@ class AddAttendanceActivity : BaseActivity(), AttendanceAdapter.OnItemSelected {
             AddAttendence()
         }
 
+        //    chbAllPresent.setch
+
 
         page = 1
         list.clear()
