@@ -46,7 +46,7 @@ class QuotationAdapter(
             holder.constrain_pending.invisible()
         }
 
-        if (session.roleData.data?.invoice?.isInsert.toString().equals("1"))
+        if (session.roleData.data?.invoice?.isInsert.toString().equals("0"))
             holder.btnInvoice.invisible()
 
         holder.bindData(mContext, data, listener, isAccept)
