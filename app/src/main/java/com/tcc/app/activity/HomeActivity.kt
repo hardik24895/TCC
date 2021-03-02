@@ -3,6 +3,7 @@ package com.tcc.app.activity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -50,7 +51,6 @@ class HomeActivity : AppCompatActivity() {
         profileImage = headerview.findViewById(R.id.circleImageView)
         drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener {
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
-
             }
 
             override fun onDrawerOpened(drawerView: View) {
@@ -71,9 +71,12 @@ class HomeActivity : AppCompatActivity() {
             }
 
             override fun onDrawerStateChanged(newState: Int) {
-
+                val inputMethodManager =
+                    getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.hideSoftInputFromWindow(getCurrentFocus()?.getWindowToken(), 0)
             }
         })
+
 
 
 

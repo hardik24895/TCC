@@ -46,7 +46,7 @@ class QuotationAdapter(
             holder.constrain_pending.invisible()
         }
 
-        if (session.roleData.data?.invoice?.isInsert.toString().equals("0"))
+        if (session.roleData.data?.invoice?.isInsert.toString().equals("1"))
             holder.btnInvoice.invisible()
 
         holder.bindData(mContext, data, listener, isAccept)
@@ -71,7 +71,7 @@ class QuotationAdapter(
             txtEstinationNo.text = data.estimateNo
             txtHRS.text = data.service
             txtName.text = data.name
-            txtStatus.text = data.status
+            txtStatus.text = data.quotationStatus
             txtCGST.text = data.cGST
             txtSGST.text = data.sGST
             txtIGST.text = data.iGST

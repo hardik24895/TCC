@@ -233,4 +233,6 @@
     <string name="remaining_payment">Remaining Payment</string>
     <string name="remaining_gst">Remaining GST</string>
     <string name="reminder">Reminder</string>
+    <string name="all_present">All Present</string>
+    <string name="all_absent">All Absent</string>
 </resources>
