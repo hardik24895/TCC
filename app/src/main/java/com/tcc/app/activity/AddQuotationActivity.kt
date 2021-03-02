@@ -75,6 +75,9 @@ class AddQuotationActivity : BaseActivity() {
     var adapterCity: ArrayAdapter<String>? = null
     var cityIteams: List<SearchableItem>? = null
 
+    var UserAmount: Float = 0f
+    var MaterialAmount: Float = 0f
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
@@ -126,6 +129,7 @@ class AddQuotationActivity : BaseActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
         })
+
         edQty.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 setUpdatedTotal()
@@ -149,6 +153,45 @@ class AddQuotationActivity : BaseActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
         })
+
+
+        edMaterialRate.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                setMaterialTotal()
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+        })
+
+        edMaterialQty.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                setMaterialTotal()
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+        })
+
+        edtMaterialDays.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                setMaterialTotal()
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+        })
+
+
 
         btnSubmit.setOnClickListener {
             validation()
@@ -195,7 +238,6 @@ class AddQuotationActivity : BaseActivity() {
                 root.showSnackBar("Select Pincode")
                 edPincode.requestFocus()
             }
-
 
             else -> {
                 AddQuotation()
@@ -333,14 +375,14 @@ class AddQuotationActivity : BaseActivity() {
                         edMaterialQty.setText("0")
                         edMaterialRate.setText("0")
                         // edtDays.setText("0")
-                        setUpdatedTotal()
+                        setMaterialTotal()
                     } else {
                         materialtypeId =
                             materialTypeListArray!!.get(position - 1).usertypeID.toString()
                         edMaterialHSN.setText(materialTypeListArray!!.get(position - 1).hSNNo)
                         edMaterialQty.setText("1")
                         edMaterialRate.setText(materialTypeListArray!!.get(position - 1).rate)
-                        setUpdatedTotal()
+                        setMaterialTotal()
                     }
 
 
@@ -545,13 +587,13 @@ class AddQuotationActivity : BaseActivity() {
                         edQtyChild.setText("0")
                         edRateChild.setText("0")
                         edDaysChild.setText("0")
-                        setUpdatedTotal()
+                        setMaterialTotal()
                     } else {
                         edHSNChild.setText(materialTypeListArray!!.get(position - 1).hSNNo)
                         edQtyChild.setText("1")
                         edDaysChild.setText("1")
                         edRateChild.setText(materialTypeListArray!!.get(position - 1).rate)
-                        setUpdatedTotal()
+                        setMaterialTotal()
                     }
 
 
@@ -560,10 +602,9 @@ class AddQuotationActivity : BaseActivity() {
             }
         }
 
-
         edRateChild.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                setUpdatedTotal()
+                setMaterialTotal()
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -574,7 +615,7 @@ class AddQuotationActivity : BaseActivity() {
         })
         edQtyChild.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                setUpdatedTotal()
+                setMaterialTotal()
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -586,7 +627,7 @@ class AddQuotationActivity : BaseActivity() {
 
         edDaysChild.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                setUpdatedTotal()
+                setMaterialTotal()
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -849,7 +890,7 @@ class AddQuotationActivity : BaseActivity() {
         if (siteListItem != null) {
 
             for (i in session.stetList.indices) {
-                if (session.stetList.get(i).stateID.toString().equals(siteListItem!!.stateID)) {
+                if (session.stetList.get(i).stateID.toString() == siteListItem!!.stateID.toString()) {
                     spState.setSelection(i)
                     break
                 }
@@ -895,34 +936,23 @@ class AddQuotationActivity : BaseActivity() {
             .subscribeWith(object : CallbackObserver<CityListModel>() {
                 override fun onSuccess(response: CityListModel) {
                     hideProgressbar()
-                    cityListArray?.addAll(response.data)
-                    var myList: MutableList<SearchableItem> = mutableListOf()
-                    for (items in response.data.indices) {
-                        cityNameList.add(response.data.get(items).cityName.toString())
-                        myList.add(SearchableItem(items.toLong(), cityNameList.get(items)))
-                    }
-                    cityIteams = myList
 
-                    adapterCity = ArrayAdapter(
-                        this@AddQuotationActivity,
-                        R.layout.custom_spinner_item,
-                        cityNameList
-                    )
-                    spCity.setAdapter(adapterCity)
-
-                    if (siteListItem != null) {
-
-                        for (i in response.data.indices) {
-                            if (response.data.get(i).cityID.toString()
-                                    .equals(siteListItem!!.cityID)
-                            ) {
-                                spState.setSelection(i)
-                                break
-                            }
-
+                    if (response.error == 200) {
+                        cityListArray?.addAll(response.data)
+                        var myList: MutableList<SearchableItem> = mutableListOf()
+                        for (items in response.data.indices) {
+                            cityNameList.add(response.data.get(items).cityName.toString())
+                            myList.add(SearchableItem(items.toLong(), cityNameList.get(items)))
                         }
+                        cityIteams = myList
 
-                    } else {
+                        adapterCity = ArrayAdapter(
+                            this@AddQuotationActivity,
+                            R.layout.custom_spinner_item,
+                            cityNameList
+                        )
+                        spCity.setAdapter(adapterCity)
+
 
 
                         for (i in response.data.indices) {
@@ -934,7 +964,13 @@ class AddQuotationActivity : BaseActivity() {
                         if (cityID.equals("")) {
                             spCity.setSelection(-1)
                         }
+
+                    } else {
+                        if (cityID.equals("")) {
+                            spCity.setSelection(-1)
+                        }
                     }
+
 
 
                 }
@@ -950,13 +986,12 @@ class AddQuotationActivity : BaseActivity() {
 
 
     fun setUpdatedTotal() {
-
+        UserAmount = 0f
         var TotalAmount: Float = 0f
         var CGST: Float = 0f
         var SGST: Float = 0f
         var IGST: Float = 0f
         var DAYS: Float = 0f
-
 
         if (!edQty.isEmpty() && !edRate.isEmpty() && !edtDays.isEmpty()) {
 
@@ -965,13 +1000,7 @@ class AddQuotationActivity : BaseActivity() {
 
         }
 
-        if (!edMaterialQty.isEmpty() && !edMaterialRate.isEmpty() && !edtMaterialDays.isEmpty()) {
 
-            TotalAmount =
-                TotalAmount + (edMaterialQty.getValue().toFloat() * edMaterialRate.getValue()
-                    .toFloat()) * edtMaterialDays.getValue().toFloat()
-
-        }
 
         if (lin_add_user.childCount > 0) {
             for (item in 0 until lin_add_user.childCount) {
@@ -990,22 +1019,8 @@ class AddQuotationActivity : BaseActivity() {
         }
 
 
-        if (lin_add_material.childCount > 0) {
-            for (item in 0 until lin_add_material.childCount) {
-                if (!lin_add_material.getChildAt(item).edQtyChild.isEmpty() && !lin_add_material.getChildAt(
-                        item
-                    ).edRateChild.isEmpty() && !lin_add_material.getChildAt(item).edtChildDays.isEmpty()
-                ) {
-                    TotalAmount =
-                        TotalAmount + (lin_add_material.getChildAt(item).edQtyChild.getValue()
-                            .toFloat() * lin_add_material.getChildAt(item).edRateChild.getValue()
-                            .toFloat() * lin_add_material.getChildAt(item).edtChildDays.getValue()
-                            .toFloat())
 
-                }
 
-            }
-        }
 
         if (TotalAmount == 0f) {
             edTotalAmount.setText("")
@@ -1018,7 +1033,9 @@ class AddQuotationActivity : BaseActivity() {
             SGST = SGST + ((TotalAmount * session.configData.data?.sGST!!.toFloat()) / 100)
             IGST = IGST + ((TotalAmount * session.configData.data?.iGST!!.toFloat()) / 100)
 
-            edTotalAmount.setText(TotalAmount.toString())
+            UserAmount = TotalAmount + MaterialAmount
+
+            edTotalAmount.setText(UserAmount.toString())
 
             var df: DecimalFormat = DecimalFormat("##.##")
 
@@ -1042,6 +1059,79 @@ class AddQuotationActivity : BaseActivity() {
         }
     }
 
+    fun setMaterialTotal() {
+        MaterialAmount = 0f
+        var TotalAmount: Float = 0f
+        var CGST: Float = 0f
+        var SGST: Float = 0f
+        var IGST: Float = 0f
+        var DAYS: Float = 0f
+
+        if (!edMaterialQty.isEmpty() && !edMaterialRate.isEmpty() && !edtMaterialDays.isEmpty()) {
+
+            TotalAmount =
+                TotalAmount + (edMaterialQty.getValue().toFloat() * edMaterialRate.getValue()
+                    .toFloat()) * edtMaterialDays.getValue().toFloat()
+
+        }
+
+
+
+
+        if (lin_add_material.childCount > 0) {
+            for (item in 0 until lin_add_material.childCount) {
+                if (!lin_add_material.getChildAt(item).edQtyChild.isEmpty() && !lin_add_material.getChildAt(
+                        item
+                    ).edRateChild.isEmpty() && !lin_add_material.getChildAt(item).edtChildDays.isEmpty()
+                ) {
+                    TotalAmount =
+                        TotalAmount + (lin_add_material.getChildAt(item).edQtyChild.getValue()
+                            .toFloat() * lin_add_material.getChildAt(item).edRateChild.getValue()
+                            .toFloat() * lin_add_material.getChildAt(item).edtChildDays.getValue()
+                            .toFloat())
+
+                }
+
+            }
+        }
+
+
+        if (TotalAmount == 0f && UserAmount == 0f) {
+            edTotalAmount.setText("")
+            edCGST.setText("")
+            edSGST.setText("")
+            edIGST.setText("")
+        } else {
+
+            CGST = CGST + ((TotalAmount * session.configData.data?.cGST!!.toFloat()) / 100)
+            SGST = SGST + ((TotalAmount * session.configData.data?.sGST!!.toFloat()) / 100)
+            IGST = IGST + ((TotalAmount * session.configData.data?.iGST!!.toFloat()) / 100)
+
+            MaterialAmount = TotalAmount + UserAmount
+
+            edTotalAmount.setText(MaterialAmount.toString())
+
+            var df: DecimalFormat = DecimalFormat("##.##")
+
+            if (siteListItem?.stateID?.toInt() == 12) {
+                edCGST.setText(df.format(CGST))
+                edSGST.setText(df.format(SGST))
+                edIGST.setText("")
+
+                edCGST.isEnabled = true
+                edSGST.isEnabled = true
+                edIGST.isEnabled = false
+            } else {
+                edCGST.setText("")
+                edSGST.setText("")
+                edIGST.setText(df.format(IGST))
+
+                edCGST.isEnabled = false
+                edSGST.isEnabled = false
+                edIGST.isEnabled = true
+            }
+        }
+    }
 
     fun AddQuotation() {
         var result = ""

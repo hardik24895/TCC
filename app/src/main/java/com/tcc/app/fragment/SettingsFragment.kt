@@ -13,6 +13,7 @@ import com.tcc.app.activity.NotificationActivity
 import com.tcc.app.dialog.LogoutDailog
 import com.tcc.app.extention.goToActivity
 import com.tcc.app.extention.goToActivityAndClearTask
+import com.tcc.app.extention.replaceFragment
 import com.tcc.app.extention.setHomeScreenTitle
 import com.tcc.app.utils.Constant
 import com.tcc.app.utils.Constant.CMS_URL
@@ -53,9 +54,15 @@ class SettingsFragment : BaseFragment() {
             intent.putExtra("Desc", CMS_URL + "TermandCondition")
             startActivity(intent)
         }
+
+        relayTickets.setOnClickListener {
+            replaceFragment(TicketListFragment(), R.id.main)
+        }
+
         relayPwd.setOnClickListener { goToActivity<ChangePasswordActivity>() }
         relayLogout.setOnClickListener {
-            val dialog = LogoutDailog.newInstance(requireContext(),
+            val dialog = LogoutDailog.newInstance(
+                requireContext(),
                 object : LogoutDailog.onItemClick {
                     override fun onItemCLicked() {
                         //   val mobile=  session.getDataByKey(Constant.MOBILE)
