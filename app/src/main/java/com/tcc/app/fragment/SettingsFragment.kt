@@ -56,7 +56,7 @@ class SettingsFragment : BaseFragment() {
         }
 
         relayTickets.setOnClickListener {
-            replaceFragment(TicketListFragment(), R.id.main)
+            replaceFragment(TicketListFragment(), R.id.nav_host_fragment)
         }
 
         relayPwd.setOnClickListener { goToActivity<ChangePasswordActivity>() }

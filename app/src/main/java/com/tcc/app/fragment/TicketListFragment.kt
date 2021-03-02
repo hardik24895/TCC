@@ -33,6 +33,7 @@ class TicketListFragment() : BaseFragment(), TicketAdapter.OnItemSelected {
     private val list: MutableList<TicketDataItem> = mutableListOf()
     var page: Int = 1
     var hasNextPage: Boolean = true
+    var filter: MenuItem? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -165,8 +166,8 @@ class TicketListFragment() : BaseFragment(), TicketAdapter.OnItemSelected {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.home, menu)
-        val filter = menu.findItem(R.id.action_filter)
-        filter.setVisible(true)
+        filter = menu.findItem(R.id.action_filter)
+        filter?.setVisible(true)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -204,11 +205,15 @@ class TicketListFragment() : BaseFragment(), TicketAdapter.OnItemSelected {
 
     override fun onDestroy() {
         Ticket = ""
+        // setHasOptionsMenu(false);
+        //filter?.setVisible(false)
         super.onDestroy()
     }
 
     override fun onDestroyView() {
         Ticket = ""
+        //   setHasOptionsMenu(false);
+        //  filter?.setVisible(false)
         super.onDestroyView()
     }
 

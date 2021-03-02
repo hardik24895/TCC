@@ -62,7 +62,8 @@ class AddInvoiceActivity : BaseActivity() {
     var itemMaterialType: List<SearchableItem>? = null
     var materialtypeId: String = "-1"
 
-    var invoiceAttedanceList: ArrayList<InvoiceAttendanceDataItem> = ArrayList()
+    var invoiceMaterialList: ArrayList<MaterialItemData> = ArrayList()
+    var invoiceUserList: ArrayList<UserItemData> = ArrayList()
 
     var stateNameList: ArrayList<String> = ArrayList()
     var adapterState: ArrayAdapter<String>? = null
@@ -103,8 +104,8 @@ class AddInvoiceActivity : BaseActivity() {
         serviceListArray = ArrayList()
 
         edtInvoiceDate.setText(getCurrentDate())
-        edStartDate.setText(getCurrentDate())
-        edEndDate.setText(getCurrentDate())
+        edStartDate.setText(quotationIteam?.startDate)
+        edEndDate.setText(quotationIteam?.endDate)
         edtInvoiceDate.setOnClickListener {
             showDateTimePicker(
                 this@AddInvoiceActivity,
@@ -308,16 +309,16 @@ class AddInvoiceActivity : BaseActivity() {
                 id: Long
             ) {
                 if (position != -1 && userTypeListArray!!.size > position) {
-                    if (position != -1 && invoiceAttedanceList!!.size > position) {
+                    if (position != -1 && invoiceUserList!!.size > position) {
 
-                        for (iteam in invoiceAttedanceList.indices) {
+                        for (iteam in invoiceUserList.indices) {
                             if (userTypeListArray!!.get(position).usertypeID.toString()
-                                    .equals(invoiceAttedanceList.get(iteam).usertypeID)
+                                    .equals(invoiceUserList.get(iteam).usertypeID)
                             ) {
-                                usertypeId = invoiceAttedanceList!!.get(iteam).usertypeID.toString()
-                                edHSN.setText(invoiceAttedanceList!!.get(iteam).hSNNo)
-                                edQty.setText(invoiceAttedanceList!!.get(iteam).qty)
-                                edRate.setText(invoiceAttedanceList!!.get(iteam).rate)
+                                usertypeId = invoiceUserList!!.get(iteam).usertypeID.toString()
+                                edHSN.setText(invoiceUserList!!.get(iteam).hSNNo)
+                                edQty.setText(invoiceUserList!!.get(iteam).qty)
+                                edRate.setText(invoiceUserList!!.get(iteam).rate)
                                 setUpdatedTotal()
                             }
                         }
@@ -421,16 +422,16 @@ class AddInvoiceActivity : BaseActivity() {
                    }*/
 
                 if (position != -1 && userTypeListArray!!.size > position) {
-                    if (position != -1 && invoiceAttedanceList!!.size > position) {
+                    if (position != -1 && invoiceUserList!!.size > position) {
 
-                        for (iteam in invoiceAttedanceList.indices) {
+                        for (iteam in invoiceUserList.indices) {
                             if (userTypeListArray!!.get(position).usertypeID.toString()
-                                    .equals(invoiceAttedanceList.get(iteam).usertypeID)
+                                    .equals(invoiceUserList.get(iteam).usertypeID)
                             ) {
-                                usertypeId = invoiceAttedanceList!!.get(iteam).usertypeID.toString()
-                                edHSNChild.setText(invoiceAttedanceList!!.get(iteam).hSNNo)
-                                edQtyChild.setText(invoiceAttedanceList!!.get(iteam).qty)
-                                edRateChild.setText(invoiceAttedanceList!!.get(iteam).rate)
+                                usertypeId = invoiceUserList!!.get(iteam).usertypeID.toString()
+                                edHSNChild.setText(invoiceUserList!!.get(iteam).hSNNo)
+                                edQtyChild.setText(invoiceUserList!!.get(iteam).qty)
+                                edRateChild.setText(invoiceUserList!!.get(iteam).rate)
                                 setUpdatedTotal()
                             }
                         }
@@ -687,17 +688,17 @@ class AddInvoiceActivity : BaseActivity() {
                         // edtDays.setText("0")
                         setMaterialTotal()
                     } else {
-                        if (position != -1 && invoiceAttedanceList!!.size > position) {
+                        if (position != -1 && invoiceMaterialList!!.size > position) {
 
-                            for (iteam in invoiceAttedanceList.indices) {
+                            for (iteam in invoiceMaterialList.indices) {
                                 if (materialTypeListArray!!.get(position - 1).usertypeID.toString()
-                                        .equals(invoiceAttedanceList.get(iteam).usertypeID)
+                                        .equals(invoiceMaterialList.get(iteam).usertypeID)
                                 ) {
                                     materialtypeId =
-                                        invoiceAttedanceList!!.get(iteam).usertypeID.toString()
-                                    edMaterialHSN.setText(invoiceAttedanceList!!.get(iteam).hSNNo)
-                                    edMaterialQty.setText(invoiceAttedanceList!!.get(iteam).qty)
-                                    edMaterialRate.setText(invoiceAttedanceList!!.get(iteam).rate)
+                                        invoiceMaterialList!!.get(iteam).usertypeID.toString()
+                                    edMaterialHSN.setText(invoiceMaterialList!!.get(iteam).hSNNo)
+                                    edMaterialQty.setText(invoiceMaterialList!!.get(iteam).qty)
+                                    edMaterialRate.setText(invoiceMaterialList!!.get(iteam).rate)
                                     setMaterialTotal()
                                 }
                             }
@@ -799,21 +800,94 @@ class AddInvoiceActivity : BaseActivity() {
             ) {
                 if (position != -1 && materialTypeListArray!!.size > position - 1) {
                     if (position == 0) {
+                        materialtypeId = "-1"
                         edHSNChild.setText("0")
                         edQtyChild.setText("0")
                         edRateChild.setText("0")
-                        edDaysChild.setText("0")
+                        // edtDays.setText("0")
                         setMaterialTotal()
                     } else {
-                        edHSNChild.setText(materialTypeListArray!!.get(position - 1).hSNNo)
-                        edQtyChild.setText("1")
-                        edDaysChild.setText("1")
-                        edRateChild.setText(materialTypeListArray!!.get(position - 1).rate)
-                        setMaterialTotal()
+                        if (position != -1 && invoiceMaterialList!!.size > position) {
+
+                            for (iteam in invoiceMaterialList.indices) {
+                                if (materialTypeListArray!!.get(position - 1).usertypeID.toString()
+                                        .equals(invoiceMaterialList.get(iteam).usertypeID)
+                                ) {
+                                    materialtypeId =
+                                        invoiceMaterialList!!.get(iteam).usertypeID.toString()
+                                    edHSNChild.setText(invoiceMaterialList!!.get(iteam).hSNNo)
+                                    edQtyChild.setText(invoiceMaterialList!!.get(iteam).qty)
+                                    edRateChild.setText(invoiceMaterialList!!.get(iteam).rate)
+                                    setMaterialTotal()
+                                }
+                            }
+                        } else {
+                            materialtypeId =
+                                materialTypeListArray!!.get(position - 1).usertypeID.toString()
+                            edHSNChild.setText(materialTypeListArray!!.get(position - 1).hSNNo)
+                            edQtyChild.setText("1")
+                            edRateChild.setText(materialTypeListArray!!.get(position - 1).rate)
+                            setMaterialTotal()
+                            for (i in quotationIteam?.item?.material!!.indices) {
+                                if (materialTypeListArray!!.get(position - 1).usertypeID.toString()
+                                        .equals(quotationIteam?.item?.material!!.get(i)!!.usertypeID)
+
+
+                                ) {
+                                    materialtypeId =
+                                        quotationIteam?.item?.material!!.get(i)!!.usertypeID.toString()
+                                    edHSNChild.setText(quotationIteam?.item?.material!!.get(i)!!.hSNNo)
+
+                                    val qua =
+                                        quotationIteam?.item?.material!!.get(i)!!.qty!!.toInt() * quotationIteam?.item?.material!!.get(
+                                            i
+                                        )!!.days!!.toInt()
+                                    edQtyChild.setText(qua.toString())
+                                    edRateChild.setText(quotationIteam?.item?.material!!.get(i)!!.rate)
+                                    setMaterialTotal()
+                                }
+                            }
+
+                        }
+
                     }
 
 
+                    /*  if (position == 0) {
+                          materialtypeId = "-1"
+                          edMaterialHSN.setText("0")
+                          edMaterialQty.setText("0")
+                          edMaterialRate.setText("0")
+                          // edtDays.setText("0")
+                          setUpdatedTotal()
+                      } else {
+                          materialtypeId = materialTypeListArray!!.get(position - 1).usertypeID.toString()
+                          edMaterialHSN.setText(materialTypeListArray!!.get(position - 1).hSNNo)
+                          edMaterialQty.setText("1")
+                          edMaterialRate.setText(materialTypeListArray!!.get(position - 1).rate)
+                          setUpdatedTotal()
+                      }*/
+
+
                 }
+
+                /*  if (position != -1 && materialTypeListArray!!.size > position - 1) {
+                      if (position == 0) {
+                          edHSNChild.setText("0")
+                          edQtyChild.setText("0")
+                          edRateChild.setText("0")
+                          edDaysChild.setText("0")
+                          setMaterialTotal()
+                      } else {
+                          edHSNChild.setText(materialTypeListArray!!.get(position - 1).hSNNo)
+                          edQtyChild.setText("1")
+                          edDaysChild.setText("1")
+                          edRateChild.setText(materialTypeListArray!!.get(position - 1).rate)
+                          setMaterialTotal()
+                      }
+
+
+                  }*/
 
             }
         }
@@ -869,7 +943,8 @@ class AddInvoiceActivity : BaseActivity() {
     fun getInvoiceAttedanceList() {
 
         showProgressbar()
-        invoiceAttedanceList.clear()
+        invoiceMaterialList.clear()
+        invoiceUserList.clear()
         lin_add_user.removeAllViews()
         //   setUpdatedTotal()
         var result = ""
@@ -891,25 +966,30 @@ class AddInvoiceActivity : BaseActivity() {
             .getInvoiceAttedanceList(Networking.wrapParams(result))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeWith(object : CallbackObserver<InvoiceAttendanceListModal>() {
-                override fun onSuccess(response: InvoiceAttendanceListModal) {
+            .subscribeWith(object : CallbackObserver<InVoiceAttendanceListModal>() {
+                override fun onSuccess(response: InVoiceAttendanceListModal) {
                     hideProgressbar()
                     val data = response.data
-                    invoiceAttedanceList.addAll(data)
-                    if (invoiceAttedanceList.size > 0) {
-                        for (iteam in invoiceAttedanceList!!.indices) {
+                    if (data != null) {
+                        invoiceMaterialList.addAll(data.material)
+                        invoiceUserList.addAll(data.user)
+                    }
+
+
+                    if (invoiceUserList.size > 0) {
+                        for (iteam in invoiceUserList!!.indices) {
                             if (iteam == 0) {
                                 for (i in userTypeListArray!!.indices) {
-                                    if (invoiceAttedanceList.get(iteam).usertypeID.equals(
+                                    if (invoiceUserList.get(iteam).usertypeID.equals(
                                             userTypeListArray!!.get(i).usertypeID
                                         )
                                     ) {
 
                                         usertypeId =
-                                            invoiceAttedanceList!!.get(iteam).usertypeID.toString()
-                                        edHSN.setText(invoiceAttedanceList!!.get(iteam).hSNNo)
-                                        edQty.setText(invoiceAttedanceList!!.get(iteam).qty)
-                                        edRate.setText(invoiceAttedanceList!!.get(iteam).rate)
+                                            invoiceUserList!!.get(iteam).usertypeID.toString()
+                                        edHSN.setText(invoiceUserList!!.get(iteam).hSNNo)
+                                        edQty.setText(invoiceUserList!!.get(iteam).qty)
+                                        edRate.setText(invoiceUserList!!.get(iteam).rate)
                                         setUpdatedTotal()
 
                                         spUserType.setSelection(i)
@@ -920,7 +1000,7 @@ class AddInvoiceActivity : BaseActivity() {
                             } else {
                                 onAddField()
                                 for (i in userTypeListArray!!.indices) {
-                                    if (invoiceAttedanceList.get(iteam).usertypeID.equals(
+                                    if (invoiceUserList.get(iteam).usertypeID.equals(
                                             userTypeListArray!!.get(i).usertypeID
                                         )
                                     ) {
@@ -928,13 +1008,13 @@ class AddInvoiceActivity : BaseActivity() {
                                             i
                                         )
                                         lin_add_user.getChildAt(iteam - 1).edHSNChild.setText(
-                                            invoiceAttedanceList!!.get(iteam).hSNNo
+                                            invoiceUserList!!.get(iteam).hSNNo
                                         )
                                         lin_add_user.getChildAt(iteam - 1).edQtyChild.setText(
-                                            invoiceAttedanceList!!.get(iteam).qty
+                                            invoiceUserList!!.get(iteam).qty
                                         )
                                         lin_add_user.getChildAt(iteam - 1).edRateChild.setText(
-                                            invoiceAttedanceList!!.get(iteam).rate
+                                            invoiceUserList!!.get(iteam).rate
                                         )
                                         setUpdatedTotal()
 
@@ -947,6 +1027,57 @@ class AddInvoiceActivity : BaseActivity() {
                         lin_add_user.removeAllViews()
                     }
 
+
+                    if (invoiceMaterialList.size > 0) {
+                        for (iteam in invoiceMaterialList!!.indices) {
+                            if (iteam == 0) {
+                                for (i in invoiceMaterialList!!.indices) {
+                                    if (invoiceMaterialList.get(iteam).usertypeID.equals(
+                                            materialTypeListArray!!.get(i).usertypeID
+                                        )
+                                    ) {
+
+                                        materialtypeId =
+                                            invoiceMaterialList!!.get(iteam).usertypeID.toString()
+                                        edMaterialHSN.setText(invoiceMaterialList!!.get(iteam).hSNNo)
+                                        edMaterialQty.setText(invoiceMaterialList!!.get(iteam).qty)
+                                        edMaterialRate.setText(invoiceMaterialList!!.get(iteam).rate)
+                                        setMaterialTotal()
+
+                                        spMaterialType.setSelection(i + 1)
+                                    }
+
+
+                                }
+                            } else {
+                                onAddMaterial()
+                                for (i in materialTypeListArray!!.indices) {
+                                    if (invoiceMaterialList.get(iteam).usertypeID.equals(
+                                            materialTypeListArray!!.get(i).usertypeID
+                                        )
+                                    ) {
+                                        lin_add_material.getChildAt(iteam - 1).spUserTypeChild.setSelection(
+                                            i
+                                        )
+                                        lin_add_material.getChildAt(iteam - 1).edHSNChild.setText(
+                                            invoiceMaterialList!!.get(iteam).hSNNo
+                                        )
+                                        lin_add_material.getChildAt(iteam - 1).edQtyChild.setText(
+                                            invoiceMaterialList!!.get(iteam).qty
+                                        )
+                                        lin_add_material.getChildAt(iteam - 1).edRateChild.setText(
+                                            invoiceMaterialList!!.get(iteam).rate
+                                        )
+                                        setMaterialTotal()
+
+                                    }
+                                }
+                            }
+
+                        }
+                    } else {
+                        lin_add_material.removeAllViews()
+                    }
 
                 }
 

@@ -163,7 +163,7 @@ interface APIInterface {
     fun getEmpListWiseAttendance(@Body body: RequestBody): Observable<Response<EmployeeAttendanceListModel>>
 
     @POST("service/")
-    fun getInvoiceAttedanceList(@Body body: RequestBody): Observable<Response<InvoiceAttendanceListModal>>
+    fun getInvoiceAttedanceList(@Body body: RequestBody): Observable<Response<InVoiceAttendanceListModal>>
 
     @POST("service/")
     fun getSalaryList(@Body body: RequestBody): Observable<Response<SalaryListModal>>
