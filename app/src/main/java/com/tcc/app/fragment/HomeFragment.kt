@@ -344,12 +344,13 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.home, menu)
-        var filter = menu.findItem(R.id.action_filter)
-        filter?.setVisible(false)
-        var add = menu.findItem(R.id.action_add)
-        add?.setVisible(false)
+        /* inflater.inflate(R.menu.home, menu)
+         var filter = menu.findItem(R.id.action_filter)
+         filter?.setVisible(false)
+         var add = menu.findItem(R.id.action_add)
+         add?.setVisible(false)*/
         super.onCreateOptionsMenu(menu, inflater)
+        menu.clear();
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
