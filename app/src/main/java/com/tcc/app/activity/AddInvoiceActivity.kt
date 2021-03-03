@@ -23,8 +23,8 @@ import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
 import com.tcc.app.utils.SessionManager
 import com.tcc.app.utils.TimeStamp.formatDateFromString
-import com.tcc.app.widgets.DecimalDigitsInputFilter
 import com.tcc.app.utils.TimeStamp.formatServerDateToLocal
+import com.tcc.app.widgets.DecimalDigitsInputFilter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_add_invoice.*
@@ -98,8 +98,6 @@ class AddInvoiceActivity : BaseActivity() {
         if (intent.hasExtra(Constant.DATA)) {
             quotationIteam = intent.getSerializableExtra(Constant.DATA) as QuotationItem
 
-            edStartDate.setText(quotationIteam!!.startDate)
-            edEndDate.setText(quotationIteam!!.endDate)
 
             if (quotationIteam!!.stateID.toString() == "12") {
 
