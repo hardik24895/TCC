@@ -1004,7 +1004,6 @@ class AddInvoiceActivity : BaseActivity() {
                         invoiceUserList.addAll(data.user)
                     }
 
-
                     if (invoiceUserList.size > 0) {
                         for (iteam in invoiceUserList!!.indices) {
                             if (iteam == 0) {
