@@ -61,6 +61,7 @@
         <item
             android:id="@+id/nav_penalti"
             android:icon="@drawable/ic_penaltys"
+            android:visible="false"
             android:title="@string/nav_panalti" />
 
         <item
@@ -72,6 +73,7 @@
         <item
             android:id="@+id/nav_ticket"
             android:icon="@drawable/ic_ticket"
+            android:visible="false"
             android:title="@string/ticket" />
 
         <item

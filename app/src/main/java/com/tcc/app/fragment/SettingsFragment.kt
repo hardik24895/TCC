@@ -59,6 +59,10 @@ class SettingsFragment : BaseFragment() {
             replaceFragment(TicketListFragment(), R.id.nav_host_fragment)
         }
 
+        relayPenalty.setOnClickListener {
+            replaceFragment(PenaltyFragment(), R.id.nav_host_fragment)
+        }
+
         relayPwd.setOnClickListener { goToActivity<ChangePasswordActivity>() }
         relayLogout.setOnClickListener {
             val dialog = LogoutDailog.newInstance(
