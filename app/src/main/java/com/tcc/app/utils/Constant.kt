@@ -129,4 +129,5 @@ object Constant {
     const val METHOD_ADD_ADVANCE = "addAdvance"
     const val METHOD_GET_ADVANCE = "getAdvance"
     const val METHOD_GET_PROCRESS = "getCustomerProcess"
+    const val METHOD_SEND_MAIL = "sendMail"
 }

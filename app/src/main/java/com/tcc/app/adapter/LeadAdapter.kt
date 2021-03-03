@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tcc.app.R
 import com.tcc.app.extention.callPhone
 import com.tcc.app.extention.getRandomMaterialColor
-import com.tcc.app.extention.sendEmail
 import com.tcc.app.extention.visible
 import com.tcc.app.modal.LeadItem
 import com.tcc.app.utils.SessionManager
@@ -78,11 +77,6 @@ class LeadAdapter(
             itemView.setOnClickListener { listener.onItemSelect(adapterPosition, data, "MainView") }
 
 
-            imgEdit.setOnClickListener {
-                listener.onItemSelect(adapterPosition, data, "Edit")
-
-            }
-
             linbtnCall.setOnClickListener {
                 linbtnCall.isSelected = true
                 linbtnSMS.isSelected = false
@@ -94,14 +88,14 @@ class LeadAdapter(
                 linbtnCall.isSelected = false
                 linbtnSMS.isSelected = true
                 linbtnEmail.isSelected = false
-
+                listener.onItemSelect(adapterPosition, data, "SMS")
             }
             linbtnEmail.setOnClickListener {
                 linbtnCall.isSelected = false
                 linbtnSMS.isSelected = false
                 linbtnEmail.isSelected = true
 
-                sendEmail(context, data.emailID.toString())
+                listener.onItemSelect(adapterPosition, data, "Email")
             }
 
 

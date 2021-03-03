@@ -5,6 +5,7 @@ import android.app.DatePickerDialog
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
+import android.text.InputFilter
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +23,7 @@ import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
 import com.tcc.app.utils.SessionManager
 import com.tcc.app.utils.TimeStamp.formatDateFromString
+import com.tcc.app.widgets.DecimalDigitsInputFilter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_add_invoice.*
@@ -97,6 +99,17 @@ class AddInvoiceActivity : BaseActivity() {
 
             edStartDate.setText(quotationIteam!!.startDate)
             edEndDate.setText(quotationIteam!!.endDate)
+
+            if (quotationIteam!!.stateID.toString() == "12") {
+
+                edCGST.isEnabled = true
+                edSGST.isEnabled = true
+                edIGST.isEnabled = false
+            } else {
+                edCGST.isEnabled = false
+                edSGST.isEnabled = false
+                edIGST.isEnabled = true
+            }
         }
         if (intent.hasExtra(Constant.DATA1)) {
             leadItem = intent.getSerializableExtra(Constant.DATA1) as LeadItem
@@ -108,6 +121,14 @@ class AddInvoiceActivity : BaseActivity() {
 
         serviceNameList = ArrayList()
         serviceListArray = ArrayList()
+
+
+        edRate.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
+        edMaterialRate.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
+        edTotalAmount.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
+        edCGST.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
+        edSGST.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
+        edIGST.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
 
         edtInvoiceDate.setText(getCurrentDate())
 
@@ -370,6 +391,7 @@ class AddInvoiceActivity : BaseActivity() {
         var edHSNChild: EditText = rowView.findViewById(R.id.edHSNChild)
         var edQtyChild: EditText = rowView.findViewById(R.id.edQtyChild)
         var edRateChild: EditText = rowView.findViewById(R.id.edRateChild)
+        edRateChild.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
         var edtChildDays: EditText = rowView.findViewById(R.id.edtChildDays)
         var til22: TextInputLayout = rowView.findViewById(R.id.til22)
         til22.invisible()
@@ -771,6 +793,7 @@ class AddInvoiceActivity : BaseActivity() {
         var edHSNChild: EditText = rowView.findViewById(R.id.edHSNChild)
         var edQtyChild: EditText = rowView.findViewById(R.id.edQtyChild)
         var edRateChild: EditText = rowView.findViewById(R.id.edRateChild)
+        edRateChild.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
         var edDaysChild: EditText = rowView.findViewById(R.id.edtChildDays)
         var til22: TextInputLayout = rowView.findViewById(R.id.til22)
         til22.invisible()
@@ -1194,9 +1217,7 @@ class AddInvoiceActivity : BaseActivity() {
             edCGST.setText("")
             edSGST.setText("")
             edIGST.setText("")
-            edCGST.isEnabled = false
-            edSGST.isEnabled = false
-            edIGST.isEnabled = false
+
         } else {
 
             CGST = CGST + ((TotalAmount * session.configData.data?.cGST!!.toFloat()) / 100)
@@ -1213,17 +1234,12 @@ class AddInvoiceActivity : BaseActivity() {
                 edCGST.setText(df.format(CGST))
                 edSGST.setText(df.format(SGST))
                 edIGST.setText("")
-                edCGST.isEnabled = false
-                edSGST.isEnabled = false
-                edIGST.isEnabled = true
+
             } else {
                 edCGST.setText("")
                 edSGST.setText("")
                 edIGST.setText(df.format(IGST))
 
-                edCGST.isEnabled = true
-                edSGST.isEnabled = true
-                edIGST.isEnabled = false
             }
         }
     }

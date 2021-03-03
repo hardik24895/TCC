@@ -11,8 +11,11 @@ import com.tcc.app.activity.LeadDetailActivity
 import com.tcc.app.activity.SearchActivity
 import com.tcc.app.adapter.LeadAdapter
 import com.tcc.app.dialog.AddVisitorDailog
+import com.tcc.app.dialog.SendMailDailog
+import com.tcc.app.dialog.SendMessageDailog
 import com.tcc.app.extention.*
 import com.tcc.app.interfaces.LoadMoreListener
+import com.tcc.app.modal.CommonAddModal
 import com.tcc.app.modal.LeadItem
 import com.tcc.app.modal.LeadListModal
 import com.tcc.app.network.CallbackObserver
@@ -89,7 +92,11 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
             intent.putExtra(Constant.DATA, data)
             startActivity(intent)
             Animatoo.animateCard(context)
-        } else {
+        } else if (action.equals("SMS")) {
+            sendMeassageDialog()
+        } else if (action.equals("Email")) {
+            sendMailDialog()
+        } else if (action.equals("Edit")) {
 
             if (checkUserRole(
                     session.roleData.data?.visitor?.isInsert.toString(),
@@ -114,6 +121,41 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
 //            }
         }
 
+    }
+
+
+    private fun sendMailDialog() {
+        SendMailDailog(requireContext())
+
+        val dialog = SendMailDailog.newInstance(
+            requireContext(),
+            object : SendMailDailog.onItemClick {
+                override fun onItemCLicked(Subject: String, Description: String) {
+                    SendEmail(Subject, Description)
+                }
+            })
+        val bundle = Bundle()
+        bundle.putString(Constant.TITLE, getString(R.string.app_name))
+
+        dialog.arguments = bundle
+        dialog.show(childFragmentManager, "YesNO")
+    }
+
+    private fun sendMeassageDialog() {
+        SendMessageDailog(requireContext())
+
+        val dialog = SendMessageDailog.newInstance(
+            requireContext(),
+            object : SendMessageDailog.onItemClick {
+                override fun onItemCLicked(Message: String) {
+                    SendMessage(Message)
+                }
+            })
+        val bundle = Bundle()
+        bundle.putString(Constant.TITLE, getString(R.string.app_name))
+
+        dialog.arguments = bundle
+        dialog.show(childFragmentManager, "YesNO")
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -217,7 +259,7 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
                     )
                     hasNextPage = list.size < response.rowcount
 
-                  refreshData(getString(R.string.no_data_found), 1)
+                    refreshData(getString(R.string.no_data_found), 1)
                 }
 
                 override fun onFailed(code: Int, message: String) {
@@ -309,4 +351,84 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
         name = ""
         super.onDestroy()
     }
+
+    fun SendEmail(subject: String, Description: String) {
+        showProgressbar()
+        var result = ""
+        try {
+            val jsonBody = JSONObject()
+
+            jsonBody.put("Subject", subject)
+            jsonBody.put("Description", Description)
+
+            result = Networking.setParentJsonData(Constant.METHOD_SEND_MAIL, jsonBody)
+
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+
+
+        Networking
+            .with(requireContext())
+            .getServices()
+            .SendMail(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : CallbackObserver<CommonAddModal>() {
+                override fun onSuccess(response: CommonAddModal) {
+                    hideProgressbar()
+                    if (response.error == 200) {
+                        swipeRefreshLayout.showSnackBar(response.message.toString())
+                    } else {
+                        showAlert(response.message.toString())
+                    }
+                }
+
+                override fun onFailed(code: Int, message: String) {
+                    showAlert(message)
+                    hideProgressbar()
+                }
+
+            }).addTo(autoDisposable)
+    }
+
+    fun SendMessage(Message: String) {
+        showProgressbar()
+        var result = ""
+        try {
+            val jsonBody = JSONObject()
+
+            jsonBody.put("Description", Message)
+
+            result = Networking.setParentJsonData(Constant.METHOD_SEND_MAIL, jsonBody)
+
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+
+
+        Networking
+            .with(requireContext())
+            .getServices()
+            .SendMail(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : CallbackObserver<CommonAddModal>() {
+                override fun onSuccess(response: CommonAddModal) {
+                    hideProgressbar()
+                    if (response.error == 200) {
+                        swipeRefreshLayout.showSnackBar(response.message.toString())
+                    } else {
+                        showAlert(response.message.toString())
+                    }
+                }
+
+                override fun onFailed(code: Int, message: String) {
+                    showAlert(message)
+                    hideProgressbar()
+                }
+
+            }).addTo(autoDisposable)
+    }
+
 }

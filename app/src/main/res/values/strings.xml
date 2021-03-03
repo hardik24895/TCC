@@ -235,4 +235,7 @@
     <string name="reminder">Reminder</string>
     <string name="all_present">All Present</string>
     <string name="all_absent">All Absent</string>
+    <string name="send_email">Send Email</string>
+    <string name="subject">Subject</string>
+    <string name="send_message">Send Message</string>
 </resources>

@@ -270,5 +270,8 @@ interface APIInterface {
     @POST("service/")
     fun getProcessList(@Body body: RequestBody): Observable<Response<ProcessListModal>>
 
+    @POST("service/")
+    fun SendMail(@Body body: RequestBody): Observable<Response<CommonAddModal>>
+
 
 }
