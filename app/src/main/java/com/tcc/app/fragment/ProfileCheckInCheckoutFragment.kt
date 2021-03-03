@@ -29,6 +29,7 @@ import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
 import com.tcc.app.utils.GpsTracker
 import com.tcc.app.utils.SessionManager
+import com.tcc.app.utils.TimeStamp.getTimeFromCheckInOUtTime
 import com.tcc.app.utils.Utils
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -88,11 +89,11 @@ class ProfileCheckInCheckoutFragment : BaseFragment(), CheckInOutAdapter.OnItemS
             getCheckinoutList(page)
         }
 
-        if (session.getDataByKey(SessionManager.KEY_CHECKIN_ID).equals("")) {
-            btnCHeckout.text = "Check In"
-        } else {
-            btnCHeckout.text = "Check Out"
-        }
+//        if (session.getDataByKey(SessionManager.KEY_CHECKIN_ID).equals("")) {
+//            btnCHeckout.text = "Check In"
+//        } else {
+//            btnCHeckout.text = "Check Out"
+//        }
         btnCHeckout.setOnClickListener {
             isBtnClick = true
             checkPermission()
@@ -221,23 +222,27 @@ class ProfileCheckInCheckoutFragment : BaseFragment(), CheckInOutAdapter.OnItemS
                     )
                     hasNextPage = list.size < response.rowcount!!
 
-//                    if (response.message.equals("") && response.message.equals("")) {
-//                        txtCheckInTime.append(" : ${getCurrentDateTime()}")
-//                        txtCheckOutTime.append(" : ${getCurrentDateTime()}")
-//                        txtCheckInTime.invisible()
-//                        txtCheckOutTime.invisible()
-//                        btnCHeckout.visible()
-//                    } else if (!response.message.equals("") && response.message.equals("")) {
-//                        txtCheckInTime.append(" : ${getCurrentDateTime()}")
-//                        txtCheckOutTime.append(" : ${getCurrentDateTime()}")
-//                        txtCheckInTime.visible()
-//                        txtCheckOutTime.invisible()
-//                        btnCHeckout.visible()
-//                    } else {
-//                        btnCHeckout.invisible()
-//                        txtCheckInTime.visible()
-//                        txtCheckOutTime.visible()
-//                    }
+                    if (response.checkintime.equals("") && response.checkouttime.equals("")) {
+                        txtCheckInTime.invisible()
+                        txtCheckOutTime.invisible()
+                        btnCHeckout.visible()
+                        btnCHeckout.text = "Check In"
+                    } else if (!response.checkintime.equals("") && response.checkouttime.equals("")) {
+                        txtCheckInTime.text =
+                            getTimeFromCheckInOUtTime(response.checkintime.toString())
+                        txtCheckInTime.visible()
+                        txtCheckOutTime.invisible()
+                        btnCHeckout.visible()
+                        btnCHeckout.text = "Check Out"
+                    } else {
+                        txtCheckInTime.text =
+                            getTimeFromCheckInOUtTime(response.checkintime.toString())
+                        txtCheckOutTime.text =
+                            getTimeFromCheckInOUtTime(response.checkouttime.toString())
+                        btnCHeckout.invisible()
+                        txtCheckInTime.visible()
+                        txtCheckOutTime.visible()
+                    }
 
                     refreshData(getString(R.string.no_data_found), 1)
                 }

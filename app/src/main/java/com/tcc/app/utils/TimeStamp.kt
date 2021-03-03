@@ -126,20 +126,23 @@ object TimeStamp {
     fun getDateFromCheckInTime(Checkindate: String): String {
 
 
-        var parsed: Date? = null
-        var outputDate = ""
+        if (!Checkindate.equals("")) {
+            var parsed: Date? = null
+            var outputDate = ""
 
-        val dfInput = SimpleDateFormat("dd-MM-yyyy hh:mm:ss", Locale.getDefault())
-        val dfOutput = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+            val dfInput = SimpleDateFormat("dd-MM-yyyy hh:mm:ss", Locale.getDefault())
+            val dfOutput = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
 
-        try {
-            parsed = dfInput.parse(Checkindate)
-            outputDate = dfOutput.format(parsed)
+            try {
+                parsed = dfInput.parse(Checkindate)
+                outputDate = dfOutput.format(parsed)
 
-        } catch (e: ParseException) {
-            e.printStackTrace()
-        }
-        return outputDate
+            } catch (e: ParseException) {
+                e.printStackTrace()
+            }
+            return outputDate
+        } else
+            return ""
 
     }
 

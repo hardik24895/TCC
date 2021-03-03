@@ -3,6 +3,7 @@ package com.tcc.app.activity
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
+import android.text.InputFilter
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
@@ -20,9 +21,35 @@ import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
 import com.tcc.app.utils.Logger
 import com.tcc.app.utils.TimeStamp.formatDateFromString
+import com.tcc.app.widgets.DecimalDigitsInputFilter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_add_invoice.*
 import kotlinx.android.synthetic.main.activity_add_quotation.*
+import kotlinx.android.synthetic.main.activity_add_quotation.btnAddMaterial
+import kotlinx.android.synthetic.main.activity_add_quotation.btnAddUser
+import kotlinx.android.synthetic.main.activity_add_quotation.btnSubmit
+import kotlinx.android.synthetic.main.activity_add_quotation.edCGST
+import kotlinx.android.synthetic.main.activity_add_quotation.edHSN
+import kotlinx.android.synthetic.main.activity_add_quotation.edIGST
+import kotlinx.android.synthetic.main.activity_add_quotation.edMaterialHSN
+import kotlinx.android.synthetic.main.activity_add_quotation.edMaterialQty
+import kotlinx.android.synthetic.main.activity_add_quotation.edMaterialRate
+import kotlinx.android.synthetic.main.activity_add_quotation.edQty
+import kotlinx.android.synthetic.main.activity_add_quotation.edRate
+import kotlinx.android.synthetic.main.activity_add_quotation.edSGST
+import kotlinx.android.synthetic.main.activity_add_quotation.edTotalAmount
+import kotlinx.android.synthetic.main.activity_add_quotation.edtMaterialDays
+import kotlinx.android.synthetic.main.activity_add_quotation.lin_add_material
+import kotlinx.android.synthetic.main.activity_add_quotation.lin_add_user
+import kotlinx.android.synthetic.main.activity_add_quotation.root
+import kotlinx.android.synthetic.main.activity_add_quotation.spMaterialType
+import kotlinx.android.synthetic.main.activity_add_quotation.spUserType
+import kotlinx.android.synthetic.main.activity_add_quotation.til22
+import kotlinx.android.synthetic.main.activity_add_quotation.txtUserTitle
+import kotlinx.android.synthetic.main.activity_add_quotation.view2
+import kotlinx.android.synthetic.main.activity_add_quotation.view7
+import kotlinx.android.synthetic.main.row_dynamic_user.*
 import kotlinx.android.synthetic.main.row_dynamic_user.view.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 import org.json.JSONArray
@@ -104,6 +131,18 @@ class AddQuotationActivity : BaseActivity() {
             edAddress1.setText(siteListItem?.address.toString())
             edAddress2.setText(siteListItem?.address2.toString())
             edPincode.setText(siteListItem?.pinCode.toString())
+
+
+            if (siteListItem!!.stateID.equals("12")) {
+
+                edCGST.isEnabled = true
+                edSGST.isEnabled = true
+                edIGST.isEnabled = false
+            } else {
+                edCGST.isEnabled = false
+                edSGST.isEnabled = false
+                edIGST.isEnabled = true
+            }
         }
         if (intent.hasExtra(Constant.DATA1)) {
             leadItem = intent.getSerializableExtra(Constant.DATA1) as LeadItem
@@ -123,6 +162,13 @@ class AddQuotationActivity : BaseActivity() {
                 edEstimationDate
             )
         }
+
+        edRate.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
+        edMaterialRate.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
+        edTotalAmount.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
+        edCGST.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
+        edSGST.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
+        edIGST.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
 
         edRate.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
@@ -498,6 +544,7 @@ class AddQuotationActivity : BaseActivity() {
         var viewChild: View = rowView.findViewById(R.id.viewUserTypeChild)
         var edHSNChild: EditText = rowView.findViewById(R.id.edHSNChild)
         var edQtyChild: EditText = rowView.findViewById(R.id.edQtyChild)
+        edRateChild.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
         var edRateChild: EditText = rowView.findViewById(R.id.edRateChild)
         var edDaysChild: EditText = rowView.findViewById(R.id.edtChildDays)
         txtUserTitle.setText("User")
@@ -606,6 +653,7 @@ class AddQuotationActivity : BaseActivity() {
         var edHSNChild: EditText = rowView.findViewById(R.id.edHSNChild)
         var edQtyChild: EditText = rowView.findViewById(R.id.edQtyChild)
         var edRateChild: EditText = rowView.findViewById(R.id.edRateChild)
+        edRateChild.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
         var edDaysChild: EditText = rowView.findViewById(R.id.edtChildDays)
         var til22: TextInputLayout = rowView.findViewById(R.id.til22)
         edDaysChild.setText("1")
@@ -1161,17 +1209,11 @@ class AddQuotationActivity : BaseActivity() {
                 edSGST.setText(df.format(SGST))
                 edIGST.setText("")
 
-                edCGST.isEnabled = true
-                edSGST.isEnabled = true
-                edIGST.isEnabled = false
             } else {
                 edCGST.setText("")
                 edSGST.setText("")
                 edIGST.setText(df.format(IGST))
 
-                edCGST.isEnabled = false
-                edSGST.isEnabled = false
-                edIGST.isEnabled = true
             }
         }
     }
@@ -1219,9 +1261,7 @@ class AddQuotationActivity : BaseActivity() {
             edSGST.setText("")
             edIGST.setText("")
 
-            edCGST.isEnabled = false
-            edSGST.isEnabled = false
-            edIGST.isEnabled = false
+
         } else {
 
             CGST = CGST + ((TotalAmount * session.configData.data?.cGST!!.toFloat()) / 100)
@@ -1249,17 +1289,11 @@ class AddQuotationActivity : BaseActivity() {
                 edSGST.setText(df.format(SGST))
                 edIGST.setText("")
 
-                edCGST.isEnabled = true
-                edSGST.isEnabled = true
-                edIGST.isEnabled = false
             } else {
                 edCGST.setText("")
                 edSGST.setText("")
                 edIGST.setText(df.format(IGST))
 
-                edCGST.isEnabled = false
-                edSGST.isEnabled = false
-                edIGST.isEnabled = true
             }
         }
     }

@@ -99,7 +99,7 @@ class AddInvoiceActivity : BaseActivity() {
             quotationIteam = intent.getSerializableExtra(Constant.DATA) as QuotationItem
 
 
-            if (quotationIteam!!.stateID.toString() == "12") {
+            if (quotationIteam!!.stateID.equals("12")) {
 
                 edCGST.isEnabled = true
                 edSGST.isEnabled = true
@@ -392,6 +392,7 @@ class AddInvoiceActivity : BaseActivity() {
         var edHSNChild: EditText = rowView.findViewById(R.id.edHSNChild)
         var edQtyChild: EditText = rowView.findViewById(R.id.edQtyChild)
         var edRateChild: EditText = rowView.findViewById(R.id.edRateChild)
+        edRateChild.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
         var edtChildDays: EditText = rowView.findViewById(R.id.edtChildDays)
         var til22: TextInputLayout = rowView.findViewById(R.id.til22)
         til22.invisible()
@@ -1160,9 +1161,11 @@ class AddInvoiceActivity : BaseActivity() {
 
             UserAmount = TotalAmount + MaterialAmount
 
-            edTotalAmount.setText(UserAmount.toString())
-
             var df: DecimalFormat = DecimalFormat("##.##")
+
+            edTotalAmount.setText(df.format(UserAmount.toString()))
+
+
 
             if (quotationIteam?.stateID?.toInt() == 12) {
                 edCGST.setText(df.format(CGST))
@@ -1226,9 +1229,11 @@ class AddInvoiceActivity : BaseActivity() {
 
             MaterialAmount = TotalAmount + UserAmount
 
-            edTotalAmount.setText(MaterialAmount.toString())
-
             var df: DecimalFormat = DecimalFormat("##.##")
+
+            edTotalAmount.setText(df.format(MaterialAmount.toString()))
+
+
 
             if (quotationIteam?.stateID?.toInt() == 12) {
                 edCGST.setText(df.format(CGST))
