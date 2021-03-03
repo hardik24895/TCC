@@ -1138,9 +1138,7 @@ class AddQuotationActivity : BaseActivity() {
             edIGST.setText("")
         } else {
 
-            CGST = CGST + ((TotalAmount * session.configData.data?.cGST!!.toFloat()) / 100)
-            SGST = SGST + ((TotalAmount * session.configData.data?.sGST!!.toFloat()) / 100)
-            IGST = IGST + ((TotalAmount * session.configData.data?.iGST!!.toFloat()) / 100)
+
 
             UserAmount = TotalAmount
 
@@ -1153,6 +1151,10 @@ class AddQuotationActivity : BaseActivity() {
 
 
             edTotalAmount.setText(TotalAmount.toString())
+
+            CGST = CGST + ((TotalAmount * session.configData.data?.cGST!!.toFloat()) / 100)
+            SGST = SGST + ((TotalAmount * session.configData.data?.sGST!!.toFloat()) / 100)
+            IGST = IGST + ((TotalAmount * session.configData.data?.iGST!!.toFloat()) / 100)
 
             var df: DecimalFormat = DecimalFormat("##.##")
 
@@ -1224,9 +1226,6 @@ class AddQuotationActivity : BaseActivity() {
             edIGST.isEnabled = false
         } else {
 
-            CGST = CGST + ((TotalAmount * session.configData.data?.cGST!!.toFloat()) / 100)
-            SGST = SGST + ((TotalAmount * session.configData.data?.sGST!!.toFloat()) / 100)
-            IGST = IGST + ((TotalAmount * session.configData.data?.iGST!!.toFloat()) / 100)
 
             MaterialAmount = TotalAmount
 
@@ -1241,6 +1240,10 @@ class AddQuotationActivity : BaseActivity() {
 
             edTotalAmount.setText(TotalAmount.toString())
 
+
+            CGST = CGST + ((TotalAmount * session.configData.data?.cGST!!.toFloat()) / 100)
+            SGST = SGST + ((TotalAmount * session.configData.data?.sGST!!.toFloat()) / 100)
+            IGST = IGST + ((TotalAmount * session.configData.data?.iGST!!.toFloat()) / 100)
 
             var df: DecimalFormat = DecimalFormat("##.##")
 

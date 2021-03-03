@@ -3,6 +3,7 @@ package com.tcc.app.activity
 import android.app.DatePickerDialog
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
@@ -11,7 +12,6 @@ import com.tcc.app.R
 import com.tcc.app.extention.*
 import com.tcc.app.modal.AvailableEmployeeDataItem
 import com.tcc.app.modal.AvailableEmployeeListModel
-import com.tcc.app.modal.CommonAddModal
 import com.tcc.app.modal.QuotationItem
 import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
@@ -22,11 +22,7 @@ import com.tcc.app.utils.SessionManager
 import com.tcc.app.utils.TimeStamp.formatDateFromString
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_add_payment.*
-import kotlinx.android.synthetic.main.activity_add_salary.*
 import kotlinx.android.synthetic.main.activity_add_team_definition.*
-import kotlinx.android.synthetic.main.activity_add_team_definition.btnSubmit
-import kotlinx.android.synthetic.main.activity_add_team_definition.root
 import kotlinx.android.synthetic.main.row_dynamic_user_team_definition.view.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 import org.json.JSONArray
@@ -180,6 +176,7 @@ class AddTeamDefinitionActivity : BaseActivity() {
     }
 
     private fun AddTeamDefinitionList() {
+        var selectuserCount = 0
         showProgressbar()
         var result = ""
 
@@ -191,6 +188,48 @@ class AddTeamDefinitionActivity : BaseActivity() {
 
             if (linAddTeamDefinition.childCount > 0) {
                 for (item in 0 until linAddTeamDefinition.childCount) {
+                    selectuserCount = 0
+                    Log.d(
+                        "TAG",
+                        "AddTeamDefinitionList:  =   ${userTypeListArray.get(
+                            linAddTeamDefinition.getChildAt(item).spUserTypeChild.selectedItemPosition
+                        ).userID}"
+                    )
+                    for (i in userTypeListArray.indices) {
+                        if (userTypeListArray.get(linAddTeamDefinition.getChildAt(item).spUserTypeChild.selectedItemPosition).userID == userTypeListArray.get(
+                                i
+                            ).userID
+                        ) {
+                            selectuserCount += 1
+                            if (selectuserCount == 2) {
+                                hideProgressbar()
+                                root.showSnackBar("PLease Remove Duplicate Employee")
+                                Log.d(
+                                    "TAG",
+                                    "AddTeamDefinitionList:  =   ${userTypeListArray.get(
+                                        linAddTeamDefinition.getChildAt(item).spUserTypeChild.selectedItemPosition
+                                    ).userID}  =   ${userTypeListArray.get(i).userID}"
+                                )
+                                return
+                            }
+
+                        } else {
+                            Log.d(
+                                "TAG",
+                                "AddTeamDefinitionList:  =   ${userTypeListArray.get(
+                                    linAddTeamDefinition.getChildAt(item).spUserTypeChild.selectedItemPosition
+                                ).userID}  =!  ${userTypeListArray.get(i).userID}"
+                            )
+
+                        }
+
+                        /* if(userTypeListArray.get(i).userID==userId){
+                             hideProgressbar()
+                             root.showSnackBar("PLease Remove Duplicate Employee")
+                             return
+                         }*/
+
+                    }
                     val jsonObj1 = JSONObject()
                     jsonObj1.put(
                         "EmployeeID",
@@ -199,6 +238,28 @@ class AddTeamDefinitionActivity : BaseActivity() {
                     jsonArray.put(jsonObj1)
                 }
             }
+
+            /* if (linAddTeamDefinition.childCount > 0) {
+
+                 for (i in 0 until  jsonArray.length()){
+                     for (item in 0 until linAddTeamDefinition.childCount) {
+
+                         if (userId==jsonArray.getJSONObject(i).getString("EmployeeID")){
+                             root.showSnackBar("PLease Remove Duplicate Employee")
+                             hideProgressbar()
+                             return
+                         }
+                         if(userTypeListArray.get(linAddTeamDefinition.getChildAt(item).spUserTypeChild.selectedItemPosition).userID== jsonArray.getJSONObject(i).getString("EmployeeID")){
+                            root.showSnackBar("PLease Remove Duplicate Employee")
+                             hideProgressbar()
+                            return
+                        }
+
+                     }
+                 }
+
+
+             }*/
 
 
             val jsonBody = JSONObject()
@@ -222,31 +283,31 @@ class AddTeamDefinitionActivity : BaseActivity() {
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-        Networking
-            .with(this@AddTeamDefinitionActivity)
-            .getServices()
-            .AddTeamDefinition(Networking.wrapParams(result))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeWith(object : CallbackObserver<CommonAddModal>() {
-                override fun onSuccess(response: CommonAddModal) {
-                           hideProgressbar()
-                    if (response.error == 200) {
-                        root.showSnackBar(response.message.toString())
-                        finish()
-                    } else {
-                        showAlert(response.message.toString())
-                    }
-
-                }
-
-                override fun onFailed(code: Int, message: String) {
-                    hideProgressbar()
-                    showAlert(message)
-                }
-
-            }).addTo(autoDisposable)
-
+//        Networking
+//            .with(this@AddTeamDefinitionActivity)
+//            .getServices()
+//            .AddTeamDefinition(Networking.wrapParams(result))
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribeWith(object : CallbackObserver<CommonAddModal>() {
+//                override fun onSuccess(response: CommonAddModal) {
+//                           hideProgressbar()
+//                    if (response.error == 200) {
+//                        root.showSnackBar(response.message.toString())
+//                        finish()
+//                    } else {
+//                        showAlert(response.message.toString())
+//                    }
+//
+//                }
+//
+//                override fun onFailed(code: Int, message: String) {
+//                    hideProgressbar()
+//                    showAlert(message)
+//                }
+//
+//            }).addTo(autoDisposable)
+//
 
     }
 
@@ -337,13 +398,27 @@ class AddTeamDefinitionActivity : BaseActivity() {
                         }
                         userTypeListArray.addAll(response.data)
                         var myList: MutableList<SearchableItem> = mutableListOf()
+
+                        userTypeNameList!!.add("Select Staff")
+                        myList.add(
+                            SearchableItem(
+                                0,
+                                "Select Staff"
+                            )
+                        )
+
                         for (items in response.data.indices) {
                             userTypeNameList.add(
                                 response.data.get(items).firstName.toString() + " " + response.data.get(
                                     items
                                 ).lastName.toString() + " - " + response.data.get(items).userType.toString()
                             )
-                            myList.add(SearchableItem(items.toLong(), userTypeNameList.get(items)))
+                            myList.add(
+                                SearchableItem(
+                                    items.toLong() + 1,
+                                    userTypeNameList.get(items + 1)
+                                )
+                            )
 
                         }
                         itemUserType = myList
@@ -393,8 +468,13 @@ class AddTeamDefinitionActivity : BaseActivity() {
                 position: Int,
                 id: Long
             ) {
-                if (position != -1 && userTypeListArray.size > position) {
-                    userId = userTypeListArray.get(position).userID.toString()
+                if (position != -1 && userTypeListArray.size > position - 1) {
+                    if (position == 0) {
+                        userId = "-1"
+                    } else {
+                        userId = userTypeListArray.get(position).userID.toString()
+                    }
+
 
                 }
 
