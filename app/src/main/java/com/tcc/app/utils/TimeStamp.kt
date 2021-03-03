@@ -106,6 +106,23 @@ object TimeStamp {
         return outputDate
     }
 
+    fun formatServerDateToLocal(inputDate: String): String {
+        var parsed: Date? = null
+        var outputDate = ""
+
+        val dfInput = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        val dfOutput = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+
+        try {
+            parsed = dfInput.parse(inputDate)
+            outputDate = dfOutput.format(parsed)
+
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        return outputDate
+    }
+
     fun getDateFromCheckInTime(Checkindate: String): String {
 
 

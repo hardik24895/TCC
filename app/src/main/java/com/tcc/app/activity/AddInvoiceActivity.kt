@@ -24,6 +24,7 @@ import com.tcc.app.utils.Constant
 import com.tcc.app.utils.SessionManager
 import com.tcc.app.utils.TimeStamp.formatDateFromString
 import com.tcc.app.widgets.DecimalDigitsInputFilter
+import com.tcc.app.utils.TimeStamp.formatServerDateToLocal
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_add_invoice.*
@@ -110,6 +111,8 @@ class AddInvoiceActivity : BaseActivity() {
                 edSGST.isEnabled = false
                 edIGST.isEnabled = true
             }
+            edStartDate.setText(formatServerDateToLocal(quotationIteam!!.startDate.toString()))
+            edEndDate.setText(formatServerDateToLocal(quotationIteam!!.endDate.toString()))
         }
         if (intent.hasExtra(Constant.DATA1)) {
             leadItem = intent.getSerializableExtra(Constant.DATA1) as LeadItem
@@ -391,7 +394,6 @@ class AddInvoiceActivity : BaseActivity() {
         var edHSNChild: EditText = rowView.findViewById(R.id.edHSNChild)
         var edQtyChild: EditText = rowView.findViewById(R.id.edQtyChild)
         var edRateChild: EditText = rowView.findViewById(R.id.edRateChild)
-        edRateChild.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
         var edtChildDays: EditText = rowView.findViewById(R.id.edtChildDays)
         var til22: TextInputLayout = rowView.findViewById(R.id.til22)
         til22.invisible()

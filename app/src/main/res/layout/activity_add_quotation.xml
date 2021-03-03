@@ -468,7 +468,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_12sdp"
-                        android:text="User"
+                        android:text="@string/staff"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_14sdp"
                         app:layout_constraintStart_toStartOf="parent"
@@ -569,6 +569,7 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/til22"
+                        android:visibility="gone"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/_12sdp"
@@ -733,11 +734,11 @@
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/colorWhite"
                             android:fontFamily="@font/opensans_regular"
-                            android:inputType="text"
-                            android:cursorVisible="false"
-                            android:enabled="true"
-                            android:focusable="true"
-                            android:maxLength="150"
+                            android:editable="false"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
+                            android:inputType="none"
+                            android:maxLength="50"
                             android:singleLine="true"
                             android:textColor="@color/black"
                             android:textColorHint="@color/black" />
@@ -772,6 +773,7 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/til222"
+                        android:visibility="gone"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/_12sdp"
@@ -896,6 +898,7 @@
                             android:fontFamily="@font/opensans_regular"
                             android:inputType="number"
                             android:maxLength="10"
+                            android:text="0"
                             android:singleLine="true"
                             android:textColor="@color/black"
                             android:textColorHint="@color/black" />
@@ -919,6 +922,7 @@
                             android:fontFamily="@font/opensans_regular"
                             android:inputType="number"
                             android:maxLength="10"
+                            android:text="0"
                             android:singleLine="true"
                             android:textColor="@color/black"
                             android:textColorHint="@color/black" />
@@ -942,6 +946,7 @@
                             android:fontFamily="@font/opensans_regular"
                             android:inputType="number"
                             android:maxLength="10"
+                            android:text="0"
                             android:singleLine="true"
                             android:textColor="@color/black"
                             android:textColorHint="@color/black" />

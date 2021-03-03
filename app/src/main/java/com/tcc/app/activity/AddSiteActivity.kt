@@ -225,29 +225,45 @@ class AddSiteActivity : BaseActivity() {
             .subscribeWith(object : CallbackObserver<CityListModel>() {
                 override fun onSuccess(response: CityListModel) {
                     hideProgressbar()
-                    cityListArray?.addAll(response.data)
-                    var myList: MutableList<SearchableItem> = mutableListOf()
-                    for (items in response.data.indices) {
-                        cityNameList.add(response.data.get(items).cityName.toString())
-                        myList.add(SearchableItem(items.toLong(), cityNameList.get(items)))
-                    }
-                    cityIteams = myList
 
-                    adapterCity = ArrayAdapter(
-                        this@AddSiteActivity,
-                        R.layout.custom_spinner_item,
-                        cityNameList
-                    )
-                    spCity.setAdapter(adapterCity)
-
-                    for (i in response.data.indices) {
-                        if (response.data.get(i).cityID.equals(cityID)) {
-                            spCity.setSelection(i)
+                    if (response.error == 200) {
+                        view2.isEnabled = true
+                        cityListArray?.addAll(response.data)
+                        var myList: MutableList<SearchableItem> = mutableListOf()
+                        for (items in response.data.indices) {
+                            cityNameList.add(response.data.get(items).cityName.toString())
+                            myList.add(SearchableItem(items.toLong(), cityNameList.get(items)))
                         }
-                    }
+                        cityIteams = myList
 
-                    if (stateid.equals("-1")) {
-                        spCity.setSelection(-1)
+                        adapterCity = ArrayAdapter(
+                            this@AddSiteActivity,
+                            R.layout.custom_spinner_item,
+                            cityNameList
+                        )
+                        spCity.setAdapter(adapterCity)
+
+                        for (i in response.data.indices) {
+                            if (response.data.get(i).cityID.equals(cityID)) {
+                                spCity.setSelection(i)
+                            }
+                        }
+
+                        if (cityID.equals("")) {
+                            spCity.setSelection(-1)
+                        }
+
+                    } else {
+                        cityListArray.clear()
+                        cityNameList.clear()
+                        cityID = "-1"
+                        adapterCity?.clear()
+                        // spCity.removeAllViews()
+                        view2.isEnabled = false
+
+                        /*if (cityID.equals("")) {
+                            spCity.setSelection(-1)
+                        }*/
                     }
 
 
@@ -295,10 +311,15 @@ class AddSiteActivity : BaseActivity() {
                 root.showSnackBar("Enter Valid Pincode")
                 edtPincode.requestFocus()
             }
+            cityID == "-1" -> {
+                root.showSnackBar("City Not Found")
+            }
             !edtGST.isEmpty() -> {
                 if (!validGSTIN(edtGST.getValue())) {
                     root.showSnackBar("Enter Valid GST No.")
                     edtGST.requestFocus()
+                } else {
+                    addSite(rbLead?.text.toString(), flag)
                 }
             }
 
