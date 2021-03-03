@@ -17,6 +17,10 @@
         android:id="@+id/calendarView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:sizeBottomText="@dimen/_10ssp"
+        app:sizeMiddleText="@dimen/_12ssp"
+        app:sizeTopText="@dimen/_10ssp"
+        app:textColorNormal="@color/txtgray"
         android:background="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,11 +29,11 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/crd_check_all"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorWhite"
         android:padding="@dimen/_4sdp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/calendarView">

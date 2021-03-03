@@ -45,14 +45,14 @@ class LeadDetailActivity : BaseActivity() {
                     val i = Intent(this, AddSiteActivity::class.java)
                     i.putExtra(Constant.VISITOR_ID, leadItem?.visitorID.toString())
                     i.putExtra(Constant.DATA_LEAD, leadItem)
-                    intent.putExtra(Constant.CUSTOMER_ID, "0")
+                    i.putExtra(Constant.CUSTOMER_ID, "0")
                     startActivity(i)
                     Animatoo.animateCard(this)
                 }
             } else if (viewPager.currentItem == 3) {
                 val i = Intent(this, AddLeadReminderActivity::class.java)
                 i.putExtra(Constant.VISITOR_ID, leadItem?.visitorID.toString())
-                intent.putExtra(Constant.CUSTOMER_ID, "0")
+                i.putExtra(Constant.CUSTOMER_ID, "0")
                 startActivity(i)
                 Animatoo.animateCard(this)
             }

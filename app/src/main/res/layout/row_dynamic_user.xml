@@ -94,8 +94,12 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/colorWhite"
                     android:fontFamily="@font/opensans_regular"
-                    android:inputType="date"
+                    android:editable="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
                     android:maxLength="50"
+                    android:inputType="none"
+
                     android:singleLine="true"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black" />
@@ -126,6 +130,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:visibility="gone"
                 android:id="@+id/til22"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

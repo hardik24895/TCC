@@ -21,30 +21,7 @@ import com.tcc.app.utils.Logger
 import com.tcc.app.utils.TimeStamp.formatDateFromString
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_add_invoice.*
 import kotlinx.android.synthetic.main.activity_add_quotation.*
-import kotlinx.android.synthetic.main.activity_add_quotation.btnAddMaterial
-import kotlinx.android.synthetic.main.activity_add_quotation.btnAddUser
-import kotlinx.android.synthetic.main.activity_add_quotation.btnSubmit
-import kotlinx.android.synthetic.main.activity_add_quotation.edCGST
-import kotlinx.android.synthetic.main.activity_add_quotation.edHSN
-import kotlinx.android.synthetic.main.activity_add_quotation.edIGST
-import kotlinx.android.synthetic.main.activity_add_quotation.edMaterialHSN
-import kotlinx.android.synthetic.main.activity_add_quotation.edMaterialQty
-import kotlinx.android.synthetic.main.activity_add_quotation.edMaterialRate
-import kotlinx.android.synthetic.main.activity_add_quotation.edQty
-import kotlinx.android.synthetic.main.activity_add_quotation.edRate
-import kotlinx.android.synthetic.main.activity_add_quotation.edSGST
-import kotlinx.android.synthetic.main.activity_add_quotation.edTotalAmount
-import kotlinx.android.synthetic.main.activity_add_quotation.edtMaterialDays
-import kotlinx.android.synthetic.main.activity_add_quotation.lin_add_material
-import kotlinx.android.synthetic.main.activity_add_quotation.lin_add_user
-import kotlinx.android.synthetic.main.activity_add_quotation.root
-import kotlinx.android.synthetic.main.activity_add_quotation.spMaterialType
-import kotlinx.android.synthetic.main.activity_add_quotation.spUserType
-import kotlinx.android.synthetic.main.activity_add_quotation.txtUserTitle
-import kotlinx.android.synthetic.main.activity_add_quotation.view2
-import kotlinx.android.synthetic.main.activity_add_quotation.view7
 import kotlinx.android.synthetic.main.row_dynamic_user.view.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 import org.json.JSONArray
@@ -110,6 +87,11 @@ class AddQuotationActivity : BaseActivity() {
             finish()
         }
         txtTitle.text = "Quotation"
+
+        edtDays.setText("1")
+        til22.invisible()
+        edtDays.invisible()
+
         btnAddUser.setOnClickListener { onAddField() }
 
         btnAddMaterial.setOnClickListener { onAddMaterial() }
@@ -245,10 +227,10 @@ class AddQuotationActivity : BaseActivity() {
 
     fun validation() {
         when {
-            edtDays.isEmpty() -> {
-                root.showSnackBar("Enter Days")
-                edtDays.requestFocus()
-            }
+            /*  edtDays.isEmpty() -> {
+                  root.showSnackBar("Enter Days")
+                  edtDays.requestFocus()
+              }*/
             edAddress1.isEmpty() -> {
                 root.showSnackBar("Enter Address 1")
                 edAddress1.requestFocus()
@@ -261,6 +243,14 @@ class AddQuotationActivity : BaseActivity() {
                 root.showSnackBar("Select Pincode")
                 edPincode.requestFocus()
             }
+            usertypeId == "-1" -> {
+                root.showSnackBar("Select Staff")
+                spUserType.requestFocus()
+            }
+            /* materialtypeId =="-1"->{
+                 root.showSnackBar("Select Ma")
+                 spUserType.requestFocus()
+             }*/
 
             else -> {
                 AddQuotation()
@@ -365,12 +355,23 @@ class AddQuotationActivity : BaseActivity() {
                 position: Int,
                 id: Long
             ) {
-                if (position != -1 && userTypeListArray!!.size > position) {
-                    usertypeId = userTypeListArray!!.get(position).usertypeID.toString()
-                    edHSN.setText(userTypeListArray!!.get(position).hSNNo)
-                    edQty.setText("1")
-                    edRate.setText(userTypeListArray!!.get(position).rate)
-                    setUpdatedTotal()
+                if (position != -1 && userTypeListArray!!.size > position - 1) {
+
+                    if (position == 0) {
+                        usertypeId = "-1"
+                        edHSN.setText("0")
+                        edQty.setText("0")
+                        edRate.setText("0")
+                        // edtDays.setText("0")
+                        setUpdatedTotal()
+                    } else {
+                        usertypeId = userTypeListArray!!.get(position - 1).usertypeID.toString()
+                        edHSN.setText(userTypeListArray!!.get(position - 1).hSNNo)
+                        edQty.setText("1")
+                        edRate.setText(userTypeListArray!!.get(position - 1).rate)
+                        setUpdatedTotal()
+                    }
+
 
                 }
 
@@ -506,14 +507,22 @@ class AddQuotationActivity : BaseActivity() {
                 position: Int,
                 id: Long
             ) {
-                if (position != -1 && userTypeListArray!!.size > position) {
+                if (position != -1 && userTypeListArray!!.size > position - 1) {
 
-                    edHSNChild.setText(userTypeListArray!!.get(position).hSNNo)
-                    edQtyChild.setText("1")
-                    edRateChild.setText(userTypeListArray!!.get(position).rate)
-                    setUpdatedTotal()
+                    if (position == 0) {
+                        edHSNChild.setText("0")
+                        edQtyChild.setText("0")
+                        edRateChild.setText("0")
+                        edDaysChild.setText("0")
+                        setUpdatedTotal()
+                    } else {
+                        edHSNChild.setText(userTypeListArray!!.get(position - 1).hSNNo)
+                        edQtyChild.setText("1")
+                        edRateChild.setText(userTypeListArray!!.get(position - 1).rate)
+                        setUpdatedTotal()
+                    }
+
                 }
-
             }
         }
 
@@ -813,9 +822,22 @@ class AddQuotationActivity : BaseActivity() {
                 override fun onSuccess(response: UserTypeListModel) {
                     userTypeListArray!!.addAll(response.data)
                     var myList: MutableList<SearchableItem> = mutableListOf()
+
+                    userTypeNameList!!.add("Select Staff")
+                    myList.add(
+                        SearchableItem(
+                            0,
+                            "Select Staff"
+                        )
+                    )
                     for (items in response.data.indices) {
                         userTypeNameList!!.add(response.data.get(items).usertype.toString())
-                        myList.add(SearchableItem(items.toLong(), userTypeNameList!!.get(items)))
+                        myList.add(
+                            SearchableItem(
+                                items.toLong() + 1,
+                                userTypeNameList!!.get(items + 1)
+                            )
+                        )
 
                     }
                     itemUserType = myList
@@ -1223,7 +1245,7 @@ class AddQuotationActivity : BaseActivity() {
                         val jsonObj = JSONObject()
                         jsonObj.put(
                             "UsertypeID",
-                            userTypeListArray?.get(lin_add_user.getChildAt(item).spUserTypeChild.selectedItemPosition)?.usertypeID
+                            userTypeListArray?.get(lin_add_user.getChildAt(item).spUserTypeChild.selectedItemPosition - 1)?.usertypeID
                         )
                         jsonObj.put("Qty", lin_add_user.getChildAt(item).edQtyChild.getValue())
                         jsonObj.put("Rate", lin_add_user.getChildAt(item).edRateChild.getValue())
