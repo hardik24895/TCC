@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tcc.app.R
+import com.tcc.app.extention.invisible
+import com.tcc.app.extention.visible
 import com.tcc.app.modal.PaleltyUserListItem
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.row_panelty_user.*
@@ -32,6 +34,12 @@ class PenaltyUserListAdapter(
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         val data = list[position]
+
+        if (position == list.size - 1) {
+            holder.view1.invisible()
+        } else {
+            holder.view1.visible()
+        }
 
         holder.bindData(mContext, data)
     }

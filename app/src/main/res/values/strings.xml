@@ -12,7 +12,7 @@
     <string name="loremupsome">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero</string>
     <string name="msg_logout">Are you Sure to Logout?</string>
     <string name="menu_home">Home</string>
-    <string name="nav_setting">Setting</string>
+    <string name="nav_setting">Settings</string>
     <string name="menu_profile">Profile</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>

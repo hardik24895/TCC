@@ -7,6 +7,7 @@ import com.tcc.app.modal.SalaryDataItem
 import com.tcc.app.utils.Constant
 import kotlinx.android.synthetic.main.activity_salary_detail.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
+import java.text.DecimalFormat
 
 class SalaryDetailActivity : BaseActivity() {
     var salaryDataIteam: SalaryDataItem? = null
@@ -22,7 +23,7 @@ class SalaryDetailActivity : BaseActivity() {
         }
 
 
-        txtMonthSalary.text =  getString(R.string.RS) + " " + salaryDataIteam?.salary
+        txtMonthSalary.text = getString(R.string.RS) + " " + salaryDataIteam?.salary
         txtPayAmount.text = getString(R.string.RS) + " " + (salaryDataIteam?.present?.toDouble()
             ?.times(salaryDataIteam?.rate?.toDouble()!!)).toString()
 
@@ -30,9 +31,10 @@ class SalaryDetailActivity : BaseActivity() {
 
         txtPresentAmount.text = getString(R.string.RS) + " " + (salaryDataIteam?.rate?.toDouble())
 
-        txtOverTimeAmount.text = getString(R.string.RS) + " " + ((salaryDataIteam?.rate?.toDouble())?.times(
-            (salaryDataIteam?.fullOverTime?.toDouble()!!)
-        ) )
+
+        var df: DecimalFormat = DecimalFormat("##.##")
+        txtOverTimeAmount.text =
+            getString(R.string.RS) + " " + df.format((salaryDataIteam?.rate?.toDouble())?.times((salaryDataIteam?.halfOverTime?.toDouble()!!) + (salaryDataIteam?.fullOverTime?.toDouble()!!)))
 
         textviewSemiBold2.text = salaryDataIteam?.salaryDate
 
@@ -40,7 +42,8 @@ class SalaryDetailActivity : BaseActivity() {
         imgBack.setOnClickListener {
             finish()
         }
-        txtTitle.text = salaryDataIteam?.firstName.toString() +  " " + salaryDataIteam?.lastName.toString()
+        txtTitle.text =
+            salaryDataIteam?.firstName.toString() + " " + salaryDataIteam?.lastName.toString()
     }
 
 }

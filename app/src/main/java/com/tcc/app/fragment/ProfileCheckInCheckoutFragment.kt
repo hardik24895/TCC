@@ -221,23 +221,23 @@ class ProfileCheckInCheckoutFragment : BaseFragment(), CheckInOutAdapter.OnItemS
                     )
                     hasNextPage = list.size < response.rowcount!!
 
-                    if (response.message.equals("") && response.message.equals("")) {
-                        txtCheckInTime.append(" : ${getCurrentDateTime()}")
-                        txtCheckOutTime.append(" : ${getCurrentDateTime()}")
-                        txtCheckInTime.invisible()
-                        txtCheckOutTime.invisible()
-                        btnCHeckout.visible()
-                    } else if (!response.message.equals("") && response.message.equals("")) {
-                        txtCheckInTime.append(" : ${getCurrentDateTime()}")
-                        txtCheckOutTime.append(" : ${getCurrentDateTime()}")
-                        txtCheckInTime.visible()
-                        txtCheckOutTime.invisible()
-                        btnCHeckout.visible()
-                    } else {
-                        btnCHeckout.invisible()
-                        txtCheckInTime.visible()
-                        txtCheckOutTime.visible()
-                    }
+//                    if (response.message.equals("") && response.message.equals("")) {
+//                        txtCheckInTime.append(" : ${getCurrentDateTime()}")
+//                        txtCheckOutTime.append(" : ${getCurrentDateTime()}")
+//                        txtCheckInTime.invisible()
+//                        txtCheckOutTime.invisible()
+//                        btnCHeckout.visible()
+//                    } else if (!response.message.equals("") && response.message.equals("")) {
+//                        txtCheckInTime.append(" : ${getCurrentDateTime()}")
+//                        txtCheckOutTime.append(" : ${getCurrentDateTime()}")
+//                        txtCheckInTime.visible()
+//                        txtCheckOutTime.invisible()
+//                        btnCHeckout.visible()
+//                    } else {
+//                        btnCHeckout.invisible()
+//                        txtCheckInTime.visible()
+//                        txtCheckOutTime.visible()
+//                    }
 
                     refreshData(getString(R.string.no_data_found), 1)
                 }

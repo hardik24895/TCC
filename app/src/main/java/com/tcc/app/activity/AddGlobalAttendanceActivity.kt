@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.tcc.app.R
 import com.tcc.app.adapter.GlobalAttendanceAdapter
 import com.tcc.app.extention.*
-import com.tcc.app.interfaces.LoadMoreListener
 import com.tcc.app.modal.CommonAddModal
 import com.tcc.app.modal.GlobalEmployeeAttedanceDataItem
 import com.tcc.app.modal.GlobalEmployeeAttedanceListModal
@@ -34,8 +33,6 @@ import kotlin.collections.ArrayList
 class AddGlobalAttendanceActivity : BaseActivity(), GlobalAttendanceAdapter.OnItemSelected {
 
     private val list: ArrayList<GlobalEmployeeAttedanceDataItem> = ArrayList()
-    var page: Int = 1
-    var hasNextPage: Boolean = true
     var selectedDateStr: String = getCurrentDate()
     var adapter: GlobalAttendanceAdapter? = null
 
@@ -56,35 +53,57 @@ class AddGlobalAttendanceActivity : BaseActivity(), GlobalAttendanceAdapter.OnIt
         btnSubmit.setOnClickListener {
             AddAttendence()
         }
-
-
-        page = 1
         list.clear()
-        hasNextPage = true
-        swipeRefreshLayout.isRefreshing = true
         setupRecyclerView()
-        recyclerView.isLoading = true
-        getGloablAttendanceList(page)
-
-
-        recyclerView.setLoadMoreListener(object : LoadMoreListener {
-            override fun onLoadMore() {
-                if (hasNextPage && !recyclerView.isLoading) {
-                    progressbar.visible()
-                    getGloablAttendanceList(++page)
-                }
+        getGloablAttendanceList()
+        chbAllPresent.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                updateAttendance("1")
             }
-        })
-
-        swipeRefreshLayout.setOnRefreshListener {
-            page = 1
-            list.clear()
-            hasNextPage = true
-            recyclerView.isLoading = true
-            adapter?.notifyDataSetChanged()
-            getGloablAttendanceList(page)
         }
 
+        chbAllAbsent.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                updateAttendance("0")
+            }
+        }
+
+    }
+
+    private fun updateAttendance(attendance: String) {
+        for (i in list.indices) {
+            list.set(
+                i, GlobalEmployeeAttedanceDataItem(
+                    userID = list.get(i).userID,
+                    roleID = list.get(i).roleID,
+                    emailID = list.get(i).emailID,
+                    firstName = list.get(i).firstName,
+                    lastName = list.get(i).lastName,
+                    mobileNo = list.get(i).mobileNo,
+                    address = list.get(i).address,
+                    profilePic = list.get(i).profilePic,
+                    status = list.get(i).status,
+                    salary = list.get(i).salary,
+                    usertypeID = list.get(i).usertypeID,
+                    usertype = list.get(i).usertype,
+                    workingHours = list.get(i).workingHours,
+                    documents = list.get(i).documents,
+                    offerLetter = list.get(i).offerLetter,
+                    bankName = list.get(i).bankName,
+                    branchName = list.get(i).branchName,
+                    accountNo = list.get(i).accountNo,
+                    iFSCCode = list.get(i).iFSCCode,
+                    joiningDate = list.get(i).joiningDate,
+                    cityName = list.get(i).cityName,
+                    attendance = attendance,
+                    overtime = list.get(i).overtime,
+                    attendanceID = list.get(i).attendanceID,
+                    rno = list.get(i).rno,
+                    rowcount = list.get(i).rowcount,
+                )
+            )
+        }
+        adapter?.notifyDataSetChanged()
     }
 
     fun horizontalCalender() {
@@ -102,13 +121,10 @@ class AddGlobalAttendanceActivity : BaseActivity(), GlobalAttendanceAdapter.OnIt
         horizontalCalendar.calendarListener = object : HorizontalCalendarListener() {
             override fun onDateSelected(date: Calendar?, position: Int) {
                 selectedDateStr = DateFormat.format("dd/MM/yyyy", date).toString()
-                page = 1
+
                 list.clear()
-                hasNextPage = true
-                swipeRefreshLayout.isRefreshing = true
-                setupRecyclerView()
-                recyclerView.isLoading = true
-                getGloablAttendanceList(page)
+
+                getGloablAttendanceList()
 
             }
         }
@@ -163,76 +179,16 @@ class AddGlobalAttendanceActivity : BaseActivity(), GlobalAttendanceAdapter.OnIt
             )
         )
 
-
     }
 
-//    fun showBottomSheetDialog() {
-//        val dialog = AttendanceBottomSheetDialog
-//            .newInstance(
-//                this,
-//                object : AttendanceBottomSheetDialog.OnItemClick {
-//                    override fun onItemClicked(message: String) {
-//                        if (Constant.OVERTIME.equals(message)) {
-//                            showOverTimeDialog()
-//                        } else if (Constant.LATEFINE.equals(message)) {
-//                            showLateFineDialog()
-//                        }
-//                    }
-//
-//                    override fun onError(message: String) {
-//                        showAlert(message)
-//                    }
-//                })
-//        dialog.show(supportFragmentManager, "ImagePicker")
-//
-//    }
-//
-//    fun showOverTimeDialog() {
-//        val dialog = OverTimeBottomSheetDialog
-//            .newInstance(
-//                this,
-//                object : OverTimeBottomSheetDialog.OnItemClick {
-//                    override fun onItemClicked(message: String) {
-//                        if (Constant.OVERTIME.equals(message)) {
-//
-//                        }
-//                    }
-//
-//
-//                    override fun onError(message: String) {
-//                        showAlert(message)
-//                    }
-//                })
-//        dialog.show(supportFragmentManager, "ImagePicker")
-//    }
-//
-//    fun showLateFineDialog() {
-//        val dialog = LateFineBottomSheetDialog
-//            .newInstance(
-//                this,
-//                object : LateFineBottomSheetDialog.OnItemClick {
-//                    override fun onItemClicked(message: String) {
-//                        if (Constant.OVERTIME.equals(message)) {
-//
-//                        }
-//                    }
-//
-//                    override fun onError(message: String) {
-//                        showAlert(message)
-//                    }
-//                })
-//        dialog.show(supportFragmentManager, "ImagePicker")
-//    }
-
-
-    fun getGloablAttendanceList(page: Int) {
+    fun getGloablAttendanceList() {
         var result = ""
         try {
             val jsonBody = JSONObject()
-            jsonBody.put("PageSize", Constant.PAGE_SIZE)
-            jsonBody.put("CurrentPage", page)
+            jsonBody.put("PageSize", -1)
+            jsonBody.put("CurrentPage", 1)
             jsonBody.put("CityID", session.getDataByKey(SessionManager.KEY_CITY_ID))
-            jsonBody.put("AttendanceDate", formatDateFromString(selectedDateStr!!))
+            jsonBody.put("AttendanceDate", formatDateFromString(selectedDateStr))
             result = Networking.setParentJsonData(
                 Constant.METHOD_GLOBAL_EMPLOYEE_LIST,
                 jsonBody
@@ -256,14 +212,11 @@ class AddGlobalAttendanceActivity : BaseActivity(), GlobalAttendanceAdapter.OnIt
 
                     if (response.error == 200) {
                         list.addAll(response.data)
-                        adapter?.notifyItemRangeInserted(
-                            list.size.minus(response.data.size),
-                            list.size
-                        )
-                        hasNextPage = list.size < response.rowcount!!
+                        adapter?.notifyDataSetChanged()
+
                     }
 
-                  refreshData(getString(R.string.no_data_found), 1)
+                    refreshData(getString(R.string.no_data_found), 1)
                 }
 
                 override fun onFailed(code: Int, message: String) {
@@ -287,7 +240,6 @@ class AddGlobalAttendanceActivity : BaseActivity(), GlobalAttendanceAdapter.OnIt
 
             for (item in list.indices) {
 
-                //   if (!list.get(item).attendance?.equals("")!!) {
                 val jsonObj = JSONObject()
                 jsonObj.put("EmployeeID", list.get(item).userID)
                 jsonObj.put("Attendance", list.get(item).attendance)
@@ -296,7 +248,6 @@ class AddGlobalAttendanceActivity : BaseActivity(), GlobalAttendanceAdapter.OnIt
                 jsonArray.put(jsonObj)
 
                 Log.e("TAG", "AddAttendence: " + jsonObj.toString())
-                //   }
             }
 
             jsonBody.put("AttendanceDate", formatDateFromString(selectedDateStr))

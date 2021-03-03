@@ -64,7 +64,6 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
         setHomeScreenTitle(requireActivity(), getString(R.string.menu_home))
         cityListArray = ArrayList()
         cityNameList = ArrayList()
-        setSlider()
         getCityList()
         setuprvHomeCounterMarchant()
         // recyclerView.setNestedScrollingEnabled(false);
