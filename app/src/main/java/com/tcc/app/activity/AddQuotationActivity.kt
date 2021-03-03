@@ -10,6 +10,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.TextView
+import com.google.android.material.textfield.TextInputLayout
 import com.tcc.app.R
 import com.tcc.app.extention.*
 import com.tcc.app.modal.*
@@ -231,6 +232,12 @@ class AddQuotationActivity : BaseActivity() {
                   root.showSnackBar("Enter Days")
                   edtDays.requestFocus()
               }*/
+
+            compnyID == "-1" -> {
+                root.showSnackBar("Select Company")
+                spCompany.requestFocus()
+            }
+
             edAddress1.isEmpty() -> {
                 root.showSnackBar("Enter Address 1")
                 edAddress1.requestFocus()
@@ -243,15 +250,17 @@ class AddQuotationActivity : BaseActivity() {
                 root.showSnackBar("Select Pincode")
                 edPincode.requestFocus()
             }
+            serviceId == "-1" -> {
+                root.showSnackBar("Select Service")
+                spService.requestFocus()
+            }
             usertypeId == "-1" -> {
                 root.showSnackBar("Select Staff")
                 spUserType.requestFocus()
             }
-            /* materialtypeId =="-1"->{
-                 root.showSnackBar("Select Ma")
-                 spUserType.requestFocus()
-             }*/
-
+            cityID == "-1" -> {
+                root.showSnackBar("City Not Found")
+            }
             else -> {
                 AddQuotation()
             }
@@ -281,9 +290,22 @@ class AddQuotationActivity : BaseActivity() {
                 override fun onSuccess(response: ServiceListModel) {
                     serviceListArray!!.addAll(response.data)
                     var myList: MutableList<SearchableItem> = mutableListOf()
+                    serviceNameList!!.add("Select Service")
+                    myList.add(
+                        SearchableItem(
+                            0,
+                            "Select Service"
+                        )
+                    )
+
                     for (items in response.data.indices) {
                         serviceNameList!!.add(response.data.get(items).service.toString())
-                        myList.add(SearchableItem(items.toLong(), serviceNameList.get(items)))
+                        myList.add(
+                            SearchableItem(
+                                items.toLong() + 1,
+                                serviceNameList.get(items + 1)
+                            )
+                        )
 
                     }
                     itemService = myList
@@ -294,7 +316,6 @@ class AddQuotationActivity : BaseActivity() {
                         serviceNameList!!
                     )
                     spService.setAdapter(adapterService)
-
 
                 }
 
@@ -480,6 +501,7 @@ class AddQuotationActivity : BaseActivity() {
         var edRateChild: EditText = rowView.findViewById(R.id.edRateChild)
         var edDaysChild: EditText = rowView.findViewById(R.id.edtChildDays)
         txtUserTitle.setText("User")
+        edDaysChild.setText("1")
         // userTypeChildId.add("")
         // Log.e("TAG", "onAddField:      "+userTypeChildId.size )
 
@@ -513,7 +535,7 @@ class AddQuotationActivity : BaseActivity() {
                         edHSNChild.setText("0")
                         edQtyChild.setText("0")
                         edRateChild.setText("0")
-                        edDaysChild.setText("0")
+                        edDaysChild.setText("1")
                         setUpdatedTotal()
                     } else {
                         edHSNChild.setText(userTypeListArray!!.get(position - 1).hSNNo)
@@ -550,17 +572,17 @@ class AddQuotationActivity : BaseActivity() {
             }
         })
 
-        edDaysChild.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                setUpdatedTotal()
-            }
+        /* edDaysChild.addTextChangedListener(object : TextWatcher {
+             override fun afterTextChanged(s: Editable?) {
+                 setUpdatedTotal()
+             }
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
+             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+             }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-        })
+             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+             }
+         })*/
 
 
         viewChild.setOnClickListener {
@@ -570,7 +592,7 @@ class AddQuotationActivity : BaseActivity() {
                 getString(R.string.select_usertype),
                 { item, _ -> spUserTypeChild.setSelection(item.id.toInt()) }).show()
         }
-
+        edDaysChild.setText("1")
         lin_add_user!!.addView(rowView)
     }
 
@@ -585,6 +607,9 @@ class AddQuotationActivity : BaseActivity() {
         var edQtyChild: EditText = rowView.findViewById(R.id.edQtyChild)
         var edRateChild: EditText = rowView.findViewById(R.id.edRateChild)
         var edDaysChild: EditText = rowView.findViewById(R.id.edtChildDays)
+        var til22: TextInputLayout = rowView.findViewById(R.id.til22)
+        edDaysChild.setText("1")
+        til22.invisible()
         txtUserTitle.setText("Material")
         // userTypeChildId.add("")
         // Log.e("TAG", "onAddField:      "+userTypeChildId.size )
@@ -657,17 +682,17 @@ class AddQuotationActivity : BaseActivity() {
             }
         })
 
-        edDaysChild.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                setMaterialTotal()
-            }
+        /*   edDaysChild.addTextChangedListener(object : TextWatcher {
+               override fun afterTextChanged(s: Editable?) {
+                   setMaterialTotal()
+               }
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
+               override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+               }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-        })
+               override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+               }
+           })*/
 
 
         viewChild.setOnClickListener {
@@ -677,7 +702,7 @@ class AddQuotationActivity : BaseActivity() {
                 getString(R.string.select_material),
                 { item, _ -> spUserTypeChild.setSelection(item.id.toInt()) }).show()
         }
-
+        edDaysChild.setText("1")
         lin_add_material!!.addView(rowView)
     }
 
@@ -716,9 +741,14 @@ class AddQuotationActivity : BaseActivity() {
                 position: Int,
                 id: Long
             ) {
-                if (position != -1 && companyListArray.size > position) {
-                    compnyID = companyListArray.get(position).companyID.toString()
-                    Logger.d("companyID", compnyID)
+                if (position != -1 && companyListArray.size > position - 1) {
+                    if (position == 0) {
+                        compnyID = "-1"
+                    } else {
+                        compnyID = companyListArray.get(position - 1).companyID.toString()
+                        Logger.d("companyID", compnyID)
+                    }
+
                 }
 
             }
@@ -736,9 +766,14 @@ class AddQuotationActivity : BaseActivity() {
                 position: Int,
                 id: Long
             ) {
-                if (position != -1 && serviceListArray.size > position) {
-                    serviceId = serviceListArray.get(position).serviceID.toString()
-                    Logger.d("serviceID : ", serviceId)
+                if (position != -1 && serviceListArray.size > position - 1) {
+                    if (position == 0) {
+                        serviceId = "-1"
+                    } else {
+                        serviceId = serviceListArray.get(position - 1).serviceID.toString()
+                        Logger.d("serviceID : ", serviceId)
+                    }
+
                 }
 
             }
@@ -769,9 +804,23 @@ class AddQuotationActivity : BaseActivity() {
                     hideProgressbar()
                     companyListArray?.addAll(response.data)
                     var myList: MutableList<SearchableItem> = mutableListOf()
+
+                    companyNameList!!.add("Select Company")
+                    myList.add(
+                        SearchableItem(
+                            0,
+                            "Select Company"
+                        )
+                    )
+
                     for (items in response.data.indices) {
                         companyNameList.add(response.data.get(items).companyName.toString())
-                        myList.add(SearchableItem(items.toLong(), companyNameList.get(items)))
+                        myList.add(
+                            SearchableItem(
+                                items.toLong() + 1,
+                                companyNameList.get(items + 1)
+                            )
+                        )
                     }
                     companyIteams = myList
 
@@ -983,6 +1032,7 @@ class AddQuotationActivity : BaseActivity() {
                     hideProgressbar()
 
                     if (response.error == 200) {
+                        view3.isEnabled = true
                         cityListArray?.addAll(response.data)
                         var myList: MutableList<SearchableItem> = mutableListOf()
                         for (items in response.data.indices) {
@@ -998,8 +1048,6 @@ class AddQuotationActivity : BaseActivity() {
                         )
                         spCity.setAdapter(adapterCity)
 
-
-
                         for (i in response.data.indices) {
                             if (response.data.get(i).cityID.equals(cityID)) {
                                 spCity.setSelection(i)
@@ -1011,11 +1059,17 @@ class AddQuotationActivity : BaseActivity() {
                         }
 
                     } else {
-                        if (cityID.equals("")) {
-                            spCity.setSelection(-1)
-                        }
-                    }
+                        cityListArray.clear()
+                        cityNameList.clear()
+                        cityID = "-1"
+                        adapterCity?.clear()
+                        // spCity.removeAllViews()
+                        view3.isEnabled = false
 
+                        /*if (cityID.equals("")) {
+                            spCity.setSelection(-1)
+                        }*/
+                    }
 
 
                 }
@@ -1053,6 +1107,16 @@ class AddQuotationActivity : BaseActivity() {
                         item
                     ).edRateChild.isEmpty() && !lin_add_user.getChildAt(item).edtChildDays.isEmpty()
                 ) {
+
+                    Logger.d(
+                        "qta " + (lin_add_user.getChildAt(item).edQtyChild.getValue().toFloat())
+                    )
+                    Logger.d(
+                        "rate " + (lin_add_user.getChildAt(item).edRateChild.getValue().toFloat())
+                    )
+                    Logger.d(
+                        "days " + (lin_add_user.getChildAt(item).edtChildDays.getValue().toFloat())
+                    )
                     TotalAmount = TotalAmount + (lin_add_user.getChildAt(item).edQtyChild.getValue()
                         .toFloat() * lin_add_user.getChildAt(item).edRateChild.getValue()
                         .toFloat() * lin_add_user.getChildAt(item).edtChildDays.getValue()
@@ -1068,7 +1132,7 @@ class AddQuotationActivity : BaseActivity() {
 
 
         if (TotalAmount == 0f) {
-            edTotalAmount.setText("")
+            edTotalAmount.setText("0")
             edCGST.setText("")
             edSGST.setText("")
             edIGST.setText("")
@@ -1078,9 +1142,17 @@ class AddQuotationActivity : BaseActivity() {
             SGST = SGST + ((TotalAmount * session.configData.data?.sGST!!.toFloat()) / 100)
             IGST = IGST + ((TotalAmount * session.configData.data?.iGST!!.toFloat()) / 100)
 
-            UserAmount = TotalAmount + MaterialAmount
+            UserAmount = TotalAmount
 
-            edTotalAmount.setText(UserAmount.toString())
+            if (MaterialAmount != 0f) {
+                TotalAmount = TotalAmount + MaterialAmount
+            }/*else{
+                TotalAmount = TotalAmount + edTotalAmount.getValue().toFloat()
+            }*/
+
+
+
+            edTotalAmount.setText(TotalAmount.toString())
 
             var df: DecimalFormat = DecimalFormat("##.##")
 
@@ -1142,7 +1214,7 @@ class AddQuotationActivity : BaseActivity() {
 
 
         if (TotalAmount == 0f && UserAmount == 0f) {
-            edTotalAmount.setText("")
+            edTotalAmount.setText("0")
             edCGST.setText("")
             edSGST.setText("")
             edIGST.setText("")
@@ -1156,9 +1228,19 @@ class AddQuotationActivity : BaseActivity() {
             SGST = SGST + ((TotalAmount * session.configData.data?.sGST!!.toFloat()) / 100)
             IGST = IGST + ((TotalAmount * session.configData.data?.iGST!!.toFloat()) / 100)
 
-            MaterialAmount = TotalAmount + UserAmount
+            MaterialAmount = TotalAmount
 
-            edTotalAmount.setText(MaterialAmount.toString())
+            if (UserAmount != 0f) {
+                TotalAmount = TotalAmount + UserAmount
+            }/*else{
+                TotalAmount = TotalAmount + edTotalAmount.getValue().toFloat()
+            }
+*/
+
+            //   TotalAmount = TotalAmount + edTotalAmount.getValue().toFloat()
+
+            edTotalAmount.setText(TotalAmount.toString())
+
 
             var df: DecimalFormat = DecimalFormat("##.##")
 

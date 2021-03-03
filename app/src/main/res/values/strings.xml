@@ -235,4 +235,5 @@
     <string name="reminder">Reminder</string>
     <string name="all_present">All Present</string>
     <string name="all_absent">All Absent</string>
+    <string name="staff">Staff</string>
 </resources>
