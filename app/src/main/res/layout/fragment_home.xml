@@ -25,6 +25,7 @@
 
             <com.tcc.app.customview.TextviewSemiBold
                 android:id="@+id/txtSelectCity"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -79,9 +80,11 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <HorizontalScrollView
+                android:layout_marginTop="@dimen/_5sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_5sdp"
+                android:scrollbars="none"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -110,6 +113,7 @@
 
                     <com.tcc.app.customview.RadioButtonReguler
                         android:id="@+id/rbWeekly"
+                        android:layout_marginHorizontal="@dimen/_4sdp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:buttonTint="@color/colorWhite"
@@ -118,6 +122,7 @@
 
                     <com.tcc.app.customview.RadioButtonReguler
                         android:id="@+id/rbMonthly"
+                        android:layout_marginHorizontal="@dimen/_4sdp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:buttonTint="@color/colorWhite"
@@ -126,6 +131,7 @@
 
                     <com.tcc.app.customview.RadioButtonReguler
                         android:id="@+id/rbYearly"
+                        android:layout_marginHorizontal="@dimen/_4sdp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:buttonTint="@color/colorWhite"
@@ -135,6 +141,7 @@
                     <com.tcc.app.customview.RadioButtonReguler
                         android:id="@+id/rbTotal"
                         android:layout_width="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_4sdp"
                         android:layout_height="wrap_content"
                         android:buttonTint="@color/colorWhite"
                         android:text="Total"
@@ -150,21 +157,21 @@
         <com.smarteist.autoimageslider.SliderView
             android:id="@+id/rvHomeCounter"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_150sdp"
+            android:layout_height="@dimen/_112sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
             app:sliderAnimationDuration="600"
-            app:sliderAutoCycleDirection="back_and_forth"
+            app:sliderAutoCycleDirection="right"
             app:sliderAutoCycleEnabled="true"
             app:sliderIndicatorAnimationDuration="600"
             app:sliderIndicatorGravity="center_horizontal|bottom"
             app:sliderIndicatorMargin="15dp"
             app:sliderIndicatorOrientation="horizontal"
             app:sliderIndicatorRadius="1.5dp"
-            app:sliderIndicatorSelectedColor="#40000000"
-            app:sliderIndicatorUnselectedColor="#FFF"
-            app:sliderScrollTimeInSec="1"
+            app:sliderIndicatorSelectedColor="#80FFFFFF"
+            app:sliderIndicatorUnselectedColor="#40FFFFFF"
+            app:sliderScrollTimeInSec="4"
             app:sliderStartAutoCycle="true" />
 
         <com.tcc.app.customview.TextviewSemiBold

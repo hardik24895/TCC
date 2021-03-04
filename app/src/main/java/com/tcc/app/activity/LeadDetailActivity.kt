@@ -10,7 +10,7 @@ import com.tcc.app.extention.checkUserRole
 import com.tcc.app.extention.invisible
 import com.tcc.app.extention.visible
 import com.tcc.app.fragment.CustomerSiteFragment
-import com.tcc.app.fragment.LeadInfofoFragment
+import com.tcc.app.fragment.LeadInfoFragment
 import com.tcc.app.fragment.LeadReminderFragment
 import com.tcc.app.fragment.QuotationFragment
 import com.tcc.app.modal.LeadItem
@@ -88,7 +88,7 @@ class LeadDetailActivity : BaseActivity() {
         args.putSerializable(Constant.DATA, leadItem)
 
         viewPageradapter = ViewPagerPagerAdapter(supportFragmentManager)
-        viewPageradapter?.addFragment(LeadInfofoFragment.getInstance(args), "Details")
+        viewPageradapter?.addFragment(LeadInfoFragment.getInstance(args), "Details")
         viewPageradapter?.addFragment(CustomerSiteFragment.getInstance(args), "Sites")
         viewPageradapter?.addFragment(QuotationFragment.getInstance(args), "Quotations")
         viewPageradapter?.addFragment(LeadReminderFragment.getInstance(args), "Reminders")

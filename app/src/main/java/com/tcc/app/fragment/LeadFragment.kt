@@ -93,9 +93,9 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
             startActivity(intent)
             Animatoo.animateCard(context)
         } else if (action.equals("SMS")) {
-            sendMeassageDialog()
+            sendMeassageDialog(data.mobileNo.toString())
         } else if (action.equals("Email")) {
-            sendMailDialog()
+            sendMailDialog(data.emailID.toString())
         } else if (action.equals("Edit")) {
 
             if (checkUserRole(
@@ -124,14 +124,14 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
     }
 
 
-    private fun sendMailDialog() {
+    private fun sendMailDialog(EMail: String) {
         SendMailDailog(requireContext())
 
         val dialog = SendMailDailog.newInstance(
             requireContext(),
             object : SendMailDailog.onItemClick {
                 override fun onItemCLicked(Subject: String, Description: String) {
-                    SendEmail(Subject, Description)
+                    SendEmail(EMail, Subject, Description)
                 }
             })
         val bundle = Bundle()
@@ -141,14 +141,14 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
         dialog.show(childFragmentManager, "YesNO")
     }
 
-    private fun sendMeassageDialog() {
+    private fun sendMeassageDialog(contact: String) {
         SendMessageDailog(requireContext())
 
         val dialog = SendMessageDailog.newInstance(
             requireContext(),
             object : SendMessageDailog.onItemClick {
                 override fun onItemCLicked(Message: String) {
-                    SendMessage(Message)
+                    SendMessage(contact, Message)
                 }
             })
         val bundle = Bundle()
@@ -352,15 +352,15 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
         super.onDestroy()
     }
 
-    fun SendEmail(subject: String, Description: String) {
+    fun SendEmail(email: String, subject: String, Description: String) {
         showProgressbar()
         var result = ""
         try {
             val jsonBody = JSONObject()
 
+            jsonBody.put("EmailID", email)
             jsonBody.put("Subject", subject)
-            jsonBody.put("Description", Description)
-
+            jsonBody.put("Message", Description)
             result = Networking.setParentJsonData(Constant.METHOD_SEND_MAIL, jsonBody)
 
         } catch (e: JSONException) {
@@ -392,15 +392,16 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
             }).addTo(autoDisposable)
     }
 
-    fun SendMessage(Message: String) {
+    fun SendMessage(Contact: String, Message: String) {
         showProgressbar()
         var result = ""
         try {
             val jsonBody = JSONObject()
 
-            jsonBody.put("Description", Message)
+            jsonBody.put("MobileNo", Contact)
+            jsonBody.put("Message", Message)
 
-            result = Networking.setParentJsonData(Constant.METHOD_SEND_MAIL, jsonBody)
+            result = Networking.setParentJsonData(Constant.METHOD_SEND_MESSAGE, jsonBody)
 
         } catch (e: JSONException) {
             e.printStackTrace()
@@ -410,7 +411,7 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
         Networking
             .with(requireContext())
             .getServices()
-            .SendMail(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
+            .SendMessage(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeWith(object : CallbackObserver<CommonAddModal>() {

@@ -14,7 +14,13 @@ data class CheckInOutListModel(
     val error: Int? = null,
 
     @field:SerializedName("message")
-    val message: String? = null
+    val message: String? = null,
+
+    @field:SerializedName("Checkintime")
+    val checkintime: String? = null,
+
+    @field:SerializedName("Checkouttime")
+    val checkouttime: String? = null
 )
 
 data class CheckInOutDataItem(

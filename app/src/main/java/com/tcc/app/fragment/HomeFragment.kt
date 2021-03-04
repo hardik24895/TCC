@@ -1,7 +1,6 @@
 package com.tcc.app.fragment
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import android.widget.AdapterView
@@ -11,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
 import com.smarteist.autoimageslider.SliderAnimations
-import com.smarteist.autoimageslider.SliderView
 import com.tcc.app.R
 import com.tcc.app.activity.LeadDetailActivity
 import com.tcc.app.adapter.AutoImageSliderAdapter
@@ -65,7 +63,7 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
         cityListArray = ArrayList()
         cityNameList = ArrayList()
         getCityList()
-        setuprvHomeCounterMarchant()
+
         // recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setLoadMoreListener(object : LoadMoreListener {
             override fun onLoadMore() {
@@ -75,9 +73,6 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
                 }
             }
         })
-
-
-
 
         rbDaly.isChecked = true
 
@@ -133,8 +128,6 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
         rvHomeCounter.setSliderAdapter(autoImageSliderAdapter!!)
         rvHomeCounter.setIndicatorAnimation(IndicatorAnimationType.SLIDE)
         rvHomeCounter.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION)
-        rvHomeCounter.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH)
-        rvHomeCounter.setIndicatorUnselectedColor(Color.WHITE)
         rvHomeCounter.setScrollTimeInSec(4)
         rvHomeCounter.startAutoCycle()
     }
@@ -160,6 +153,7 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
         setuprvHomeCounterMarchant()
         recyclerView.isLoading = true
         getDashBoardLead(page)
+        setSlider()
         super.onResume()
 
     }
@@ -217,7 +211,7 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
 
     fun getDashBoardCount(filter: String) {
         var result = ""
-        list.clear()
+
 
         try {
             val jsonBody = JSONObject()
@@ -238,15 +232,13 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeWith(object : CallbackObserver<HomeCounterModal>() {
                 override fun onSuccess(response: HomeCounterModal) {
+                    list.clear()
                     list.addAll(response.data)
-                    setSlider()
-
+                    autoImageSliderAdapter?.notifyDataSetChanged()
                 }
 
                 override fun onFailed(code: Int, message: String) {
-
                     showAlert(message)
-
                 }
 
             }).addTo(autoDisposable)

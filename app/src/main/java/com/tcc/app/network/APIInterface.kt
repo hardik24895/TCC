@@ -274,4 +274,8 @@ interface APIInterface {
     fun SendMail(@Body body: RequestBody): Observable<Response<CommonAddModal>>
 
 
+    @POST("service/")
+    fun SendMessage(@Body body: RequestBody): Observable<Response<CommonAddModal>>
+
+
 }

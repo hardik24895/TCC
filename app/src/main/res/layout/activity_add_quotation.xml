@@ -115,71 +115,6 @@
                             android:textColorHint="@color/black" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-
-                    <!--   <com.google.android.material.textfield.TextInputLayout
-                           android:id="@+id/til2"
-                           android:layout_width="0dp"
-                           android:layout_height="wrap_content"
-                           android:hint="GST No"
-                           app:hintTextColor="@color/black"
-                           app:layout_constraintEnd_toEndOf="@+id/linlayCompany"
-                           app:layout_constraintStart_toStartOf="@+id/linlayCompany"
-                           app:layout_constraintTop_toBottomOf="@+id/til1">
-
-                           <EditText
-                               android:id="@+id/edGSTNo"
-                               android:layout_width="match_parent"
-                               android:layout_height="wrap_content"
-                               android:backgroundTint="@color/colorWhite"
-                               android:fontFamily="@font/opensans_regular"
-                               android:inputType="textCapCharacters"
-                               android:maxLength="15"
-                               android:singleLine="true"
-                               android:textColor="@color/black"
-                               android:textColorHint="@color/black" />
-                       </com.google.android.material.textfield.TextInputLayout>
-
-                       <com.tcc.app.customview.TextviewBold
-                           android:id="@+id/txtSitetype"
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content"
-                           android:layout_marginTop="@dimen/_10sdp"
-                           android:paddingTop="@dimen/_2sdp"
-                           android:text="@string/site_type"
-                           app:layout_constraintStart_toStartOf="parent"
-                           app:layout_constraintTop_toBottomOf="@+id/til2" />
-
-                       <RadioGroup
-                           android:id="@+id/rg"
-                           android:layout_width="0dp"
-                           android:layout_height="wrap_content"
-                           android:layout_marginBottom="@dimen/_8sdp"
-                           android:orientation="vertical"
-                           app:layout_constraintBottom_toBottomOf="parent"
-                           app:layout_constraintStart_toStartOf="parent"
-                           app:layout_constraintTop_toBottomOf="@+id/txtSitetype">
-
-                           <com.tcc.app.customview.RadioButtonReguler
-                               android:id="@+id/rbResidential"
-                               android:layout_width="wrap_content"
-                               android:layout_height="@dimen/_30sdp"
-                               android:text="@string/residential" />
-
-                           <com.tcc.app.customview.RadioButtonReguler
-                               android:id="@+id/rbCommercial"
-                               android:layout_width="wrap_content"
-                               android:layout_height="@dimen/_30sdp"
-                               android:text="@string/commercial" />
-
-                           <com.tcc.app.customview.RadioButtonReguler
-                               android:id="@+id/rbIndustrial"
-                               android:layout_width="wrap_content"
-                               android:layout_height="@dimen/_30sdp"
-                               android:text="@string/industrial" />
-
-                       </RadioGroup>
-   -->
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
@@ -611,7 +546,7 @@
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/colorWhite"
                             android:fontFamily="@font/opensans_regular"
-                            android:inputType="number"
+                            android:inputType="numberDecimal"
                             android:maxLength="10"
                             android:singleLine="true"
                             android:textColor="@color/black"
@@ -810,7 +745,7 @@
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/colorWhite"
                             android:fontFamily="@font/opensans_regular"
-                            android:inputType="number"
+                            android:inputType="numberDecimal"
                             android:maxLength="10"
                             android:singleLine="true"
                             android:textColor="@color/black"
@@ -892,7 +827,7 @@
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/colorWhite"
                             android:fontFamily="@font/opensans_regular"
-                            android:inputType="number"
+                            android:inputType="numberDecimal"
                             android:maxLength="10"
                             android:text="0"
                             android:singleLine="true"
@@ -916,7 +851,7 @@
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/colorWhite"
                             android:fontFamily="@font/opensans_regular"
-                            android:inputType="number"
+                            android:inputType="numberDecimal"
                             android:maxLength="10"
                             android:text="0"
                             android:singleLine="true"
@@ -940,7 +875,7 @@
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/colorWhite"
                             android:fontFamily="@font/opensans_regular"
-                            android:inputType="number"
+                            android:inputType="numberDecimal"
                             android:maxLength="10"
                             android:text="0"
                             android:singleLine="true"
@@ -966,7 +901,7 @@
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/colorWhite"
                             android:fontFamily="@font/opensans_regular"
-                            android:inputType="number"
+                            android:inputType="numberDecimal"
                             android:maxLength="10"
                             android:singleLine="true"
                             android:textColor="@color/black"

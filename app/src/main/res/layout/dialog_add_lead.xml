@@ -31,11 +31,20 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <ImageView
+                android:id="@+id/btnClose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_btn_close" />
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/inpnumber"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:hint="@string/mobile_no"
+                android:layout_marginTop="@dimen/_8sdp"
                 app:hintTextColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

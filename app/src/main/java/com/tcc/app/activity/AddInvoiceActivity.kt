@@ -101,7 +101,7 @@ class AddInvoiceActivity : BaseActivity() {
             quotationIteam = intent.getSerializableExtra(Constant.DATA) as QuotationItem
 
 
-            if (quotationIteam!!.stateID.toString() == "12") {
+            if (quotationIteam!!.stateID.equals("12")) {
 
                 edCGST.isEnabled = true
                 edSGST.isEnabled = true
@@ -268,7 +268,6 @@ class AddInvoiceActivity : BaseActivity() {
         btnSubmit.setOnClickListener {
             validation()
         }
-
         getMaterialTypeList()
 
         getUserTypeList()
@@ -435,6 +434,7 @@ class AddInvoiceActivity : BaseActivity() {
         var edHSNChild: EditText = rowView.findViewById(R.id.edHSNChild)
         var edQtyChild: EditText = rowView.findViewById(R.id.edQtyChild)
         var edRateChild: EditText = rowView.findViewById(R.id.edRateChild)
+        edRateChild.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
         var edtChildDays: EditText = rowView.findViewById(R.id.edtChildDays)
         var txtUserTitle: TextView = rowView.findViewById(R.id.txtUserTitle)
         var til22: TextInputLayout = rowView.findViewById(R.id.til22)
@@ -1168,6 +1168,7 @@ class AddInvoiceActivity : BaseActivity() {
 
     fun setUpdatedTotal() {
         UserAmount = 0f
+        var df = DecimalFormat("##.##")
         var TotalAmount: Float = 0f
         var CGST: Float = 0f
         var SGST: Float = 0f
@@ -1212,13 +1213,12 @@ class AddInvoiceActivity : BaseActivity() {
 
 
 
-            edTotalAmount.setText(TotalAmount.toString())
+            edTotalAmount.setText(df.format(TotalAmount))
 
             CGST = CGST + ((TotalAmount * session.configData.data?.cGST!!.toFloat()) / 100)
             SGST = SGST + ((TotalAmount * session.configData.data?.sGST!!.toFloat()) / 100)
             IGST = IGST + ((TotalAmount * session.configData.data?.iGST!!.toFloat()) / 100)
 
-            var df: DecimalFormat = DecimalFormat("##.##")
 
             if (quotationIteam?.stateID?.toInt() == 12) {
                 edCGST.setText(df.format(CGST))
@@ -1233,7 +1233,7 @@ class AddInvoiceActivity : BaseActivity() {
     }
 
     fun setMaterialTotal() {
-
+        var df = DecimalFormat("##.##")
         MaterialAmount = 0f
         var TotalAmount: Float = 0f
         var CGST: Float = 0f
@@ -1288,15 +1288,13 @@ class AddInvoiceActivity : BaseActivity() {
 
             //   TotalAmount = TotalAmount + edTotalAmount.getValue().toFloat()
 
-            edTotalAmount.setText(TotalAmount.toString())
+            edTotalAmount.setText(df.format(TotalAmount))
 
 
             CGST = CGST + ((TotalAmount * session.configData.data?.cGST!!.toFloat()) / 100)
             SGST = SGST + ((TotalAmount * session.configData.data?.sGST!!.toFloat()) / 100)
             IGST = IGST + ((TotalAmount * session.configData.data?.iGST!!.toFloat()) / 100)
 
-
-            var df: DecimalFormat = DecimalFormat("##.##")
 
             if (quotationIteam?.stateID?.toInt() == 12) {
                 edCGST.setText(df.format(CGST))
