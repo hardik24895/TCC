@@ -772,6 +772,7 @@ class AddInvoiceActivity : BaseActivity() {
                 position: Int,
                 id: Long
             ) {
+
                 if (position != -1 && materialTypeListArray!!.size > position - 1) {
                     if (position == 0) {
                         materialtypeId = "-1"
@@ -858,10 +859,6 @@ class AddInvoiceActivity : BaseActivity() {
 
                     }
 
-
-
-
-
                 }
 
             }
@@ -912,6 +909,8 @@ class AddInvoiceActivity : BaseActivity() {
                 position: Int,
                 id: Long
             ) {
+
+
                 if (position != -1 && materialTypeListArray!!.size > position - 1) {
                     if (position == 0) {
                         edHSNChild.setText("0")
@@ -1314,17 +1313,16 @@ class AddInvoiceActivity : BaseActivity() {
         var total = 0.0;
         val jsonBody = JSONObject()
         val jsonArray = JSONArray()
+        val jsonArray1 = JSONArray()
 
         if (!edTotalAmount.isEmpty()) {
             if (quotationIteam?.stateID?.toInt() == 12) {
                 total = edTotalAmount.getValue().toDouble() + edCGST.getValue()
                     .toDouble() + edSGST.getValue().toDouble() + 0
             } else {
-                total = edTotalAmount.getValue().toDouble() + 0 + 0 + edIGST.getValue().toDouble()
+                total = edTotalAmount.getValue().toDouble() + edIGST.getValue().toDouble()
             }
         }
-
-
 
         try {
 
@@ -1353,15 +1351,15 @@ class AddInvoiceActivity : BaseActivity() {
 
             jsonBody.put("Item", jsonArray)
 
-            if (!edQty.isEmpty() && !edRate.isEmpty() && usertypeId != "-1") {
+            if (!edQty.isEmpty() && !edRate.isEmpty() && !usertypeId.equals("-1")) {
                 val jsonObj = JSONObject()
                 jsonObj.put("UsertypeID", usertypeId)
                 jsonObj.put("Qty", edQty.getValue())
                 jsonObj.put("Rate", edRate.getValue())
-
+                jsonArray1.put(jsonObj)
                 jsonArray.put(jsonObj)
             }
-            if (!edMaterialQty.isEmpty() && !edMaterialRate.isEmpty() && materialtypeId != "-1") {
+            if (!edMaterialQty.isEmpty() && !edMaterialRate.isEmpty() && !materialtypeId.equals("-1")) {
                 val jsonObj = JSONObject()
                 jsonObj.put("UsertypeID", materialtypeId)
                 jsonObj.put("Qty", edMaterialQty.getValue())
@@ -1373,9 +1371,15 @@ class AddInvoiceActivity : BaseActivity() {
 
             if (lin_add_user.childCount > 0) {
                 for (item in 0 until lin_add_user.childCount) {
+
+
                     if (!lin_add_user.getChildAt(item).edQtyChild.isEmpty() && !lin_add_user.getChildAt(
                             item
-                        ).edRateChild.isEmpty()
+                        ).edRateChild.isEmpty() && !userTypeListArray?.get(
+                            (lin_add_user.getChildAt(
+                                item
+                            ).spUserTypeChild.selectedItemPosition)
+                        )?.usertypeID.equals("-1")
                     ) {
 
                         try {
@@ -1389,6 +1393,8 @@ class AddInvoiceActivity : BaseActivity() {
                                 "Rate", lin_add_user.getChildAt(item).edRateChild.getValue()
                             )
                             jsonArray.put(jsonObj)
+                            jsonArray1.put(jsonObj)
+
                         } catch (e: Exception) {
 
                         }
@@ -1403,7 +1409,11 @@ class AddInvoiceActivity : BaseActivity() {
                 for (item in 0 until lin_add_material.childCount) {
                     if (!lin_add_material.getChildAt(item).edQtyChild.isEmpty() && !lin_add_material.getChildAt(
                             item
-                        ).edRateChild.isEmpty()
+                        ).edRateChild.isEmpty() && !materialTypeListArray?.get(
+                            (lin_add_user.getChildAt(
+                                item
+                            ).spUserTypeChild.selectedItemPosition)
+                        )?.usertypeID.equals("-1")
                     ) {
 
                         try {
@@ -1412,7 +1422,6 @@ class AddInvoiceActivity : BaseActivity() {
                                 "UsertypeID",
                                 materialTypeListArray?.get(lin_add_material.getChildAt(item).spUserTypeChild.selectedItemPosition - 1)?.usertypeID
                             )
-
                             jsonObj.put(
                                 "Qty",
                                 lin_add_material.getChildAt(item).edQtyChild.getValue()
@@ -1445,28 +1454,33 @@ class AddInvoiceActivity : BaseActivity() {
         }
 
 
-
-        Networking
-            .with(this@AddInvoiceActivity)
-            .getServices()
-            .AddQuotationData(Networking.wrapParams(result))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeWith(object : CallbackObserver<CommonAddModal>() {
-                override fun onSuccess(response: CommonAddModal) {
-                    hideProgressbar()
-                    if (response.error == 200) {
-                        root.showSnackBar(response.message.toString())
-                        finish()
+        if (jsonArray1.length() != 0) {
+            Networking
+                .with(this@AddInvoiceActivity)
+                .getServices()
+                .AddQuotationData(Networking.wrapParams(result))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(object : CallbackObserver<CommonAddModal>() {
+                    override fun onSuccess(response: CommonAddModal) {
+                        hideProgressbar()
+                        if (response.error == 200) {
+                            root.showSnackBar(response.message.toString())
+                            finish()
+                        }
                     }
-                }
 
-                override fun onFailed(code: Int, message: String) {
-                    hideProgressbar()
-                    showAlert(message.toString())
-                }
+                    override fun onFailed(code: Int, message: String) {
+                        hideProgressbar()
+                        showAlert(message.toString())
+                    }
 
-            }).addTo(autoDisposable)
+                }).addTo(autoDisposable)
 
+        } else {
+            root.showSnackBar("Please select staff")
+            hideProgressbar()
+        }
     }
+
 }
