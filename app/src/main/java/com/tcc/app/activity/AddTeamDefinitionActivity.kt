@@ -3,7 +3,6 @@ package com.tcc.app.activity
 import android.app.DatePickerDialog
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
@@ -12,6 +11,7 @@ import com.tcc.app.R
 import com.tcc.app.extention.*
 import com.tcc.app.modal.AvailableEmployeeDataItem
 import com.tcc.app.modal.AvailableEmployeeListModel
+import com.tcc.app.modal.CommonAddModal
 import com.tcc.app.modal.QuotationItem
 import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
@@ -30,14 +30,15 @@ import org.json.JSONException
 import org.json.JSONObject
 import tech.hibk.searchablespinnerlibrary.SearchableDialog
 import tech.hibk.searchablespinnerlibrary.SearchableItem
-import tech.hibk.searchablespinnerlibrary.SearchableSpinner
 import java.util.*
 import kotlin.collections.ArrayList
 
 
 class AddTeamDefinitionActivity : BaseActivity() {
     var userTypeNameList: ArrayList<String> = ArrayList()
+
     var userTypeListArray: ArrayList<AvailableEmployeeDataItem> = ArrayList()
+    var selectedArrayList: ArrayList<AvailableEmployeeDataItem> = ArrayList()
     var adapterUserType: ArrayAdapter<String>? = null
     var itemUserType: List<SearchableItem>? = null
     var userId: String = ""
@@ -66,7 +67,6 @@ class AddTeamDefinitionActivity : BaseActivity() {
 
         edStartDate.setText(getCurrentDate())
         edEndDate.setText(getCurrentDate())
-
 
 
         getUserTypeList()
@@ -139,7 +139,20 @@ class AddTeamDefinitionActivity : BaseActivity() {
         rgType.setOnCheckedChangeListener({ group, checkedId ->
             getUserTypeList()
         })
-        btnAddUser.setOnClickListener { onAddField() }
+        btnAddUser.setOnClickListener {
+
+            var selectedPos = spUserType.selectedItemPosition - 1
+            if (selectedPos > -1) {
+                var userName = "${userTypeListArray.get(selectedPos).firstName} ${
+                    userTypeListArray.get(selectedPos).lastName
+                } - ${userTypeListArray.get(selectedPos).userType}"
+                selectedArrayList.add(userTypeListArray.get(selectedPos))
+                onAddField(userName)
+                spUserType.setSelection(0)
+            } else {
+                root.showSnackBar("Please select Staff")
+            }
+        }
         btnSubmit.setOnClickListener { AddTeamDefinitionList() }
 
         edStartTime.setOnClickListener {
@@ -176,7 +189,6 @@ class AddTeamDefinitionActivity : BaseActivity() {
     }
 
     private fun AddTeamDefinitionList() {
-        var selectuserCount = 0
         showProgressbar()
         var result = ""
 
@@ -186,80 +198,14 @@ class AddTeamDefinitionActivity : BaseActivity() {
             jsonObj.put("EmployeeID", userId)
             jsonArray.put(jsonObj)
 
-            if (linAddTeamDefinition.childCount > 0) {
-                for (item in 0 until linAddTeamDefinition.childCount) {
-                    selectuserCount = 0
-                    Log.d(
-                        "TAG",
-                        "AddTeamDefinitionList:  =   ${userTypeListArray.get(
-                            linAddTeamDefinition.getChildAt(item).spUserTypeChild.selectedItemPosition
-                        ).userID}"
-                    )
-                    for (i in userTypeListArray.indices) {
-                        if (userTypeListArray.get(linAddTeamDefinition.getChildAt(item).spUserTypeChild.selectedItemPosition).userID == userTypeListArray.get(
-                                i
-                            ).userID
-                        ) {
-                            selectuserCount += 1
-                            if (selectuserCount == 2) {
-                                hideProgressbar()
-                                root.showSnackBar("PLease Remove Duplicate Employee")
-                                Log.d(
-                                    "TAG",
-                                    "AddTeamDefinitionList:  =   ${userTypeListArray.get(
-                                        linAddTeamDefinition.getChildAt(item).spUserTypeChild.selectedItemPosition
-                                    ).userID}  =   ${userTypeListArray.get(i).userID}"
-                                )
-                                return
-                            }
 
-                        } else {
-                            Log.d(
-                                "TAG",
-                                "AddTeamDefinitionList:  =   ${userTypeListArray.get(
-                                    linAddTeamDefinition.getChildAt(item).spUserTypeChild.selectedItemPosition
-                                ).userID}  =!  ${userTypeListArray.get(i).userID}"
-                            )
+            for (item in selectedArrayList.indices) {
 
-                        }
 
-                        /* if(userTypeListArray.get(i).userID==userId){
-                             hideProgressbar()
-                             root.showSnackBar("PLease Remove Duplicate Employee")
-                             return
-                         }*/
-
-                    }
-                    val jsonObj1 = JSONObject()
-                    jsonObj1.put(
-                        "EmployeeID",
-                        userTypeListArray.get(linAddTeamDefinition.getChildAt(item).spUserTypeChild.selectedItemPosition).userID.toString()
-                    )
-                    jsonArray.put(jsonObj1)
-                }
+                val jsonObj1 = JSONObject()
+                jsonObj1.put("EmployeeID", selectedArrayList.get(item).userID)
+                jsonArray.put(jsonObj1)
             }
-
-            /* if (linAddTeamDefinition.childCount > 0) {
-
-                 for (i in 0 until  jsonArray.length()){
-                     for (item in 0 until linAddTeamDefinition.childCount) {
-
-                         if (userId==jsonArray.getJSONObject(i).getString("EmployeeID")){
-                             root.showSnackBar("PLease Remove Duplicate Employee")
-                             hideProgressbar()
-                             return
-                         }
-                         if(userTypeListArray.get(linAddTeamDefinition.getChildAt(item).spUserTypeChild.selectedItemPosition).userID== jsonArray.getJSONObject(i).getString("EmployeeID")){
-                            root.showSnackBar("PLease Remove Duplicate Employee")
-                             hideProgressbar()
-                            return
-                        }
-
-                     }
-                 }
-
-
-             }*/
 
 
             val jsonBody = JSONObject()
@@ -283,91 +229,57 @@ class AddTeamDefinitionActivity : BaseActivity() {
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-//        Networking
-//            .with(this@AddTeamDefinitionActivity)
-//            .getServices()
-//            .AddTeamDefinition(Networking.wrapParams(result))
-//            .subscribeOn(Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribeWith(object : CallbackObserver<CommonAddModal>() {
-//                override fun onSuccess(response: CommonAddModal) {
-//                           hideProgressbar()
-//                    if (response.error == 200) {
-//                        root.showSnackBar(response.message.toString())
-//                        finish()
-//                    } else {
-//                        showAlert(response.message.toString())
-//                    }
-//
-//                }
-//
-//                override fun onFailed(code: Int, message: String) {
-//                    hideProgressbar()
-//                    showAlert(message)
-//                }
-//
-//            }).addTo(autoDisposable)
-//
+        Networking
+            .with(this@AddTeamDefinitionActivity)
+            .getServices()
+            .AddTeamDefinition(Networking.wrapParams(result))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : CallbackObserver<CommonAddModal>() {
+                override fun onSuccess(response: CommonAddModal) {
+                    hideProgressbar()
+                    if (response.error == 200) {
+                        root.showSnackBar(response.message.toString())
+                        finish()
+                    } else {
+                        showAlert(response.message.toString())
+                    }
+
+                }
+
+                override fun onFailed(code: Int, message: String) {
+                    hideProgressbar()
+                    showAlert(message)
+                }
+
+            }).addTo(autoDisposable)
+
 
     }
 
-
-    fun onAddField() {
+    fun onAddField(username: String) {
         val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val rowView: View = inflater.inflate(R.layout.row_dynamic_user_team_definition, null, false)
-        var btnRemove: TextView = rowView.findViewById(R.id.btnRemove)
-        var spUserTypeChild: SearchableSpinner = rowView.findViewById(R.id.spUserTypeChild)
-        var viewChild: View = rowView.findViewById(R.id.viewChild)
+        var btnClose: ImageView = rowView.findViewById(R.id.btnClose)
+        var txtSelectUser: TextView = rowView.findViewById(R.id.txtSelectedUser)
+        txtSelectUser.isSelected = true
+        txtSelectUser.text = username
 
-        btnRemove.setOnClickListener {
+        btnClose.setOnClickListener {
+            selectedArrayList.removeAt(linAddTeamDefinition.indexOfChild(rowView))
             linAddTeamDefinition.removeView(rowView)
-            setUpdatedTotal()
-        }
-        adapterUserType = ArrayAdapter(
-            this@AddTeamDefinitionActivity,
-            R.layout.custom_spinner_item,
-            userTypeNameList
-        )
-        spUserTypeChild.setAdapter(adapterUserType)
-
-        spUserTypeChild.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
-
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                if (position != -1 && userTypeListArray.size > position) {
-
-                    setUpdatedTotal()
-                }
-
-            }
-        }
-
-        viewChild.setOnClickListener {
-            SearchableDialog(
-                this@AddTeamDefinitionActivity,
-                itemUserType!!,
-                getString(R.string.select_usertype),
-                { item, _ -> spUserTypeChild.setSelection(item.id.toInt()) }).show()
         }
 
         linAddTeamDefinition!!.addView(rowView)
     }
 
-    private fun setUpdatedTotal() {
-        //TODO("Not yet implemented")
-    }
 
     fun getUserTypeList() {
 
         if (!edStartDate.isEmpty() && !edEndDate.isEmpty()) {
             userTypeListArray.clear()
             userTypeNameList.clear()
+            selectedArrayList.clear()
             var result = ""
 
 
@@ -400,12 +312,7 @@ class AddTeamDefinitionActivity : BaseActivity() {
                         var myList: MutableList<SearchableItem> = mutableListOf()
 
                         userTypeNameList!!.add("Select Staff")
-                        myList.add(
-                            SearchableItem(
-                                0,
-                                "Select Staff"
-                            )
-                        )
+                        myList.add(SearchableItem(0, "Select Staff"))
 
                         for (items in response.data.indices) {
                             userTypeNameList.add(
@@ -430,7 +337,6 @@ class AddTeamDefinitionActivity : BaseActivity() {
                         )
                         spUserType.setAdapter(adapterUserType)
 
-
                     }
 
                     override fun onFailed(code: Int, message: String) {
@@ -447,11 +353,57 @@ class AddTeamDefinitionActivity : BaseActivity() {
     private fun userTypeViewClick() {
 
         view2.setOnClickListener {
-            SearchableDialog(this@AddTeamDefinitionActivity,
-                itemUserType!!,
-                getString(R.string.select_employee), { item, _ ->
-                    spUserType.setSelection(item.id.toInt())
-                }).show()
+
+            if (selectedArrayList.size == 0) {
+                SearchableDialog(this@AddTeamDefinitionActivity, itemUserType!!,
+                    getString(R.string.select_employee), { item, _ ->
+                        spUserType.setSelection(item.id.toInt())
+                    }).show()
+            } else {
+                var SelectedItemUserType: List<SearchableItem>? = null
+                var tempuserTypeNameList: ArrayList<String> = ArrayList()
+                var myList: MutableList<SearchableItem> = mutableListOf()
+
+                myList.add(SearchableItem(0, "Select Staff"))
+
+                for (items in userTypeListArray.indices) {
+                    var isAdd: Boolean? = null
+
+                    for (selectedpos in selectedArrayList) {
+
+                        if (userTypeListArray.get(items).userID.equals(selectedpos.userID)) {
+                            isAdd = false
+                            break
+                        } else {
+                            isAdd = true
+                        }
+
+
+                    }
+                    if (isAdd!!) {
+                        tempuserTypeNameList.add(
+                            userTypeListArray.get(items).firstName.toString() + " " + userTypeListArray.get(
+                                items
+                            ).lastName.toString() + " - " + userTypeListArray.get(items).userType.toString()
+                        )
+                        myList.add(
+                            SearchableItem(
+                                items.toLong() + 1,
+                                userTypeNameList.get(items + 1)
+                            )
+                        )
+                    }
+
+                }
+                SelectedItemUserType = myList
+                SearchableDialog(this@AddTeamDefinitionActivity, SelectedItemUserType!!,
+                    getString(R.string.select_employee), { item, _ ->
+                        spUserType.setSelection(item.id.toInt())
+                    }).show()
+
+            }
+
+
         }
 
     }
@@ -481,6 +433,5 @@ class AddTeamDefinitionActivity : BaseActivity() {
             }
         }
     }
-
 
 }

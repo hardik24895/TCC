@@ -10,13 +10,13 @@ import com.tcc.app.utils.Constant
 import kotlinx.android.synthetic.main.fragment_lead_detail.*
 
 
-class LeadInfofoFragment : BaseFragment() {
+class LeadInfoFragment : BaseFragment() {
 
     var leadItem: LeadItem? = null
 
     companion object {
-        fun getInstance(bundle: Bundle): LeadInfofoFragment {
-            val fragment = LeadInfofoFragment()
+        fun getInstance(bundle: Bundle): LeadInfoFragment {
+            val fragment = LeadInfoFragment()
             fragment.arguments = bundle
             return fragment
         }

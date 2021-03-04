@@ -82,8 +82,6 @@ class AutoImageSliderAdapter(
                 main_view.setBackgroundColor(Color.parseColor("#7b1fa2"))
             } else if (position == 12) {
                 main_view.setBackgroundColor(Color.parseColor("#303f9f"))
-            } else if (position == 13) {
-                main_view.setBackgroundColor(Color.parseColor("#0288d1"))
             }
 
         }
