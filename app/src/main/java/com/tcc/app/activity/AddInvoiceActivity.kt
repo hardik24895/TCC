@@ -281,7 +281,6 @@ class AddInvoiceActivity : BaseActivity() {
 
     }
 
-
     fun validation() {
         when {
             edtNote.isEmpty() -> {
@@ -299,7 +298,6 @@ class AddInvoiceActivity : BaseActivity() {
 
         }
     }
-
 
     private fun userTypeViewClick() {
 
