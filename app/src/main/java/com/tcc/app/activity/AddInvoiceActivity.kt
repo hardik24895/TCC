@@ -1149,8 +1149,6 @@ class AddInvoiceActivity : BaseActivity() {
 
         }
 
-
-
         if (lin_add_user.childCount > 0) {
             for (item in 0 until lin_add_user.childCount) {
                 if (!lin_add_user.getChildAt(item).edQtyChild.isEmpty() && !lin_add_user.getChildAt(
