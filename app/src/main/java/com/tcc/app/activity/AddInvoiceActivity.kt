@@ -59,6 +59,7 @@ class AddInvoiceActivity : BaseActivity() {
     var userTypeListArray: ArrayList<UserTypeDataItem>? = null
     var itemUserType: List<SearchableItem>? = null
     var usertypeId: String = "-1"
+    var usertypeChildId: String = "-1"
 
     var materialTypeNameList: ArrayList<String>? = null
     var adapterMaterialType: ArrayAdapter<String>? = null
@@ -294,6 +295,9 @@ class AddInvoiceActivity : BaseActivity() {
                 root.showSnackBar("Select Staff")
                 //  edTotalAmount.requestFocus()
             }
+            /*usertypeChildId =="-1"->{
+                root.showSnackBar("Select Staff")
+            }*/
 
             else -> {
                 AddInvoice()
@@ -424,7 +428,6 @@ class AddInvoiceActivity : BaseActivity() {
         }
     }
 
-
     fun onAddField() {
         val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val rowView: View = inflater.inflate(R.layout.row_dynamic_user, null, false)
@@ -476,6 +479,7 @@ class AddInvoiceActivity : BaseActivity() {
                         edHSNChild.setText("0")
                         edQtyChild.setText("0")
                         edRateChild.setText("0")
+                        usertypeChildId = "-1"
                         setUpdatedTotal()
                     } else {
                         if (invoiceUserList.size > 0) {
@@ -483,12 +487,13 @@ class AddInvoiceActivity : BaseActivity() {
                                 if (userTypeListArray!!.get(position - 1).usertypeID.toString()
                                         .equals(invoiceUserList.get(iteam).usertypeID)
                                 ) {
-
+                                    //  usertypeChildId = invoiceUserList.get(iteam).usertypeID.toString()
                                     edHSNChild.setText(invoiceUserList.get(iteam).hSNNo)
                                     edQtyChild.setText(invoiceUserList.get(iteam).qty)
                                     edRateChild.setText(invoiceUserList.get(iteam).rate)
                                     setUpdatedTotal()
                                 } else {
+                                    // usertypeChildId = userTypeListArray!!.get(position - 1).usertypeID.toString()
                                     edHSNChild.setText(userTypeListArray!!.get(position - 1).hSNNo)
                                     edQtyChild.setText("1")
                                     edRateChild.setText(userTypeListArray!!.get(position - 1).rate)
@@ -499,6 +504,7 @@ class AddInvoiceActivity : BaseActivity() {
 
 
                                         ) {
+                                            //  usertypeChildId =quotationIteam?.item?.user!!.get(i)!!.usertypeID.toString()
                                             edHSNChild.setText(quotationIteam?.item?.user!!.get(i)!!.hSNNo)
                                             val qua =
                                                 quotationIteam?.item?.user!!.get(i)!!.qty!!.toInt() * quotationIteam?.item?.user!!.get(
@@ -514,6 +520,7 @@ class AddInvoiceActivity : BaseActivity() {
                                 }
                             }
                         } else {
+                            //  usertypeChildId = userTypeListArray!!.get(position - 1).usertypeID.toString()
                             edHSNChild.setText(userTypeListArray!!.get(position - 1).hSNNo)
                             edQtyChild.setText("1")
                             edRateChild.setText(userTypeListArray!!.get(position - 1).rate)
@@ -524,6 +531,7 @@ class AddInvoiceActivity : BaseActivity() {
 
 
                                 ) {
+                                    //  usertypeChildId =quotationIteam?.item?.user!!.get(i)!!.usertypeID.toString()
                                     edHSNChild.setText(quotationIteam?.item?.user!!.get(i)!!.hSNNo)
                                     val qua =
                                         quotationIteam?.item?.user!!.get(i)!!.qty!!.toInt() * quotationIteam?.item?.user!!.get(
@@ -1219,7 +1227,6 @@ class AddInvoiceActivity : BaseActivity() {
             SGST = SGST + ((TotalAmount * session.configData.data?.sGST!!.toFloat()) / 100)
             IGST = IGST + ((TotalAmount * session.configData.data?.iGST!!.toFloat()) / 100)
 
-
             if (quotationIteam?.stateID?.toInt() == 12) {
                 edCGST.setText(df.format(CGST))
                 edSGST.setText(df.format(SGST))
@@ -1316,20 +1323,16 @@ class AddInvoiceActivity : BaseActivity() {
         var total = 0.0;
         val jsonBody = JSONObject()
         val jsonArray = JSONArray()
+        val jsonArray1 = JSONArray()
 
-        if (!edTotalAmount.isEmpty()) {
             if (quotationIteam?.stateID?.toInt() == 12) {
                 total = edTotalAmount.getValue().toDouble() + edCGST.getValue()
                     .toDouble() + edSGST.getValue().toDouble() + 0
             } else {
                 total = edTotalAmount.getValue().toDouble() + 0 + 0 + edIGST.getValue().toDouble()
             }
-        }
-
-
 
         try {
-
 
             jsonBody.put("SitesID", quotationIteam?.sitesID)
             jsonBody.put("QuotationID", quotationIteam?.quotationID)
@@ -1360,7 +1363,7 @@ class AddInvoiceActivity : BaseActivity() {
                 jsonObj.put("UsertypeID", usertypeId)
                 jsonObj.put("Qty", edQty.getValue())
                 jsonObj.put("Rate", edRate.getValue())
-
+                jsonArray1.put(jsonObj)
                 jsonArray.put(jsonObj)
             }
             if (!edMaterialQty.isEmpty() && !edMaterialRate.isEmpty() && materialtypeId != "-1") {
@@ -1369,15 +1372,16 @@ class AddInvoiceActivity : BaseActivity() {
                 jsonObj.put("Qty", edMaterialQty.getValue())
                 jsonObj.put("Rate", edMaterialRate.getValue())
                 jsonObj.put("Days", edtMaterialDays.getValue())
-
                 jsonArray.put(jsonObj)
             }
 
             if (lin_add_user.childCount > 0) {
                 for (item in 0 until lin_add_user.childCount) {
+
+
                     if (!lin_add_user.getChildAt(item).edQtyChild.isEmpty() && !lin_add_user.getChildAt(
                             item
-                        ).edRateChild.isEmpty()
+                        ).edRateChild.isEmpty() && lin_add_user.getChildAt(item).spUserTypeChild.selectedItemPosition != 0
                     ) {
 
                         try {
@@ -1391,6 +1395,7 @@ class AddInvoiceActivity : BaseActivity() {
                                 "Rate", lin_add_user.getChildAt(item).edRateChild.getValue()
                             )
                             jsonArray.put(jsonObj)
+                            jsonArray1.put(jsonObj)
                         } catch (e: Exception) {
 
                         }
@@ -1407,14 +1412,12 @@ class AddInvoiceActivity : BaseActivity() {
                             item
                         ).edRateChild.isEmpty()
                     ) {
-
                         try {
                             val jsonObj = JSONObject()
                             jsonObj.put(
                                 "UsertypeID",
                                 materialTypeListArray?.get(lin_add_material.getChildAt(item).spUserTypeChild.selectedItemPosition - 1)?.usertypeID
                             )
-
                             jsonObj.put(
                                 "Qty",
                                 lin_add_material.getChildAt(item).edQtyChild.getValue()
@@ -1446,6 +1449,11 @@ class AddInvoiceActivity : BaseActivity() {
             e.printStackTrace()
         }
 
+        if (jsonArray1.length() == 0) {
+            hideProgressbar()
+            root.showSnackBar("staff not selected....")
+            return
+        }
 
 
         Networking
