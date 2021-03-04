@@ -81,7 +81,7 @@ class AddQuotationActivity : BaseActivity() {
     var adapterUserType: ArrayAdapter<String>? = null
     var userTypeListArray: ArrayList<UserTypeDataItem>? = null
     var itemUserType: List<SearchableItem>? = null
-    var usertypeId: String = ""
+    var usertypeId: String = "-1"
 
 
     var materialTypeNameList: ArrayList<String>? = null
@@ -853,11 +853,11 @@ class AddQuotationActivity : BaseActivity() {
                     companyListArray?.addAll(response.data)
                     var myList: MutableList<SearchableItem> = mutableListOf()
 
-                    companyNameList!!.add("Select Company")
+                    companyNameList!!.add(getString(R.string.select_company))
                     myList.add(
                         SearchableItem(
                             0,
-                            "Select Company"
+                            getString(R.string.select_company)
                         )
                     )
 
@@ -881,7 +881,7 @@ class AddQuotationActivity : BaseActivity() {
 
                     for (i in response.data.indices) {
                         if (response.data.get(i).companyID.equals(compnyID)) {
-                            spCompany.setSelection(i)
+                            spCompany.setSelection(i + 1)
                         }
                     }
 
@@ -920,11 +920,11 @@ class AddQuotationActivity : BaseActivity() {
                     userTypeListArray!!.addAll(response.data)
                     var myList: MutableList<SearchableItem> = mutableListOf()
 
-                    userTypeNameList!!.add("Select Staff")
+                    userTypeNameList!!.add(getString(R.string.staff_selection))
                     myList.add(
                         SearchableItem(
                             0,
-                            "Select Staff"
+                            getString(R.string.staff_selection)
                         )
                     )
                     for (items in response.data.indices) {
@@ -980,11 +980,11 @@ class AddQuotationActivity : BaseActivity() {
                     materialTypeListArray!!.addAll(response.data)
                     var myList: MutableList<SearchableItem> = mutableListOf()
 
-                    materialTypeNameList!!.add("Select Material Type")
+                    materialTypeNameList!!.add(getString(R.string.select_material))
                     myList.add(
                         SearchableItem(
                             0,
-                            "Select Material Type"
+                            getString(R.string.select_material)
                         )
                     )
 

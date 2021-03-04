@@ -21,6 +21,7 @@ import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
+import com.tcc.app.utils.Logger
 import com.tcc.app.utils.SessionManager
 import com.tcc.app.utils.TimeStamp.formatDateFromString
 import com.tcc.app.utils.TimeStamp.formatServerDateToLocal
@@ -57,7 +58,7 @@ class AddInvoiceActivity : BaseActivity() {
     var adapterUserType: ArrayAdapter<String>? = null
     var userTypeListArray: ArrayList<UserTypeDataItem>? = null
     var itemUserType: List<SearchableItem>? = null
-    var usertypeId: String = ""
+    var usertypeId: String = "-1"
 
     var materialTypeNameList: ArrayList<String>? = null
     var adapterMaterialType: ArrayAdapter<String>? = null
@@ -94,6 +95,7 @@ class AddInvoiceActivity : BaseActivity() {
         edStartDate.setText(getCurrentDate())
         edEndDate.setText(getCurrentDate())
         btnAddUser.setOnClickListener { onAddField() }
+        btnAddMaterial.setOnClickListener { onAddMaterial() }
 
         if (intent.hasExtra(Constant.DATA)) {
             quotationIteam = intent.getSerializableExtra(Constant.DATA) as QuotationItem
@@ -272,7 +274,6 @@ class AddInvoiceActivity : BaseActivity() {
         userTypeSpinnerListner()
         userTypeViewClick()
 
-
         materialTypeSpinnerListner()
         materialTypeViewClick()
 
@@ -335,11 +336,20 @@ class AddInvoiceActivity : BaseActivity() {
                 position: Int,
                 id: Long
             ) {
-                if (position != -1 && userTypeListArray!!.size > position) {
-                    if (position != -1 && invoiceUserList!!.size > position) {
+                if (position != -1 && userTypeListArray!!.size > position - 1) {
+
+                    if (position == 0) {
+                        usertypeId = "-1"
+                        edHSN.setText("0")
+                        edQty.setText("0")
+                        edRate.setText("0")
+                        setUpdatedTotal()
+                    }
+
+                    if (position != -1 && invoiceUserList!!.size > position - 1) {
 
                         for (iteam in invoiceUserList.indices) {
-                            if (userTypeListArray!!.get(position).usertypeID.toString()
+                            if (userTypeListArray!!.get(position - 1).usertypeID.toString()
                                     .equals(invoiceUserList.get(iteam).usertypeID)
                             ) {
                                 usertypeId = invoiceUserList!!.get(iteam).usertypeID.toString()
@@ -350,18 +360,19 @@ class AddInvoiceActivity : BaseActivity() {
                             }
                         }
                     } else {
-                        usertypeId = userTypeListArray!!.get(position).usertypeID.toString()
-                        edHSN.setText(userTypeListArray!!.get(position).hSNNo)
+                        usertypeId = userTypeListArray!!.get(position - 1).usertypeID.toString()
+                        edHSN.setText(userTypeListArray!!.get(position - 1).hSNNo)
                         edQty.setText("1")
-                        edRate.setText(userTypeListArray!!.get(position).rate)
+                        edRate.setText(userTypeListArray!!.get(position - 1).rate)
                         setUpdatedTotal()
                         for (i in quotationIteam?.item?.user!!.indices) {
-                            if (userTypeListArray!!.get(position).usertypeID.toString()
+                            if (userTypeListArray!!.get(position - 1).usertypeID.toString()
                                     .equals(quotationIteam?.item?.user!!.get(i)!!.usertypeID)
 
 
                             ) {
-                                usertypeId = userTypeListArray!!.get(position).usertypeID.toString()
+                                usertypeId =
+                                    userTypeListArray!!.get(position - 1).usertypeID.toString()
                                 edHSN.setText(quotationIteam?.item?.user!!.get(i)!!.hSNNo)
                                 val qua =
                                     quotationIteam?.item?.user!!.get(i)!!.qty!!.toInt() * quotationIteam?.item?.user!!.get(
@@ -394,8 +405,11 @@ class AddInvoiceActivity : BaseActivity() {
         var edRateChild: EditText = rowView.findViewById(R.id.edRateChild)
         edRateChild.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
         var edtChildDays: EditText = rowView.findViewById(R.id.edtChildDays)
+        var txtUserTitle: TextView = rowView.findViewById(R.id.txtUserTitle)
         var til22: TextInputLayout = rowView.findViewById(R.id.til22)
+        edtChildDays.setText("1")
         til22.invisible()
+        txtUserTitle.setText(getString(R.string.staff))
         // userTypeChildId.add("")
         // Log.e("TAG", "onAddField:      "+userTypeChildId.size )
 
@@ -423,73 +437,79 @@ class AddInvoiceActivity : BaseActivity() {
                 position: Int,
                 id: Long
             ) {
-                /*   if (position != -1 && userTypeListArray!!.size > position) {
 
 
+                if (position != -1 && userTypeListArray!!.size > position - 1) {
 
-
-                       if (position != -1 && invoiceAttedanceList!!.size > position) {
-
-                           for (iteam in invoiceAttedanceList.indices) {
-                               if (userTypeListArray!!.get(position).usertypeID.toString()
-                                       .equals(invoiceAttedanceList.get(iteam).usertypeID)
-                               ) {
-                                   edHSNChild.setText(invoiceAttedanceList!!.get(position).hSNNo)
-                                   edQtyChild.setText(invoiceAttedanceList!!.get(position).qty)
-                                   edRateChild.setText(invoiceAttedanceList!!.get(position).rate)
-                                   setUpdatedTotal()
-                               }
-                           }
-                       } else {
-                           edHSNChild.setText(userTypeListArray!!.get(position).hSNNo)
-                           edQtyChild.setText("1")
-                           edRateChild.setText(userTypeListArray!!.get(position).rate)
-                           setUpdatedTotal()
-                       }
-
-                   }*/
-
-                if (position != -1 && userTypeListArray!!.size > position) {
-                    if (position != -1 && invoiceUserList!!.size > position) {
-
-                        for (iteam in invoiceUserList.indices) {
-                            if (userTypeListArray!!.get(position).usertypeID.toString()
-                                    .equals(invoiceUserList.get(iteam).usertypeID)
-                            ) {
-                                usertypeId = invoiceUserList!!.get(iteam).usertypeID.toString()
-                                edHSNChild.setText(invoiceUserList!!.get(iteam).hSNNo)
-                                edQtyChild.setText(invoiceUserList!!.get(iteam).qty)
-                                edRateChild.setText(invoiceUserList!!.get(iteam).rate)
-                                setUpdatedTotal()
-                            }
-                        }
-                    } else {
-                        usertypeId = userTypeListArray!!.get(position).usertypeID.toString()
-                        edHSNChild.setText(userTypeListArray!!.get(position).hSNNo)
-                        edQtyChild.setText("1")
-                        edRateChild.setText(userTypeListArray!!.get(position).rate)
+                    if (position == 0) {
+                        edHSNChild.setText("0")
+                        edQtyChild.setText("0")
+                        edRateChild.setText("0")
                         setUpdatedTotal()
-                        for (i in quotationIteam?.item?.user!!.indices) {
-                            if (userTypeListArray!!.get(position).usertypeID.toString()
-                                    .equals(quotationIteam?.item?.user!!.get(i)!!.usertypeID)
+                    } else {
+                        if (invoiceUserList.size > 0) {
+                            for (iteam in invoiceUserList.indices) {
+                                if (userTypeListArray!!.get(position - 1).usertypeID.toString()
+                                        .equals(invoiceUserList.get(iteam).usertypeID)
+                                ) {
+
+                                    edHSNChild.setText(invoiceUserList.get(iteam).hSNNo)
+                                    edQtyChild.setText(invoiceUserList.get(iteam).qty)
+                                    edRateChild.setText(invoiceUserList.get(iteam).rate)
+                                    setUpdatedTotal()
+                                } else {
+                                    edHSNChild.setText(userTypeListArray!!.get(position - 1).hSNNo)
+                                    edQtyChild.setText("1")
+                                    edRateChild.setText(userTypeListArray!!.get(position - 1).rate)
+                                    setUpdatedTotal()
+                                    for (i in quotationIteam?.item?.user!!.indices) {
+                                        if (userTypeListArray!!.get(position - 1).usertypeID.toString()
+                                                .equals(quotationIteam?.item?.user!!.get(i)!!.usertypeID)
 
 
-                            ) {
-                                usertypeId = userTypeListArray!!.get(position).usertypeID.toString()
-                                edHSNChild.setText(quotationIteam?.item?.user!!.get(i)!!.hSNNo)
-                                val qua =
-                                    quotationIteam?.item?.user!!.get(i)!!.qty!!.toInt() * quotationIteam?.item?.user!!.get(
-                                        i
-                                    )!!.days!!.toInt()
-                                edQtyChild.setText(qua.toString())
-                                edRateChild.setText(quotationIteam?.item?.user!!.get(i)!!.rate)
-                                setUpdatedTotal()
+                                        ) {
+                                            edHSNChild.setText(quotationIteam?.item?.user!!.get(i)!!.hSNNo)
+                                            val qua =
+                                                quotationIteam?.item?.user!!.get(i)!!.qty!!.toInt() * quotationIteam?.item?.user!!.get(
+                                                    i
+                                                )!!.days!!.toInt()
+                                            edQtyChild.setText(qua.toString())
+                                            edRateChild.setText(quotationIteam?.item?.user!!.get(i)!!.rate)
+                                            setUpdatedTotal()
+                                        }
+
+
+                                    }
+                                }
+                            }
+                        } else {
+                            edHSNChild.setText(userTypeListArray!!.get(position - 1).hSNNo)
+                            edQtyChild.setText("1")
+                            edRateChild.setText(userTypeListArray!!.get(position - 1).rate)
+                            setUpdatedTotal()
+                            for (i in quotationIteam?.item?.user!!.indices) {
+                                if (userTypeListArray!!.get(position - 1).usertypeID.toString()
+                                        .equals(quotationIteam?.item?.user!!.get(i)!!.usertypeID)
+
+
+                                ) {
+                                    edHSNChild.setText(quotationIteam?.item?.user!!.get(i)!!.hSNNo)
+                                    val qua =
+                                        quotationIteam?.item?.user!!.get(i)!!.qty!!.toInt() * quotationIteam?.item?.user!!.get(
+                                            i
+                                        )!!.days!!.toInt()
+                                    edQtyChild.setText(qua.toString())
+                                    edRateChild.setText(quotationIteam?.item?.user!!.get(i)!!.rate)
+                                    setUpdatedTotal()
+                                }
+
+
                             }
                         }
-
                     }
 
                 }
+
 
             }
         }
@@ -523,7 +543,7 @@ class AddInvoiceActivity : BaseActivity() {
             SearchableDialog(
                 this@AddInvoiceActivity,
                 itemUserType!!,
-                getString(R.string.select_usertype),
+                getString(R.string.staff_selection),
                 { item, _ -> spUserTypeChild.setSelection(item.id.toInt()) }).show()
         }
 
@@ -551,9 +571,23 @@ class AddInvoiceActivity : BaseActivity() {
                 override fun onSuccess(response: UserTypeListModel) {
                     userTypeListArray!!.addAll(response.data)
                     var myList: MutableList<SearchableItem> = mutableListOf()
+                    userTypeNameList!!.add(getString(R.string.staff_selection))
+                    myList.add(
+                        SearchableItem(
+                            0,
+                            getString(R.string.staff_selection)
+                        )
+                    )
+
+
                     for (items in response.data.indices) {
                         userTypeNameList!!.add(response.data.get(items).usertype.toString())
-                        myList.add(SearchableItem(items.toLong(), userTypeNameList!!.get(items)))
+                        myList.add(
+                            SearchableItem(
+                                items.toLong() + 1,
+                                userTypeNameList!!.get(items + 1)
+                            )
+                        )
 
                     }
                     itemUserType = myList
@@ -577,7 +611,7 @@ class AddInvoiceActivity : BaseActivity() {
                                         )
                                     ) {
 
-                                        spUserType.setSelection(i)
+                                        spUserType.setSelection(i + 1)
                                     }
                                 }
                             } else {
@@ -588,7 +622,7 @@ class AddInvoiceActivity : BaseActivity() {
                                         )
                                     ) {
                                         lin_add_user.getChildAt(iteam - 1).spUserTypeChild.setSelection(
-                                            i
+                                            i + 1
                                         )
                                     }
                                 }
@@ -631,11 +665,11 @@ class AddInvoiceActivity : BaseActivity() {
                     materialTypeListArray!!.addAll(response.data)
                     var myList: MutableList<SearchableItem> = mutableListOf()
 
-                    materialTypeNameList!!.add("Select Material Type")
+                    materialTypeNameList!!.add(getString(R.string.select_material))
                     myList.add(
                         SearchableItem(
                             0,
-                            "Select Material Type"
+                            getString(R.string.select_material)
                         )
                     )
 
@@ -713,11 +747,10 @@ class AddInvoiceActivity : BaseActivity() {
                         edMaterialHSN.setText("0")
                         edMaterialQty.setText("0")
                         edMaterialRate.setText("0")
-                        // edtDays.setText("0")
+                        //edtMaterialDays.setText("0")
                         setMaterialTotal()
                     } else {
-                        if (position != -1 && invoiceMaterialList!!.size > position) {
-
+                        if (invoiceMaterialList.size > 0) {
                             for (iteam in invoiceMaterialList.indices) {
                                 if (materialTypeListArray!!.get(position - 1).usertypeID.toString()
                                         .equals(invoiceMaterialList.get(iteam).usertypeID)
@@ -728,6 +761,40 @@ class AddInvoiceActivity : BaseActivity() {
                                     edMaterialQty.setText(invoiceMaterialList!!.get(iteam).qty)
                                     edMaterialRate.setText(invoiceMaterialList!!.get(iteam).rate)
                                     setMaterialTotal()
+                                } else {
+                                    materialtypeId =
+                                        materialTypeListArray!!.get(position - 1).usertypeID.toString()
+                                    edMaterialHSN.setText(materialTypeListArray!!.get(position - 1).hSNNo)
+                                    edMaterialQty.setText("1")
+                                    edMaterialRate.setText(materialTypeListArray!!.get(position - 1).rate)
+                                    setMaterialTotal()
+                                    for (i in quotationIteam?.item?.material!!.indices) {
+                                        if (materialTypeListArray!!.get(position - 1).usertypeID.toString()
+                                                .equals(quotationIteam?.item?.material!!.get(i)!!.usertypeID)
+
+
+                                        ) {
+                                            materialtypeId =
+                                                quotationIteam?.item?.material!!.get(i)!!.usertypeID.toString()
+                                            edMaterialHSN.setText(
+                                                quotationIteam?.item?.material!!.get(
+                                                    i
+                                                )!!.hSNNo
+                                            )
+
+                                            val qua =
+                                                quotationIteam?.item?.material!!.get(i)!!.qty!!.toInt() * quotationIteam?.item?.material!!.get(
+                                                    i
+                                                )!!.days!!.toInt()
+                                            edMaterialQty.setText(qua.toString())
+                                            edMaterialRate.setText(
+                                                quotationIteam?.item?.material!!.get(
+                                                    i
+                                                )!!.rate
+                                            )
+                                            setMaterialTotal()
+                                        }
+                                    }
                                 }
                             }
                         } else {
@@ -756,26 +823,12 @@ class AddInvoiceActivity : BaseActivity() {
                                     setMaterialTotal()
                                 }
                             }
-
                         }
 
                     }
 
 
-                    /*  if (position == 0) {
-                          materialtypeId = "-1"
-                          edMaterialHSN.setText("0")
-                          edMaterialQty.setText("0")
-                          edMaterialRate.setText("0")
-                          // edtDays.setText("0")
-                          setUpdatedTotal()
-                      } else {
-                          materialtypeId = materialTypeListArray!!.get(position - 1).usertypeID.toString()
-                          edMaterialHSN.setText(materialTypeListArray!!.get(position - 1).hSNNo)
-                          edMaterialQty.setText("1")
-                          edMaterialRate.setText(materialTypeListArray!!.get(position - 1).rate)
-                          setUpdatedTotal()
-                      }*/
+
 
 
                 }
@@ -797,6 +850,7 @@ class AddInvoiceActivity : BaseActivity() {
         edRateChild.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
         var edDaysChild: EditText = rowView.findViewById(R.id.edtChildDays)
         var til22: TextInputLayout = rowView.findViewById(R.id.til22)
+        edDaysChild.setText("1")
         til22.invisible()
         edDaysChild.invisible()
         txtUserTitle.setText("Material")
@@ -807,7 +861,7 @@ class AddInvoiceActivity : BaseActivity() {
         btnRemove.setOnClickListener {
             lin_add_material.removeView(rowView)
             //     userTypeChildId.removeAt((lin_add_user as ViewGroup).indexOfChild(btnRemove))
-            setUpdatedTotal()
+            setMaterialTotal()
         }
         adapterMaterialType = ArrayAdapter(
             this@AddInvoiceActivity,
@@ -829,30 +883,57 @@ class AddInvoiceActivity : BaseActivity() {
             ) {
                 if (position != -1 && materialTypeListArray!!.size > position - 1) {
                     if (position == 0) {
-                        materialtypeId = "-1"
                         edHSNChild.setText("0")
                         edQtyChild.setText("0")
                         edRateChild.setText("0")
-                        // edtDays.setText("0")
+                        //edDaysChild.setText("0")
                         setMaterialTotal()
                     } else {
-                        if (position != -1 && invoiceMaterialList!!.size > position) {
+                        if (invoiceMaterialList!!.size > 0) {
 
                             for (iteam in invoiceMaterialList.indices) {
                                 if (materialTypeListArray!!.get(position - 1).usertypeID.toString()
                                         .equals(invoiceMaterialList.get(iteam).usertypeID)
                                 ) {
-                                    materialtypeId =
-                                        invoiceMaterialList!!.get(iteam).usertypeID.toString()
                                     edHSNChild.setText(invoiceMaterialList!!.get(iteam).hSNNo)
                                     edQtyChild.setText(invoiceMaterialList!!.get(iteam).qty)
                                     edRateChild.setText(invoiceMaterialList!!.get(iteam).rate)
                                     setMaterialTotal()
+                                } else {
+                                    edHSNChild.setText(materialTypeListArray!!.get(position - 1).hSNNo)
+                                    edQtyChild.setText("1")
+                                    edRateChild.setText(materialTypeListArray!!.get(position - 1).rate)
+                                    setMaterialTotal()
+                                    for (i in quotationIteam?.item?.material!!.indices) {
+                                        if (materialTypeListArray!!.get(position - 1).usertypeID.toString()
+                                                .equals(quotationIteam?.item?.material!!.get(i)!!.usertypeID)
+
+
+                                        ) {
+
+                                            edHSNChild.setText(
+                                                quotationIteam?.item?.material!!.get(
+                                                    i
+                                                )!!.hSNNo
+                                            )
+
+                                            val qua =
+                                                quotationIteam?.item?.material!!.get(i)!!.qty!!.toInt() * quotationIteam?.item?.material!!.get(
+                                                    i
+                                                )!!.days!!.toInt()
+                                            edQtyChild.setText(qua.toString())
+                                            edRateChild.setText(
+                                                quotationIteam?.item?.material!!.get(
+                                                    i
+                                                )!!.rate
+                                            )
+                                            setMaterialTotal()
+                                        }
+                                    }
                                 }
                             }
                         } else {
-                            materialtypeId =
-                                materialTypeListArray!!.get(position - 1).usertypeID.toString()
+
                             edHSNChild.setText(materialTypeListArray!!.get(position - 1).hSNNo)
                             edQtyChild.setText("1")
                             edRateChild.setText(materialTypeListArray!!.get(position - 1).rate)
@@ -863,8 +944,7 @@ class AddInvoiceActivity : BaseActivity() {
 
 
                                 ) {
-                                    materialtypeId =
-                                        quotationIteam?.item?.material!!.get(i)!!.usertypeID.toString()
+
                                     edHSNChild.setText(quotationIteam?.item?.material!!.get(i)!!.hSNNo)
 
                                     val qua =
@@ -882,41 +962,12 @@ class AddInvoiceActivity : BaseActivity() {
                     }
 
 
-                    /*  if (position == 0) {
-                          materialtypeId = "-1"
-                          edMaterialHSN.setText("0")
-                          edMaterialQty.setText("0")
-                          edMaterialRate.setText("0")
-                          // edtDays.setText("0")
-                          setUpdatedTotal()
-                      } else {
-                          materialtypeId = materialTypeListArray!!.get(position - 1).usertypeID.toString()
-                          edMaterialHSN.setText(materialTypeListArray!!.get(position - 1).hSNNo)
-                          edMaterialQty.setText("1")
-                          edMaterialRate.setText(materialTypeListArray!!.get(position - 1).rate)
-                          setUpdatedTotal()
-                      }*/
+
 
 
                 }
 
-                /*  if (position != -1 && materialTypeListArray!!.size > position - 1) {
-                      if (position == 0) {
-                          edHSNChild.setText("0")
-                          edQtyChild.setText("0")
-                          edRateChild.setText("0")
-                          edDaysChild.setText("0")
-                          setMaterialTotal()
-                      } else {
-                          edHSNChild.setText(materialTypeListArray!!.get(position - 1).hSNNo)
-                          edQtyChild.setText("1")
-                          edDaysChild.setText("1")
-                          edRateChild.setText(materialTypeListArray!!.get(position - 1).rate)
-                          setMaterialTotal()
-                      }
 
-
-                  }*/
 
             }
         }
@@ -945,17 +996,7 @@ class AddInvoiceActivity : BaseActivity() {
             }
         })
 
-        /*edDaysChild.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                setUpdatedTotal()
-            }
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-        })*/
 
 
         viewChild.setOnClickListener {
@@ -1005,22 +1046,18 @@ class AddInvoiceActivity : BaseActivity() {
                     }
 
                     if (invoiceUserList.size > 0) {
-                        for (iteam in invoiceUserList!!.indices) {
+                        for (iteam in invoiceUserList.indices) {
                             if (iteam == 0) {
                                 for (i in userTypeListArray!!.indices) {
                                     if (invoiceUserList.get(iteam).usertypeID.equals(
                                             userTypeListArray!!.get(i).usertypeID
                                         )
                                     ) {
-
-                                        usertypeId =
-                                            invoiceUserList!!.get(iteam).usertypeID.toString()
-                                        edHSN.setText(invoiceUserList!!.get(iteam).hSNNo)
-                                        edQty.setText(invoiceUserList!!.get(iteam).qty)
-                                        edRate.setText(invoiceUserList!!.get(iteam).rate)
+                                        edHSN.setText(invoiceUserList.get(iteam).hSNNo)
+                                        edQty.setText(invoiceUserList.get(iteam).qty)
+                                        edRate.setText(invoiceUserList.get(iteam).rate)
                                         setUpdatedTotal()
-
-                                        spUserType.setSelection(i)
+                                        spUserType.setSelection(i + 1)
                                     }
 
 
@@ -1033,18 +1070,9 @@ class AddInvoiceActivity : BaseActivity() {
                                         )
                                     ) {
                                         lin_add_user.getChildAt(iteam - 1).spUserTypeChild.setSelection(
-                                            i
+                                            i + 1
                                         )
-                                        lin_add_user.getChildAt(iteam - 1).edHSNChild.setText(
-                                            invoiceUserList!!.get(iteam).hSNNo
-                                        )
-                                        lin_add_user.getChildAt(iteam - 1).edQtyChild.setText(
-                                            invoiceUserList!!.get(iteam).qty
-                                        )
-                                        lin_add_user.getChildAt(iteam - 1).edRateChild.setText(
-                                            invoiceUserList!!.get(iteam).rate
-                                        )
-                                        setUpdatedTotal()
+
 
                                     }
                                 }
@@ -1065,8 +1093,6 @@ class AddInvoiceActivity : BaseActivity() {
                                         )
                                     ) {
 
-                                        materialtypeId =
-                                            invoiceMaterialList!!.get(iteam).usertypeID.toString()
                                         edMaterialHSN.setText(invoiceMaterialList!!.get(iteam).hSNNo)
                                         edMaterialQty.setText(invoiceMaterialList!!.get(iteam).qty)
                                         edMaterialRate.setText(invoiceMaterialList!!.get(iteam).rate)
@@ -1085,18 +1111,9 @@ class AddInvoiceActivity : BaseActivity() {
                                         )
                                     ) {
                                         lin_add_material.getChildAt(iteam - 1).spUserTypeChild.setSelection(
-                                            i
+                                            i + 1
                                         )
-                                        lin_add_material.getChildAt(iteam - 1).edHSNChild.setText(
-                                            invoiceMaterialList!!.get(iteam).hSNNo
-                                        )
-                                        lin_add_material.getChildAt(iteam - 1).edQtyChild.setText(
-                                            invoiceMaterialList!!.get(iteam).qty
-                                        )
-                                        lin_add_material.getChildAt(iteam - 1).edRateChild.setText(
-                                            invoiceMaterialList!!.get(iteam).rate
-                                        )
-                                        setMaterialTotal()
+
 
                                     }
                                 }
@@ -1154,11 +1171,21 @@ class AddInvoiceActivity : BaseActivity() {
             edIGST.setText("")
         } else {
 
+            UserAmount = TotalAmount
+
+            if (MaterialAmount != 0f) {
+                TotalAmount = TotalAmount + MaterialAmount
+            }/*else{
+                TotalAmount = TotalAmount + edTotalAmount.getValue().toFloat()
+            }*/
+
+
+
+            edTotalAmount.setText(TotalAmount.toString())
+
             CGST = CGST + ((TotalAmount * session.configData.data?.cGST!!.toFloat()) / 100)
             SGST = SGST + ((TotalAmount * session.configData.data?.sGST!!.toFloat()) / 100)
             IGST = IGST + ((TotalAmount * session.configData.data?.iGST!!.toFloat()) / 100)
-
-            UserAmount = TotalAmount + MaterialAmount
 
             var df: DecimalFormat = DecimalFormat("##.##")
 
@@ -1214,13 +1241,28 @@ class AddInvoiceActivity : BaseActivity() {
 
 
 
-        if (TotalAmount == 0f) {
+        if (TotalAmount == 0f && UserAmount == 0f) {
             edTotalAmount.setText("")
             edCGST.setText("")
             edSGST.setText("")
             edIGST.setText("")
 
+
         } else {
+
+            MaterialAmount = TotalAmount
+
+            if (UserAmount != 0f) {
+                TotalAmount = TotalAmount + UserAmount
+            }/*else{
+                TotalAmount = TotalAmount + edTotalAmount.getValue().toFloat()
+            }
+*/
+
+            //   TotalAmount = TotalAmount + edTotalAmount.getValue().toFloat()
+
+            edTotalAmount.setText(TotalAmount.toString())
+
 
             CGST = CGST + ((TotalAmount * session.configData.data?.cGST!!.toFloat()) / 100)
             SGST = SGST + ((TotalAmount * session.configData.data?.sGST!!.toFloat()) / 100)
@@ -1310,14 +1352,23 @@ class AddInvoiceActivity : BaseActivity() {
                             item
                         ).edRateChild.isEmpty()
                     ) {
-                        val jsonObj = JSONObject()
-                        jsonObj.put(
-                            "UsertypeID",
-                            userTypeListArray?.get(lin_add_user.getChildAt(item).spUserTypeChild.selectedItemPosition)?.usertypeID
-                        )
-                        jsonObj.put("Qty", lin_add_user.getChildAt(item).edQtyChild.getValue())
-                        jsonObj.put("Rate", lin_add_user.getChildAt(item).edRateChild.getValue())
-                        jsonArray.put(jsonObj)
+
+                        try {
+                            val jsonObj = JSONObject()
+                            jsonObj.put(
+                                "UsertypeID",
+                                userTypeListArray?.get(lin_add_user.getChildAt(item).spUserTypeChild.selectedItemPosition - 1)?.usertypeID
+                            )
+                            jsonObj.put("Qty", lin_add_user.getChildAt(item).edQtyChild.getValue())
+                            jsonObj.put(
+                                "Rate",
+                                lin_add_user.getChildAt(item).edRateChild.getValue()
+                            )
+                            jsonArray.put(jsonObj)
+                        } catch (e: Exception) {
+
+                        }
+
 
                     }
 
@@ -1330,27 +1381,38 @@ class AddInvoiceActivity : BaseActivity() {
                             item
                         ).edRateChild.isEmpty()
                     ) {
-                        val jsonObj = JSONObject()
-                        jsonObj.put(
-                            "UsertypeID",
-                            materialTypeListArray?.get(lin_add_material.getChildAt(item).spUserTypeChild.selectedItemPosition - 1)?.usertypeID
-                        )
-                        jsonObj.put("Qty", lin_add_material.getChildAt(item).edQtyChild.getValue())
-                        jsonObj.put(
-                            "Rate",
-                            lin_add_material.getChildAt(item).edRateChild.getValue()
-                        )
-                        jsonObj.put(
-                            "Days",
-                            lin_add_material.getChildAt(item).edtChildDays.getValue()
-                        )
-                        jsonArray.put(jsonObj)
+
+                        try {
+                            val jsonObj = JSONObject()
+                            jsonObj.put(
+                                "UsertypeID",
+                                materialTypeListArray?.get(lin_add_material.getChildAt(item).spUserTypeChild.selectedItemPosition - 1)?.usertypeID
+                            )
+
+                            jsonObj.put(
+                                "Qty",
+                                lin_add_material.getChildAt(item).edQtyChild.getValue()
+                            )
+                            jsonObj.put(
+                                "Rate",
+                                lin_add_material.getChildAt(item).edRateChild.getValue()
+                            )
+                            jsonObj.put(
+                                "Days",
+                                lin_add_material.getChildAt(item).edtChildDays.getValue()
+                            )
+                            jsonArray.put(jsonObj)
+                        } catch (e: Exception) {
+
+                        }
+
 
                     }
 
                 }
             }
 
+            Logger.d("Result", jsonArray.toString())
 
             result = Networking.setParentJsonData(Constant.METHOD_ADD_INVOICE, jsonBody)
 
