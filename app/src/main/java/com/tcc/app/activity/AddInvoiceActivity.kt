@@ -291,6 +291,10 @@ class AddInvoiceActivity : BaseActivity() {
                 root.showSnackBar("Enter Terms")
                 edtTerms.requestFocus()
             }
+            edTotalAmount.isEmpty() -> {
+                root.showSnackBar("Select Staff")
+                //  edTotalAmount.requestFocus()
+            }
 
             else -> {
                 AddInvoice()
@@ -343,47 +347,76 @@ class AddInvoiceActivity : BaseActivity() {
                         edQty.setText("0")
                         edRate.setText("0")
                         setUpdatedTotal()
-                    }
-
-                    if (position != -1 && invoiceUserList!!.size > position - 1) {
-
-                        for (iteam in invoiceUserList.indices) {
-                            if (userTypeListArray!!.get(position - 1).usertypeID.toString()
-                                    .equals(invoiceUserList.get(iteam).usertypeID)
-                            ) {
-                                usertypeId = invoiceUserList!!.get(iteam).usertypeID.toString()
-                                edHSN.setText(invoiceUserList!!.get(iteam).hSNNo)
-                                edQty.setText(invoiceUserList!!.get(iteam).qty)
-                                edRate.setText(invoiceUserList!!.get(iteam).rate)
-                                setUpdatedTotal()
-                            }
-                        }
                     } else {
-                        usertypeId = userTypeListArray!!.get(position - 1).usertypeID.toString()
-                        edHSN.setText(userTypeListArray!!.get(position - 1).hSNNo)
-                        edQty.setText("1")
-                        edRate.setText(userTypeListArray!!.get(position - 1).rate)
-                        setUpdatedTotal()
-                        for (i in quotationIteam?.item?.user!!.indices) {
-                            if (userTypeListArray!!.get(position - 1).usertypeID.toString()
-                                    .equals(quotationIteam?.item?.user!!.get(i)!!.usertypeID)
+                        if (invoiceUserList!!.size > 0) {
+
+                            for (iteam in invoiceUserList.indices) {
+                                if (userTypeListArray!!.get(position - 1).usertypeID.toString()
+                                        .equals(invoiceUserList.get(iteam).usertypeID)
+                                ) {
+                                    usertypeId = invoiceUserList!!.get(iteam).usertypeID.toString()
+                                    edHSN.setText(invoiceUserList!!.get(iteam).hSNNo)
+                                    edQty.setText(invoiceUserList!!.get(iteam).qty)
+                                    edRate.setText(invoiceUserList!!.get(iteam).rate)
+                                    setUpdatedTotal()
+                                } else {
+                                    usertypeId =
+                                        userTypeListArray!!.get(position - 1).usertypeID.toString()
+                                    edHSN.setText(userTypeListArray!!.get(position - 1).hSNNo)
+                                    edQty.setText("1")
+                                    edRate.setText(userTypeListArray!!.get(position - 1).rate)
+                                    setUpdatedTotal()
+                                    for (i in quotationIteam?.item?.user!!.indices) {
+                                        if (userTypeListArray!!.get(position - 1).usertypeID.toString()
+                                                .equals(quotationIteam?.item?.user!!.get(i)!!.usertypeID)
 
 
-                            ) {
-                                usertypeId =
-                                    userTypeListArray!!.get(position - 1).usertypeID.toString()
-                                edHSN.setText(quotationIteam?.item?.user!!.get(i)!!.hSNNo)
-                                val qua =
-                                    quotationIteam?.item?.user!!.get(i)!!.qty!!.toInt() * quotationIteam?.item?.user!!.get(
-                                        i
-                                    )!!.days!!.toInt()
-                                edQty.setText(qua.toString())
-                                edRate.setText(quotationIteam?.item?.user!!.get(i)!!.rate)
-                                setUpdatedTotal()
+                                        ) {
+                                            usertypeId =
+                                                userTypeListArray!!.get(position - 1).usertypeID.toString()
+                                            edHSN.setText(quotationIteam?.item?.user!!.get(i)!!.hSNNo)
+                                            val qua =
+                                                quotationIteam?.item?.user!!.get(i)!!.qty!!.toInt() * quotationIteam?.item?.user!!.get(
+                                                    i
+                                                )!!.days!!.toInt()
+                                            edQty.setText(qua.toString())
+                                            edRate.setText(quotationIteam?.item?.user!!.get(i)!!.rate)
+                                            setUpdatedTotal()
+                                        }
+                                    }
+                                }
                             }
-                        }
+                        } else {
+                            usertypeId = userTypeListArray!!.get(position - 1).usertypeID.toString()
+                            edHSN.setText(userTypeListArray!!.get(position - 1).hSNNo)
+                            edQty.setText("1")
+                            edRate.setText(userTypeListArray!!.get(position - 1).rate)
+                            setUpdatedTotal()
+                            for (i in quotationIteam?.item?.user!!.indices) {
+                                if (userTypeListArray!!.get(position - 1).usertypeID.toString()
+                                        .equals(quotationIteam?.item?.user!!.get(i)!!.usertypeID)
 
+
+                                ) {
+                                    usertypeId =
+                                        userTypeListArray!!.get(position - 1).usertypeID.toString()
+                                    edHSN.setText(quotationIteam?.item?.user!!.get(i)!!.hSNNo)
+                                    val qua =
+                                        quotationIteam?.item?.user!!.get(i)!!.qty!!.toInt() * quotationIteam?.item?.user!!.get(
+                                            i
+                                        )!!.days!!.toInt()
+                                    edQty.setText(qua.toString())
+                                    edRate.setText(quotationIteam?.item?.user!!.get(i)!!.rate)
+                                    setUpdatedTotal()
+                                }
+                            }
+
+                        }
                     }
+
+
+
+
 
                 }
 
@@ -1283,16 +1316,22 @@ class AddInvoiceActivity : BaseActivity() {
         var result = ""
         showProgressbar()
         var total = 0.0;
-        if (quotationIteam?.stateID?.toInt() == 12) {
-            total = edTotalAmount.getValue().toDouble() + edCGST.getValue()
-                .toDouble() + edSGST.getValue().toDouble() + 0
-        } else {
-            total = edTotalAmount.getValue().toDouble() + 0 + 0 + edIGST.getValue().toDouble()
+        val jsonBody = JSONObject()
+        val jsonArray = JSONArray()
+
+        if (!edTotalAmount.isEmpty()) {
+            if (quotationIteam?.stateID?.toInt() == 12) {
+                total = edTotalAmount.getValue().toDouble() + edCGST.getValue()
+                    .toDouble() + edSGST.getValue().toDouble() + 0
+            } else {
+                total = edTotalAmount.getValue().toDouble() + 0 + 0 + edIGST.getValue().toDouble()
+            }
         }
 
+
+
         try {
-            val jsonBody = JSONObject()
-            val jsonArray = JSONArray()
+
 
             jsonBody.put("SitesID", quotationIteam?.sitesID)
             jsonBody.put("QuotationID", quotationIteam?.quotationID)
@@ -1315,9 +1354,10 @@ class AddInvoiceActivity : BaseActivity() {
                 jsonBody.put("CustomerID", quotationIteam?.customerID)
             }
             jsonBody.put("UserID", session.user.data?.userID)
+
             jsonBody.put("Item", jsonArray)
 
-            if (!edQty.isEmpty() && !edRate.isEmpty()) {
+            if (!edQty.isEmpty() && !edRate.isEmpty() && usertypeId != "-1") {
                 val jsonObj = JSONObject()
                 jsonObj.put("UsertypeID", usertypeId)
                 jsonObj.put("Qty", edQty.getValue())
@@ -1325,7 +1365,7 @@ class AddInvoiceActivity : BaseActivity() {
 
                 jsonArray.put(jsonObj)
             }
-            if (!edMaterialQty.isEmpty() && !edMaterialRate.isEmpty()) {
+            if (!edMaterialQty.isEmpty() && !edMaterialRate.isEmpty() && materialtypeId != "-1") {
                 val jsonObj = JSONObject()
                 jsonObj.put("UsertypeID", materialtypeId)
                 jsonObj.put("Qty", edMaterialQty.getValue())
@@ -1350,8 +1390,7 @@ class AddInvoiceActivity : BaseActivity() {
                             )
                             jsonObj.put("Qty", lin_add_user.getChildAt(item).edQtyChild.getValue())
                             jsonObj.put(
-                                "Rate",
-                                lin_add_user.getChildAt(item).edRateChild.getValue()
+                                "Rate", lin_add_user.getChildAt(item).edRateChild.getValue()
                             )
                             jsonArray.put(jsonObj)
                         } catch (e: Exception) {
@@ -1408,6 +1447,9 @@ class AddInvoiceActivity : BaseActivity() {
         } catch (e: JSONException) {
             e.printStackTrace()
         }
+
+
+
         Networking
             .with(this@AddInvoiceActivity)
             .getServices()
@@ -1429,6 +1471,6 @@ class AddInvoiceActivity : BaseActivity() {
                 }
 
             }).addTo(autoDisposable)
-    }
 
+    }
 }
