@@ -1137,6 +1137,7 @@ class AddInvoiceActivity : BaseActivity() {
 
     fun setUpdatedTotal() {
         UserAmount = 0f
+        var df = DecimalFormat("##.##")
         var TotalAmount: Float = 0f
         var CGST: Float = 0f
         var SGST: Float = 0f
@@ -1181,16 +1182,11 @@ class AddInvoiceActivity : BaseActivity() {
 
 
 
-            edTotalAmount.setText(TotalAmount.toString())
+            edTotalAmount.setText(df.format(TotalAmount))
 
             CGST = CGST + ((TotalAmount * session.configData.data?.cGST!!.toFloat()) / 100)
             SGST = SGST + ((TotalAmount * session.configData.data?.sGST!!.toFloat()) / 100)
             IGST = IGST + ((TotalAmount * session.configData.data?.iGST!!.toFloat()) / 100)
-
-            var df: DecimalFormat = DecimalFormat("##.##")
-
-            edTotalAmount.setText(df.format(UserAmount.toString()))
-
 
 
             if (quotationIteam?.stateID?.toInt() == 12) {
@@ -1206,7 +1202,7 @@ class AddInvoiceActivity : BaseActivity() {
     }
 
     fun setMaterialTotal() {
-
+        var df = DecimalFormat("##.##")
         MaterialAmount = 0f
         var TotalAmount: Float = 0f
         var CGST: Float = 0f
@@ -1261,19 +1257,12 @@ class AddInvoiceActivity : BaseActivity() {
 
             //   TotalAmount = TotalAmount + edTotalAmount.getValue().toFloat()
 
-            edTotalAmount.setText(TotalAmount.toString())
+            edTotalAmount.setText(df.format(TotalAmount))
 
 
             CGST = CGST + ((TotalAmount * session.configData.data?.cGST!!.toFloat()) / 100)
             SGST = SGST + ((TotalAmount * session.configData.data?.sGST!!.toFloat()) / 100)
             IGST = IGST + ((TotalAmount * session.configData.data?.iGST!!.toFloat()) / 100)
-
-            MaterialAmount = TotalAmount + UserAmount
-
-            var df: DecimalFormat = DecimalFormat("##.##")
-
-            edTotalAmount.setText(df.format(MaterialAmount.toString()))
-
 
 
             if (quotationIteam?.stateID?.toInt() == 12) {
