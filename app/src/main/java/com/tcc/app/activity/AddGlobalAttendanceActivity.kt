@@ -58,12 +58,14 @@ class AddGlobalAttendanceActivity : BaseActivity(), GlobalAttendanceAdapter.OnIt
         getGloablAttendanceList()
         chbAllPresent.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
+                chbAllAbsent.isChecked = false
                 updateAttendance("1")
             }
         }
 
         chbAllAbsent.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
+                chbAllPresent.isChecked = false
                 updateAttendance("0")
             }
         }
@@ -99,7 +101,7 @@ class AddGlobalAttendanceActivity : BaseActivity(), GlobalAttendanceAdapter.OnIt
                     overtime = list.get(i).overtime,
                     attendanceID = list.get(i).attendanceID,
                     rno = list.get(i).rno,
-                    rowcount = list.get(i).rowcount,
+                    rowcount = list.get(i).rowcount
                 )
             )
         }
@@ -132,7 +134,6 @@ class AddGlobalAttendanceActivity : BaseActivity(), GlobalAttendanceAdapter.OnIt
 
 
     fun setupRecyclerView() {
-
         val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
         adapter = GlobalAttendanceAdapter(this, list, this)
@@ -175,7 +176,7 @@ class AddGlobalAttendanceActivity : BaseActivity(), GlobalAttendanceAdapter.OnIt
                 overtime = overtime,
                 attendanceID = data.attendanceID,
                 rno = data.rno,
-                rowcount = data.rowcount,
+                rowcount = data.rowcount
             )
         )
 

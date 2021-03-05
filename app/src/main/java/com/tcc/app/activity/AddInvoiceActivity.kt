@@ -1227,12 +1227,6 @@ class AddInvoiceActivity : BaseActivity() {
             edIGST.setText("0")
         } else {
 
-//            UserAmount = TotalAmount
-//
-//            if (MaterialAmount != 0f) {
-//                TotalAmount = TotalAmount + MaterialAmount
-//            }
-
             edSubTotalAmount.setText(df.format(TotalAmount))
 
             CGST = CGST + ((TotalAmount * session.configData.data?.cGST!!.toFloat()) / 100)

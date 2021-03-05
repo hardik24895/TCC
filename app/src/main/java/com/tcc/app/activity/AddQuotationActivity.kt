@@ -139,6 +139,7 @@ class AddQuotationActivity : BaseActivity() {
 
         edRate.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
         edMaterialRate.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
+        edSubTotalAmount.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
         edTotalAmount.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
         edCGST.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
         edSGST.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
@@ -1109,6 +1110,7 @@ class AddQuotationActivity : BaseActivity() {
 
     fun setUpdatedTotal() {
         UserAmount = 0f
+        var df = DecimalFormat("##.##")
         var TotalAmount: Float = 0f
         var CGST: Float = 0f
         var SGST: Float = 0f
@@ -1182,23 +1184,14 @@ class AddQuotationActivity : BaseActivity() {
 
 
         if (TotalAmount == 0f) {
+            edSubTotalAmount.setText("0")
             edTotalAmount.setText("0")
             edCGST.setText("0")
             edSGST.setText("0")
             edIGST.setText("0")
         } else {
 
-            /* UserAmount = TotalAmount
-
-             if (MaterialAmount != 0f) {
-                 TotalAmount = TotalAmount + MaterialAmount
-             }*//*else{
-                TotalAmount = TotalAmount + edTotalAmount.getValue().toFloat()
-            }*//*
-*/
-
-
-            edTotalAmount.setText(TotalAmount.toString())
+            edSubTotalAmount.setText(df.format(TotalAmount))
 
             CGST = CGST + ((TotalAmount * session.configData.data?.cGST!!.toFloat()) / 100)
             SGST = SGST + ((TotalAmount * session.configData.data?.sGST!!.toFloat()) / 100)
@@ -1210,69 +1203,16 @@ class AddQuotationActivity : BaseActivity() {
                 edCGST.setText(df.format(CGST))
                 edSGST.setText(df.format(SGST))
                 edIGST.setText("")
-
+                edTotalAmount.setText(df.format(TotalAmount + CGST + SGST))
             } else {
                 edCGST.setText("")
                 edSGST.setText("")
                 edIGST.setText(df.format(IGST))
+                edTotalAmount.setText(df.format(TotalAmount + CGST + SGST))
 
             }
         }
     }
-
-    /*fun setMaterialTotal() {
-        MaterialAmount = 0f
-        var TotalAmount: Float = 0f
-        var CGST: Float = 0f
-        var SGST: Float = 0f
-        var IGST: Float = 0f
-        var DAYS: Float = 0f
-
-
-
-        if (TotalAmount == 0f && UserAmount == 0f) {
-            edTotalAmount.setText("0")
-            edCGST.setText("0")
-            edSGST.setText("0")
-            edIGST.setText("0")
-
-
-        } else {
-
-
-            MaterialAmount = TotalAmount
-
-            if (UserAmount != 0f) {
-                TotalAmount = TotalAmount + UserAmount
-            }*//*else{
-                TotalAmount = TotalAmount + edTotalAmount.getValue().toFloat()
-            }
-*//*
-
-            //   TotalAmount = TotalAmount + edTotalAmount.getValue().toFloat()
-
-            edTotalAmount.setText(TotalAmount.toString())
-
-
-            CGST = CGST + ((TotalAmount * session.configData.data?.cGST!!.toFloat()) / 100)
-            SGST = SGST + ((TotalAmount * session.configData.data?.sGST!!.toFloat()) / 100)
-            IGST = IGST + ((TotalAmount * session.configData.data?.iGST!!.toFloat()) / 100)
-
-            var df: DecimalFormat = DecimalFormat("##.##")
-
-            if (siteListItem?.stateID?.toInt() == 12) {
-                edCGST.setText(df.format(CGST))
-                edSGST.setText(df.format(SGST))
-                edIGST.setText("")
-
-            } else {
-                edCGST.setText("")
-                edSGST.setText("")
-                edIGST.setText(df.format(IGST))
-
-            }
-        }
-    }*/
 
     fun AddQuotation() {
         var result = ""
@@ -1291,7 +1231,7 @@ class AddQuotationActivity : BaseActivity() {
             jsonBody.put("CityID", cityID)
             jsonBody.put("StateID", stateID)
             jsonBody.put("PinCode", edPincode.getValue())
-            jsonBody.put("SubTotal", edTotalAmount.getValue())
+            jsonBody.put("SubTotal", edSubTotalAmount.getValue())
             jsonBody.put("CGST", edCGST.getValue())
             jsonBody.put("SGST", edSGST.getValue())
             jsonBody.put("IGST", edIGST.getValue())
