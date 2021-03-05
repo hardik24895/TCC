@@ -29,6 +29,34 @@ import com.tcc.app.widgets.DecimalDigitsInputFilter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_add_invoice.*
+import kotlinx.android.synthetic.main.activity_add_invoice.btnAddMaterial
+import kotlinx.android.synthetic.main.activity_add_invoice.btnAddUser
+import kotlinx.android.synthetic.main.activity_add_invoice.btnSubmit
+import kotlinx.android.synthetic.main.activity_add_invoice.edCGST
+import kotlinx.android.synthetic.main.activity_add_invoice.edHSN
+import kotlinx.android.synthetic.main.activity_add_invoice.edIGST
+import kotlinx.android.synthetic.main.activity_add_invoice.edMaterialHSN
+import kotlinx.android.synthetic.main.activity_add_invoice.edMaterialQty
+import kotlinx.android.synthetic.main.activity_add_invoice.edMaterialRate
+import kotlinx.android.synthetic.main.activity_add_invoice.edQty
+import kotlinx.android.synthetic.main.activity_add_invoice.edRate
+import kotlinx.android.synthetic.main.activity_add_invoice.edSGST
+import kotlinx.android.synthetic.main.activity_add_invoice.edSubTotalAmount
+import kotlinx.android.synthetic.main.activity_add_invoice.edTotalAmount
+import kotlinx.android.synthetic.main.activity_add_invoice.edtMaterialDays
+import kotlinx.android.synthetic.main.activity_add_invoice.edtNote
+import kotlinx.android.synthetic.main.activity_add_invoice.edtTerms
+import kotlinx.android.synthetic.main.activity_add_invoice.lin_add_material
+import kotlinx.android.synthetic.main.activity_add_invoice.lin_add_user
+import kotlinx.android.synthetic.main.activity_add_invoice.root
+import kotlinx.android.synthetic.main.activity_add_invoice.spMaterialType
+import kotlinx.android.synthetic.main.activity_add_invoice.spUserType
+import kotlinx.android.synthetic.main.activity_add_invoice.view2
+import kotlinx.android.synthetic.main.activity_add_invoice.view7
+import kotlinx.android.synthetic.main.activity_add_quotation.*
+import kotlinx.android.synthetic.main.activity_add_quotation.tilCGST
+import kotlinx.android.synthetic.main.activity_add_quotation.tilIGST
+import kotlinx.android.synthetic.main.activity_add_quotation.tilSGST
 import kotlinx.android.synthetic.main.row_dynamic_user.view.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 import org.json.JSONArray
@@ -93,6 +121,8 @@ class AddInvoiceActivity : BaseActivity() {
         }
         txtTitle.text = getString(R.string.invoice)
 
+
+
         edStartDate.setText(getCurrentDate())
         edEndDate.setText(getCurrentDate())
         btnAddUser.setOnClickListener { onAddField() }
@@ -101,6 +131,8 @@ class AddInvoiceActivity : BaseActivity() {
         if (intent.hasExtra(Constant.DATA)) {
             quotationIteam = intent.getSerializableExtra(Constant.DATA) as QuotationItem
 
+            edtNote.setText(quotationIteam?.note)
+            edtTerms.setText(quotationIteam?.term)
 
             if (quotationIteam!!.stateID.equals("12")) {
 
@@ -1416,4 +1448,6 @@ class AddInvoiceActivity : BaseActivity() {
             }).addTo(autoDisposable)
 
     }
+
+
 }

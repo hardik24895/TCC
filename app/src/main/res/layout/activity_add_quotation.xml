@@ -836,7 +836,7 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/til10"
+                        android:id="@+id/tilCGST"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:hint="@string/cgst"
@@ -860,14 +860,14 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/til11"
+                        android:id="@+id/tilSGST"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:hint="@string/sgst"
                         app:hintTextColor="@color/black"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/til10">
+                        app:layout_constraintTop_toBottomOf="@+id/tilCGST">
 
                         <EditText
                             android:id="@+id/edSGST"
@@ -884,7 +884,7 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/til12"
+                        android:id="@+id/tilIGST"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/_8sdp"
@@ -893,7 +893,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/til11">
+                        app:layout_constraintTop_toBottomOf="@+id/tilSGST">
 
                         <EditText
                             android:id="@+id/edIGST"
@@ -939,6 +939,89 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/crdview7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="@dimen/_2ssp"
+                app:cardCornerRadius="@dimen/_4sdp"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/crdview4">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/_16ssp">
+
+                    <com.tcc.app.customview.TextviewBold
+                        android:id="@+id/txtDesc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:text="@string/description"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/inNote"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:hint="@string/notes"
+                        app:hintTextColor="@color/black"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txtDesc">
+
+                        <EditText
+                            android:id="@+id/edtNote"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorWhite"
+                            android:fontFamily="@font/opensans_regular"
+                            android:inputType="textMultiLine"
+                            android:maxLength="1000"
+                            android:maxLines="5"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/inTerms"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:hint="@string/terms"
+                        app:hintTextColor="@color/black"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/inNote">
+
+                        <EditText
+                            android:id="@+id/edtTerms"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorWhite"
+                            android:fontFamily="@font/opensans_regular"
+                            android:inputType="textMultiLine"
+                            android:lines="2"
+                            android:maxLength="1000"
+                            android:maxLines="5"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
 
             <com.tcc.app.customview.ButtonReguler
                 android:id="@+id/btnSubmit"
@@ -951,7 +1034,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/crdview4" />
+                app:layout_constraintTop_toBottomOf="@id/crdview7" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

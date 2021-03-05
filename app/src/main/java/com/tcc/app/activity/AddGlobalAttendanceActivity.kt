@@ -1,5 +1,6 @@
 package com.tcc.app.activity
 
+
 import android.os.Bundle
 import android.text.format.DateFormat
 import android.util.Log
@@ -43,6 +44,10 @@ class AddGlobalAttendanceActivity : BaseActivity(), GlobalAttendanceAdapter.OnIt
         setContentView(R.layout.activity_attendance)
         txtTitle.text = "Attendance"
         imgBack.visible()
+        //  imgAdd.visible()
+        // imgAdd.setImageResource(R.drawable.ic_search)
+        //    search_view.openSearch()
+
         imgBack.setOnClickListener {
             finish()
         }
@@ -309,5 +314,6 @@ class AddGlobalAttendanceActivity : BaseActivity(), GlobalAttendanceAdapter.OnIt
             recyclerView.invisible()
         }
     }
+
 
 }

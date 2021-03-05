@@ -133,4 +133,5 @@ object Constant {
     const val METHOD_SEND_MAIL = "sendReminderMail"
     const val METHOD_SEND_MESSAGE = "sendReminderSMS"
     const val METHOD_GET_NOTIFICATION = "getNotification"
+    const val METHOD_GET_NOTES = "getNotes"
 }
