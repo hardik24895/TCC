@@ -28,9 +28,13 @@ class AddPaymentActivity : BaseActivity() {
         supportActionBar?.hide()
         setContentView(R.layout.activity_add_payment)
 
+        tilAccountNo.invisible()
+        tilChequeNo.invisible()
+        tilIFSC.invisible()
+        tilBankName.invisible()
+        tilBranchName.invisible()
         if (intent.hasExtra(Constant.DATA)) {
             invoiceDataItem = intent.getSerializableExtra(Constant.DATA) as InvoiceDataItem
-
 
             var df = DecimalFormat("##.##")
 
@@ -65,6 +69,8 @@ class AddPaymentActivity : BaseActivity() {
             validation()
 
         }
+
+
 
         rg.setOnCheckedChangeListener({ group, checkedId ->
             val radio: RadioButton = findViewById(checkedId)
