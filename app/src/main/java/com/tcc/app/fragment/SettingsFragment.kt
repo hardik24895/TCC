@@ -83,5 +83,16 @@ class SettingsFragment : BaseFragment() {
             dialog.arguments = bundle
             dialog.show(childFragmentManager, "YesNO")
         }
+
+        switchPushNotion.isChecked = session.getDataByKeyBoolean(Constant.ISCHECKED, false)
+
+        switchPushNotion.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                session.storeDataByKey(Constant.ISCHECKED, true)
+            } else {
+                session.storeDataByKey(Constant.ISCHECKED, false)
+            }
+        }
+
     }
 }

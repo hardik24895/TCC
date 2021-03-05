@@ -2,6 +2,7 @@ package com.tcc.app.utils
 
 object Constant {
     const val NA = "NA"
+    const val ISCHECKED = "isChecked"
     const val LEAD = "lead"
     const val SITE = "site"
     const val TICKET = "ticket"

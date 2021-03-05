@@ -47,7 +47,7 @@
                     android:textSize="@dimen/text_large" />
 
                 <Switch
-                    android:id="@+id/switchPushNoti"
+                    android:id="@+id/switchPushNotion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
