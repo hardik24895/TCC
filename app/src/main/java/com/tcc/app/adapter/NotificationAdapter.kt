@@ -6,11 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tcc.app.R
+import com.tcc.app.modal.NotificationDataItem
 import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.row_notification.*
 
 class NotificationAdapter(
     private val mContext: Context,
-    var list: MutableList<String> = mutableListOf(),
+    var list: MutableList<NotificationDataItem> = mutableListOf(),
+    private val listener: OnItemSelected
 ) : RecyclerView.Adapter<NotificationAdapter.ItemHolder>() {
 
 
@@ -33,23 +36,17 @@ class NotificationAdapter(
         holder.bindData(mContext, data)
     }
 
-    /* interface OnItemSelected {
-         fun onItemSelect(position: Int, data: Datum)
-     }*/
+    interface OnItemSelected {
+        fun onItemSelect(position: Int, data: NotificationDataItem)
+    }
 
     class ItemHolder(override val containerView: View) :
         RecyclerView.ViewHolder(containerView),
         LayoutContainer {
 
-        fun bindData(
-            context: Context,
-            data: String
-        ) {
-//            var txtNum = containerView.findViewById<TextView>(R.id.txtNum)
-//            txtNum.setText("" + (getAdapterPosition() + 1) + ".")
-
+        fun bindData(context: Context, data: NotificationDataItem) {
+            txtTitle.text = data.discription
+            txtDate.text = data.createdDate
         }
-
-
     }
 }

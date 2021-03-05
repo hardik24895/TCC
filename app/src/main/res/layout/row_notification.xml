@@ -20,16 +20,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:lineSpacingExtra="@dimen/_4sdp"
-            android:paddingVertical="@dimen/_8sdp"
-            android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
+            android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. "
             android:textColor="@color/black"
             android:textSize="@dimen/_12ssp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtDate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
             android:text="07 Jan 2021 18:16 PM"
             android:textColor="@color/black"
             android:textSize="@dimen/_10ssp"

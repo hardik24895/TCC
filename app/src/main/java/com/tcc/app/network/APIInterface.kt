@@ -277,5 +277,8 @@ interface APIInterface {
     @POST("service/")
     fun SendMessage(@Body body: RequestBody): Observable<Response<CommonAddModal>>
 
+    @POST("service/")
+    fun getNotification(@Body body: RequestBody): Observable<Response<NotificationListModel>>
+
 
 }
