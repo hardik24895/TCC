@@ -283,7 +283,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/_8sdp"
-                        android:hint="PinCode"
+                        android:hint="@string/pincode"
                         app:hintTextColor="@color/black"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="@+id/til3"
@@ -437,7 +437,7 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:nothingSelectedText="Select UserType"
+                            app:nothingSelectedText="@string/staff_selection"
                             app:onlyLightTheme="true" />
 
                         <View
@@ -638,7 +638,7 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:nothingSelectedText="Select Material Type"
+                            app:nothingSelectedText="@string/select_material"
                             app:onlyLightTheme="true" />
 
                         <View

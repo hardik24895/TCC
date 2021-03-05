@@ -67,6 +67,8 @@ class InvoicePaidAdapter(
             txtSgst.text = data.sGST
             txtNotes.text = data.notes
             txtTerms.text = data.terms
+            txtSubtotal.text = data.subTotal
+            txtTotal.text = data.totalAmount
 
             if (!flag.equals("Paid")) {
                 crd_remaining.visible()

@@ -44,7 +44,7 @@ class SearchActivity : BaseActivity() {
             finish()
         }
 
-        txtTitle.text = getString(R.string.filter)
+        txtTitle.text = getString(R.string.search)
 
         userTypeNameList = ArrayList()
         userTypeListArray = ArrayList()
