@@ -132,4 +132,5 @@ object Constant {
     const val METHOD_GET_PROCRESS = "getCustomerProcess"
     const val METHOD_SEND_MAIL = "sendReminderMail"
     const val METHOD_SEND_MESSAGE = "sendReminderSMS"
+    const val METHOD_GET_NOTIFICATION = "getNotification"
 }

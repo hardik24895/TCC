@@ -1257,12 +1257,6 @@ class AddInvoiceActivity : BaseActivity() {
         val jsonArray = JSONArray()
         val jsonArray1 = JSONArray()
 
-        if (quotationIteam?.stateID?.toInt() == 12) {
-            total = edTotalAmount.getValue().toDouble() + edCGST.getValue()
-                .toDouble() + edSGST.getValue().toDouble() + 0
-        } else {
-            total = edTotalAmount.getValue().toDouble() + 0 + 0 + edIGST.getValue().toDouble()
-        }
 
         try {
 
@@ -1272,8 +1266,8 @@ class AddInvoiceActivity : BaseActivity() {
             jsonBody.put("InvoiceDate", formatDateFromString(edtInvoiceDate.getValue()))
             jsonBody.put("StartDate", formatDateFromString(edStartDate.getValue()))
             jsonBody.put("EndDate", formatDateFromString(edEndDate.getValue()))
-            jsonBody.put("SubTotal", edTotalAmount.getValue())
-            jsonBody.put("TotalAmount", total)
+            jsonBody.put("SubTotal", edSubTotalAmount.getValue())
+            jsonBody.put("TotalAmount", edTotalAmount.getValue())
             jsonBody.put("CGST", edCGST.getValue())
             jsonBody.put("SGST", edSGST.getValue())
             jsonBody.put("IGST", edIGST.getValue())
