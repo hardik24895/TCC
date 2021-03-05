@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginHorizontal="@dimen/_5sdp"
-    android:elevation="5dp"
     app:cardCornerRadius="8dp"
     app:cardUseCompatPadding="true">
 
@@ -13,7 +12,7 @@
         android:layout_width="match_parent"
         android:paddingEnd="@dimen/_5ssp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_5sdp">
+        android:layout_margin="@dimen/_8sdp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imgProfile"
@@ -79,7 +78,8 @@
             android:id="@+id/recPanelty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginVertical="@dimen/_5sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtEmployeeTitle"

@@ -9,6 +9,9 @@
         android:id="@+id/txtQuestionTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:drawableLeft="@drawable/bg_panelty_circle"
+        android:drawablePadding="@dimen/_8sdp"
         android:text="@string/which_age_category_do_you_fall_into"
         android:textColor="@color/txtgray"
         android:textSize="@dimen/_12sdp"
@@ -21,9 +24,10 @@
         android:layout_height="wrap_content"
         android:text="25-40"
         android:textColor="@color/txtgray"
-        android:textSize="@dimen/_14sdp"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/txtQuestionTitle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/txtQuestionTitle" />
 
 
     <View
