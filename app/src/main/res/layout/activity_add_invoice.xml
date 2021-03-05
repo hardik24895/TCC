@@ -284,8 +284,8 @@
                             android:fontFamily="@font/opensans_regular"
                             android:inputType="text"
                             android:cursorVisible="false"
-                            android:enabled="true"
-                            android:focusable="true"
+                            android:enabled="false"
+                            android:focusable="false"
                             android:maxLength="150"
                             android:singleLine="true"
                             android:textColor="@color/black"
@@ -458,8 +458,8 @@
                             android:fontFamily="@font/opensans_regular"
                             android:inputType="text"
                             android:cursorVisible="false"
-                            android:enabled="true"
-                            android:focusable="true"
+                            android:enabled="false"
+                            android:focusable="false"
                             android:maxLength="150"
                             android:singleLine="true"
                             android:textColor="@color/black"
@@ -602,14 +602,14 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_8sdp"
-                        android:hint="Total Amount"
+                        android:hint="@string/sub_amount"
                         app:hintTextColor="@color/black"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/txtTotalTitle">
 
                         <EditText
-                            android:id="@+id/edTotalAmount"
+                            android:id="@+id/edSubTotalAmount"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/colorWhite"
@@ -622,7 +622,7 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/til10"
+                        android:id="@+id/tilCGST"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:hint="@string/cgst"
@@ -645,14 +645,14 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/til11"
+                        android:id="@+id/tilSGST"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:hint="@string/sgst"
                         app:hintTextColor="@color/black"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/til10">
+                        app:layout_constraintTop_toBottomOf="@+id/tilCGST">
 
                         <EditText
                             android:id="@+id/edSGST"
@@ -668,19 +668,45 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/til12"
+                        android:id="@+id/tilIGST"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/_8sdp"
                         android:hint="@string/igst"
                         app:hintTextColor="@color/black"
-                        app:layout_constraintBottom_toBottomOf="parent"
+
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/til11">
+                        app:layout_constraintTop_toBottomOf="@+id/tilSGST">
 
                         <EditText
                             android:id="@+id/edIGST"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorWhite"
+                            android:fontFamily="@font/opensans_regular"
+                            android:inputType="numberDecimal"
+                            android:maxLength="10"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til13"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_8sdp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:hint="Total Amount"
+                        app:hintTextColor="@color/black"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tilIGST">
+
+                        <EditText
+                            android:id="@+id/edTotalAmount"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/colorWhite"

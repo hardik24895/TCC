@@ -94,9 +94,9 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/colorWhite"
                     android:fontFamily="@font/opensans_regular"
-                    android:editable="false"
+                    android:cursorVisible="false"
+                    android:enabled="false"
                     android:focusable="false"
-                    android:focusableInTouchMode="false"
                     android:maxLength="50"
                     android:inputType="none"
 

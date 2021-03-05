@@ -94,8 +94,12 @@ class LeadAdapter(
                 linbtnCall.isSelected = false
                 linbtnSMS.isSelected = false
                 linbtnEmail.isSelected = true
-
                 listener.onItemSelect(adapterPosition, data, "Email")
+            }
+
+            imgEdit.setOnClickListener {
+
+                listener.onItemSelect(adapterPosition, data, "Edit")
             }
 
 

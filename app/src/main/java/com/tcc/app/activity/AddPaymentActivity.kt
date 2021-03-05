@@ -57,6 +57,8 @@ class AddPaymentActivity : BaseActivity() {
         }
 
         edtPaymentDate.setText(getCurrentDate())
+        edtPaymentAmount.setText(invoiceDataItem?.remainingPayment)
+        edtGSTAmount.setText(invoiceDataItem?.remainingGSTPayment)
 
 
         btnSubmit.setOnClickListener {
