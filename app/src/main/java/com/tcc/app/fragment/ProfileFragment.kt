@@ -39,6 +39,7 @@ class ProfileFragment : BaseFragment() {
         edtFirstName.setText(session.user.data?.firstName)
         edtLastName.setText(session.user.data?.lastName)
         edtContact.setText(session.user.data?.mobileNo)
+        edtEmail.setText(session.user.data?.emailID)
         edtAddress.setText(session.user.data?.address)
         Glide.with(this)
             .load(Constant.EMP_PROFILE + session.user.data?.photoURL)

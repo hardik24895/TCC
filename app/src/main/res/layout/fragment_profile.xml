@@ -79,7 +79,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_16sdp"
-
                 android:layout_marginEnd="@dimen/_16sdp"
                 android:hint="@string/last_name"
                 app:hintTextColor="@color/black"
@@ -107,10 +106,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_16sdp"
-
                 android:layout_marginEnd="@dimen/_16sdp"
                 android:hint="@string/contact"
                 app:hintTextColor="@color/black"
+                android:clickable="false"
+                android:enabled="false"
+                android:focusable="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -134,7 +135,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_16sdp"
-
                 android:layout_marginEnd="@dimen/_16sdp"
                 android:hint="@string/email"
                 app:hintTextColor="@color/black"
@@ -160,14 +160,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_16sdp"
-
                 android:layout_marginEnd="@dimen/_16sdp"
                 android:hint="@string/address"
                 app:hintTextColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/til3">
+                app:layout_constraintTop_toBottomOf="@+id/til4">
 
                 <EditText
                     android:id="@+id/edtAddress"
@@ -194,7 +193,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/til1"
                 app:layout_constraintStart_toStartOf="@+id/til1"
-                app:layout_constraintTop_toBottomOf="@+id/til4" />
+                app:layout_constraintTop_toBottomOf="@+id/til5" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
