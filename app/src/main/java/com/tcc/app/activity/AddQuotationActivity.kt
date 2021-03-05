@@ -145,6 +145,10 @@ class AddQuotationActivity : BaseActivity() {
         edSGST.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
         edIGST.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
 
+        tilCGST.hint = "CGST ( ${session.configData.data?.cGST!!}% )"
+        tilSGST.hint = "SGST ( ${session.configData.data?.sGST!!}% )"
+        tilIGST.hint = "IGST ( ${session.configData.data?.iGST!!}% )"
+
         edRate.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 setUpdatedTotal()
@@ -224,6 +228,7 @@ class AddQuotationActivity : BaseActivity() {
             validation()
         }
 
+        getNotes()
         getCompanyList()
         getServiceList()
         getUserTypeList()
@@ -1362,6 +1367,45 @@ class AddQuotationActivity : BaseActivity() {
                 override fun onFailed(code: Int, message: String) {
                     hideProgressbar()
                     showAlert(message.toString())
+                }
+
+            }).addTo(autoDisposable)
+    }
+
+
+    fun getNotes() {
+        showProgressbar()
+        var result = ""
+        try {
+            val jsonBody = JSONObject()
+            jsonBody.put("Type", "Quotation")
+            result = Networking.setParentJsonData(Constant.METHOD_GET_NOTES, jsonBody)
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+        Networking
+            .with(this)
+            .getServices()
+            .getNotes(Networking.wrapParams(result))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : CallbackObserver<GetNotesModal>() {
+                override fun onSuccess(response: GetNotesModal) {
+                    hideProgressbar()
+                    if (response.error == 200) {
+                        edtNote.setText(response.data?.note)
+                        edtTerms.setText(response.data?.term)
+                    } else {
+
+                    }
+
+
+                }
+
+                override fun onFailed(code: Int, message: String) {
+
+                    showAlert(message)
+
                 }
 
             }).addTo(autoDisposable)

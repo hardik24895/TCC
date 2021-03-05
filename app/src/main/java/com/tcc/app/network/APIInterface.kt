@@ -280,5 +280,6 @@ interface APIInterface {
     @POST("service/")
     fun getNotification(@Body body: RequestBody): Observable<Response<NotificationListModel>>
 
-
+    @POST("service/")
+    fun getNotes(@Body body: RequestBody): Observable<Response<GetNotesModal>>
 }
