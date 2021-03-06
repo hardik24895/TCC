@@ -3,16 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary">
+    android:background="@drawable/ic_background">
 
 
     <androidx.cardview.widget.CardView
-        android:visibility="gone"
         android:id="@+id/crd_pending"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_16ssp"
         android:layout_marginTop="@dimen/_16ssp"
+        android:visibility="gone"
         app:cardCornerRadius="@dimen/_4sdp"
         app:cardElevation="@dimen/_2ssp"
         app:cardUseCompatPadding="true"
@@ -76,7 +76,6 @@
             <com.tcc.app.customview.TextviewSemiBold
                 android:id="@+id/txtAdavance"
                 android:layout_width="0dp"
-
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="0.5dp"
                 android:background="@color/colorWhite"
@@ -112,7 +111,17 @@
 
     </androidx.cardview.widget.CardView>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintBottom_toTopOf="@id/list"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/list"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/_8sdp"

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/ic_background"
     android:layout_height="match_parent"
     tools:context=".activity.CustomerDetailActivity">
 
@@ -15,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_gravity="bottom"
-        android:background="@android:color/white"
+
         android:elevation="8dp"
         app:behavior_peekHeight="@dimen/_300sdp"
         app:layout_behavior="@string/bottom_sheet_behavior"

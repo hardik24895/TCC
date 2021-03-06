@@ -65,8 +65,21 @@ class LeadAdapter(
             txtLeadType.text = data.leadType
             if (data.customerID?.equals("0")!!) {
                 txtStatus.text = "Pending"
+
+                txtStatus.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.bg_lead_status_pending_circle,
+                    0,
+                    0,
+                    0
+                )
             } else {
                 txtStatus.text = "Customer"
+                txtStatus.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.bg_lead_status_convert_circle,
+                    0,
+                    0,
+                    0
+                )
             }
             txtCity.text = data.address
             imgProfile.setImageResource(R.drawable.bg_circle)

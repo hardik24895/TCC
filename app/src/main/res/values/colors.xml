@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#203d51</color>
-    <color name="colorPrimaryDark">#3977A1</color>
+    <color name="colorPrimary">#19d2d7</color>
+    <color name="colorPrimaryDark">#1ba5a9</color>
     <color name="colorAccent">#FFFFFF</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="purple_200">#FFBB86FC</color>
@@ -19,4 +19,19 @@
 
     <color name="light_grey">#D1D1D1</color>
     <color name="swipe_view_bg">#ECEAEA</color>
+
+    <color name="colorCall">#0086c3</color>
+    <color name="colorSms">#005b4f</color>
+    <color name="colorEmail">#004c8c</color>
+    <color name="colorPendingDot">#ff3600</color>
+    <color name="colorSucessDot">#2bb406</color>
+
+
+    <!--Status Bar - #1ba5a9-->
+    <!--    Top Header- #19d2d7-->
+    <!--    Call button- #0086c3-->
+    <!--    Sms button- #005b4f-->
+    <!--    Email button- #004c8c-->
+    <!--    pending Dot -#ff3600-->
+    <!--    Success DOt -#2bb406-->
 </resources>

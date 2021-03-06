@@ -70,7 +70,7 @@ class QuotationAdapter(
             txtSiteName.text = data.siteName
             txtEstinationNo.text = data.estimateNo
             txtHRS.text = data.service
-            txtName.text = data.name
+            //txtName.text = data.name
             txtStatus.text = data.quotationStatus
             txtCGST.text = data.cGST
             txtSGST.text = data.sGST
