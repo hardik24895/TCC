@@ -4,7 +4,10 @@ package com.tcc.app.activity
 import android.os.Bundle
 import android.text.format.DateFormat
 import android.util.Log
+import android.view.View
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.claudiodegio.msv.MaterialSearchView
 import com.tcc.app.R
 import com.tcc.app.adapter.GlobalAttendanceAdapter
 import com.tcc.app.extention.*
@@ -23,7 +26,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_attendance.*
 import kotlinx.android.synthetic.main.reclerview_swipelayout.*
-import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
+import kotlinx.android.synthetic.main.search_layout.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -36,18 +39,23 @@ class AddGlobalAttendanceActivity : BaseActivity(), GlobalAttendanceAdapter.OnIt
     private val list: ArrayList<GlobalEmployeeAttedanceDataItem> = ArrayList()
     var selectedDateStr: String = getCurrentDate()
     var adapter: GlobalAttendanceAdapter? = null
-
+    var mSearchView: MaterialSearchView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportActionBar?.hide()
+        //  supportActionBar?.hide()
         setContentView(R.layout.activity_attendance)
+        swipeRefreshLayout.isRefreshing = false
         txtTitle.text = "Attendance"
         imgBack.visible()
+        val toolbar: Toolbar = findViewById<View>(R.id.toolbar) as Toolbar
+        setSupportActionBar(toolbar)
+
+        mSearchView = findViewById<View>(R.id.sv) as MaterialSearchView
+        //mSearchView?.setOnSearchViewListener(this)
         //  imgAdd.visible()
         // imgAdd.setImageResource(R.drawable.ic_search)
         //    search_view.openSearch()
-
         imgBack.setOnClickListener {
             finish()
         }
@@ -141,7 +149,8 @@ class AddGlobalAttendanceActivity : BaseActivity(), GlobalAttendanceAdapter.OnIt
     fun setupRecyclerView() {
         val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
-        adapter = GlobalAttendanceAdapter(this, list, this)
+        adapter = GlobalAttendanceAdapter()
+        adapter?.setList(this, list, this);
         recyclerView.adapter = adapter
 
     }
@@ -219,7 +228,6 @@ class AddGlobalAttendanceActivity : BaseActivity(), GlobalAttendanceAdapter.OnIt
                     if (response.error == 200) {
                         list.addAll(response.data)
                         adapter?.notifyDataSetChanged()
-
                     }
 
                     refreshData(getString(R.string.no_data_found), 1)
@@ -315,5 +323,39 @@ class AddGlobalAttendanceActivity : BaseActivity(), GlobalAttendanceAdapter.OnIt
         }
     }
 
+    /* override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+         super.onCreateOptionsMenu(menu, inflater)
+         menuInflater.inflate(R.menu.menu_search, menu)
+
+         val item: MenuItem = menu.findItem(R.id.action_search)
+         searchView.setMenuItem(item)
+
+         return true
+     }*/
+/*
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_search, menu)
+        val item = menu.findItem(R.id.action_search)
+        mSearchView?.setMenuItem(item)
+        return true
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        adapter?.getFilter()?.filter(query);
+        return false
+    }
+
+    override fun onSearchViewClosed() {
+   //  adapter?.notifyDataSetChanged()
+    }
+
+    override fun onQueryTextChange(query: String?) {
+        adapter?.getFilter()?.filter(query);
+    }
+
+    override fun onSearchViewShown() {
+
+    }
+*/
 
 }

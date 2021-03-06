@@ -282,7 +282,7 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
             jsonBody.put("CurrentPage", 1)
             jsonBody.put("Name", "")
             jsonBody.put("EmailID", mobile)
-            jsonBody.put("CityID", session?.getDataByKey(SessionManager.KEY_CITY_ID))
+            jsonBody.put("CityID", session.getDataByKey(SessionManager.KEY_CITY_ID))
             result = Networking.setParentJsonData(
                 Constant.METHOD_LEADLIST,
                 jsonBody
