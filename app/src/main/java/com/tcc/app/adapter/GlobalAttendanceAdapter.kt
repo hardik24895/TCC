@@ -4,8 +4,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Filter
-import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.tcc.app.R
 import com.tcc.app.extention.getRandomMaterialColor
@@ -14,67 +12,19 @@ import com.tcc.app.modal.GlobalEmployeeAttedanceDataItem
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.row_attendance.*
 
+class GlobalAttendanceAdapter(
+    private val mContext: Context,
+    var list: MutableList<GlobalEmployeeAttedanceDataItem> = mutableListOf(),
+    private val listener: OnItemSelected
+) : RecyclerView.Adapter<GlobalAttendanceAdapter.ItemHolder>() {
 
-class GlobalAttendanceAdapter() : RecyclerView.Adapter<GlobalAttendanceAdapter.ItemHolder>(),
-    Filterable {
-
-    var filterList: MutableList<GlobalEmployeeAttedanceDataItem> = mutableListOf()
-    lateinit var context: Context
-    lateinit var list: MutableList<GlobalEmployeeAttedanceDataItem>
-    lateinit var listener: OnItemSelected
-
-    fun setList(
-        context: Context,
-        movieList: MutableList<GlobalEmployeeAttedanceDataItem>,
-        listeners: OnItemSelected
-    ) {
-        this.filterList = movieList
-        this.list = movieList
-        this.context = context
-        this.listener = listeners
-        // this.list = movieList
-        // this.filterList = movieList
-        /*  if (list == null) {
-              list = movieList
-              this.filterList = movieList
-              notifyItemChanged(0, filterList?.size!!)
-          } else {
-              val result = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
-                  override fun getOldListSize(): Int {
-                      return this@GlobalAttendanceAdapter.list.size
-                  }
-
-                  override fun getNewListSize(): Int {
-                      return movieList.size
-                  }
-
-                  override fun areItemsTheSame(
-                      oldItemPosition: Int,
-                      newItemPosition: Int
-                  ): Boolean {
-                      return this@GlobalAttendanceAdapter.list.get(oldItemPosition).firstName === movieList[newItemPosition].firstName
-                  }
-
-                  override fun areContentsTheSame(
-                      oldItemPosition: Int,
-                      newItemPosition: Int
-                  ): Boolean {
-                      val newMovie: GlobalEmployeeAttedanceDataItem =
-                          this@GlobalAttendanceAdapter.list.get(oldItemPosition)
-                      val oldMovie = movieList[newItemPosition]
-                      return newMovie.firstName === oldMovie.firstName
-                  }
-              })
-              this@GlobalAttendanceAdapter.list = movieList
-              this@GlobalAttendanceAdapter.filterList = movieList
-              result.dispatchUpdatesTo(this)
-          }*/
+    override fun getItemCount(): Int {
+        return list.size
     }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         return ItemHolder(
-            LayoutInflater.from(context).inflate(
+            LayoutInflater.from(mContext).inflate(
                 R.layout.row_attendance,
                 parent, false
             )
@@ -82,7 +32,7 @@ class GlobalAttendanceAdapter() : RecyclerView.Adapter<GlobalAttendanceAdapter.I
     }
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
-        val data = filterList[position]
+        val data = list[position]
 
         if (data.attendance.equals("1")) {
             holder.txtPresent.isSelected = true
@@ -91,7 +41,6 @@ class GlobalAttendanceAdapter() : RecyclerView.Adapter<GlobalAttendanceAdapter.I
             holder.txtAbsent.isSelected = false
             holder.txtHalfDay.isSelected = false
             holder.txtNone.isSelected = false
-
             if (data.overtime.equals("1")) {
                 holder.txtOvertimeHalfDay.isSelected = false
                 holder.txtOvertimeFullDay.isSelected = true
@@ -129,8 +78,8 @@ class GlobalAttendanceAdapter() : RecyclerView.Adapter<GlobalAttendanceAdapter.I
             holder.txtNone.isSelected = true
         }
 
-        setselection(holder, position, filterList[position])
-        holder.bindData(context, data, listener)
+        setselection(holder, position, list[position])
+        holder.bindData(mContext, data, listener)
     }
 
     private fun setselection(
@@ -182,48 +131,6 @@ class GlobalAttendanceAdapter() : RecyclerView.Adapter<GlobalAttendanceAdapter.I
             overtime: String
         )
     }
-
-
-    override fun getItemCount(): Int {
-        return filterList!!.size
-    }
-
-    override fun getFilter(): Filter? {
-        return object : Filter() {
-            override fun performFiltering(charSequence: CharSequence): FilterResults {
-                val charString = charSequence.toString()
-                if (charString.isEmpty()) {
-                    filterList = list
-                } else {
-                    val filteredList: MutableList<GlobalEmployeeAttedanceDataItem> = ArrayList()
-                    for (row in list) {
-
-                        // name match condition. this might differ depending on your requirement
-                        // here we are looking for name or phone number match
-                        if (row.firstName!!.toLowerCase()
-                                .contains(charString.toLowerCase()) || row.mobileNo!!
-                                .contains(charSequence)
-                        ) {
-                            filteredList.add(row)
-                        }
-                    }
-                    filterList = filteredList
-                }
-                val filterResults = FilterResults()
-                filterResults.values = filterList
-                return filterResults
-            }
-
-            override fun publishResults(
-                charSequence: CharSequence,
-                filterResults: FilterResults
-            ) {
-                filterList = filterResults.values as ArrayList<GlobalEmployeeAttedanceDataItem>
-                notifyDataSetChanged()
-            }
-        }
-    }
-
 
     class ItemHolder(override val containerView: View) :
         RecyclerView.ViewHolder(containerView),
