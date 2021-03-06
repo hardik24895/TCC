@@ -72,6 +72,7 @@ class AddQuotationActivity : BaseActivity() {
     var stateIteams: List<SearchableItem>? = null
     var stateID: String = ""
     var cityID: String = ""
+
     var cityNameList: ArrayList<String> = ArrayList()
     var cityListArray: ArrayList<CityDataItem> = ArrayList()
     var adapterCity: ArrayAdapter<String>? = null

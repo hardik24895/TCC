@@ -23,7 +23,6 @@ import com.tcc.app.utils.TimeStamp.formatDateFromString
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_add_team_definition.*
-import kotlinx.android.synthetic.main.row_dynamic_user_team_definition.view.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 import org.json.JSONArray
 import org.json.JSONException
@@ -40,7 +39,7 @@ class AddTeamDefinitionActivity : BaseActivity() {
     var userTypeListArray: ArrayList<AvailableEmployeeDataItem> = ArrayList()
     var selectedArrayList: ArrayList<AvailableEmployeeDataItem> = ArrayList()
     var adapterUserType: ArrayAdapter<String>? = null
-    var itemUserType: List<SearchableItem>? = null
+    var itemUserType: List<SearchableItem> = ArrayList()
     var userId: String = ""
     val c = Calendar.getInstance()
     val year = c.get(Calendar.YEAR)
