@@ -56,7 +56,7 @@ class CustomerListAdapter(
             txtEmail.text = data.emailID
             txtMobile.text = data.mobileNo
             txtAddress.text = data.address
-            txtSiteCount.text = "1"
+            txtSiteCount.text = data.siteCount
             imgProfile.setImageResource(R.drawable.bg_circle)
             imgProfile.setColorFilter(getRandomMaterialColor("400", context))
             txtIcon.text = data.name.toString().substring(0, 1)

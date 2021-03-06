@@ -63,6 +63,7 @@ class LeadAdapter(
             txtEmail.text = data.emailID
             txtContact.text = data.mobileNo
             txtLeadType.text = data.leadType
+            txtNoOfSite.text = data.siteCount
             if (data.customerID?.equals("0")!!) {
                 txtStatus.text = "Pending"
 

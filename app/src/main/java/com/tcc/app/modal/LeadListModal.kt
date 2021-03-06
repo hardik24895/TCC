@@ -62,6 +62,9 @@ data class LeadItem(
     @field:SerializedName("CityID")
     val cityID: String? = null,
 
+    @field:SerializedName("SitesCount")
+    val siteCount: String? = null,
+
     @field:SerializedName("UserID")
     val userID: String? = null
 ) : Serializable
