@@ -10,9 +10,9 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="@dimen/_80sdp"
-        android:layout_height="@dimen/_80sdp"
-        app:layout_constraintBottom_toTopOf="@+id/cardView"
+        android:layout_width="@dimen/_200sdp"
+        android:layout_height="@dimen/_200sdp"
+        app:layout_constraintBottom_toTopOf="@+id/imageView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -43,25 +43,29 @@
             android:layout_marginStart="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_12sdp"
             android:layout_marginEnd="@dimen/_16sdp"
+            android:dividerPadding="@dimen/_2sdp"
             android:hint="Contact"
-            app:hintTextColor="@color/black"
+            android:textColorHint="@color/colorWhite"
+            app:hintTextColor="@color/colorWhite"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:placeholderTextColor="@color/colorWhite"
+            app:startIconDrawable="@drawable/ic_username"
+            app:startIconTint="@color/colorWhite">
 
             <EditText
                 android:id="@+id/edtUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@android:color/transparent"
-                android:drawableLeft="@drawable/ic_filter_list"
                 android:fontFamily="@font/opensans_regular"
                 android:inputType="number"
                 android:maxLength="10"
                 android:singleLine="true"
-                android:textColor="@color/black"
-                android:textColorHint="@color/black" />
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorWhite" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -72,13 +76,17 @@
             android:layout_marginStart="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginEnd="@dimen/_16sdp"
+            android:backgroundTint="@color/colorWhite"
             android:hint="Password"
-            app:hintTextColor="@color/black"
+            android:textColorHint="@color/colorWhite"
+            app:hintTextColor="@color/colorWhite"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/til1"
-            app:passwordToggleEnabled="true">
+            app:passwordToggleEnabled="true"
+            app:startIconDrawable="@drawable/ic_password"
+            app:startIconTint="@color/colorWhite">
 
             <EditText
                 android:id="@+id/edtPassword"
@@ -88,10 +96,11 @@
                 android:ems="10"
                 android:fontFamily="@font/opensans_regular"
                 android:inputType="textPassword"
+                android:textColor="@color/colorWhite"
                 android:maxLength="25"
                 android:singleLine="true"
-                android:textColor="@color/black"
-                android:textColorHint="@color/black" />
+                android:textColorHint="@color/colorWhite"
+                android:textCursorDrawable="@color/colorWhite" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.tcc.app.customview.TextviewReguler
@@ -103,7 +112,6 @@
             android:text="Forgot your password?"
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="@+id/til2"
-
             app:layout_constraintTop_toBottomOf="@+id/til2" />
 
         <com.tcc.app.customview.ButtonReguler
@@ -111,7 +119,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_18sdp"
-            android:layout_marginBottom="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_52sdp"
             android:background="@drawable/custom_login_button_press_bg"
             android:text="Login"
             app:layout_constraintBottom_toBottomOf="parent"

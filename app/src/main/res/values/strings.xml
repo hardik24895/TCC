@@ -158,11 +158,11 @@
     <string name="pay_now">Pay Now</string>
     <string name="next">Next</string>
     <string name="inspection">Inspection</string>
-    <string name="total_basic_amount">Total Basic Amount : ₹ </string>
+    <string name="total_basic_amount">Total Amount</string>
     <string name="RS">\u20b9</string>
-    <string name="remaining_basic_payment">Remaining Basic Payment : ₹ </string>
-    <string name="total_gst_amount">Total GST Amount : ₹ </string>
-    <string name="remaining_gst_payment">Remaining GST Payment : ₹ </string>
+    <string name="remaining_basic_payment">Remaining Amount</string>
+    <string name="total_gst_amount">Total GST</string>
+    <string name="remaining_gst_payment">Remaining GST</string>
     <string name="payment_date">Payment Date</string>
     <string name="amount_type">Amount Type</string>
     <string name="excluding_gst_amount">Excluding GST Amount</string>

@@ -38,14 +38,16 @@ class AddPaymentActivity : BaseActivity() {
 
             var df = DecimalFormat("##.##")
 
-            total_basic_amount.text = invoiceDataItem?.totalAmount
-            remaining_basic_payment.text = invoiceDataItem?.remainingPayment
+            total_basic_amount.text = getString(R.string.RS) + " " + invoiceDataItem?.totalAmount
+            remaining_basic_payment.text =
+                getString(R.string.RS) + " " + invoiceDataItem?.remainingPayment
 
             total_gst_amount.text =
-                df.format(invoiceDataItem?.cGST?.toFloat()!! * invoiceDataItem?.sGST?.toFloat()!! * invoiceDataItem?.iGST?.toFloat()!!)
+                getString(R.string.RS) + " " + df.format(invoiceDataItem?.cGST?.toFloat()!! * invoiceDataItem?.sGST?.toFloat()!! * invoiceDataItem?.iGST?.toFloat()!!)
                     .toString()
             remaining_gst_payment.text =
-                df.format(invoiceDataItem?.remainingGSTPayment!!.toBigDecimal()).toString()
+                getString(R.string.RS) + " " + df.format(invoiceDataItem?.remainingGSTPayment!!.toBigDecimal())
+                    .toString()
 
         }
 
