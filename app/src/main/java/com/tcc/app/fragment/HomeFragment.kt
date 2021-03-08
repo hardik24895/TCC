@@ -42,7 +42,7 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
     lateinit var cityNameList: ArrayList<String>
     lateinit var cityListArray: ArrayList<CityDataItem>
     var adapterCity: ArrayAdapter<String>? = null
-    var itens: List<SearchableItem>? = null
+    var itens: List<SearchableItem> = ArrayList()
     var autoImageSliderAdapter: AutoImageSliderAdapter? = null
     lateinit var parent: View
     var page: Int = 1

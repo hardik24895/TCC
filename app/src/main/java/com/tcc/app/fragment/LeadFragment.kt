@@ -207,8 +207,8 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
     fun showDialog() {
         val dialog = AddVisitorDailog.newInstance(requireContext(),
             object : AddVisitorDailog.onItemClick {
-                override fun onItemCLicked(mobile: String) {
-                    checkLead(mobile)
+                override fun onItemCLicked(mobile: String, serviceId: String) {
+                    checkLead(mobile, serviceId)
                 }
             })
         val bundle = Bundle()
@@ -273,7 +273,8 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
             }).addTo(autoDisposable)
     }
 
-    fun checkLead(mobile: String) {
+
+    fun checkLead(mobile: String, serviceId: String) {
         showProgressbar()
         var result = ""
         try {
@@ -282,6 +283,7 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
             jsonBody.put("CurrentPage", 1)
             jsonBody.put("Name", "")
             jsonBody.put("EmailID", mobile)
+            jsonBody.put("ServiceID", serviceId)
             jsonBody.put("CityID", session.getDataByKey(SessionManager.KEY_CITY_ID))
             result = Networking.setParentJsonData(
                 Constant.METHOD_LEADLIST,
