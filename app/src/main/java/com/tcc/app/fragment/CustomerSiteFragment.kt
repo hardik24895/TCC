@@ -41,6 +41,7 @@ class CustomerSiteFragment() : BaseFragment(), SiteListAdapter.OnItemSelected {
         customerId = customerData?.customerID?.toInt()
         visitorId = customerData?.visitorID?.toInt()
     }
+
     var adapter: SiteListAdapter? = null
     private val list: MutableList<SiteListItem> = mutableListOf()
     var page: Int = 1
@@ -119,7 +120,6 @@ class CustomerSiteFragment() : BaseFragment(), SiteListAdapter.OnItemSelected {
             i.putExtra(Constant.DATA1, leadItem)
         startActivity(i)
         Animatoo.animateCard(requireContext())
-
     }
 
     override fun onDocumentClick(position: Int, data: SiteListItem) {

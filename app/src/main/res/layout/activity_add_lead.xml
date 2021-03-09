@@ -505,6 +505,50 @@
                                 android:textColorHint="@color/black" />
                         </com.google.android.material.textfield.TextInputLayout>
 
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/inWorkingd"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/working_days"
+                            android:visibility="gone"
+                            app:hintTextColor="@color/black"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/inpDate">
+
+                            <EditText
+                                android:id="@+id/edtWorkingDays"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/colorWhite"
+                                android:fontFamily="@font/opensans_regular"
+                                android:inputType="number"
+                                android:textColor="@color/black"
+                                android:textColorHint="@color/black" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/inWorkingh"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/working_hours"
+                            android:visibility="gone"
+                            app:hintTextColor="@color/black"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/inWorkingd">
+
+                            <EditText
+                                android:id="@+id/edtWorkingHour"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/colorWhite"
+                                android:fontFamily="@font/opensans_regular"
+                                android:inputType="number"
+                                android:textColor="@color/black"
+                                android:textColorHint="@color/black" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
