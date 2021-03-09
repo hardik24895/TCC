@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayout.MODE_SCROLLABLE
 import com.tcc.app.R
 import com.tcc.app.adapter.ViewPagerPagerAdapter
 import com.tcc.app.extention.setHomeScreenTitle
@@ -52,10 +53,11 @@ class SiteListMainFragment() : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (customerId == -1)
-            setHomeScreenTitle(requireActivity(), getString(R.string.nav_site))
+        setHomeScreenTitle(requireActivity(), getString(R.string.nav_site))
 
         getSiteListByTab()
+
+        tabs.tabMode = MODE_SCROLLABLE
 
         tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
