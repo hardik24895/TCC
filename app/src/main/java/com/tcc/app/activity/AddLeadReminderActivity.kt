@@ -3,6 +3,7 @@ package com.tcc.app.activity
 import android.os.Bundle
 import android.widget.EditText
 import com.akexorcist.snaptimepicker.SnapTimePickerDialog
+import com.akexorcist.snaptimepicker.TimeValue
 import com.tcc.app.R
 import com.tcc.app.extention.*
 import com.tcc.app.modal.GetRoleModal
@@ -20,6 +21,7 @@ import org.json.JSONException
 import org.json.JSONObject
 
 class AddLeadReminderActivity : BaseActivity() {
+    var reminderTime: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,24 +45,43 @@ class AddLeadReminderActivity : BaseActivity() {
         edtReminderDate.setText(getCurrentDate())
         edtProcessDate.setText(getCurrentDate())
 
+        edtReminderTime.setText(getCurentTime(getCurrentDateTime()))
+
+        edtProcessTime.setText(getCurentTime(getCurrentDateTime()))
+
+        val namepass: Array<String> = edtReminderTime.getValue().split(":").toTypedArray()
+        val startTime = namepass[0]
+        val endTime = namepass[1]
         edtReminderTime.setOnClickListener {
             SnapTimePickerDialog.Builder().apply {
+                setPreselectedTime(TimeValue(startTime.toInt(), endTime.toInt()))
                 setTitle(R.string.reminder_time)
             }.build().apply {
+
                 setListener { hour, minute ->
                     Logger.d("time", hour.toString() + ":" + minute.toString())
                     var edStartTime1: EditText = findViewById(R.id.edtReminderTime)
                     edStartTime1.setText(
-                        convertIntoTowDigit(hour) + ":" + convertIntoTowDigit(minute)
+                        convertIntoTowDigit(hour) + ":" + convertIntoTowDigit(
+                            minute
+                        )
                     )
+                    reminderTime = convertIntoTowDigit(hour) + ":" + convertIntoTowDigit(minute)
 
                 }
             }.show(supportFragmentManager, "")
 
         }
+
+        //  edtReminderTime.setText(reminderTime)
+        val namepass1: Array<String> = edtProcessTime.getValue().split(":").toTypedArray()
+        val startTime1 = namepass1[0]
+        val endTime1 = namepass1[1]
         edtProcessTime.setOnClickListener {
+
             SnapTimePickerDialog.Builder().apply {
                 setTitle(R.string.procces_time)
+                setPreselectedTime(TimeValue(startTime1.toInt(), endTime1.toInt()))
             }.build().apply {
                 setListener { hour, minute ->
                     Logger.d("time", hour.toString() + ":" + minute.toString())

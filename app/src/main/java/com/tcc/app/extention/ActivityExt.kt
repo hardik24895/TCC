@@ -18,6 +18,8 @@ import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.tcc.app.R
 import com.tcc.app.customview.TextviewBold
 import com.tcc.app.utils.Constant
+import java.text.DateFormat
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -184,6 +186,20 @@ fun getCurrentDateTime(): String {
     val currentDate = sdf.format(Date())
 
     return currentDate.toString()
+}
+
+fun getCurentTime(date: String): String {
+    try {
+        val f: DateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
+        val d: Date = f.parse(date)
+        val date: DateFormat = SimpleDateFormat("MM/dd/yyyy")
+        val time: DateFormat = SimpleDateFormat("HH:mm")
+        System.out.println("Time: " + time.format(d))
+        return time.format(d).toString()
+    } catch (e: ParseException) {
+        e.printStackTrace()
+    }
+    return ""
 }
 
 fun showDateTimePicker(requireActivity: Activity, edittext: EditText) {
