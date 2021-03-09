@@ -423,11 +423,11 @@ class AddLeadActivity : BaseActivity(), SiteAddressAdapter.OnItemSelected {
             cityID == "-1" -> {
                 root.showSnackBar("City Not Found")
             }
-            edtWorkingHour.isVisible && edtWorkingHour.isEmpty() -> {
+            inWorkingd.isVisible && edtWorkingHour.isEmpty() -> {
                 root.showSnackBar("Enter Working Hours")
                 edtWorkingHour.requestFocus()
             }
-            edtWorkingDays.isVisible && edtWorkingDays.isEmpty() -> {
+            inWorkingh.isVisible && edtWorkingDays.isEmpty() -> {
                 root.showSnackBar("Enter Working Days")
                 edtWorkingDays.requestFocus()
             }
