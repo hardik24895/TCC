@@ -24,13 +24,7 @@ import com.tcc.app.utils.TimeStamp.formatDateFromString
 import com.tcc.app.widgets.DecimalDigitsInputFilter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_add_lead.*
 import kotlinx.android.synthetic.main.activity_add_quotation.*
-import kotlinx.android.synthetic.main.activity_add_quotation.btnSubmit
-import kotlinx.android.synthetic.main.activity_add_quotation.root
-import kotlinx.android.synthetic.main.activity_add_quotation.spCity
-import kotlinx.android.synthetic.main.activity_add_quotation.spState
-import kotlinx.android.synthetic.main.activity_add_quotation.view2
 import kotlinx.android.synthetic.main.row_dynamic_user.view.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 import org.json.JSONArray
@@ -1260,6 +1254,8 @@ class AddQuotationActivity : BaseActivity() {
             jsonBody.put("CGST", edCGST.getValue())
             jsonBody.put("SGST", edSGST.getValue())
             jsonBody.put("IGST", edIGST.getValue())
+            jsonBody.put("Notes", edtNote.getValue())
+            jsonBody.put("Terms", edtTerms.getValue())
             jsonBody.put("ServiceID", serviceId)
             if (leadItem != null) {
                 jsonBody.put("VisitorID", leadItem?.visitorID)

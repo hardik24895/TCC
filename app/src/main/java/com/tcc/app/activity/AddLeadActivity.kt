@@ -250,6 +250,7 @@ class AddLeadActivity : BaseActivity(), SiteAddressAdapter.OnItemSelected {
         edtEmail.setText(leadItem?.emailID.toString())
         edtMobile.setText(leadItem?.mobileNo.toString())
         edtAddress.setText(leadItem?.address.toString())
+        edtAddress1.setText(leadItem?.address.toString())
         edtPincode.setText(leadItem?.pinCode.toString())
         stateID = leadItem?.stateID.toString()
         cityID = leadItem?.cityID.toString()
