@@ -49,6 +49,7 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/inVoiceDate"
                         android:layout_width="0dp"
+                        android:layout_marginTop="@dimen/_8sdp"
                         android:layout_height="wrap_content"
                         android:hint="@string/invoice_date"
                         app:hintTextColor="@color/black"

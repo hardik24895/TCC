@@ -24,7 +24,13 @@ import com.tcc.app.utils.TimeStamp.formatDateFromString
 import com.tcc.app.widgets.DecimalDigitsInputFilter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_add_lead.*
 import kotlinx.android.synthetic.main.activity_add_quotation.*
+import kotlinx.android.synthetic.main.activity_add_quotation.btnSubmit
+import kotlinx.android.synthetic.main.activity_add_quotation.root
+import kotlinx.android.synthetic.main.activity_add_quotation.spCity
+import kotlinx.android.synthetic.main.activity_add_quotation.spState
+import kotlinx.android.synthetic.main.activity_add_quotation.view2
 import kotlinx.android.synthetic.main.row_dynamic_user.view.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 import org.json.JSONArray
@@ -107,9 +113,10 @@ class AddQuotationActivity : BaseActivity() {
             edAddress2.setText(siteListItem?.address2.toString())
             edPincode.setText(siteListItem?.pinCode.toString())
 
+            txtService.text = siteListItem!!.serviceName
+            serviceId = siteListItem!!.serviceID.toString()
 
             if (siteListItem!!.stateID.equals("12")) {
-
                 edCGST.isEnabled = true
                 edSGST.isEnabled = true
                 edIGST.isEnabled = false
@@ -224,28 +231,27 @@ class AddQuotationActivity : BaseActivity() {
         })
 
 
-
         btnSubmit.setOnClickListener {
             validation()
         }
 
         getNotes()
         getCompanyList()
-        getServiceList()
-        getUserTypeList()
+        //   getServiceList()
+        getUserTypeList(siteListItem?.serviceID.toString())
         getMaterialTypeList()
         getStateSppinerData()
-        getCityList(stateID)
+        getCityList(siteListItem!!.stateID.toString())
 
         companySpinnerListner()
-        serviceSpinnerListner()
+        //   serviceSpinnerListner()
         userTypeSpinnerListner()
         stateSpinnerListner()
         citySpinnerListner()
         materialTypeSpinnerListner()
 
         compnyViewClick()
-        serviceViewClick()
+        //  serviceViewClick()
         userTypeViewClick()
         materialTypeViewClick()
         stateViewClick()
@@ -273,8 +279,8 @@ class AddQuotationActivity : BaseActivity() {
                 root.showSnackBar("Enter Address 2")
                 edAddress2.requestFocus()
             }
-            edPincode.isEmpty() -> {
-                root.showSnackBar("Select Pincode")
+            !edPincode.isEmpty() && edPincode.getValue().length < 6 -> {
+                root.showSnackBar("Enter Valid Pincode")
                 edPincode.requestFocus()
             }
             serviceId == "-1" -> {
@@ -316,10 +322,7 @@ class AddQuotationActivity : BaseActivity() {
                     var myList: MutableList<SearchableItem> = mutableListOf()
                     serviceNameList!!.add("Select Service")
                     myList.add(
-                        SearchableItem(
-                            0,
-                            "Select Service"
-                        )
+                        SearchableItem(0, "Select Service")
                     )
 
                     for (items in response.data.indices) {
@@ -340,6 +343,21 @@ class AddQuotationActivity : BaseActivity() {
                         serviceNameList!!
                     )
                     spService.setAdapter(adapterService)
+
+
+                    if (siteListItem != null) {
+
+                        for (i in serviceListArray.indices) {
+                            if (serviceListArray.get(i).serviceID.toString() == siteListItem!!.serviceID.toString()) {
+                                spService.setSelection(i + 1)
+                                // txtService.text = siteListItem!!.name
+
+                                break
+                            }
+
+                        }
+
+                    }
 
                 }
 
@@ -880,11 +898,12 @@ class AddQuotationActivity : BaseActivity() {
             }).addTo(autoDisposable)
     }
 
-    fun getUserTypeList() {
+    fun getUserTypeList(serviceID: String) {
         var result = ""
         try {
             val jsonBody = JSONObject()
             jsonBody.put("StateID", "")
+            jsonBody.put("ServiceID", serviceID)
 
             result = Networking.setParentJsonData(Constant.METHOD_USERTYPE_LIST, jsonBody)
 

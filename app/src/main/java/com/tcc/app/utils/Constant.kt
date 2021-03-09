@@ -48,6 +48,7 @@ object Constant {
 
 
     const val MOBILE = "mobile"
+    const val SERVICE_ID = "serviceId"
     const val UNAUTHORIZED = "unauthorized"
 
 

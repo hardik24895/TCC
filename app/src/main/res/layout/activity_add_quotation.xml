@@ -337,8 +337,28 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
+
+                    <com.tcc.app.customview.TextviewReguler
+                        android:id="@+id/txtService"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginBottom="@dimen/_12sdp"
+                        android:background="@drawable/bg_spinner"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="@dimen/_12ssp"
+                        android:paddingVertical="@dimen/_10sdp"
+                        android:text="Selected Service"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_13sdp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txtServiceTitle" />
+
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/linlayService"
+                        android:visibility="gone"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_8sdp"
@@ -355,6 +375,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/_3sdp"
+
                             android:clickable="false"
                             android:focusable="false"
                             android:padding="@dimen/_5sdp"

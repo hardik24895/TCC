@@ -303,11 +303,8 @@ class AddSiteActivity : BaseActivity() {
                 root.showSnackBar("Enter Address")
                 edtAddress.requestFocus()
             }
-            edtPincode.isEmpty() -> {
-                root.showSnackBar("Enter Pincode")
-                edtPincode.requestFocus()
-            }
-            edtPincode.getValue().length < 6 -> {
+
+            !edtPincode.isEmpty() && edtPincode.getValue().length < 6 -> {
                 root.showSnackBar("Enter Valid Pincode")
                 edtPincode.requestFocus()
             }

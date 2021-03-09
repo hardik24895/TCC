@@ -235,7 +235,6 @@ class AddLeadActivity : BaseActivity(), SiteAddressAdapter.OnItemSelected {
         }
     }
 
-
     fun setData() {
         edtName.setText(leadItem?.name.toString())
         edtEmail.setText(leadItem?.emailID.toString())
@@ -401,7 +400,7 @@ class AddLeadActivity : BaseActivity(), SiteAddressAdapter.OnItemSelected {
                 edtAddress1.requestFocus()
             }
             !edtPincode.isEmpty() && edtPincode.getValue().length < 6 -> {
-                root.showSnackBar("Enter Valid GST No.")
+                root.showSnackBar("Enter Valid Pincode")
                 edtPincode.requestFocus()
             }
             stateID.equals("-1") -> {
@@ -424,7 +423,6 @@ class AddLeadActivity : BaseActivity(), SiteAddressAdapter.OnItemSelected {
         }
 
     }
-
 
     fun validationEdit(flag: Boolean) {
         val selectedId: Int = rg.getCheckedRadioButtonId()
@@ -462,7 +460,7 @@ class AddLeadActivity : BaseActivity(), SiteAddressAdapter.OnItemSelected {
                 edtAddress1.requestFocus()
             }
             !edtPincode.isEmpty() && edtPincode.getValue().length < 6 -> {
-                root.showSnackBar("Enter Valid GST No.")
+                root.showSnackBar("Enter Valid Pincode")
                 edtPincode.requestFocus()
             }
             stateID.equals("-1") -> {
@@ -495,12 +493,14 @@ class AddLeadActivity : BaseActivity(), SiteAddressAdapter.OnItemSelected {
             jsonBody.put("UserID", session.user.data?.userID)
             jsonBody.put("Name", edtName.getValue())
             jsonBody.put("MobileNo", edtMobile.getValue())
+            jsonBody.put("ServiceId", edtMobile.getValue())
             jsonBody.put("EmailID", edtEmail.getValue())
             jsonBody.put("Address", edtAddress.getValue())
             jsonBody.put("CityID", cityID)
             jsonBody.put("StateID", stateID)
             jsonBody.put("SiteID", siteID)
             jsonBody.put("PinCode", edtPincode.getValue())
+            jsonBody.put("ServiceID", intent.getStringExtra(Constant.SERVICE_ID))
             jsonBody.put("GSTNo", edtGST.getValue())
             jsonBody.put("LeadType", leadType)
             jsonBody.put("SiteName", edtSiteName.getValue())
@@ -630,9 +630,6 @@ class AddLeadActivity : BaseActivity(), SiteAddressAdapter.OnItemSelected {
         edtAddress.isEnabled = false
         edtAddress1.isEnabled = false
         edtPincode.isEnabled = false
-        edtSdate.isEnabled = false
-        edtEdate.isEnabled = false
-        edtPdate.isEnabled = false
 
 
         for (i in cityListArray.indices) {
@@ -677,9 +674,6 @@ class AddLeadActivity : BaseActivity(), SiteAddressAdapter.OnItemSelected {
         edtAddress.isEnabled = true
         edtAddress1.isEnabled = true
         edtPincode.isEnabled = true
-        edtSdate.isEnabled = true
-        edtEdate.isEnabled = true
-        edtPdate.isEnabled = true
 
         edtSdate.setText(getCurrentDate())
         edtEdate.setText(getCurrentDate())

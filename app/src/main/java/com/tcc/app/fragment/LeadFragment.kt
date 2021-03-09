@@ -312,12 +312,13 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
                         intent.putExtra(Constant.DATA, response.data.get(0))
                         intent.putExtra(Constant.DATA_SITE, jsonCars)
                         intent.putExtra(Constant.MOBILE, mobile)
+                        intent.putExtra(Constant.SERVICE_ID, serviceId)
                         startActivity(intent)
                         Animatoo.animateCard(context)
                     } else {
                         val intent = Intent(context, AddLeadActivity::class.java)
-//                        intent.putExtra(Constant.DATA, response.data.get(0))
-//                        intent.putExtra(Constant.DATA_SITE, jsonCars)
+//
+                        intent.putExtra(Constant.SERVICE_ID, serviceId)
                         intent.putExtra(Constant.MOBILE, mobile)
                         startActivity(intent)
                         Animatoo.animateCard(context)

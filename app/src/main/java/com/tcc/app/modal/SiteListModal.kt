@@ -86,6 +86,12 @@ data class SiteListItem(
     @field:SerializedName("ProposedDate")
     val proposedDate: String? = null,
 
+    @field:SerializedName("ServiceID")
+    val serviceID: String? = null,
+
+    @field:SerializedName("ServiceName")
+    val serviceName: String? = null,
+
     @field:SerializedName("WorkingDays")
     val workingDays: String? = null
 ) : Serializable

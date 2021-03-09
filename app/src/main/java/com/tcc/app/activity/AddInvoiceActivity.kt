@@ -146,6 +146,7 @@ class AddInvoiceActivity : BaseActivity() {
             }
             edStartDate.setText(formatServerDateToLocal(quotationIteam!!.startDate.toString()))
             edEndDate.setText(formatServerDateToLocal(quotationIteam!!.endDate.toString()))
+
         }
         if (intent.hasExtra(Constant.DATA1)) {
             leadItem = intent.getSerializableExtra(Constant.DATA1) as LeadItem
@@ -625,7 +626,8 @@ class AddInvoiceActivity : BaseActivity() {
         var result = ""
         try {
             val jsonBody = JSONObject()
-
+            if (quotationIteam != null)
+                jsonBody.put("ServiceID", quotationIteam?.service)
 
             result = Networking.setParentJsonData(Constant.METHOD_USERTYPE_LIST, jsonBody)
 
