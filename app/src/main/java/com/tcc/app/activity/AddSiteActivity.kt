@@ -623,11 +623,11 @@ class AddSiteActivity : BaseActivity(), SiteAddressAdapter1.OnItemSelected {
         edtAddress.setText(data.address)
         edtAddress2.setText(data.address2)
         edtPincode.setText(data.pinCode)
-        edtSdate.setText(data.startDate)
-        edtEdate.setText(data.endDate)
-        edtPdate.setText(data.proposedDate)
-        edtWorkingDays.setText(data.workingDays?.let { formatServerDateToLocal(it) })
-        edtWorkingHour.setText(data.workingHours?.let { formatServerDateToLocal(it) })
+        edtSdate.setText(formatServerDateToLocal(data.startDate.toString()))
+        edtEdate.setText(formatServerDateToLocal(data.endDate.toString()))
+        edtPdate.setText(formatServerDateToLocal(data.proposedDate.toString()))
+        edtWorkingDays.setText(data.workingDays)
+        edtWorkingHour.setText(data.workingHours)
 
         edtSiteName.isEnabled = false
         edtGST.isEnabled = false
