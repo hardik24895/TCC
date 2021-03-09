@@ -528,19 +528,17 @@ class AddLeadActivity : BaseActivity(), SiteAddressAdapter.OnItemSelected {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeWith(object : CallbackObserver<SiteListModal>() {
                 override fun onSuccess(response: SiteListModal) {
+
                     val data = response.data
                     hideProgressbar()
                     if (response.error == 200) {
                         root.showSnackBar(response.message.toString())
                         if (flag) {
-
                             val i = Intent(this@AddLeadActivity, AddQuotationActivity::class.java)
                             i.putExtra(Constant.DATA, data.get(0))
                             startActivity(i)
                         }
-
                         finish()
-
                     } else {
                         showAlert(response.message.toString())
                     }
