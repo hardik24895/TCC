@@ -7,6 +7,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.RadioButton
 import androidx.cardview.widget.CardView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.gson.Gson
@@ -21,11 +22,12 @@ import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
 import com.tcc.app.utils.GSTINValidator
 import com.tcc.app.utils.Logger
+import com.tcc.app.utils.TimeStamp.formatDateFromString
+import com.tcc.app.utils.TimeStamp.formatServerDateToLocal
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_add_lead.*
 import kotlinx.android.synthetic.main.bottom_dailog_attendance.*
-import kotlinx.android.synthetic.main.reclerview_swipelayout.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 import org.json.JSONException
 import org.json.JSONObject
@@ -79,6 +81,12 @@ class AddLeadActivity : BaseActivity(), SiteAddressAdapter.OnItemSelected {
 
         if (intent.hasExtra("Edit")) {
             isEdit = true
+
+        }
+
+        if (intent.getStringExtra(Constant.SERVICE_ID).equals("1")) {
+            inWorkingd.visible()
+            inWorkingh.visible()
 
         }
 
@@ -415,6 +423,15 @@ class AddLeadActivity : BaseActivity(), SiteAddressAdapter.OnItemSelected {
             cityID == "-1" -> {
                 root.showSnackBar("City Not Found")
             }
+            edtWorkingHour.isVisible && edtWorkingHour.isEmpty() -> {
+                root.showSnackBar("Enter Working Hours")
+                edtWorkingHour.requestFocus()
+            }
+            edtWorkingDays.isVisible && edtWorkingDays.isEmpty() -> {
+                root.showSnackBar("Enter Working Days")
+                edtWorkingDays.requestFocus()
+            }
+
             else -> {
 
                 addLead(rbLead?.text.toString(), flag)
@@ -477,7 +494,7 @@ class AddLeadActivity : BaseActivity(), SiteAddressAdapter.OnItemSelected {
             }
             else -> {
 
-                    editLead(rbLead?.text.toString(), flag)
+                editLead(rbLead?.text.toString(), flag)
             }
 
         }
@@ -493,9 +510,9 @@ class AddLeadActivity : BaseActivity(), SiteAddressAdapter.OnItemSelected {
             jsonBody.put("UserID", session.user.data?.userID)
             jsonBody.put("Name", edtName.getValue())
             jsonBody.put("MobileNo", edtMobile.getValue())
-            jsonBody.put("ServiceId", edtMobile.getValue())
             jsonBody.put("EmailID", edtEmail.getValue())
             jsonBody.put("Address", edtAddress.getValue())
+            jsonBody.put("Address2", edtAddress1.getValue())
             jsonBody.put("CityID", cityID)
             jsonBody.put("StateID", stateID)
             jsonBody.put("SiteID", siteID)
@@ -504,9 +521,18 @@ class AddLeadActivity : BaseActivity(), SiteAddressAdapter.OnItemSelected {
             jsonBody.put("GSTNo", edtGST.getValue())
             jsonBody.put("LeadType", leadType)
             jsonBody.put("SiteName", edtSiteName.getValue())
-            jsonBody.put("StartDate", edtSdate.getValue())
-            jsonBody.put("EndDate", edtEdate.getValue())
-            jsonBody.put("ProposedDate", edtPdate.getValue())
+
+            if (intent.getStringExtra(Constant.SERVICE_ID).equals("1")) {
+                jsonBody.put("WorkingHours", edtWorkingHour.getValue())
+                jsonBody.put("WorkingDays", edtWorkingDays.getValue())
+            } else {
+                jsonBody.put("WorkingHours", "1")
+                jsonBody.put("WorkingDays", "1")
+            }
+
+            jsonBody.put("StartDate", formatDateFromString(edtSdate.getValue()))
+            jsonBody.put("EndDate", formatDateFromString(edtEdate.getValue()))
+            jsonBody.put("ProposedDate", formatDateFromString(edtPdate.getValue()))
             val selectedId: Int = rg1.getCheckedRadioButtonId()
             val rbSite = findViewById<View>(selectedId) as? RadioButton
             jsonBody.put("SiteType", rbSite?.text.toString())
@@ -624,13 +650,14 @@ class AddLeadActivity : BaseActivity(), SiteAddressAdapter.OnItemSelected {
         edtSdate.setText(data.startDate)
         edtEdate.setText(data.endDate)
         edtPdate.setText(data.proposedDate)
+        edtWorkingDays.setText(data.workingDays?.let { formatServerDateToLocal(it) })
+        edtWorkingHour.setText(data.workingHours?.let { formatServerDateToLocal(it) })
 
         edtSiteName.isEnabled = false
         edtGST.isEnabled = false
         edtAddress.isEnabled = false
         edtAddress1.isEnabled = false
         edtPincode.isEnabled = false
-
 
         for (i in cityListArray.indices) {
             if (cityListArray.get(i).cityID.equals(data.cityID)) {
@@ -669,6 +696,8 @@ class AddLeadActivity : BaseActivity(), SiteAddressAdapter.OnItemSelected {
         edtAddress.setText("")
         edtAddress1.setText("")
         edtPincode.setText("")
+        edtWorkingDays.setText("")
+        edtWorkingHour.setText("")
         edtSiteName.isEnabled = true
         edtGST.isEnabled = true
         edtAddress.isEnabled = true
