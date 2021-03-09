@@ -285,4 +285,7 @@ interface APIInterface {
 
     @POST("service/")
     fun getNotes(@Body body: RequestBody): Observable<Response<GetNotesModal>>
+
+    @POST("service/")
+    fun getSiteTabList(@Body body: RequestBody): Observable<Response<DynemicSiteTabListModal>>
 }
