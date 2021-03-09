@@ -78,7 +78,7 @@
         tools:layout="@layout/fragment_setting" />
     <fragment
         android:id="@+id/nav_site"
-        android:name="com.tcc.app.fragment.CustomerSiteFragment"
+        android:name="com.tcc.app.fragment.SiteListMainFragment"
         android:label="@string/nav_site"
         tools:layout="@layout/fragment_customer_site" />
 

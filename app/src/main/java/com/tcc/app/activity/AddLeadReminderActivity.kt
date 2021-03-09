@@ -38,9 +38,7 @@ class AddLeadReminderActivity : BaseActivity() {
             showDateTimePicker(this@AddLeadReminderActivity, edtReminderDate)
         }
         edtProcessDate.setOnClickListener {
-            showDateTimePicker(
-                this@AddLeadReminderActivity, edtProcessDate
-            )
+            showDateTimePicker(this@AddLeadReminderActivity, edtProcessDate)
         }
         edtReminderDate.setText(getCurrentDate())
         edtProcessDate.setText(getCurrentDate())
