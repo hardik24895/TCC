@@ -510,7 +510,6 @@ class AddLeadActivity : BaseActivity(), SiteAddressAdapter.OnItemSelected {
             jsonBody.put("UserID", session.user.data?.userID)
             jsonBody.put("Name", edtName.getValue())
             jsonBody.put("MobileNo", edtMobile.getValue())
-            jsonBody.put("ServiceId", edtMobile.getValue())
             jsonBody.put("EmailID", edtEmail.getValue())
             jsonBody.put("Address", edtAddress.getValue())
             jsonBody.put("CityID", cityID)
