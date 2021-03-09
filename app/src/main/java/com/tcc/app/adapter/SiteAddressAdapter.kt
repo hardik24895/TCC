@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.row_site_address.*
 class SiteAddressAdapter(
     private val mContext: Context,
     var list: MutableList<SitesItem> = mutableListOf(),
-    private val listener: SiteAddressAdapter.OnItemSelected,
+    private val listener: SiteAddressAdapter.OnItemSelected
 
     ) : RecyclerView.Adapter<SiteAddressAdapter.ItemHolder>() {
     var lastPos = -1
