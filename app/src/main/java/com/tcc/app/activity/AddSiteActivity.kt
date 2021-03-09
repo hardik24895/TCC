@@ -8,8 +8,14 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.RadioButton
+import androidx.cardview.widget.CardView
+import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.tcc.app.R
+import com.tcc.app.adapter.SiteAddressAdapter1
 import com.tcc.app.extention.*
+import com.tcc.app.fragment.CustomerSiteFragment
 import com.tcc.app.modal.*
 import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
@@ -17,10 +23,14 @@ import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
 import com.tcc.app.utils.GSTINValidator.validGSTIN
 import com.tcc.app.utils.Logger
+import com.tcc.app.utils.SessionManager
 import com.tcc.app.utils.TimeStamp
+import com.tcc.app.utils.TimeStamp.formatServerDateToLocal
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_add_site.*
+import kotlinx.android.synthetic.main.bottom_dailog_attendance.*
+import kotlinx.android.synthetic.main.reclerview_swipelayout.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 import org.json.JSONException
 import org.json.JSONObject
@@ -28,12 +38,13 @@ import tech.hibk.searchablespinnerlibrary.SearchableDialog
 import tech.hibk.searchablespinnerlibrary.SearchableItem
 import java.util.*
 
-class AddSiteActivity : BaseActivity() {
+class AddSiteActivity : BaseActivity(), SiteAddressAdapter1.OnItemSelected {
 
     var stateNameList: ArrayList<String> = ArrayList()
     var adapterState: ArrayAdapter<String>? = null
     var stateIteams: List<SearchableItem>? = null
     var stateID: String = "-1"
+
     var cityID: String = "-1"
     var cityNameList: ArrayList<String> = ArrayList()
     var cityListArray: ArrayList<CityDataItem> = ArrayList()
@@ -43,6 +54,18 @@ class AddSiteActivity : BaseActivity() {
     var customerData: CustomerDataItem? = null
 
     var leadItem: LeadItem? = null
+
+
+    var serviceNameList: ArrayList<String> = ArrayList()
+    var adapterService: ArrayAdapter<String>? = null
+    var serviceListArray: ArrayList<ServiceDataItem> = ArrayList()
+    var itemService: List<SearchableItem> = ArrayList()
+    var serviceId: String = ""
+
+    var list: ArrayList<SiteListItem> = ArrayList()
+    var bottomSheetBehavior: BottomSheetBehavior<CardView>? = null
+    var adapter: SiteAddressAdapter1? = null
+    var siteID: String = "-1"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,21 +80,20 @@ class AddSiteActivity : BaseActivity() {
         btnSubmit.setOnClickListener { validation(false) }
         if (intent.hasExtra(Constant.DATA)) {
             customerData = intent.getSerializableExtra(Constant.DATA) as CustomerDataItem
-
-            edtCompanyName.setText(customerData!!.name)
+            // edtCompanyName.setText(customerData!!.name)
         }
 
         if (intent.hasExtra(Constant.DATA_LEAD)) {
             leadItem = intent.getSerializableExtra(Constant.DATA_LEAD) as LeadItem
+            //  edtCompanyName.setText(leadItem!!.name)
 
-            edtCompanyName.setText(leadItem!!.name)
         }
 
         if (intent.hasExtra(Constant.CUSTOMER_NAME)) {
 
-            edtCompanyName.setText(intent.getStringExtra(Constant.CUSTOMER_NAME))
+            //  edtCompanyName.setText(intent.getStringExtra(Constant.CUSTOMER_NAME))
         }
-
+        setupRecyclerView()
         btnAddQuatation.setOnClickListener { validation(true) }
         getStateSppinerData()
         getCityList(stateID)
@@ -79,7 +101,9 @@ class AddSiteActivity : BaseActivity() {
         citySpinnerListner()
         stateViewClick()
         cityViewClick()
-
+        getServiceList()
+        serviceSpinnerListner()
+        serviceViewClick()
         edtSdate.setText(getCurrentDate())
         edtEdate.setText(getCurrentDate())
         edtPdate.setText(getCurrentDate())
@@ -108,8 +132,19 @@ class AddSiteActivity : BaseActivity() {
             }
         })
 
+        getSiteList()
 
-//         edtWorkingDays.setText(getCountOfDays(edtSdate.getValue(), edtEdate.getValue()).toString())
+
+
+        bottomSheetBehavior = BottomSheetBehavior.from(bottom)
+
+
+        txtExistSite.setOnClickListener {
+            if (bottomSheetBehavior!!.state == BottomSheetBehavior.STATE_EXPANDED)
+                bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_COLLAPSED
+            else
+                bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_EXPANDED
+        }
 
 
     }
@@ -282,20 +317,24 @@ class AddSiteActivity : BaseActivity() {
         val selectedId: Int = rg.getCheckedRadioButtonId()
         val rbLead = findViewById<View>(selectedId) as? RadioButton
         when {
+            serviceId.equals("-1") -> {
+                root.showSnackBar("Select Service")
+            }
+
             edtSiteName.isEmpty() -> {
                 root.showSnackBar("Enter Site Name")
                 edtSiteName.requestFocus()
             }
-            edtCompanyName.isEmpty() -> {
-                root.showSnackBar("Enter Company Name or Individual Name")
-                edtCompanyName.requestFocus()
-            }
+//            edtCompanyName.isEmpty() -> {
+//                root.showSnackBar("Enter Company Name or Individual Name")
+//                edtCompanyName.requestFocus()
+//            }
 
-            edtWorkingDays.isEmpty() -> {
+            edtWorkingDays.isEmpty() && edtWorkingDays.isVisible -> {
                 root.showSnackBar("Enter  Working Days")
                 edtWorkingDays.requestFocus()
             }
-            edtWorkingHour.isEmpty() -> {
+            edtWorkingHour.isEmpty() && edtWorkingHour.isVisible -> {
                 root.showSnackBar("Enter WorkingHours")
                 edtWorkingHour.requestFocus()
             }
@@ -311,13 +350,10 @@ class AddSiteActivity : BaseActivity() {
             cityID == "-1" -> {
                 root.showSnackBar("City Not Found")
             }
-            !edtGST.isEmpty() -> {
-                if (!validGSTIN(edtGST.getValue())) {
-                    root.showSnackBar("Enter Valid GST No.")
-                    edtGST.requestFocus()
-                } else {
-                    addSite(rbLead?.text.toString(), flag)
-                }
+            !edtGST.isEmpty() && !validGSTIN(edtGST.getValue()) -> {
+                root.showSnackBar("Enter Valid GST No.")
+                edtGST.requestFocus()
+
             }
 
 
@@ -334,23 +370,31 @@ class AddSiteActivity : BaseActivity() {
         try {
             val jsonBody = JSONObject()
             jsonBody.put("UserID", session.user.data?.userID)
-            jsonBody.put("Name", edtCompanyName.getValue())
+            //  jsonBody.put("Name", edtCompanyName.getValue())
             jsonBody.put("VisitorID", intent.getStringExtra(Constant.VISITOR_ID))
             jsonBody.put("CustomerID", intent.getStringExtra(Constant.CUSTOMER_ID))
             jsonBody.put("Address", edtAddress.getValue())
             jsonBody.put("SiteName", edtSiteName.getValue())
             jsonBody.put("StateID", stateID)
             jsonBody.put("CityID", cityID)
-            jsonBody.put("WorkingHours", edtWorkingHour.getValue())
-            jsonBody.put("WorkingDays", edtWorkingDays.getValue())
+            if (!serviceId.equals("1")) {
+                jsonBody.put("WorkingHours", "1")
+                jsonBody.put("WorkingDays", "1")
+            } else {
+                jsonBody.put("WorkingHours", edtWorkingHour.getValue())
+                jsonBody.put("WorkingDays", edtWorkingDays.getValue())
+            }
             jsonBody.put("PinCode", edtPincode.getValue())
             jsonBody.put("GSTNo", edtGST.getValue())
             jsonBody.put("Address2", edtAddress2.getValue())
             jsonBody.put("ProposedDate", TimeStamp.formatDateFromString(edtPdate.getValue()))
             jsonBody.put("StartDate", TimeStamp.formatDateFromString(edtSdate.getValue()))
             jsonBody.put("EndDate", TimeStamp.formatDateFromString(edtEdate.getValue()))
-            jsonBody.put("SiteType", siteType)
-
+            jsonBody.put("SiteID", siteID)
+            jsonBody.put("ServiceID", serviceId)
+            val selectedId: Int = rg.getCheckedRadioButtonId()
+            val rbSite = findViewById<View>(selectedId) as? RadioButton
+            jsonBody.put("SiteType", rbSite?.text.toString())
 
             result = Networking.setParentJsonData(
                 Constant.METHOD_ADD_SITE,
@@ -389,5 +433,274 @@ class AddSiteActivity : BaseActivity() {
                 }
 
             }).addTo(autoDisposable)
+    }
+
+    private fun getServiceList() {
+        var result = ""
+        try {
+            val jsonBody = JSONObject()
+
+
+            result = Networking.setParentJsonData(Constant.METHOD_SERVICE_LIST, jsonBody)
+
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+        Networking
+            .with(this)
+            .getServices()
+            .getServiceList(Networking.wrapParams(result))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : CallbackObserver<ServiceListModel>() {
+                override fun onSuccess(response: ServiceListModel) {
+                    serviceListArray!!.addAll(response.data)
+                    var myList: MutableList<SearchableItem> = mutableListOf()
+                    serviceNameList!!.add("Select Service")
+                    myList.add(
+                        SearchableItem(
+                            0,
+                            "Select Service"
+                        )
+                    )
+
+                    for (items in response.data.indices) {
+                        serviceNameList!!.add(response.data.get(items).service.toString())
+                        myList.add(
+                            SearchableItem(
+                                items.toLong() + 1,
+                                serviceNameList.get(items + 1)
+                            )
+                        )
+
+                    }
+                    itemService = myList
+
+                    adapterService = ArrayAdapter(
+                        this@AddSiteActivity,
+                        R.layout.custom_spinner_item,
+                        serviceNameList!!
+                    )
+                    spService.setAdapter(adapterService)
+
+                }
+
+                override fun onFailed(code: Int, message: String) {
+
+                    showAlert(message)
+
+                }
+
+            }).addTo(autoDisposable)
+    }
+
+    fun serviceSpinnerListner() {
+        spService.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                if (position != -1 && serviceListArray.size > position - 1) {
+                    if (position == 0) {
+                        serviceId = "-1"
+                    } else {
+                        serviceId = serviceListArray.get(position - 1).serviceID.toString()
+
+
+                    }
+
+                    if (serviceId.equals("1")) {
+                        edtWorkingDays.visible()
+                        edtWorkingHour.visible()
+                    } else {
+                        edtWorkingDays.invisible()
+                        edtWorkingHour.invisible()
+                    }
+
+                }
+
+            }
+        }
+    }
+
+    fun serviceViewClick() {
+        view5.setOnClickListener {
+            if (itemService.size > 0)
+                SearchableDialog(this,
+                    itemService!!,
+                    getString(R.string.select_service), { item, _ ->
+                        spService.setSelection(item.id.toInt())
+                    }).show()
+        }
+    }
+
+    fun getSiteList() {
+        var result = ""
+        try {
+            val jsonBody = JSONObject()
+            jsonBody.put("PageSize", -1)
+            jsonBody.put("CurrentPage", 1)
+
+            jsonBody.put("VisitorID", -1)
+            jsonBody.put("CustomerID", -1)
+            if (leadItem != null) {
+                jsonBody.put("CustomerID", leadItem!!.customerID)
+                jsonBody.put("VisitorID", leadItem!!.visitorID)
+            }
+
+            if (customerData != null) {
+                jsonBody.put("CustomerID", customerData!!.customerID)
+                jsonBody.put("VisitorID", customerData!!.visitorID)
+            }
+
+            jsonBody.put("SiteName", CustomerSiteFragment.name)
+            jsonBody.put("CityID", session.getDataByKey(SessionManager.KEY_CITY_ID))
+            result = Networking.setParentJsonData(
+                Constant.METHOD_SITE_LIST,
+                jsonBody
+            )
+
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+
+
+        Networking
+            .with(this)
+            .getServices()
+            .getSiteList(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : CallbackObserver<SiteListModal>() {
+                override fun onSuccess(response: SiteListModal) {
+                    if (response.error == 200) {
+
+                        list.addAll(response.data)
+
+                        list.add(response.data.get(0))
+                        adapter?.notifyDataSetChanged()
+
+                        if (list.size > 0) {
+                            txtExistSite.visible()
+                        } else {
+                            txtExistSite.invisible()
+                        }
+                    }
+
+
+                }
+
+                override fun onFailed(code: Int, message: String) {
+                    if (list.size > 0) {
+                        progressbar.invisible()
+                    }
+                    showAlert(message)
+
+                }
+
+            }).addTo(autoDisposable)
+    }
+
+    fun setupRecyclerView() {
+
+        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        recSiteAddress.layoutManager = layoutManager
+        adapter = SiteAddressAdapter1(this, list, this)
+        recSiteAddress.adapter = adapter
+
+    }
+
+
+    override fun onItemSelect(position: Int, data: SiteListItem) {
+        bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_COLLAPSED
+        edtSiteName.setText(data.siteName)
+        edtGST.setText(data.gSTNo)
+        edtAddress.setText(data.address)
+        edtAddress2.setText(data.address2)
+        edtPincode.setText(data.pinCode)
+        edtSdate.setText(data.startDate)
+        edtEdate.setText(data.endDate)
+        edtPdate.setText(data.proposedDate)
+        edtWorkingDays.setText(data.workingDays?.let { formatServerDateToLocal(it) })
+        edtWorkingHour.setText(data.workingHours?.let { formatServerDateToLocal(it) })
+
+        edtSiteName.isEnabled = false
+        edtGST.isEnabled = false
+        edtAddress.isEnabled = false
+        edtAddress2.isEnabled = false
+        edtPincode.isEnabled = false
+
+
+        for (i in cityListArray.indices) {
+            if (cityListArray.get(i).cityID.equals(data.cityID)) {
+                spCity.setSelection(i)
+                break
+            }
+        }
+
+        for (i in session.stetList.indices) {
+            if (session.stetList.get(i).stateID.toString().equals(data.stateID)) {
+                spState.setSelection(i)
+                break
+            }
+
+        }
+
+        view.isClickable = false
+        view2.isClickable = false
+        linlayCity.isClickable = false
+        linlayState.isClickable = false
+        view.isEnabled = false
+        view2.isEnabled = false
+        linlayCity.isEnabled = false
+        linlayState.isEnabled = false
+
+
+        siteID = data.sitesID.toString()
+
+    }
+
+    override fun onItemSelect(position: Int) {
+        bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_COLLAPSED
+        siteID = "-1"
+        edtSiteName.setText("")
+        edtGST.setText("")
+        edtAddress.setText("")
+        edtAddress2.setText("")
+        edtPincode.setText("")
+        edtWorkingDays.setText("")
+        edtWorkingHour.setText("")
+
+
+        edtSiteName.isEnabled = true
+        edtGST.isEnabled = true
+        edtAddress.isEnabled = true
+        edtAddress2.isEnabled = true
+        edtPincode.isEnabled = true
+
+        edtSdate.setText(getCurrentDate())
+        edtEdate.setText(getCurrentDate())
+        edtPdate.setText(getCurrentDate())
+
+
+        edtSdate.setOnClickListener { showDateTimePicker(this@AddSiteActivity, edtSdate) }
+        edtEdate.setOnClickListener {
+            showNextFromStartDateTimePicker(
+                this@AddSiteActivity,
+                edtEdate,
+                edtSdate.getValue()
+            )
+        }
+        edtPdate.setOnClickListener { showDateTimePicker(this@AddSiteActivity, edtPdate) }
+
+        view.isClickable = true
+        view2.isClickable = true
+        linlayCity.isClickable = true
+        linlayState.isClickable = true
     }
 }
