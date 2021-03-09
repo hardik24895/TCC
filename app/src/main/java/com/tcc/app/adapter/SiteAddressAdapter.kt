@@ -4,10 +4,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.get
 import androidx.recyclerview.widget.RecyclerView
 import com.tcc.app.R
-import com.tcc.app.extention.hide
 import com.tcc.app.extention.invisible
 import com.tcc.app.extention.visible
 import com.tcc.app.modal.SitesItem
@@ -40,8 +38,8 @@ class SiteAddressAdapter(
 
 
         if (position.equals(list.size - 1)) {
-            holder.txtSiteName.hide()
-            holder.txtSiteAddress.hide()
+            holder.txtSiteName.invisible()
+            holder.txtSiteAddress.invisible()
             holder.txtAddNew.visible()
         } else {
 
@@ -52,18 +50,22 @@ class SiteAddressAdapter(
             holder.txtSiteAddress.text =
                 data.address + ", " + data.address2 + ", " + data.pinCode + ", " + data.cityName + ", " + data.stateName
         }
+
+
+        if (lastPos != -1 && position == lastPos)
+            holder.view_select.setBackgroundResource(R.drawable.bg_none_selected)
+        else {
+            holder.view_select.setBackgroundResource(R.drawable.bg_address_select)
+        }
+
+
+
         holder.itemView.setOnClickListener {
-
+            lastPos = position
             if (lastPos == -1) {
-                holder.root.setBackgroundResource(R.drawable.bg_none_selected)
-                lastPos = position
-
+                holder.view_select.setBackgroundResource(R.drawable.bg_none_selected)
             } else {
-                holder.root.get(lastPos).setBackgroundResource(R.drawable.bg_service_unselected)
-                notifyItemChanged(lastPos)
-                holder.root.setBackgroundResource(R.drawable.bg_none_selected)
-                notifyItemChanged(position)
-                lastPos = position
+                notifyDataSetChanged()
             }
 
             if (position == list.size - 1) {
