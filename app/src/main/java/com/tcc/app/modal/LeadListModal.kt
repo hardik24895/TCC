@@ -5,20 +5,20 @@ import java.io.Serializable
 
 data class LeadListModal(
 
-	@field:SerializedName("data")
-	val data: List<LeadItem> = mutableListOf(),
+    @field:SerializedName("data")
+    val data: List<LeadItem> = mutableListOf(),
 
-	@field:SerializedName("rowcount")
-	val rowcount: Int = 0,
+    @field:SerializedName("rowcount")
+    val rowcount: Int = 0,
 
-	@field:SerializedName("sites")
-	val sites: List<SitesItem?>? = null,
+    @field:SerializedName("sites")
+    val sites: List<SitesItem> = mutableListOf(),
 
-	@field:SerializedName("error")
-	val error: Int? = null,
+    @field:SerializedName("error")
+    val error: Int? = null,
 
-	@field:SerializedName("message")
-	val message: String? = null
+    @field:SerializedName("message")
+    val message: String? = null
 )
 
 data class LeadItem(

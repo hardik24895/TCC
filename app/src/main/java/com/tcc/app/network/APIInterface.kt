@@ -56,7 +56,10 @@ interface APIInterface {
     fun getStateList(@Body body: RequestBody): Observable<Response<StateListModal>>
 
     @POST("service/")
-    fun addLead(@Body body: RequestBody): Observable<Response<CommonAddModal>>
+    fun addLead(@Body body: RequestBody): Observable<Response<SiteListModal>>
+
+    @POST("service/")
+    fun editLead(@Body body: RequestBody): Observable<Response<CommonAddModal>>
 
     @POST("service/")
     fun getTrainingData(@Body body: RequestBody): Observable<Response<TrainingSpinnerListModel>>

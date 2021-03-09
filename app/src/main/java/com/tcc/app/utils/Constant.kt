@@ -40,6 +40,7 @@ object Constant {
     const val DATA = "data"
     const val DATA1 = "data1"
     const val DATA_LEAD = "data_lead"
+    const val DATA_SITE = "data_site"
 
 
     // ---Server Date Time--//

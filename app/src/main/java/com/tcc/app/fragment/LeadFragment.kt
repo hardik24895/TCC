@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
+import com.google.gson.Gson
 import com.tcc.app.R
 import com.tcc.app.activity.AddLeadActivity
 import com.tcc.app.activity.LeadDetailActivity
@@ -104,6 +105,8 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
                 )
             ) {
                 val intent = Intent(context, AddLeadActivity::class.java)
+
+                intent.putExtra("Edit", true)
                 intent.putExtra(Constant.DATA, data)
                 startActivity(intent)
                 Animatoo.animateCard(context)
@@ -302,14 +305,19 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
             .subscribeWith(object : CallbackObserver<LeadListModal>() {
                 override fun onSuccess(response: LeadListModal) {
                     hideProgressbar()
+                    val gson = Gson()
+                    val jsonCars = gson.toJson(response.sites)
                     if (response.data.size > 0) {
                         val intent = Intent(context, AddLeadActivity::class.java)
                         intent.putExtra(Constant.DATA, response.data.get(0))
+                        intent.putExtra(Constant.DATA_SITE, jsonCars)
                         intent.putExtra(Constant.MOBILE, mobile)
                         startActivity(intent)
                         Animatoo.animateCard(context)
                     } else {
                         val intent = Intent(context, AddLeadActivity::class.java)
+//                        intent.putExtra(Constant.DATA, response.data.get(0))
+//                        intent.putExtra(Constant.DATA_SITE, jsonCars)
                         intent.putExtra(Constant.MOBILE, mobile)
                         startActivity(intent)
                         Animatoo.animateCard(context)

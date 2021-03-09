@@ -243,4 +243,5 @@
     <string name="search">Search</string>
     <string name="sub_amount">Sub Amount</string>
     <string name="notification">Notifications</string>
+    <string name="choose_existing_site">Choose Existing Site</string>
 </resources>

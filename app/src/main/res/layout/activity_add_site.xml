@@ -358,7 +358,6 @@
                     android:fontFamily="@font/opensans_regular"
                     android:inputType="textCapCharacters"
                     android:maxLength="15"
-
                     android:textAllCaps="true"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black" />

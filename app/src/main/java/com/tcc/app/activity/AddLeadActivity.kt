@@ -6,39 +6,53 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.RadioButton
+import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.tcc.app.R
+import com.tcc.app.adapter.SiteAddressAdapter
 import com.tcc.app.extention.*
-import com.tcc.app.modal.CityDataItem
-import com.tcc.app.modal.CityListModel
-import com.tcc.app.modal.CommonAddModal
-import com.tcc.app.modal.LeadItem
+import com.tcc.app.modal.*
 import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
+import com.tcc.app.utils.GSTINValidator
 import com.tcc.app.utils.Logger
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_add_lead.*
+import kotlinx.android.synthetic.main.bottom_dailog_attendance.*
+import kotlinx.android.synthetic.main.reclerview_swipelayout.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 import org.json.JSONException
 import org.json.JSONObject
 import tech.hibk.searchablespinnerlibrary.SearchableDialog
 import tech.hibk.searchablespinnerlibrary.SearchableItem
+import java.lang.reflect.Type
 
 
-class AddLeadActivity : BaseActivity() {
+class AddLeadActivity : BaseActivity(), SiteAddressAdapter.OnItemSelected {
     var leadItem: LeadItem? = null
     var stateNameList: ArrayList<String> = ArrayList()
     var adapterState: ArrayAdapter<String>? = null
     var stateIteams: List<SearchableItem>? = null
     var stateID: String = "-1"
+    var siteID: String = "-1"
     var cityID: String = "-1"
     var cityNameList: ArrayList<String> = ArrayList()
     var cityListArray: ArrayList<CityDataItem> = ArrayList()
     var adapterCity: ArrayAdapter<String>? = null
     var cityIteams: List<SearchableItem>? = null
     var leadType: String = ""
+    var adapter: SiteAddressAdapter? = null
+    var site: SitesItem? = null
+    var isEdit: Boolean = false
+
+    var list: ArrayList<SitesItem> = ArrayList()
+    var bottomSheetBehavior: BottomSheetBehavior<CardView>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,16 +66,97 @@ class AddLeadActivity : BaseActivity() {
         }
         txtTitle.text = resources.getText(R.string.visitor)
 
-        btnSubmit.setOnClickListener { validation(false) }
+        btnSubmit.setOnClickListener {
+            if (isEdit) {
+                validationEdit(false)
+            } else
+                validation(false)
+        }
 
         if (session.roleData.data?.sites?.isInsert.equals("0")) {
             btnAddSite.invisible()
         }
-        btnAddSite.setOnClickListener { validation(true) }
+
+        if (intent.hasExtra("Edit")) {
+            isEdit = true
+
+        }
+
+        if (isEdit) {
+            crd_4.invisible()
+            txtExistSite.invisible()
+            inSiteName.invisible()
+            ingst.invisible()
+            inendDate.invisible()
+            inStartdaate.invisible()
+            inpDate.invisible()
+
+
+        } else {
+
+
+            if (intent.hasExtra(Constant.DATA_SITE)) {
+                val gson = Gson()
+                val type: Type = object : TypeToken<List<SitesItem?>?>() {}.type
+                val siteList: List<SitesItem> =
+                    gson.fromJson(intent.getStringExtra(Constant.DATA_SITE), type)
+                list.addAll(siteList)
+                list.add(siteList.get(0))
+                bottomSheetBehavior = BottomSheetBehavior.from(bottom)
+
+                txtExistSite.setOnClickListener {
+                    if (bottomSheetBehavior!!.state == BottomSheetBehavior.STATE_EXPANDED)
+                        bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_COLLAPSED
+                    else
+                        bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_EXPANDED
+                }
+
+                setupRecyclerView()
+                txtExistSite.visible()
+            } else {
+                txtExistSite.invisible()
+
+            }
+        }
+
+        edtSdate.setText(getCurrentDate())
+        edtEdate.setText(getCurrentDate())
+        edtPdate.setText(getCurrentDate())
+
+
+        edtSdate.setOnClickListener { showDateTimePicker(this@AddLeadActivity, edtSdate) }
+        edtEdate.setOnClickListener {
+            showNextFromStartDateTimePicker(
+                this@AddLeadActivity,
+                edtEdate,
+                edtSdate.getValue()
+            )
+        }
+        edtPdate.setOnClickListener { showDateTimePicker(this@AddLeadActivity, edtPdate) }
+
+        btnAddSite.setOnClickListener {
+
+            if (isEdit) {
+                validationEdit(true)
+            } else
+                validation(true)
+
+        }
         stateSpinnerListner()
         citySpinnerListner()
         stateViewClick()
         cityViewClick()
+
+
+    }
+
+
+    fun setupRecyclerView() {
+
+        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        recSiteAddress.layoutManager = layoutManager
+        adapter = SiteAddressAdapter(this, list, this)
+        recSiteAddress.adapter = adapter
 
     }
 
@@ -282,16 +377,31 @@ class AddLeadActivity : BaseActivity() {
                 root.showSnackBar("Enter Valid Mobile No.")
                 edtMobile.requestFocus()
             }
+
+            edtSiteName.isEmpty() -> {
+                root.showSnackBar("Enter Site Name")
+                edtSiteName.requestFocus()
+            }
+
+            !edtGST.isEmpty() -> {
+                if (!GSTINValidator.validGSTIN(edtGST.getValue())) {
+                    root.showSnackBar("Enter Valid GST No.")
+                    edtGST.requestFocus()
+                }
+            }
+
             edtAddress.isEmpty() -> {
                 root.showSnackBar("Enter Address")
                 edtAddress.requestFocus()
             }
-            edtPincode.isEmpty() -> {
-                root.showSnackBar("Enter Pincode")
-                edtPincode.requestFocus()
+
+
+            edtAddress1.isEmpty() -> {
+                root.showSnackBar("Enter Address1")
+                edtAddress1.requestFocus()
             }
-            edtPincode.getValue().length < 6 -> {
-                root.showSnackBar("Enter  Valid Pincode")
+            !edtPincode.isEmpty() && edtPincode.getValue().length < 6 -> {
+                root.showSnackBar("Enter Valid GST No.")
                 edtPincode.requestFocus()
             }
             stateID.equals("-1") -> {
@@ -307,13 +417,74 @@ class AddLeadActivity : BaseActivity() {
                 root.showSnackBar("City Not Found")
             }
             else -> {
-                if (leadItem == null)
-                    addLead(rbLead?.text.toString(), flag)
-                else
+
+                addLead(rbLead?.text.toString(), flag)
+
+            }
+        }
+
+    }
+
+
+    fun validationEdit(flag: Boolean) {
+        val selectedId: Int = rg.getCheckedRadioButtonId()
+        val rbLead = findViewById<View>(selectedId) as? RadioButton
+        when {
+            edtName.isEmpty() -> {
+                root.showSnackBar("Enter Name")
+                edtName.requestFocus()
+            }
+            edtEmail.isEmpty() -> {
+                root.showSnackBar("Enter Email")
+                edtEmail.requestFocus()
+            }
+            !isValidEmail(edtEmail.getValue()) -> {
+                root.showSnackBar("Enter valid email")
+                edtEmail.requestFocus()
+            }
+            edtMobile.isEmpty() -> {
+                root.showSnackBar("Enter  Mobile No.")
+                edtMobile.requestFocus()
+            }
+            edtMobile.getValue().length < 10 -> {
+                root.showSnackBar("Enter Valid Mobile No.")
+                edtMobile.requestFocus()
+            }
+
+            edtAddress.isEmpty() -> {
+                root.showSnackBar("Enter Address")
+                edtAddress.requestFocus()
+            }
+
+
+            edtAddress1.isEmpty() -> {
+                root.showSnackBar("Enter Address1")
+                edtAddress1.requestFocus()
+            }
+            !edtPincode.isEmpty() && edtPincode.getValue().length < 6 -> {
+                root.showSnackBar("Enter Valid GST No.")
+                edtPincode.requestFocus()
+            }
+            stateID.equals("-1") -> {
+                root.showSnackBar("Select State")
+            }
+            cityID.equals("-1") -> {
+                root.showSnackBar("Select City")
+            }
+            selectedId == -1 -> {
+                root.showSnackBar("Select Lead Type")
+            }
+            cityID == "-1" -> {
+                root.showSnackBar("City Not Found")
+            }
+            else -> {
+
                     editLead(rbLead?.text.toString(), flag)
             }
 
         }
+
+
     }
 
     fun addLead(leadType: String?, flag: Boolean) {
@@ -328,9 +499,18 @@ class AddLeadActivity : BaseActivity() {
             jsonBody.put("Address", edtAddress.getValue())
             jsonBody.put("CityID", cityID)
             jsonBody.put("StateID", stateID)
+            jsonBody.put("SiteID", siteID)
             jsonBody.put("PinCode", edtPincode.getValue())
+            jsonBody.put("GSTNo", edtGST.getValue())
             jsonBody.put("LeadType", leadType)
-
+            jsonBody.put("SiteName", edtSiteName.getValue())
+            jsonBody.put("StartDate", edtSdate.getValue())
+            jsonBody.put("EndDate", edtEdate.getValue())
+            jsonBody.put("ProposedDate", edtPdate.getValue())
+            val selectedId: Int = rg1.getCheckedRadioButtonId()
+            val rbSite = findViewById<View>(selectedId) as? RadioButton
+            jsonBody.put("SiteType", rbSite?.text.toString())
+            jsonBody.put("GSTNo", edtGST.getValue())
 
             result = Networking.setParentJsonData(
                 Constant.METHOD_ADD_LEAD,
@@ -346,18 +526,17 @@ class AddLeadActivity : BaseActivity() {
             .addLead(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeWith(object : CallbackObserver<CommonAddModal>() {
-                override fun onSuccess(response: CommonAddModal) {
+            .subscribeWith(object : CallbackObserver<SiteListModal>() {
+                override fun onSuccess(response: SiteListModal) {
                     val data = response.data
                     hideProgressbar()
                     if (response.error == 200) {
                         root.showSnackBar(response.message.toString())
                         if (flag) {
-                            val intent = Intent(this@AddLeadActivity, AddSiteActivity::class.java)
-                            intent.putExtra(Constant.VISITOR_ID, data.get(0).iD.toString())
-                            intent.putExtra(Constant.CUSTOMER_ID, "0")
-                            intent.putExtra(Constant.CUSTOMER_NAME, edtName.getValue())
-                            startActivity(intent)
+
+                            val i = Intent(this@AddLeadActivity, AddQuotationActivity::class.java)
+                            i.putExtra(Constant.DATA, data.get(0))
+                            startActivity(i)
                         }
 
                         finish()
@@ -385,7 +564,7 @@ class AddLeadActivity : BaseActivity() {
             jsonBody.put("Name", edtName.getValue())
             jsonBody.put("MobileNo", edtMobile.getValue())
             jsonBody.put("EmailID", edtEmail.getValue())
-            jsonBody.put("Address", edtAddress.getValue())
+            jsonBody.put("Address", edtAddress.getValue() + ", " + edtAddress1.getValue())
             jsonBody.put("CityID", cityID)
             jsonBody.put("StateID", stateID)
             jsonBody.put("PinCode", edtPincode.getValue())
@@ -403,7 +582,7 @@ class AddLeadActivity : BaseActivity() {
         Networking
             .with(this)
             .getServices()
-            .addLead(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
+            .editLead(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeWith(object : CallbackObserver<CommonAddModal>() {
@@ -418,6 +597,8 @@ class AddLeadActivity : BaseActivity() {
                             intent.putExtra(Constant.CUSTOMER_ID, "0")
                             intent.putExtra(Constant.CUSTOMER_NAME, edtName.getValue())
                             startActivity(intent)
+                        } else {
+                            showAlert(response.message.toString())
                         }
 
 
@@ -433,5 +614,93 @@ class AddLeadActivity : BaseActivity() {
                 }
 
             }).addTo(autoDisposable)
+    }
+
+    override fun onItemSelect(position: Int, data: SitesItem) {
+        bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_COLLAPSED
+        edtSiteName.setText(data.siteName)
+        edtGST.setText(data.gSTNo)
+        edtAddress.setText(data.address)
+        edtAddress1.setText(data.address2)
+        edtPincode.setText(data.pinCode)
+        edtSdate.setText(data.startDate)
+        edtEdate.setText(data.endDate)
+        edtPdate.setText(data.proposedDate)
+
+        edtSiteName.isEnabled = false
+        edtGST.isEnabled = false
+        edtAddress.isEnabled = false
+        edtAddress1.isEnabled = false
+        edtPincode.isEnabled = false
+        edtSdate.isEnabled = false
+        edtEdate.isEnabled = false
+        edtPdate.isEnabled = false
+
+
+        for (i in cityListArray.indices) {
+            if (cityListArray.get(i).cityID.equals(data.cityID)) {
+                spCity.setSelection(i)
+                break
+            }
+        }
+
+        for (i in session.stetList.indices) {
+            if (session.stetList.get(i).stateID.toString().equals(data.stateID)) {
+                spState.setSelection(i)
+                break
+            }
+
+        }
+
+        view.isClickable = false
+        view2.isClickable = false
+        linlayCity.isClickable = false
+        linlayState.isClickable = false
+        view.isEnabled = false
+        view2.isEnabled = false
+        linlayCity.isEnabled = false
+        linlayState.isEnabled = false
+
+
+        siteID = data.sitesID.toString()
+
+    }
+
+    override fun onItemSelect(position: Int) {
+        bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_COLLAPSED
+        siteID = "-1"
+        edtSiteName.setText("")
+        edtGST.setText("")
+        edtAddress.setText("")
+        edtAddress1.setText("")
+        edtPincode.setText("")
+        edtSiteName.isEnabled = true
+        edtGST.isEnabled = true
+        edtAddress.isEnabled = true
+        edtAddress1.isEnabled = true
+        edtPincode.isEnabled = true
+        edtSdate.isEnabled = true
+        edtEdate.isEnabled = true
+        edtPdate.isEnabled = true
+
+        edtSdate.setText(getCurrentDate())
+        edtEdate.setText(getCurrentDate())
+        edtPdate.setText(getCurrentDate())
+
+
+        edtSdate.setOnClickListener { showDateTimePicker(this@AddLeadActivity, edtSdate) }
+        edtEdate.setOnClickListener {
+            showNextFromStartDateTimePicker(
+                this@AddLeadActivity,
+                edtEdate,
+                edtSdate.getValue()
+            )
+        }
+        edtPdate.setOnClickListener { showDateTimePicker(this@AddLeadActivity, edtPdate) }
+
+        view.isClickable = true
+        view2.isClickable = true
+        linlayCity.isClickable = true
+        linlayState.isClickable = true
     }
 }
