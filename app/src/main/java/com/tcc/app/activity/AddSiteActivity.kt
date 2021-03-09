@@ -330,13 +330,13 @@ class AddSiteActivity : BaseActivity(), SiteAddressAdapter1.OnItemSelected {
 //                edtCompanyName.requestFocus()
 //            }
 
-            edtWorkingDays.isEmpty() && edtWorkingDays.isVisible -> {
-                root.showSnackBar("Enter  Working Days")
-                edtWorkingDays.requestFocus()
-            }
-            edtWorkingHour.isEmpty() && edtWorkingHour.isVisible -> {
-                root.showSnackBar("Enter WorkingHours")
+            inWorkingd.isVisible && edtWorkingHour.isEmpty() -> {
+                root.showSnackBar("Enter Working Hours")
                 edtWorkingHour.requestFocus()
+            }
+            inWorkingh.isVisible && edtWorkingDays.isEmpty() -> {
+                root.showSnackBar("Enter Working Days")
+                edtWorkingDays.requestFocus()
             }
             edtAddress.isEmpty() -> {
                 root.showSnackBar("Enter Address")
