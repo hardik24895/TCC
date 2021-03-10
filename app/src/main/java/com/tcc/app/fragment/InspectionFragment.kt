@@ -9,10 +9,10 @@ import com.tcc.app.R
 import com.tcc.app.activity.AddInspectionActivity
 import com.tcc.app.activity.InspectionDetailActivity
 import com.tcc.app.adapter.InspectionAdapter
-import com.tcc.app.adapter.InspectionDataItem
-import com.tcc.app.adapter.InspectionListModel
 import com.tcc.app.extention.*
 import com.tcc.app.interfaces.LoadMoreListener
+import com.tcc.app.modal.InspectionDataItem
+import com.tcc.app.modal.InspectionListModel
 import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo

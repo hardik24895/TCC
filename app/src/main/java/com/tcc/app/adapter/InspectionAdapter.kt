@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.tcc.app.R
 import com.tcc.app.extention.invisible
+import com.tcc.app.modal.InspectionDataItem
 import com.tcc.app.utils.Constant
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.row_inspection.*

@@ -1,6 +1,5 @@
 package com.tcc.app.network
 
-import com.tcc.app.adapter.InspectionListModel
 import com.tcc.app.modal.*
 import io.reactivex.Observable
 import okhttp3.MultipartBody

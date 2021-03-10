@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tcc.app.R
+import com.tcc.app.modal.InspectionItem
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.row_preview_inspection_question.*
 

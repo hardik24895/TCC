@@ -302,8 +302,11 @@
             android:layout_marginTop="@dimen/_8sdp"
             android:drawableStart="@drawable/ic_note"
             android:drawablePadding="@dimen/_4sdp"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:text="508, Sontorini squre, jodhpur, Ahmedabad, 380015"
             android:textColor="@color/txtgray"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/imgProfile"
             app:layout_constraintTop_toBottomOf="@+id/crd_remaining" />
 
