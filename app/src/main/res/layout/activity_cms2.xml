@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite">
+
+    <ScrollView
+        android:id="@+id/root"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.01999998">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RelativeLayout
+                android:id="@+id/rLayoutTop"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_200sdp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/about_banner" />
+
+
+                <ImageView
+                    android:id="@+id/imgBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_5sdp"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    app:srcCompat="@drawable/abc_vector_test" />
+
+                <com.tcc.app.customview.TextviewBold
+                    android:id="@+id/txtTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="8dp"
+                    android:gravity="center"
+                    android:padding="@dimen/_10sdp"
+                    android:text="About us"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_20ssp"
+
+                    />
+
+
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.tcc.app.customview.TextviewReguler
+                    android:id="@+id/txtDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:padding="@dimen/_5sdp"
+                    android:text="@string/loremupsome"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_midium"
+                    tools:text="@string/loremupsome" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- <ImageView
+         android:id="@+id/img"
+         android:layout_width="match_parent"
+         android:layout_height="@dimen/_200sdp"
+         android:src="@drawable/progile_bg"
+         android:scaleType="centerCrop"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@+id/include" />
+
+     <TextView
+         android:id="@+id/txtTitle"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_margin="8dp"
+         android:fontFamily="@font/clan_ot_bold"
+         android:gravity="center"
+         android:padding="@dimen/_10sdp"
+         android:text="About us"
+         android:textColor="@color/white"
+         android:textSize="@dimen/text_extra_xlarge"
+         app:layout_constraintBottom_toBottomOf="@+id/img"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@+id/include" />
+
+     <TextView
+         android:id="@+id/txtDesc"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_margin="8dp"
+         android:padding="@dimen/_5sdp"
+         android:fontFamily="@font/clan_ot_book"
+         android:text="text"
+         android:textColor="@color/black"
+         android:textSize="@dimen/text_midium"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@+id/img" />-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

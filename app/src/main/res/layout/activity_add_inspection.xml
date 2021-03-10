@@ -2,10 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:id="@+id/root"
-    android:background="@drawable/ic_background"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/ic_background"
     tools:context=".activity.AddInspectionActivity">
 
     <include
@@ -31,326 +31,369 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inpsdate"
-                android:layout_width="0dp"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_10sdp"
-                android:hint="@string/select_date"
-                app:hintTextColor="@color/black"
+                android:layout_marginHorizontal="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:elevation="5dp"
+                app:cardCornerRadius="8dp"
+                app:cardUseCompatPadding="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <EditText
-                    android:id="@+id/edtDate"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorWhite"
-                    android:editable="false"
-                    android:focusableInTouchMode="false"
-                    android:fontFamily="@font/opensans_regular"
-                    android:inputType="none"
-                    android:maxLength="10"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_margin="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_5ssp">
 
-            <com.tcc.app.customview.TextviewSemiBold
-                android:id="@+id/txtSite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:paddingTop="@dimen/_2sdp"
-                android:text="@string/site"
-                app:layout_constraintStart_toStartOf="@+id/inpsdate"
-                app:layout_constraintTop_toBottomOf="@+id/inpsdate" />
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/inpsdate"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:hint="@string/select_date"
+                        app:hintTextColor="@color/black"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/linlaySp"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:background="@drawable/bg_spinner"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="@+id/inpsdate"
-                app:layout_constraintStart_toStartOf="@+id/txtSite"
-                app:layout_constraintTop_toBottomOf="@+id/txtSite">
+                        <EditText
+                            android:id="@+id/edtDate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorWhite"
+                            android:editable="false"
+                            android:focusableInTouchMode="false"
+                            android:fontFamily="@font/opensans_regular"
+                            android:inputType="none"
+                            android:maxLength="10"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
+                    <com.tcc.app.customview.TextviewSemiBold
+                        android:id="@+id/txtSite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:paddingTop="@dimen/_2sdp"
+                        android:text="@string/site"
+                        app:layout_constraintStart_toStartOf="@+id/inpsdate"
+                        app:layout_constraintTop_toBottomOf="@+id/inpsdate" />
 
-                <tech.hibk.searchablespinnerlibrary.SearchableSpinner
-                    android:id="@+id/spSite"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_3sdp"
-                    android:clickable="false"
-                    android:focusable="false"
-                    app:cancelButtonColor="@color/black"
-                    app:cancelButtontext="CLOSE"
-                    app:dialogTitle="@string/select_site"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:nothingSelectedText="@string/select_site"
-                    app:onlyLightTheme="true" />
-
-                <View
-                    android:id="@+id/view"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/spSite"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/spSite" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <com.tcc.app.customview.TextviewSemiBold
-                android:id="@+id/txtField"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:paddingTop="@dimen/_2sdp"
-                android:text="@string/field_operator"
-                app:layout_constraintStart_toStartOf="@+id/inpsdate"
-                app:layout_constraintTop_toBottomOf="@+id/linlaySp" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/linlaySp2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:background="@drawable/bg_spinner"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="@+id/inpsdate"
-                app:layout_constraintStart_toStartOf="@+id/txtSite"
-                app:layout_constraintTop_toBottomOf="@+id/txtField">
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/linlaySp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:background="@drawable/bg_spinner"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="@+id/inpsdate"
+                        app:layout_constraintStart_toStartOf="@+id/txtSite"
+                        app:layout_constraintTop_toBottomOf="@+id/txtSite">
 
 
-                <tech.hibk.searchablespinnerlibrary.SearchableSpinner
-                    android:id="@+id/spFieldOperator"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_3sdp"
-                    android:clickable="false"
-                    android:focusable="false"
-                    app:cancelButtonColor="@color/black"
-                    app:cancelButtontext="CLOSE"
-                    app:dialogTitle="@string/select_field_operator"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:nothingSelectedText="@string/select_field_operator"
-                    app:onlyLightTheme="true" />
+                        <tech.hibk.searchablespinnerlibrary.SearchableSpinner
+                            android:id="@+id/spSite"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/_3sdp"
+                            android:clickable="false"
+                            android:focusable="false"
+                            app:cancelButtonColor="@color/black"
+                            app:cancelButtontext="CLOSE"
+                            app:dialogTitle="@string/select_site"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:nothingSelectedText="@string/select_site"
+                            app:onlyLightTheme="true" />
 
-                <View
-                    android:id="@+id/view2"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/spFieldOperator"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/spFieldOperator" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                        <View
+                            android:id="@+id/view"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/spSite"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/spSite" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
+                    <com.tcc.app.customview.TextviewSemiBold
+                        android:id="@+id/txtField"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:paddingTop="@dimen/_2sdp"
+                        android:text="@string/field_operator"
+                        app:layout_constraintStart_toStartOf="@+id/inpsdate"
+                        app:layout_constraintTop_toBottomOf="@+id/linlaySp" />
 
-            <com.tcc.app.customview.TextviewSemiBold
-                android:id="@+id/txtOperation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:paddingTop="@dimen/_2sdp"
-                android:text="@string/operation_manager"
-                app:layout_constraintStart_toStartOf="@+id/inpsdate"
-                app:layout_constraintTop_toBottomOf="@+id/linlaySp2" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/linlaySp3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:background="@drawable/bg_spinner"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="@+id/inpsdate"
-                app:layout_constraintStart_toStartOf="@+id/txtSite"
-                app:layout_constraintTop_toBottomOf="@+id/txtOperation">
-
-
-                <tech.hibk.searchablespinnerlibrary.SearchableSpinner
-                    android:id="@+id/spOperation"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_3sdp"
-                    android:clickable="false"
-                    android:focusable="false"
-                    app:cancelButtonColor="@color/black"
-                    app:cancelButtontext="CLOSE"
-                    app:dialogTitle="Sample"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:nothingSelectedText="@string/select_operation_manager"
-                    app:onlyLightTheme="true" />
-
-                <View
-                    android:id="@+id/view3"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/spOperation"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/spOperation" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <com.tcc.app.customview.TextviewSemiBold
-                android:id="@+id/txtQuality"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:paddingTop="@dimen/_2sdp"
-                android:text="@string/quality_manager"
-                app:layout_constraintStart_toStartOf="@+id/inpsdate"
-                app:layout_constraintTop_toBottomOf="@+id/linlaySp3" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/linlaySp4"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:background="@drawable/bg_spinner"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="@+id/inpsdate"
-                app:layout_constraintStart_toStartOf="@+id/txtSite"
-                app:layout_constraintTop_toBottomOf="@+id/txtQuality">
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/linlaySp2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:background="@drawable/bg_spinner"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="@+id/inpsdate"
+                        app:layout_constraintStart_toStartOf="@+id/txtSite"
+                        app:layout_constraintTop_toBottomOf="@+id/txtField">
 
 
-                <tech.hibk.searchablespinnerlibrary.SearchableSpinner
-                    android:id="@+id/spQuality"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_3sdp"
-                    android:clickable="false"
-                    android:focusable="false"
-                    app:cancelButtonColor="@color/black"
-                    app:cancelButtontext="CLOSE"
-                    app:dialogTitle="Sample"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:nothingSelectedText="@string/select_quality_manager"
-                    app:onlyLightTheme="true"
-                    tools:layout_editor_absoluteX="10dp" />
+                        <tech.hibk.searchablespinnerlibrary.SearchableSpinner
+                            android:id="@+id/spFieldOperator"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/_3sdp"
+                            android:clickable="false"
+                            android:focusable="false"
+                            app:cancelButtonColor="@color/black"
+                            app:cancelButtontext="CLOSE"
+                            app:dialogTitle="@string/select_field_operator"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:nothingSelectedText="@string/select_field_operator"
+                            app:onlyLightTheme="true" />
 
-                <View
-                    android:id="@+id/view4"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/spQuality"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/spQuality" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                        <View
+                            android:id="@+id/view2"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/spFieldOperator"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/spFieldOperator" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvQueAns"
+                    <com.tcc.app.customview.TextviewSemiBold
+                        android:id="@+id/txtOperation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:paddingTop="@dimen/_2sdp"
+                        android:text="@string/operation_manager"
+                        app:layout_constraintStart_toStartOf="@+id/inpsdate"
+                        app:layout_constraintTop_toBottomOf="@+id/linlaySp2" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/linlaySp3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:background="@drawable/bg_spinner"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="@+id/inpsdate"
+                        app:layout_constraintStart_toStartOf="@+id/txtSite"
+                        app:layout_constraintTop_toBottomOf="@+id/txtOperation">
+
+
+                        <tech.hibk.searchablespinnerlibrary.SearchableSpinner
+                            android:id="@+id/spOperation"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/_3sdp"
+                            android:clickable="false"
+                            android:focusable="false"
+                            app:cancelButtonColor="@color/black"
+                            app:cancelButtontext="CLOSE"
+                            app:dialogTitle="Sample"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:nothingSelectedText="@string/select_operation_manager"
+                            app:onlyLightTheme="true" />
+
+                        <View
+                            android:id="@+id/view3"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/spOperation"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/spOperation" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <com.tcc.app.customview.TextviewSemiBold
+                        android:id="@+id/txtQuality"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:paddingTop="@dimen/_2sdp"
+                        android:text="@string/quality_manager"
+                        app:layout_constraintStart_toStartOf="@+id/inpsdate"
+                        app:layout_constraintTop_toBottomOf="@+id/linlaySp3" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/linlaySp4"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:background="@drawable/bg_spinner"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="@+id/inpsdate"
+                        app:layout_constraintStart_toStartOf="@+id/txtSite"
+                        app:layout_constraintTop_toBottomOf="@+id/txtQuality">
+
+
+                        <tech.hibk.searchablespinnerlibrary.SearchableSpinner
+                            android:id="@+id/spQuality"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/_3sdp"
+                            android:clickable="false"
+                            android:focusable="false"
+                            app:cancelButtonColor="@color/black"
+                            app:cancelButtontext="CLOSE"
+                            app:dialogTitle="Sample"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:nothingSelectedText="@string/select_quality_manager"
+                            app:onlyLightTheme="true"
+                            tools:layout_editor_absoluteX="10dp" />
+
+                        <View
+                            android:id="@+id/view4"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/spQuality"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/spQuality" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvQueAns"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_18sdp"
+                        android:clipToPadding="false"
+                        android:isScrollContainer="false"
+                        android:nestedScrollingEnabled="false"
+                        android:paddingVertical="@dimen/_4sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/linlaySp4" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_18sdp"
-                android:clipToPadding="false"
-                android:isScrollContainer="false"
-                android:nestedScrollingEnabled="false"
-                android:paddingVertical="@dimen/_4sdp"
+                android:layout_marginHorizontal="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:elevation="5dp"
+                app:cardCornerRadius="8dp"
+                app:cardUseCompatPadding="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/linlaySp4" />
+                app:layout_constraintTop_toBottomOf="@+id/card1">
 
-
-            <com.tcc.app.customview.TextviewBold
-                android:id="@+id/txtAge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:paddingTop="@dimen/_2sdp"
-                android:text="@string/which_age_category_do_you_fall_into"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="@+id/inpsdate"
-                app:layout_constraintTop_toBottomOf="@+id/linlaySp4" />
-
-            <RadioGroup
-                android:id="@+id/rg"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="@+id/txtAge"
-                app:layout_constraintTop_toBottomOf="@+id/txtAge">
-
-                <com.tcc.app.customview.RadioButtonReguler
-                    android:id="@+id/rb1725"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/_30sdp"
-                    android:text="17-25" />
-
-                <com.tcc.app.customview.RadioButtonReguler
-                    android:id="@+id/rb2540"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/_30sdp"
-                    android:text="25-40" />
-
-                <com.tcc.app.customview.RadioButtonReguler
-                    android:id="@+id/rb4060"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/_30sdp"
-                    android:text="40-60" />
-
-                <com.tcc.app.customview.RadioButtonReguler
-                    android:id="@+id/rb60"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/_30sdp"
-                    android:text="60+" />
-            </RadioGroup>
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/img"
-                android:layout_width="@dimen/_50sdp"
-                android:layout_height="@dimen/_50sdp"
-                android:layout_marginTop="@dimen/_2sdp"
-                android:src="@drawable/ic_profile"
-                app:civ_border_color="@color/black"
-                app:civ_border_width="@dimen/_2ssp"
-                app:layout_constraintStart_toStartOf="@+id/txtAge"
-                app:layout_constraintTop_toBottomOf="@+id/rvQueAns"
-                app:srcCompat="@drawable/ic_profile" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inpRemark"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_10sdp"
-                android:hint="@string/remark"
-                app:hintTextColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/img">
-
-                <EditText
-                    android:id="@+id/edtRemark"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorWhite"
-                    android:fontFamily="@font/opensans_regular"
-                    android:inputType="text"
-                    android:lines="3"
-                    android:maxLength="500"
-                    android:maxLines="5"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_margin="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_5ssp">
+
+
+                    <com.tcc.app.customview.TextviewBold
+                        android:id="@+id/txtAge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_2sdp"
+                        android:text="@string/which_age_category_do_you_fall_into"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="parent" />
+
+                    <RadioGroup
+                        android:id="@+id/rg"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="@+id/txtAge"
+                        app:layout_constraintTop_toBottomOf="@+id/txtAge">
+
+                        <com.tcc.app.customview.RadioButtonReguler
+                            android:id="@+id/rb1725"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/_30sdp"
+                            android:text="17-25" />
+
+                        <com.tcc.app.customview.RadioButtonReguler
+                            android:id="@+id/rb2540"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/_30sdp"
+                            android:text="25-40" />
+
+                        <com.tcc.app.customview.RadioButtonReguler
+                            android:id="@+id/rb4060"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/_30sdp"
+                            android:text="40-60" />
+
+                        <com.tcc.app.customview.RadioButtonReguler
+                            android:id="@+id/rb60"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/_30sdp"
+                            android:text="60+" />
+                    </RadioGroup>
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/img"
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:src="@drawable/ic_profile"
+                        app:civ_border_color="@color/black"
+                        app:civ_border_width="@dimen/_2ssp"
+                        app:layout_constraintStart_toStartOf="@+id/txtAge"
+
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_profile" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/inpRemark"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:hint="@string/remark"
+                        app:hintTextColor="@color/black"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/img">
+
+                        <EditText
+                            android:id="@+id/edtRemark"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorWhite"
+                            android:fontFamily="@font/opensans_regular"
+                            android:inputType="text"
+                            android:lines="3"
+                            android:maxLength="500"
+                            android:maxLines="5"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
 
             <com.tcc.app.customview.ButtonReguler
                 android:id="@+id/btnSubmit"
@@ -359,11 +402,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_18sdp"
                 android:layout_marginBottom="@dimen/_18sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
                 android:text="Next"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/linlaySp4"
-                app:layout_constraintStart_toStartOf="@+id/txtAge"
-                app:layout_constraintTop_toBottomOf="@+id/inpRemark" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/card2" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

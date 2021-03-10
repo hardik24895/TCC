@@ -154,7 +154,8 @@ class EmployeeDetailActivity : BaseActivity() {
                 }
 
                 if (tab.position == 4) {
-                    imgAdd.setImageResource(R.drawable.ic_start_date)
+                    imgAdd.invisible()
+                    //   imgAdd.setImageResource(R.drawable.ic_start_date)
                 } else {
                     imgAdd.setImageResource(R.drawable.ic_add)
                 }

@@ -245,6 +245,7 @@
     <string name="notification">Notifications</string>
     <string name="choose_existing_site">Choose Existing Site</string>
     <string name="invoice_number">Invoice Number</string>
+    <string name="more">More</string>
     <string name="advance_salary">Advance Amount</string>
     <string name="add_salary">Add Salary</string>
     <string name="penalty">Penalty</string>

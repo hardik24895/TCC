@@ -16,7 +16,6 @@ import com.tcc.app.extention.goToActivityAndClearTask
 import com.tcc.app.extention.replaceFragment
 import com.tcc.app.extention.setHomeScreenTitle
 import com.tcc.app.utils.Constant
-import com.tcc.app.utils.Constant.CMS_URL
 import com.tcc.app.utils.SessionManager
 import kotlinx.android.synthetic.main.fragment_setting.*
 
@@ -40,18 +39,18 @@ class SettingsFragment : BaseFragment() {
 
         relayNotification.setOnClickListener { goToActivity<NotificationActivity>() }
         relayAboutus.setOnClickListener {
-            intent.putExtra("Title", "About Us")
-            intent.putExtra("Desc", CMS_URL + "AboutUS")
+            intent.putExtra(Constant.TITLE, "2")
+            intent.putExtra("Desc", "AboutUS")
             startActivity(intent)
         }
         relayPrivacy.setOnClickListener {
-            intent.putExtra("Title", "Privacy Policy")
-            intent.putExtra("Desc", CMS_URL + "PrivacyPolicy")
+            intent.putExtra(Constant.TITLE, "3")
+            intent.putExtra("Desc", "PrivacyPolicy")
             startActivity(intent)
         }
         relayTerms.setOnClickListener {
-            intent.putExtra("Title", "Terms And Condition")
-            intent.putExtra("Desc", CMS_URL + "TermandCondition")
+            intent.putExtra(Constant.TITLE, "1")
+            intent.putExtra("Desc", "TermandCondition")
             startActivity(intent)
         }
 

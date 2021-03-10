@@ -143,6 +143,8 @@ dependencies {
 
     implementation 'com.github.claudiodegio:MsvSearch:1.0.0'
 
+    // Read More Textview
+    implementation 'com.borjabravo:readmoretextview:2.1.0'
    // implementation 'com.github.arimorty:floatingsearchview:2.1.1'
 
     // Import the BoM for the Firebase platform

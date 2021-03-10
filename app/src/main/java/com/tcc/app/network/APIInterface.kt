@@ -1,6 +1,5 @@
 package com.tcc.app.network
 
-import com.tcc.app.adapter.InspectionListModel
 import com.tcc.app.modal.*
 import io.reactivex.Observable
 import okhttp3.MultipartBody
@@ -288,4 +287,7 @@ interface APIInterface {
 
     @POST("service/")
     fun getSiteTabList(@Body body: RequestBody): Observable<Response<DynemicSiteTabListModal>>
+
+    @POST("service/")
+    fun getCMS(@Body body: RequestBody): Observable<Response<CMSModal>>
 }

@@ -6,9 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tcc.app.R
-import com.tcc.app.adapter.InspectionAdapter
-import com.tcc.app.adapter.InspectionDataItem
-import com.tcc.app.adapter.InspectionListModel
 import com.tcc.app.adapter.ProcessAdapter
 import com.tcc.app.extention.invisible
 import com.tcc.app.extention.showAlert

@@ -1,4 +1,4 @@
-package com.tcc.app.adapter
+package com.tcc.app.modal
 
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
