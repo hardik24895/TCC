@@ -115,7 +115,7 @@ class SearchActivity : BaseActivity() {
         view2.setOnClickListener {
             SearchableDialog(this@SearchActivity,
                 itemUserType!!,
-                getString(R.string.select_usertype), { item, _ ->
+                getString(R.string.staff_selection), { item, _ ->
                     spUserType.setSelection(item.id.toInt())
                 }).show()
         }
@@ -170,7 +170,7 @@ class SearchActivity : BaseActivity() {
                     userTypeListArray!!.addAll(response.data)
 
                     var myList: MutableList<SearchableItem> = mutableListOf()
-                    userTypeNameList!!.add("Select User Type")
+                    userTypeNameList!!.add(getString(R.string.staff_selection))
                     for (items in response.data.indices) {
                         userTypeNameList!!.add(response.data.get(items).usertype.toString())
                         myList.add(SearchableItem(items.toLong(), userTypeNameList!!.get(items)))

@@ -422,12 +422,12 @@
                     android:padding="@dimen/_5sdp"
                     app:cancelButtonColor="@color/black"
                     app:cancelButtontext="CLOSE"
-                    app:dialogTitle="@string/select_usertype"
+                    app:dialogTitle="@string/staff_selection"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:nothingSelectedText="@string/select_usertype"
+                    app:nothingSelectedText="@string/staff_selection"
                     app:onlyLightTheme="true" />
 
                 <View

@@ -160,11 +160,10 @@ class AddInvoiceActivity : BaseActivity() {
         userTypeListArray = ArrayList()
         materialTypeListArray = ArrayList()
         materialTypeNameList = ArrayList()
-
         serviceNameList = ArrayList()
         serviceListArray = ArrayList()
 
-
+        edtCompanyName.setText(quotationIteam?.companyName)
         edRate.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
         edMaterialRate.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
         edSubTotalAmount.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
@@ -352,7 +351,7 @@ class AddInvoiceActivity : BaseActivity() {
         view2.setOnClickListener {
             SearchableDialog(this@AddInvoiceActivity,
                 itemUserType!!,
-                getString(R.string.select_usertype), { item, _ ->
+                getString(R.string.staff_selection), { item, _ ->
                     spUserType.setSelection(item.id.toInt())
                 }).show()
         }

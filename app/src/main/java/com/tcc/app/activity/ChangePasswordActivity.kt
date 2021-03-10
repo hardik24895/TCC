@@ -2,15 +2,13 @@ package com.tcc.app.activity
 
 import android.os.Bundle
 import com.tcc.app.R
-import com.tcc.app.extention.getValue
-import com.tcc.app.extention.isEmpty
-import com.tcc.app.extention.showAlert
-import com.tcc.app.extention.showSnackBar
+import com.tcc.app.extention.*
 import com.tcc.app.modal.ChangePasswordModal
 import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
+import com.tcc.app.utils.SessionManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_change_password.*
@@ -96,7 +94,9 @@ class ChangePasswordActivity : BaseActivity() {
                     if (response != null) {
                         if (response.error.equals("200")) {
                             root.showSnackBar(response.message.toString())
-                            finish()
+                            session.clearSession()
+                            session.storeDataByKey(SessionManager.IsFirst, false)
+                            goToActivityAndClearTask<LoginActivity>()
                         } else {
                             showAlert(response.message.toString())
                         }

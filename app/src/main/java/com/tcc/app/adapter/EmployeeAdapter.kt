@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.tcc.app.R
+import com.tcc.app.extention.callPhone
 import com.tcc.app.extention.invisible
 import com.tcc.app.modal.EmployeeDataItem
 import com.tcc.app.utils.Constant
@@ -63,10 +64,15 @@ class EmployeeAdapter(
             txtJoinDate.text = data.joiningDate
             txtCity.text = data.cityName
 
-             Glide.with(context).load(Constant.EMP_PROFILE + data.profilePic).placeholder(R.drawable.ic_profile).into(imgProfile)
+            txtContact.setOnClickListener {
+                callPhone(context, data.mobileNo.toString())
+            }
 
-          //  imgProfile.setImageResource(R.drawable.bg_circle)
-        //    imgProfile.setColorFilter(getRandomMaterialColor("400", context))
+            Glide.with(context).load(Constant.EMP_PROFILE + data.profilePic)
+                .placeholder(R.drawable.ic_profile).into(imgProfile)
+
+            //  imgProfile.setImageResource(R.drawable.bg_circle)
+            //    imgProfile.setColorFilter(getRandomMaterialColor("400", context))
             txtIcon.text = data.firstName.toString().substring(0, 1)
             txtIcon.invisible()
             itemView.setOnClickListener {
