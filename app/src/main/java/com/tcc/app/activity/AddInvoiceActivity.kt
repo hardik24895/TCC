@@ -9,6 +9,9 @@ import android.text.InputFilter
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.Transformation
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
@@ -68,6 +71,7 @@ import tech.hibk.searchablespinnerlibrary.SearchableSpinner
 import java.text.DecimalFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.math.roundToLong
 
 
 class AddInvoiceActivity : BaseActivity() {
@@ -133,6 +137,7 @@ class AddInvoiceActivity : BaseActivity() {
 
             edtNote.setText(quotationIteam?.note)
             edtTerms.setText(quotationIteam?.term)
+
 
             if (quotationIteam!!.stateID.equals("12")) {
 
@@ -1451,5 +1456,54 @@ class AddInvoiceActivity : BaseActivity() {
 
     }
 
+    fun expand(v: View) {
+        val matchParentMeasureSpec =
+            View.MeasureSpec.makeMeasureSpec((v.parent as View).width, View.MeasureSpec.EXACTLY)
+        val wrapContentMeasureSpec =
+            View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+        v.measure(matchParentMeasureSpec, wrapContentMeasureSpec)
+        val targetHeight = v.measuredHeight
 
+        // Older versions of android (pre API 21) cancel animations for views with a height of 0.
+        v.layoutParams.height = 1
+        v.visibility = View.VISIBLE
+        val a: Animation = object : Animation() {
+            override fun applyTransformation(interpolatedTime: Float, t: Transformation?) {
+                v.layoutParams.height =
+                    if (interpolatedTime == 1f) ViewGroup.LayoutParams.WRAP_CONTENT else (targetHeight * interpolatedTime).toInt()
+                v.requestLayout()
+            }
+
+            override fun willChangeBounds(): Boolean {
+                return true
+            }
+        }
+
+        // Expansion speed of 1dp/ms
+        a.setDuration(((targetHeight / v.context.resources.displayMetrics.density).roundToLong()))
+        v.startAnimation(a)
+    }
+
+    fun collapse(v: View) {
+        val initialHeight = v.measuredHeight
+        val a: Animation = object : Animation() {
+            override fun applyTransformation(interpolatedTime: Float, t: Transformation?) {
+                if (interpolatedTime == 1f) {
+                    v.visibility = View.GONE
+                } else {
+                    v.layoutParams.height =
+                        initialHeight - (initialHeight * interpolatedTime).toInt()
+                    v.requestLayout()
+                }
+            }
+
+            override fun willChangeBounds(): Boolean {
+                return true
+            }
+        }
+
+        // Collapse speed of 1dp/ms
+        a.setDuration((initialHeight / v.context.resources.displayMetrics.density).roundToLong())
+        v.startAnimation(a)
+    }
 }

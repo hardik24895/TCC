@@ -10,6 +10,7 @@ import com.tcc.app.R
 import com.tcc.app.modal.HomeCounterDataItem
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.row_home_counter.*
+import java.text.DecimalFormat
 
 
 class AutoImageSliderAdapter(
@@ -53,8 +54,11 @@ class AutoImageSliderAdapter(
             position: Int
         ) {
             txtCounterTitle.text = data.title
-            txtCounter.text = data.count
-            txtCounter1.text = data.count
+
+            var df = DecimalFormat("##.##")
+
+            txtCounter.text = df.format(data.count?.toBigDecimal())
+            txtCounter1.text = df.format(data.count?.toBigDecimal())
 
             if (position == 0) {
                 main_view.setBackgroundColor(Color.parseColor("#d32f2f"))
