@@ -36,6 +36,8 @@ class AddPaymentActivity : BaseActivity() {
         if (intent.hasExtra(Constant.DATA)) {
             invoiceDataItem = intent.getSerializableExtra(Constant.DATA) as InvoiceDataItem
 
+            edtCompanyName.setText(invoiceDataItem?.siteUserFrindlyName)
+            edtEstimateno.setText(invoiceDataItem?.invoiceNo)
             var df = DecimalFormat("##.##")
 
             total_basic_amount.text = getString(R.string.RS) + " " + invoiceDataItem?.totalAmount

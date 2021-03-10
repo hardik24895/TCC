@@ -23,12 +23,6 @@ import com.yalantis.ucrop.UCrop
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_add_employee.*
-import kotlinx.android.synthetic.main.activity_add_employee.btnSubmit
-import kotlinx.android.synthetic.main.activity_add_employee.edtAddress
-import kotlinx.android.synthetic.main.activity_add_employee.edtGST
-import kotlinx.android.synthetic.main.activity_add_employee.root
-import kotlinx.android.synthetic.main.activity_add_employee.spCity
-import kotlinx.android.synthetic.main.activity_add_site.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -203,7 +197,7 @@ class AddEmployeeActivity : BaseActivity() {
 
             SearchableDialog(this@AddEmployeeActivity,
                 itemUserType!!,
-                getString(R.string.select_usertype), { item, _ ->
+                getString(R.string.staff_selection), { item, _ ->
                     spUserType.setSelection(item.id.toInt())
                 }).show()
         }
