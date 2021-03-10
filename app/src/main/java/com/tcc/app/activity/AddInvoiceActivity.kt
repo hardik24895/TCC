@@ -627,7 +627,7 @@ class AddInvoiceActivity : BaseActivity() {
         try {
             val jsonBody = JSONObject()
             if (quotationIteam != null)
-                jsonBody.put("ServiceID", quotationIteam?.service)
+                jsonBody.put("ServiceID", quotationIteam?.serviceID)
 
             result = Networking.setParentJsonData(Constant.METHOD_USERTYPE_LIST, jsonBody)
 

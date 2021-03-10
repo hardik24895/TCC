@@ -47,6 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:layout_margin="@dimen/scale_15dp"
+            android:padding="@dimen/_8sdp"
             android:text="Skip"
             android:textSize="@dimen/_11sdp" />
 
