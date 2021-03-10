@@ -25,7 +25,6 @@ import com.tcc.app.utils.SessionManager
 import com.yalantis.ucrop.UCrop
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_add_employee.*
 import kotlinx.android.synthetic.main.activity_add_inspection.*
 import kotlinx.android.synthetic.main.activity_add_inspection.btnSubmit
 import kotlinx.android.synthetic.main.activity_add_inspection.root
@@ -40,8 +39,6 @@ import org.json.JSONObject
 import tech.hibk.searchablespinnerlibrary.SearchableDialog
 import tech.hibk.searchablespinnerlibrary.SearchableItem
 import java.io.File
-import java.util.*
-import kotlin.collections.ArrayList
 
 class AddInspectionActivity : BaseActivity(), InspectionQuesiontAdapter.OnItemSelected {
     var layoutManager: NoScrollLinearLayoutManager? = null
@@ -92,6 +89,7 @@ class AddInspectionActivity : BaseActivity(), InspectionQuesiontAdapter.OnItemSe
         txtTitle.text = getString(R.string.inspection)
         img.invisible()
         inpRemark.invisible()
+        card2.invisible()
         edtDate.setText(getCurrentDate())
         edtDate.setOnClickListener { showDateTimePicker(this@AddInspectionActivity, edtDate) }
         setupRecycler()
@@ -186,15 +184,18 @@ class AddInspectionActivity : BaseActivity(), InspectionQuesiontAdapter.OnItemSe
                 linlaySp.visibility = View.VISIBLE
                 img.invisible()
                 inpRemark.invisible()
+                card2.invisible()
                 btnSubmit.setText(getString(R.string.next))
             } else if (layoutManager!!.findLastCompletelyVisibleItemPosition() == (QuestionListArray.size - 2)) {
                 img.visible()
                 inpRemark.visible()
+                card2.visible()
                 btnSubmit.setText(getString(R.string.submit))
 
             } else {
                 img.invisible()
                 inpRemark.invisible()
+                card2.invisible()
                 btnSubmit.setText(getString(R.string.next))
             }
         } else {
@@ -260,6 +261,15 @@ class AddInspectionActivity : BaseActivity(), InspectionQuesiontAdapter.OnItemSe
                     if (response.error == 200) {
                         QuestionListArray.addAll(response.data)
                         adapter?.notifyDataSetChanged()
+                    }
+                    if (QuestionListArray.size == 1) {
+                        img.visible()
+                        inpRemark.visible()
+                        card2.visible()
+                    } else {
+                        img.invisible()
+                        inpRemark.invisible()
+                        card2.invisible()
                     }
                 }
 
@@ -637,9 +647,7 @@ class AddInspectionActivity : BaseActivity(), InspectionQuesiontAdapter.OnItemSe
                 body,
                 methodName,
                 RequestBody.create("text/plain".toMediaTypeOrNull(), Id),
-
-
-                )//wrapParams Wraps parameters in to Request body Json format
+            )//wrapParams Wraps parameters in to Request body Json format
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : CallbackObserver<CommonAddModal>() {

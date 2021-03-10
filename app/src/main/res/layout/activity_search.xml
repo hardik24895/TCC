@@ -17,6 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_5sdp"
         android:elevation="5dp"
         app:cardCornerRadius="8dp"
         app:cardUseCompatPadding="true"
@@ -35,7 +36,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_16sdp"
-                android:layout_marginTop="@dimen/_5sdp"
+
                 android:hint="@string/email_or_mobile"
                 android:visibility="gone"
                 app:hintTextColor="@color/black"
@@ -63,7 +64,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_16sdp"
-                android:layout_marginTop="@dimen/_12ssp"
+
                 android:hint="@string/mobile_no"
                 android:visibility="gone"
                 app:hintTextColor="@color/black"
@@ -90,7 +91,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_16sdp"
-                android:layout_marginTop="@dimen/_12ssp"
+
                 android:hint="@string/name"
                 android:visibility="gone"
                 app:hintTextColor="@color/black"
@@ -162,7 +163,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_16sdp"
-                android:layout_marginTop="@dimen/_12ssp"
+
                 android:hint="@string/site_name"
                 android:visibility="gone"
                 app:hintTextColor="@color/black"
@@ -191,7 +192,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_16sdp"
-                android:layout_marginTop="@dimen/_12ssp"
+
                 android:hint="@string/ticket"
                 android:visibility="gone"
                 app:hintTextColor="@color/black"
@@ -219,13 +220,15 @@
                 style="@style/CustomPressButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_16sdp"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
                 android:text="@string/submit"
                 android:textColor="@color/colorWhite"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/inSiteName" />
+                app:layout_constraintTop_toBottomOf="@+id/inTicket" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
