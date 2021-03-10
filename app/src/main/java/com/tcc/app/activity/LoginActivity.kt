@@ -7,10 +7,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.tcc.app.R
 import com.tcc.app.extention.*
-import com.tcc.app.modal.GetRoleModal
-import com.tcc.app.modal.LoginModal
-import com.tcc.app.modal.RoleItem
-import com.tcc.app.modal.StateListModal
+import com.tcc.app.modal.*
 import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
@@ -40,7 +37,7 @@ class LoginActivity : BaseActivity() {
         }
 
         getStateList()
-
+        getCofigData()
     }
 
     fun validation() {
@@ -236,5 +233,37 @@ class LoginActivity : BaseActivity() {
             }
         } catch (e: Exception) {
         }
+    }
+
+    fun getCofigData() {
+        var result = ""
+        try {
+            val jsonBody = JSONObject()
+            jsonBody.put("StateID", "")
+
+            result = Networking.setParentJsonData(Constant.METHOD_CONFIG, jsonBody)
+
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+        Networking
+            .with(this@LoginActivity)
+            .getServices()
+            .getConfigData(Networking.wrapParams(result))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : CallbackObserver<ConfigDataModel>() {
+                override fun onSuccess(response: ConfigDataModel) {
+
+                    session.configData = response
+
+
+                }
+
+                override fun onFailed(code: Int, message: String) {
+
+                }
+
+            }).addTo(autoDisposable)
     }
 }

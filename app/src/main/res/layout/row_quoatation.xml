@@ -407,11 +407,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtAddress"
-            tools:visibility="gone">
+            tools:visibility="visible">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/btnTeamDefination"
                 android:layout_width="0dp"
+                android:layout_marginEnd="@dimen/_2sdp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/custom_call_button_press_bg"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -437,8 +438,9 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/btnInvoice"
                 android:layout_width="0dp"
+                android:layout_marginHorizontal="@dimen/_2sdp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_4sdp"
+                tools:visibility="gone"
                 android:background="@drawable/custom_sms_button_press_bg"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btnAttencence"
@@ -463,6 +465,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/btnAttencence"
                 android:layout_width="0dp"
+                android:layout_marginStart="@dimen/_2sdp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/custom_email_button_press_bg"
                 app:layout_constraintBottom_toBottomOf="parent"
