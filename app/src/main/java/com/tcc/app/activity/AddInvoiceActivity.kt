@@ -155,7 +155,6 @@ class AddInvoiceActivity : BaseActivity() {
         userTypeListArray = ArrayList()
         materialTypeListArray = ArrayList()
         materialTypeNameList = ArrayList()
-
         serviceNameList = ArrayList()
         serviceListArray = ArrayList()
 
