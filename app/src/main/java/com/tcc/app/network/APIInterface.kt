@@ -287,4 +287,7 @@ interface APIInterface {
 
     @POST("service/")
     fun getSiteTabList(@Body body: RequestBody): Observable<Response<DynemicSiteTabListModal>>
+
+    @POST("service/")
+    fun getCMS(@Body body: RequestBody): Observable<Response<CMSModal>>
 }
