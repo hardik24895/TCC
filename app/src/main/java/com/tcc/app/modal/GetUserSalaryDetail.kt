@@ -52,6 +52,9 @@ data class GetSalaryDataItem(
     @field:SerializedName("Penalty")
     val penalty: String? = null,
 
+    @field:SerializedName("AdvanceType")
+    val advanceType: String? = null,
+
     @field:SerializedName("Advance")
     val advance: String? = null
 )

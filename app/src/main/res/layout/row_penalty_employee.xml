@@ -1,94 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/_10sdp"
-    android:layout_marginEnd="@dimen/_10sdp">
+    android:layout_marginHorizontal="@dimen/_4sdp"
+    android:layout_marginEnd="@dimen/_10sdp"
+    app:cardCornerRadius="@dimen/_8sdp"
+    app:cardUseCompatPadding="true">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/linlaySp"
-        android:layout_width="0dp"
-        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_spinner"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_margin="@dimen/_8sdp">
 
 
-        <tech.hibk.searchablespinnerlibrary.SearchableSpinner
-            android:id="@+id/spEmployee"
-            android:layout_width="match_parent"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linlaySp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_3sdp"
-            android:clickable="false"
-            android:focusable="false"
-            android:paddingHorizontal="@dimen/_5sdp"
-            android:paddingVertical="@dimen/_2sdp"
-            app:cancelButtonColor="@color/black"
-            app:cancelButtontext="CLOSE"
-            app:dialogTitle="Sample"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/bg_spinner"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <tech.hibk.searchablespinnerlibrary.SearchableSpinner
+                android:id="@+id/spEmployee"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_3sdp"
+                android:clickable="false"
+                android:focusable="false"
+                android:paddingHorizontal="@dimen/_5sdp"
+                android:paddingVertical="@dimen/_2sdp"
+                app:cancelButtonColor="@color/black"
+                app:cancelButtontext="CLOSE"
+                app:dialogTitle="Sample"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:nothingSelectedText="@string/select_employee"
+                app:onlyLightTheme="true" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="@+id/spEmployee"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/spEmployee" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inpAmount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:hint="@string/Amount"
+            app:hintTextColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linlaySp">
+
+            <EditText
+                android:id="@+id/edtAmount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorWhite"
+                android:fontFamily="@font/opensans_regular"
+                android:inputType="numberDecimal"
+                android:maxLength="10"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="0"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.tcc.app.customview.ButtonReguler
+            android:id="@+id/btnRemoveUser"
+            style="@style/CustomPressButton_Red"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:paddingVertical="@dimen/_5sdp"
+            android:text="@string/remove"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:nothingSelectedText="@string/select_employee"
-            app:onlyLightTheme="true" />
+            app:layout_constraintTop_toBottomOf="@+id/inpAmount" />
 
-        <View
-            android:id="@+id/view"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="@+id/spEmployee"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/spEmployee" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/inpAmount"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:hint="@string/Amount"
-        app:hintTextColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linlaySp">
-
-        <EditText
-            android:id="@+id/edtAmount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorWhite"
-            android:fontFamily="@font/opensans_regular"
-            android:inputType="numberDecimal"
-            android:maxLength="10"
-            android:text="0"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:textColor="@color/black"
-            android:textColorHint="@color/black" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-
-    <com.tcc.app.customview.ButtonReguler
-        android:id="@+id/btnRemoveUser"
-        style="@style/CustomPressButton_Red"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:layout_marginBottom="@dimen/_8sdp"
-        android:paddingHorizontal="@dimen/_10sdp"
-        android:paddingVertical="@dimen/_5sdp"
-        android:text="@string/remove"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inpAmount" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

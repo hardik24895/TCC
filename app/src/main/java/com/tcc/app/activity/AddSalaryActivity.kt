@@ -19,7 +19,6 @@ import com.tcc.app.utils.TimeStamp
 import com.tcc.app.utils.TimeStamp.formatDateFromString
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_add_payment.*
 import kotlinx.android.synthetic.main.activity_add_salary.*
 import kotlinx.android.synthetic.main.activity_add_salary.btnSubmit
 import kotlinx.android.synthetic.main.activity_add_salary.edtEndDate
@@ -75,6 +74,19 @@ class AddSalaryActivity : BaseActivity() {
         edtStartDate.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 edtEndDate.setText(edtStartDate.getValue())
+                GetUserSalaryDetail()
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+        })
+
+        edtEndDate.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                GetUserSalaryDetail()
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -157,11 +169,24 @@ class AddSalaryActivity : BaseActivity() {
                             }"
                         )
                         adavance_amount_title.append(
-                            " : ${getString(R.string.RS)} ${
+                            " : ${getString(R.string.RS)} ${response.data.get(0).advance}  (${
                                 response.data.get(
                                     0
-                                ).advance
-                            }"
+                                ).advanceType
+                            })"
+                        )
+
+                        var tempTotalDay: Float =
+                            response.data.get(0).presentCount?.toFloat()!! + response.data.get(
+                                0
+                            ).halfDayCount?.toFloat()!! + response.data.get(0).halfOverTime?.toFloat()!! + response.data.get(
+                                0
+                            ).fullOverTime?.toFloat()!!
+
+                        edtPayment.setText(
+                            df.format(
+                                tempTotalDay * edtPerDaySalary.getValue().toFloat()
+                            )
                         )
 
 
@@ -201,8 +226,6 @@ class AddSalaryActivity : BaseActivity() {
             if (!edtPanaltyAmount.getValue().equals("")) {
                 Penalty = edtPanaltyAmount.getValue().toInt()
             }
-
-
 
             if (rg.indexOfChild(findViewById(rg.getCheckedRadioButtonId())) == 0) {
                 payAmount = edtPayment.getValue().toFloat() - adavance - Penalty

@@ -2,6 +2,7 @@ package com.tcc.app.activity
 
 import android.os.Bundle
 import com.tcc.app.R
+import com.tcc.app.extention.getValue
 import com.tcc.app.extention.visible
 import com.tcc.app.modal.SalaryDataItem
 import com.tcc.app.utils.Constant
@@ -11,7 +12,7 @@ import java.text.DecimalFormat
 
 class SalaryDetailActivity : BaseActivity() {
     var salaryDataIteam: SalaryDataItem? = null
-
+    var df: DecimalFormat = DecimalFormat("##.##")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,20 +24,36 @@ class SalaryDetailActivity : BaseActivity() {
         }
 
 
-        txtMonthSalary.text = getString(R.string.RS) + " " + salaryDataIteam?.salary
-        txtPayAmount.text = getString(R.string.RS) + " " + (salaryDataIteam?.present?.toDouble()
-            ?.times(salaryDataIteam?.rate?.toDouble()!!)).toString()
+        txtMonthSalary.text =
+            getString(R.string.RS) + " " + df.format(salaryDataIteam?.salary?.toBigDecimal())
+        txtPayAmount.text = getString(R.string.RS) + " " + df.format(
+            (salaryDataIteam?.present?.toBigDecimal()
+                ?.times(salaryDataIteam?.rate?.toBigDecimal()!!))
+        )
 
         txtTotalPresent.text = salaryDataIteam?.present + " Presents"
 
-        txtPresentAmount.text = getString(R.string.RS) + " " + (salaryDataIteam?.rate?.toDouble())
+        txtPresentAmount.text =
+            getString(R.string.RS) + " " + df.format((salaryDataIteam?.rate?.toDouble()))
 
 
-        var df: DecimalFormat = DecimalFormat("##.##")
+        txtPenaltyAmount.text =
+            getString(R.string.RS) + " " + df.format((salaryDataIteam?.penalty?.toDouble()))
+
+
+
         txtOverTimeAmount.text =
             getString(R.string.RS) + " " + df.format((salaryDataIteam?.rate?.toDouble())?.times((salaryDataIteam?.halfOverTime?.toDouble()!!) + (salaryDataIteam?.fullOverTime?.toDouble()!!)))
 
         textviewSemiBold2.text = salaryDataIteam?.salaryDate
+
+
+        txtAdvanceAmount.text = getString(R.string.RS) + " " + df.format(
+            (salaryDataIteam?.payAmount?.toBigDecimal()!! - ((salaryDataIteam?.present?.toBigDecimal()!! + salaryDataIteam?.halfDay?.toBigDecimal()!! + salaryDataIteam?.halfOverTime?.toBigDecimal()!! + salaryDataIteam?.fullOverTime?.toBigDecimal()!!)?.times(
+                salaryDataIteam?.rate?.toBigDecimal()!!
+            )!!))
+        )
+        txtAdvanceAmount.text = txtAdvanceAmount.getValue().replace("-", "")
 
         imgBack.visible()
         imgBack.setOnClickListener {

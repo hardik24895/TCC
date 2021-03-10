@@ -91,7 +91,7 @@
     <string name="monthly_salary">Monthly Salary</string>
     <string name="present">Present</string>
     <string name="paid_holiday">Paid Holiday</string>
-    <string name="adavance">Adavance</string>
+    <string name="adavance">Advance</string>
     <string name="site_name">Site Name</string>
     <string name="employee_name">Employee Name</string>
     <string name="employee_type">Employee Type</string>
@@ -222,9 +222,9 @@
     <string name="alert">Alert</string>
     <string name="msg_delete">Are you want to sure Delete ?</string>
     <string name="advance_amount">Advance Amount</string>
-    <string name="panalty_amount">Panalty Amount</string>
-    <string name="received">Received</string>
-    <string name="paid">Paid</string>
+    <string name="panalty_amount">Penalty Amount</string>
+    <string name="received">Received Advance(Deduct From Salary)</string>
+    <string name="paid">Pay Advance(Add In Salary)</string>
     <string name="none">None</string>
     <string name="filter">Search</string>
     <string name="email_or_mobile">Email or Mobile</string>
@@ -245,4 +245,7 @@
     <string name="notification">Notifications</string>
     <string name="choose_existing_site">Choose Existing Site</string>
     <string name="invoice_number">Invoice Number</string>
+    <string name="advance_salary">Advance Amount</string>
+    <string name="add_salary">Add Salary</string>
+    <string name="penalty">Penalty</string>
 </resources>

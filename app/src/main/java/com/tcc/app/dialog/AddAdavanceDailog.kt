@@ -71,7 +71,7 @@ class AddAdavanceDailog(context: Context) : BlurDialogFragment(), LifecycleOwner
         populateData()
         dialog?.setCancelable(false)
         dialog?.setCanceledOnTouchOutside(false)
-        rbReceived.isChecked = true
+        rbPaid.isChecked = true
         edtDate.setText(getCurrentDate())
         btnSubmit.setOnClickListener {
             validation()

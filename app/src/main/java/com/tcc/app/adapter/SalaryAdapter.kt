@@ -9,7 +9,7 @@ import com.tcc.app.R
 import com.tcc.app.modal.SalaryDataItem
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.row_salary.*
-import kotlin.time.times
+import java.text.DecimalFormat
 
 class SalaryAdapter(
     private val mContext: Context,
@@ -50,8 +50,10 @@ class SalaryAdapter(
             listener: SalaryAdapter.OnItemSelected
         ) {
 
-            val finalAmount = data.rate?.toDouble()?.let { data.present?.toDouble()?.times(it) }
-            txtAmount.text = context.getString(R.string.RS) + " " + finalAmount?.toString()
+            var df = DecimalFormat("##.##")
+            val finalAmount =
+                data.rate?.toBigDecimal()!! * (data.present?.toBigDecimal()!! + data.halfDay?.toBigDecimal()!! + data.halfOverTime?.toBigDecimal()!! + data.fullOverTime?.toBigDecimal()!!)
+            txtAmount.text = context.getString(R.string.RS) + " " + df.format(finalAmount)
             txtDate.text = data.startDate
             itemView.setOnClickListener { listener.onItemSelect(adapterPosition, data) }
 
