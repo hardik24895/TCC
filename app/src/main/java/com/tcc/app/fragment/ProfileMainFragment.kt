@@ -1,7 +1,9 @@
 package com.tcc.app.fragment
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import com.google.android.material.tabs.TabLayout
 import com.tcc.app.R
 import com.tcc.app.adapter.ViewPagerPagerAdapter
@@ -26,6 +28,7 @@ class ProfileMainFragment : BaseFragment() {
         setStatePageAdapter()
         tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
+                hideSoftKeyboard()
                 viewPager.currentItem = tab.position
                 val fm = childFragmentManager
                 val ft = fm.beginTransaction()

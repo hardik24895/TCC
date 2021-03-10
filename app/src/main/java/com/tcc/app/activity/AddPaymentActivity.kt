@@ -1,6 +1,7 @@
 package com.tcc.app.activity
 
 import android.os.Bundle
+import android.view.View
 import android.widget.RadioButton
 import androidx.core.view.isVisible
 import com.tcc.app.R
@@ -166,6 +167,8 @@ class AddPaymentActivity : BaseActivity() {
     fun AddPaymentApi() {
         var result = ""
         showProgressbar()
+        val selectedId: Int = rgPaymentMode.getCheckedRadioButtonId()
+        val rb = findViewById<View>(selectedId) as? RadioButton
         try {
             val jsonBody = JSONObject()
             jsonBody.put("UserID", session.user.data?.userID)
@@ -174,10 +177,7 @@ class AddPaymentActivity : BaseActivity() {
             jsonBody.put("GSTAmount", edtGSTAmount.getValue())
             jsonBody.put("AmountType", rg.indexOfChild(findViewById(rg.getCheckedRadioButtonId())))
             jsonBody.put("PaymentDate", formatDateFromString(edtPaymentDate.getValue()))
-            jsonBody.put(
-                "PaymentMode",
-                rgPaymentMode.indexOfChild(findViewById(rgPaymentMode.getCheckedRadioButtonId()))
-            )
+            jsonBody.put("PaymentMode", rb?.text.toString())
             jsonBody.put("ChequeNo", edtChequeNo.getValue())
             jsonBody.put("IFCCode", edtIFSC.getValue())
             jsonBody.put("AccountNo", edtAccountNo.getValue())

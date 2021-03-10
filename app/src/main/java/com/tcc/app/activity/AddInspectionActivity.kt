@@ -50,28 +50,28 @@ class AddInspectionActivity : BaseActivity(), InspectionQuesiontAdapter.OnItemSe
     var adapterSite: ArrayAdapter<String>? = null
     var siteListArray: ArrayList<SiteListItem>? = ArrayList()
     var itemSite: List<SearchableItem>? = null
-    var siteId: String = ""
+    var siteId: String = "-1"
 
 
     var fieldOperatorNameList: ArrayList<String>? = ArrayList()
     var adapterFieldOperator: ArrayAdapter<String>? = null
     var fieldOperatorListArray: ArrayList<UserByTypeDataItem>? = ArrayList()
     var itemFieldOperator: List<SearchableItem>? = null
-    var fieldOperatorId: String = ""
+    var fieldOperatorId: String = "-1"
 
 
     var operationMangerNameList: ArrayList<String>? = ArrayList()
     var adapterOperationManger: ArrayAdapter<String>? = null
     var operationMangerListArray: ArrayList<UserByTypeDataItem>? = ArrayList()
     var itemOperationManger: List<SearchableItem>? = null
-    var OperationMangerId: String = ""
+    var OperationMangerId: String = "-1"
 
 
     var qualityManagerNameList: ArrayList<String>? = ArrayList()
     var adapterQualityManager: ArrayAdapter<String>? = null
     var qualityManagerListArray: ArrayList<UserByTypeDataItem>? = ArrayList()
     var itemQualityManager: List<SearchableItem>? = null
-    var QualityManagerId: String = ""
+    var QualityManagerId: String = "-1"
 
     var resultUri: Uri? = null
     var resultUriProfile: Uri? = null
@@ -165,10 +165,11 @@ class AddInspectionActivity : BaseActivity(), InspectionQuesiontAdapter.OnItemSe
                 position: Int,
                 id: Long
             ) {
-                if (position != -1 && siteListArray!!.size > position) {
-                    siteId = siteListArray!!.get(position).sitesID.toString()
-
-
+                if (position != -1 && siteListArray!!.size > position - 1) {
+                    if (position == 0)
+                        siteId = "-1"
+                    else
+                        siteId = siteListArray!!.get(position).sitesID.toString()
                 }
 
             }
@@ -207,6 +208,18 @@ class AddInspectionActivity : BaseActivity(), InspectionQuesiontAdapter.OnItemSe
     private fun validation() {
 
         when {
+            siteId == "-1" -> {
+                root.showSnackBar(getString(R.string.select_site))
+            }
+            fieldOperatorId == "-1" -> {
+                root.showSnackBar(getString(R.string.select_field_operator))
+            }
+            OperationMangerId == "-1" -> {
+                root.showSnackBar(getString(R.string.select_operation_manager))
+            }
+            QualityManagerId == "-1" -> {
+                root.showSnackBar(getString(R.string.select_quality_manager))
+            }
             resultUriProfile == null -> {
                 root.showSnackBar("Upload Profile Image")
             }
@@ -311,9 +324,20 @@ class AddInspectionActivity : BaseActivity(), InspectionQuesiontAdapter.OnItemSe
                 override fun onSuccess(response: SiteListModal) {
                     siteListArray!!.addAll(response.data)
                     var myList: MutableList<SearchableItem> = mutableListOf()
+
+                    siteNameList!!.add(getString(R.string.select_site))
+                    myList.add(
+                        SearchableItem(0, getString(R.string.select_site))
+                    )
+
                     for (items in response.data.indices) {
                         siteNameList!!.add(response.data.get(items).siteName.toString())
-                        myList.add(SearchableItem(items.toLong(), siteNameList!!.get(items)))
+                        myList.add(
+                            SearchableItem(
+                                items.toLong() + 1,
+                                siteNameList!!.get(items + 1)
+                            )
+                        )
 
                     }
                     itemSite = myList
@@ -389,6 +413,10 @@ class AddInspectionActivity : BaseActivity(), InspectionQuesiontAdapter.OnItemSe
                     if (userType.equals("FieldOperator")) {
                         fieldOperatorListArray!!.addAll(response.data)
                         var myList: MutableList<SearchableItem> = mutableListOf()
+                        fieldOperatorNameList!!.add(getString(R.string.select_field_operator))
+                        myList.add(
+                            SearchableItem(0, getString(R.string.select_field_operator))
+                        )
                         for (items in response.data.indices) {
                             fieldOperatorNameList!!.add(
                                 response.data.get(items).firstName.toString() + " " + response.data.get(
@@ -397,8 +425,8 @@ class AddInspectionActivity : BaseActivity(), InspectionQuesiontAdapter.OnItemSe
                             )
                             myList.add(
                                 SearchableItem(
-                                    items.toLong(),
-                                    fieldOperatorNameList!!.get(items)
+                                    items.toLong() + 1,
+                                    fieldOperatorNameList!!.get(items + 1)
                                 )
                             )
 
@@ -414,6 +442,10 @@ class AddInspectionActivity : BaseActivity(), InspectionQuesiontAdapter.OnItemSe
                     } else if (userType.equals("OperationManager")) {
                         operationMangerListArray!!.addAll(response.data)
                         var myList: MutableList<SearchableItem> = mutableListOf()
+                        operationMangerNameList!!.add(getString(R.string.select_operation_manager))
+                        myList.add(
+                            SearchableItem(0, getString(R.string.select_operation_manager))
+                        )
                         for (items in response.data.indices) {
                             operationMangerNameList!!.add(
                                 response.data.get(items).firstName.toString() + " " + response.data.get(
@@ -422,8 +454,8 @@ class AddInspectionActivity : BaseActivity(), InspectionQuesiontAdapter.OnItemSe
                             )
                             myList.add(
                                 SearchableItem(
-                                    items.toLong(),
-                                    operationMangerNameList!!.get(items)
+                                    items.toLong() + 1,
+                                    operationMangerNameList!!.get(items + 1)
                                 )
                             )
 
@@ -439,6 +471,10 @@ class AddInspectionActivity : BaseActivity(), InspectionQuesiontAdapter.OnItemSe
                     } else {
                         qualityManagerListArray!!.addAll(response.data)
                         var myList: MutableList<SearchableItem> = mutableListOf()
+                        qualityManagerNameList!!.add(getString(R.string.select_quality_manager))
+                        myList.add(
+                            SearchableItem(0, getString(R.string.select_quality_manager))
+                        )
                         for (items in response.data.indices) {
                             qualityManagerNameList!!.add(
                                 response.data.get(items).firstName.toString() + " " + response.data.get(
@@ -447,8 +483,8 @@ class AddInspectionActivity : BaseActivity(), InspectionQuesiontAdapter.OnItemSe
                             )
                             myList.add(
                                 SearchableItem(
-                                    items.toLong(),
-                                    qualityManagerNameList!!.get(items)
+                                    items.toLong() + 1,
+                                    qualityManagerNameList!!.get(items + 1)
                                 )
                             )
 
@@ -487,8 +523,12 @@ class AddInspectionActivity : BaseActivity(), InspectionQuesiontAdapter.OnItemSe
                 position: Int,
                 id: Long
             ) {
-                if (position != -1 && operationMangerListArray!!.size > position) {
-                    OperationMangerId = operationMangerListArray!!.get(position).userID.toString()
+                if (position != -1 && operationMangerListArray!!.size > position - 1) {
+                    if (position == 0)
+                        OperationMangerId = "-1"
+                    else
+                        OperationMangerId =
+                            operationMangerListArray!!.get(position).userID.toString()
 
                 }
 
@@ -518,8 +558,11 @@ class AddInspectionActivity : BaseActivity(), InspectionQuesiontAdapter.OnItemSe
                 position: Int,
                 id: Long
             ) {
-                if (position != -1 && fieldOperatorListArray!!.size > position) {
-                    fieldOperatorId = fieldOperatorListArray!!.get(position).userID.toString()
+                if (position != -1 && fieldOperatorListArray!!.size > position - 1) {
+                    if (position == 0)
+                        fieldOperatorId = "-1"
+                    else
+                        fieldOperatorId = fieldOperatorListArray!!.get(position).userID.toString()
 
 
                 }
@@ -549,8 +592,11 @@ class AddInspectionActivity : BaseActivity(), InspectionQuesiontAdapter.OnItemSe
                 position: Int,
                 id: Long
             ) {
-                if (position != -1 && qualityManagerListArray!!.size > position) {
-                    QualityManagerId = qualityManagerListArray!!.get(position).userID.toString()
+                if (position != -1 && qualityManagerListArray!!.size > position - 1) {
+                    if (position == 0)
+                        QualityManagerId = "-1"
+                    else
+                        QualityManagerId = qualityManagerListArray!!.get(position).userID.toString()
 
 
                 }

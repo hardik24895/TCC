@@ -8,7 +8,10 @@ import com.tcc.app.R
 import com.tcc.app.adapter.AttendanceAdapter
 import com.tcc.app.extention.*
 import com.tcc.app.interfaces.LoadMoreListener
-import com.tcc.app.modal.*
+import com.tcc.app.modal.AttendanceListDataItem
+import com.tcc.app.modal.AttendanceListModel
+import com.tcc.app.modal.CommonAddModal
+import com.tcc.app.modal.QuotationItem
 import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
@@ -52,6 +55,7 @@ class AddAttendanceActivity : BaseActivity(), AttendanceAdapter.OnItemSelected {
         if (intent.hasExtra(Constant.DATA)) {
             quotationItem = intent.getSerializableExtra(Constant.DATA) as QuotationItem
             calendarView.invisible()
+            crd_check_all.invisible()
         } else {
             calendarView.visible()
         }
