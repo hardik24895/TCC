@@ -81,6 +81,9 @@ class AddQuotationActivity : BaseActivity() {
     var UserAmount: Float = 0f
     var MaterialAmount: Float = 0f
 
+    var serviceName = ""
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
@@ -107,7 +110,19 @@ class AddQuotationActivity : BaseActivity() {
             edAddress2.setText(siteListItem?.address2.toString())
             edPincode.setText(siteListItem?.pinCode.toString())
 
-            txtService.text = siteListItem!!.serviceName
+            serviceName = siteListItem!!.serviceName.toString()
+
+            if (serviceName.equals("Deep cleaning")) {
+                txtUserTitle.setText("Service Item")
+                btnAddUser.setText("Add Service Item")
+
+            } else {
+                txtUserTitle.setText("Staff")
+                btnAddUser.setText("ADD STAFF")
+            }
+
+
+            txtService.text = serviceName
             serviceId = siteListItem!!.serviceID.toString()
 
             if (siteListItem!!.stateID.equals("12")) {
@@ -379,11 +394,20 @@ class AddQuotationActivity : BaseActivity() {
     private fun userTypeViewClick() {
 
         view2.setOnClickListener {
-            SearchableDialog(this@AddQuotationActivity,
-                itemUserType!!,
-                getString(R.string.staff_selection), { item, _ ->
-                    spUserType.setSelection(item.id.toInt())
-                }).show()
+
+
+            if (serviceName.equals("Deep cleaning"))
+                SearchableDialog(
+                    this@AddQuotationActivity,
+                    itemUserType!!,
+                    "Select Service Item",
+                    { item, _ -> spUserType.setSelection(item.id.toInt()) }).show()
+            else
+                SearchableDialog(
+                    this@AddQuotationActivity,
+                    itemUserType!!,
+                    getString(R.string.staff_selection),
+                    { item, _ -> spUserType.setSelection(item.id.toInt()) }).show()
         }
 
     }
@@ -540,8 +564,15 @@ class AddQuotationActivity : BaseActivity() {
         var edRateChild: EditText = rowView.findViewById(R.id.edRateChild)
         edRateChild.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
         var edDaysChild: EditText = rowView.findViewById(R.id.edtChildDays)
-        var txtUserTitle: TextView = rowView.findViewById(R.id.txtUserTitle)
-        txtUserTitle.setText("Staff")
+        var txtUserTitleChild: TextView = rowView.findViewById(R.id.txtUserTitle)
+
+        if (serviceName.equals("Deep cleaning")) {
+            txtUserTitleChild.setText("Service Item")
+        } else {
+            txtUserTitleChild.setText("Staff")
+        }
+
+
         edDaysChild.setText("1")
 
         btnRemove.setOnClickListener {
@@ -626,11 +657,20 @@ class AddQuotationActivity : BaseActivity() {
 
 
         viewChild.setOnClickListener {
-            SearchableDialog(
-                this@AddQuotationActivity,
-                itemUserType!!,
-                getString(R.string.staff_selection),
-                { item, _ -> spUserTypeChild.setSelection(item.id.toInt()) }).show()
+
+            if (serviceName.equals("Deep cleaning"))
+
+                SearchableDialog(
+                    this@AddQuotationActivity,
+                    itemUserType!!,
+                    "Select Service Item",
+                    { item, _ -> spUserTypeChild.setSelection(item.id.toInt()) }).show()
+            else
+                SearchableDialog(
+                    this@AddQuotationActivity,
+                    itemUserType!!,
+                    getString(R.string.staff_selection),
+                    { item, _ -> spUserTypeChild.setSelection(item.id.toInt()) }).show()
         }
         edDaysChild.setText("1")
         lin_add_user!!.addView(rowView)
@@ -915,13 +955,16 @@ class AddQuotationActivity : BaseActivity() {
                     userTypeListArray!!.addAll(response.data)
                     var myList: MutableList<SearchableItem> = mutableListOf()
 
-                    userTypeNameList!!.add(getString(R.string.staff_selection))
-                    myList.add(
-                        SearchableItem(
-                            0,
-                            getString(R.string.staff_selection)
-                        )
-                    )
+                    if (serviceName.equals("Deep cleaning")) {
+
+                        userTypeNameList!!.add("Select Service Item")
+                        myList.add(SearchableItem(0, "Select Service Item"))
+                    } else {
+                        userTypeNameList!!.add(getString(R.string.staff_selection))
+                        myList.add(SearchableItem(0, getString(R.string.staff_selection)))
+                    }
+
+
                     for (items in response.data.indices) {
                         userTypeNameList!!.add(response.data.get(items).usertype.toString())
                         myList.add(
@@ -1354,7 +1397,11 @@ class AddQuotationActivity : BaseActivity() {
 
 
             if (jsonArray1.length() == 0) {
-                root.showSnackBar("Please Select Staff")
+                if (serviceName.equals("Deep cleaning"))
+                    root.showSnackBar("Please Select Service Item")
+                else
+                    root.showSnackBar("Please Select Staff")
+
                 hideProgressbar()
                 return
             }

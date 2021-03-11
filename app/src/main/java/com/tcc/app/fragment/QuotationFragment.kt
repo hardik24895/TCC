@@ -222,12 +222,13 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
         val dialog = AcceptReasonDailog.newInstance(
             requireContext(),
             object : AcceptReasonDailog.onItemClick {
-                override fun onItemCLicked(startDate: String, endDate: String) {
+                override fun onItemCLicked(startDate: String, endDate: String, startTime: String) {
                     AcceptQuotation(
                         startDate,
                         endDate,
                         data.quotationID!!,
                         data.customerID!!,
+                        startTime,
                         position
                     )
                 }
@@ -379,6 +380,7 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
         endDate: String,
         QuotationId: String,
         customerId: String,
+        startTime: String,
         position: Int
     ) {
         var result = ""
@@ -389,6 +391,7 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
             jsonBody.put("QuotationID", QuotationId)
             jsonBody.put("StartDate", formatDateFromString(startDate))
             jsonBody.put("EndDate", formatDateFromString(endDate))
+            jsonBody.put("StartTime", startTime)
             jsonBody.put("CustomerID", customerId)
             if (leadItem != null)
                 jsonBody.put("VisitorID", leadItem?.visitorID.toString())

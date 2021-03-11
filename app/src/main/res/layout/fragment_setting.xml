@@ -43,7 +43,7 @@
                     android:drawableLeft="@drawable/ic_push_notification"
                     android:drawablePadding="@dimen/scale_10dp"
                     android:text="Push notifications"
-                    android:textColor="@color/black"
+                    android:textColor="@color/txtgray"
                     android:textSize="@dimen/text_large" />
 
                 <Switch
@@ -78,7 +78,7 @@
                     android:drawablePadding="@dimen/scale_10dp"
 
                     android:text="Notification list"
-                    android:textColor="@color/black"
+                    android:textColor="@color/txtgray"
                     android:textSize="@dimen/text_large" />
 
                 <ImageView
@@ -116,7 +116,7 @@
                     android:drawablePadding="@dimen/scale_10dp"
 
                     android:text="@string/ticket"
-                    android:textColor="@color/black"
+                    android:textColor="@color/txtgray"
                     android:textSize="@dimen/text_large" />
 
                 <ImageView
@@ -155,7 +155,7 @@
                     android:drawablePadding="@dimen/scale_10dp"
 
                     android:text="@string/nav_panalti"
-                    android:textColor="@color/black"
+                    android:textColor="@color/txtgray"
                     android:textSize="@dimen/text_large" />
 
                 <ImageView
@@ -193,7 +193,7 @@
                     android:drawableLeft="@drawable/ic_aboutus"
                     android:drawablePadding="@dimen/scale_10dp"
                     android:text="About us"
-                    android:textColor="@color/black"
+                    android:textColor="@color/txtgray"
                     android:textSize="@dimen/text_large" />
 
                 <ImageView
@@ -231,7 +231,7 @@
                     android:drawableLeft="@drawable/ic_terms"
                     android:drawablePadding="@dimen/scale_10dp"
                     android:text="Privacy policy"
-                    android:textColor="@color/black"
+                    android:textColor="@color/txtgray"
                     android:textSize="@dimen/text_large" />
 
                 <ImageView
@@ -269,7 +269,7 @@
                     android:drawablePadding="@dimen/scale_10dp"
 
                     android:text="Terms and condition"
-                    android:textColor="@color/black"
+                    android:textColor="@color/txtgray"
                     android:textSize="@dimen/text_large" />
 
                 <ImageView
@@ -307,7 +307,7 @@
                     android:drawablePadding="@dimen/scale_10dp"
 
                     android:text="Change Password"
-                    android:textColor="@color/black"
+                    android:textColor="@color/txtgray"
                     android:textSize="@dimen/text_large" />
 
                 <ImageView
@@ -344,7 +344,7 @@
                     android:drawableLeft="@drawable/ic_logout"
                     android:drawablePadding="@dimen/scale_10dp"
                     android:text="Logout"
-                    android:textColor="@color/black"
+                    android:textColor="@color/txtgray"
                     android:textSize="@dimen/text_large" />
 
                 <ImageView

@@ -70,6 +70,13 @@ class AddGlobalAttendanceActivity : BaseActivity(), GlobalAttendanceAdapter.OnIt
             }
         }
 
+        swipeRefreshLayout.setOnRefreshListener {
+            list.clear()
+            recyclerView.isLoading = true
+            adapter?.notifyDataSetChanged()
+            getGloablAttendanceList()
+        }
+
     }
 
     private fun updateAttendance(attendance: String) {
@@ -114,12 +121,14 @@ class AddGlobalAttendanceActivity : BaseActivity(), GlobalAttendanceAdapter.OnIt
         val startDate: Calendar = Calendar.getInstance()
         startDate.add(Calendar.MONTH, -1)
         val endDate: Calendar = Calendar.getInstance()
+        endDate.add(Calendar.MONTH, 0)
 
         val horizontalCalendar: HorizontalCalendar =
             HorizontalCalendar.Builder(this, R.id.calendarView)
                 .range(startDate, endDate)
-                .datesNumberOnScreen(7)
+                .datesNumberOnScreen(5)
                 .build()
+
         horizontalCalendar.calendarListener = object : HorizontalCalendarListener() {
             override fun onDateSelected(date: Calendar?, position: Int) {
                 selectedDateStr = DateFormat.format("dd/MM/yyyy", date).toString()

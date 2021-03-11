@@ -155,7 +155,7 @@ class AddTeamDefinitionActivity : BaseActivity() {
         btnSubmit.setOnClickListener { AddTeamDefinitionList() }
 
         edStartTime.setOnClickListener {
-            SnapTimePickerDialog.Builder().apply {
+            SnapTimePickerDialog.Builder().setThemeColor(R.color.colorPrimary).apply {
                 setTitle(R.string.start_time)
             }.build().apply {
                 setListener { hour, minute ->
@@ -172,7 +172,7 @@ class AddTeamDefinitionActivity : BaseActivity() {
 
         }
         edEndTime.setOnClickListener {
-            SnapTimePickerDialog.Builder().apply {
+            SnapTimePickerDialog.Builder().setThemeColor(R.color.colorPrimary).apply {
                 setTitle(R.string.end_time)
             }.build().apply {
                 setListener { hour, minute ->

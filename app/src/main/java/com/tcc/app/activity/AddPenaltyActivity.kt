@@ -349,7 +349,7 @@ class AddPenaltyActivity : BaseActivity(), ReasonListAdapter.OnItemSelected {
         var result = ""
         try {
             val jsonBody = JSONObject()
-
+            jsonBody.put("ReasonType", "Employee")
             result = Networking.setParentJsonData(Constant.METHOD_GET_REASON, jsonBody)
 
         } catch (e: JSONException) {

@@ -136,7 +136,7 @@ class RejectReasonDailog(context: Context) : BlurDialogFragment(), LifecycleOwne
         var result = ""
         try {
             val jsonBody = JSONObject()
-            // jsonBody.put("StateID", stateid)
+            jsonBody.put("ReasonType", "Quotation")
 
             result = Networking.setParentJsonData(Constant.METHOD_GET_REASON, jsonBody)
 

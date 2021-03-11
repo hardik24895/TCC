@@ -45,6 +45,10 @@
             android:layout_marginEnd="@dimen/_16sdp"
             android:dividerPadding="@dimen/_2sdp"
             android:hint="Contact"
+            app:boxBackgroundColor="#FFF"
+            app:boxStrokeColor="#FFF"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
             android:textColorHint="@color/colorWhite"
             app:hintTextColor="@color/colorWhite"
             app:layout_constraintEnd_toEndOf="parent"
@@ -69,6 +73,15 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/colorWhite"
+            app:layout_constraintEnd_toEndOf="@id/til1"
+            app:layout_constraintStart_toStartOf="@id/til1"
+            app:layout_constraintTop_toBottomOf="@+id/til1" />
+
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til2"
             android:layout_width="0dp"
@@ -76,7 +89,10 @@
             android:layout_marginStart="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginEnd="@dimen/_16sdp"
-            android:backgroundTint="@color/colorWhite"
+            app:boxBackgroundColor="#FFF"
+            app:boxStrokeColor="#FFF"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
             android:hint="Password"
             android:textColorHint="@color/colorWhite"
             app:hintTextColor="@color/colorWhite"
@@ -86,6 +102,7 @@
             app:layout_constraintTop_toBottomOf="@+id/til1"
             app:passwordToggleEnabled="true"
             app:startIconDrawable="@drawable/ic_password"
+            app:passwordToggleTint="@color/colorWhite"
             app:startIconTint="@color/colorWhite">
 
             <EditText
@@ -103,6 +120,14 @@
                 android:textCursorDrawable="@color/colorWhite" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/colorWhite"
+            app:layout_constraintEnd_toEndOf="@id/til2"
+            app:layout_constraintStart_toStartOf="@id/til2"
+            app:layout_constraintTop_toBottomOf="@+id/til2" />
+
         <com.tcc.app.customview.TextviewReguler
             android:id="@+id/txtForgotpwd"
             android:layout_width="wrap_content"
@@ -110,7 +135,7 @@
             android:layout_marginTop="@dimen/_5sdp"
             android:padding="@dimen/_5sdp"
             android:text="Forgot your password?"
-            android:textColor="@color/black"
+            android:textColor="@color/colorWhite"
             app:layout_constraintEnd_toEndOf="@+id/til2"
             app:layout_constraintTop_toBottomOf="@+id/til2" />
 
