@@ -1,12 +1,14 @@
 package com.tcc.app.fragment
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.MODE_SCROLLABLE
 import com.tcc.app.R
+import com.tcc.app.activity.SearchActivity
 import com.tcc.app.adapter.ViewPagerPagerAdapter
 import com.tcc.app.extention.setHomeScreenTitle
 import com.tcc.app.extention.showAlert
@@ -18,6 +20,7 @@ import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
 import com.tcc.app.utils.SessionManager
+import com.tcc.app.utils.TimeStamp.formatDateFromString
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_invoice.*
@@ -37,9 +40,23 @@ class SiteListMainFragment() : BaseFragment() {
         visitorId = customerData?.visitorID?.toInt()
     }
 
+
+    companion object {
+
+        var name: String = ""
+        var startDate: String = ""
+        var endDate: String = ""
+        var siteType: String = ""
+        fun getInstance(bundle: Bundle): SiteListMainFragment {
+            val fragment = SiteListMainFragment()
+            fragment.arguments = bundle
+
+            return fragment
+        }
+    }
+
     lateinit var mParent: View
 
-    var viewPageradapter: ViewPagerPagerAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,8 +71,6 @@ class SiteListMainFragment() : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setHomeScreenTitle(requireActivity(), getString(R.string.nav_site))
-
-        getSiteListByTab()
 
         tabs.tabMode = MODE_SCROLLABLE
 
@@ -81,6 +96,41 @@ class SiteListMainFragment() : BaseFragment() {
         })
     }
 
+    override fun onResume() {
+
+        getSiteListByTab()
+        super.onResume()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.home, menu)
+        val add = menu.findItem(R.id.action_add)
+        add.setVisible(false)
+        val filter = menu.findItem(R.id.action_filter)
+        filter.setVisible(true)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+
+            R.id.action_filter -> {
+                val intent = Intent(context, SearchActivity::class.java)
+                intent.putExtra(Constant.DATA, Constant.SITE_BY_TYPE)
+                startActivity(intent)
+                Animatoo.animateCard(context)
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+
     fun getSiteListByTab() {
         showProgressbar()
         var result = ""
@@ -90,7 +140,10 @@ class SiteListMainFragment() : BaseFragment() {
             jsonBody.put("CurrentPage", 1)
             jsonBody.put("VisitorID", visitorId.toString())
             jsonBody.put("CustomerID", customerId)
-            jsonBody.put("SiteName", CustomerSiteFragment.name)
+            jsonBody.put("SiteName", name)
+            jsonBody.put("StartDate", formatDateFromString(startDate))
+            jsonBody.put("EndDate", formatDateFromString(endDate))
+            jsonBody.put("SiteType", siteType)
             jsonBody.put("CityID", session.getDataByKey(SessionManager.KEY_CITY_ID))
             result = Networking.setParentJsonData(
                 Constant.METHOD_SITE_LIST_TAB,
@@ -111,17 +164,20 @@ class SiteListMainFragment() : BaseFragment() {
             .subscribeWith(object : CallbackObserver<DynemicSiteTabListModal>() {
                 override fun onSuccess(response: DynemicSiteTabListModal) {
                     hideProgressbar()
+                    dynemicSiteTabListModal.clear()
                     if (response.error == 200) {
                         dynemicSiteTabListModal.addAll(response.data)
-                        setStatePageAdapter(dynemicSiteTabListModal)
+
                     }
 
+                    setStatePageAdapter(dynemicSiteTabListModal)
 
                 }
 
                 override fun onFailed(code: Int, message: String) {
                     hideProgressbar()
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
 
                 }
 
@@ -130,17 +186,49 @@ class SiteListMainFragment() : BaseFragment() {
 
 
     private fun setStatePageAdapter(list: MutableList<DynemicSiteTabDataItem>) {
-        viewPageradapter = ViewPagerPagerAdapter(childFragmentManager)
+        val viewPageradapter = ViewPagerPagerAdapter(childFragmentManager)
         for (i in list.indices) {
-            viewPageradapter?.addFragment(
+            viewPageradapter.addFragment(
                 SiteTabFragment(list.get(i).sites),
                 list.get(i).title.toString()
             )
         }
 
         viewPager.adapter = viewPageradapter
+        viewPageradapter.notifyDataSetChanged()
         tabs.setupWithViewPager(viewPager, true)
+    }
 
+    override fun onDestroy() {
+        name = ""
+        startDate = ""
+        endDate = ""
+        siteType = ""
+        super.onDestroy()
+    }
+
+    override fun onDestroyView() {
+        name = ""
+        startDate = ""
+        endDate = ""
+        siteType = ""
+        super.onDestroyView()
+    }
+
+    override fun onAttach(context: Context) {
+        name = ""
+        startDate = ""
+        endDate = ""
+        siteType = ""
+        super.onAttach(context)
+    }
+
+    override fun onPause() {
+        name = ""
+        startDate = ""
+        endDate = ""
+        siteType = ""
+        super.onPause()
     }
 
 

@@ -202,7 +202,8 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
 
                 override fun onFailed(code: Int, message: String) {
 
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
 
                 }
 
@@ -238,7 +239,8 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
                 }
 
                 override fun onFailed(code: Int, message: String) {
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
                 }
 
             }).addTo(autoDisposable)
@@ -279,14 +281,15 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
                     )
                     hasNextPage = leadList.size < response.rowcount!!
 
-                   refreshData(getString(R.string.no_data_found))
+                    refreshData(getString(R.string.no_data_found))
                 }
 
                 override fun onFailed(code: Int, message: String) {
                     if (leadList.size > 0) {
                         progressbar.invisible()
                     }
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
                     refreshData(message)
                 }
 
@@ -311,21 +314,21 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
 
     override fun onItemSelect(position: Int, data: DashBoardLeadDataItem) {
         var item = LeadItem(
-            data.mobileNo,
-            data.status,
-            data.visitorID,
-            data.emailID,
-            data.address,
-            data.rowcount,
-            data.stateID,
-            data.leadType,
-            data.cityName,
-            data.customerID,
-            data.name,
-            data.pinCode,
-            data.rno,
-            data.cityID,
-            data.userID
+            "" + data.mobileNo,
+            "" + data.status,
+            "" + data.visitorID,
+            "" + data.emailID,
+            "",
+            "" + data.address,
+            "" + data.rowcount,
+            "" + data.stateID,
+            "" + data.leadType,
+            "" + data.cityName,
+            "" + data.customerID,
+            "" + data.name,
+            "" + data.pinCode,
+            "" + data.rno,
+            "" + data.cityID
         )
         val intent = Intent(context, LeadDetailActivity::class.java)
         intent.putExtra(Constant.DATA, item)

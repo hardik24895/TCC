@@ -50,11 +50,11 @@ class AddRoomAllocationActivity : BaseActivity() {
         edtStartDate.setOnClickListener {
             showDateTimePicker(this@AddRoomAllocationActivity, edtStartDate)
         }
-        edtEndDate.setOnClickListener {
-            showDateTimePicker(
-                this@AddRoomAllocationActivity, edtEndDate
-            )
-        }
+//        edtEndDate.setOnClickListener {
+//            showDateTimePicker(
+//                this@AddRoomAllocationActivity, edtEndDate
+//            )
+//        }
 
         edtEndDate.setOnClickListener {
             showNextFromStartDateTimePicker(
@@ -156,7 +156,8 @@ class AddRoomAllocationActivity : BaseActivity() {
                 }
 
                 override fun onFailed(code: Int, message: String) {
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
                     hideProgressbar()
                 }
 

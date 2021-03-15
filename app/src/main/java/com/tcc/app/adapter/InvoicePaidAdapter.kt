@@ -61,14 +61,31 @@ class InvoicePaidAdapter(
 
             txtName.text = data.siteUserFrindlyName
             txtInvoiceno.text = data.invoiceNo
-            txtCgst.text = data.cGST
             txtEstimateno.text = data.estimateNo
             txtInvoiceDate.text = data.invoiceDate
-            txtSgst.text = data.sGST
             txtNotes.text = data.notes
             txtTerms.text = data.terms
             txtSubtotal.text = data.subTotal
             txtTotal.text = data.totalAmount
+
+
+            if (data.cGST.equals(""))
+                txtCgst.text = "N/A"
+            else
+                txtCgst.text = data.cGST
+
+            if (data.sGST.equals(""))
+                txtSgst.text = "N/A"
+            else
+                txtSgst.text = data.sGST
+
+
+            if (data.iGST.equals(""))
+                txtIgst.text = "N/A"
+            else
+                txtIgst.text = data.iGST
+
+
 
 
             if (!flag.equals("Paid")) {

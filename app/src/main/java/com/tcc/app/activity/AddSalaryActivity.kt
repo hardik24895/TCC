@@ -73,7 +73,7 @@ class AddSalaryActivity : BaseActivity() {
 
         edtStartDate.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                edtEndDate.setText(edtStartDate.getValue())
+                edtEndDate.setText(getCurrentDate())
                 GetUserSalaryDetail()
             }
 
@@ -161,20 +161,16 @@ class AddSalaryActivity : BaseActivity() {
                         edtFullDay.setText(response.data.get(0).fullOverTime)
                         edtAdvanceAmount.setText(response.data.get(0).advance)
                         edtPanaltyAmount.setText(response.data.get(0).penalty)
-                        penalty_amount_title.append(
-                            " : ${getString(R.string.RS)} ${
-                                response.data.get(
-                                    0
-                                ).penalty
+                        penalty_amount_title.text =
+                            "${getString(R.string.panalty_amount)} : ${getString(R.string.RS)} ${
+                                response.data.get(0).penalty
                             }"
-                        )
-                        adavance_amount_title.append(
-                            " : ${getString(R.string.RS)} ${response.data.get(0).advance}  (${
-                                response.data.get(
-                                    0
-                                ).advanceType
-                            })"
-                        )
+
+                        adavance_amount_title.text =
+                            "${getString(R.string.advance_amount)} : ${getString(R.string.RS)} ${
+                                response.data.get(0).advance
+                            }  (${response.data.get(0).advanceType})"
+
 
                         var tempTotalDay: Float =
                             response.data.get(0).presentCount?.toFloat()!! + response.data.get(
@@ -201,7 +197,8 @@ class AddSalaryActivity : BaseActivity() {
 
                     hideProgressbar()
 
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
 
                 }
 
@@ -289,7 +286,8 @@ class AddSalaryActivity : BaseActivity() {
 
                     hideProgressbar()
 
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
 
                 }
 

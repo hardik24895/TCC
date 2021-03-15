@@ -81,6 +81,9 @@ class AddQuotationActivity : BaseActivity() {
     var UserAmount: Float = 0f
     var MaterialAmount: Float = 0f
 
+    var serviceName = ""
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
@@ -107,18 +110,24 @@ class AddQuotationActivity : BaseActivity() {
             edAddress2.setText(siteListItem?.address2.toString())
             edPincode.setText(siteListItem?.pinCode.toString())
 
-            txtService.text = siteListItem!!.serviceName
+            serviceName = siteListItem!!.serviceName.toString()
+
+            if (serviceName.equals("Deep cleaning")) {
+                txtUserTitle.setText("Service Item")
+                btnAddUser.setText("Add Service Item")
+
+            } else {
+                txtUserTitle.setText("Staff")
+                btnAddUser.setText("ADD STAFF")
+            }
+
+
+            txtService.text = serviceName
             serviceId = siteListItem!!.serviceID.toString()
 
-            if (siteListItem!!.stateID.equals("12")) {
-                edCGST.isEnabled = true
-                edSGST.isEnabled = true
-                edIGST.isEnabled = false
-            } else {
-                edCGST.isEnabled = false
-                edSGST.isEnabled = false
-                edIGST.isEnabled = true
-            }
+            tilIGST.invisible()
+            tilCGST.invisible()
+            tilSGST.invisible()
         }
         if (intent.hasExtra(Constant.DATA1)) {
             leadItem = intent.getSerializableExtra(Constant.DATA1) as LeadItem
@@ -357,7 +366,8 @@ class AddQuotationActivity : BaseActivity() {
 
                 override fun onFailed(code: Int, message: String) {
 
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
 
                 }
 
@@ -379,11 +389,20 @@ class AddQuotationActivity : BaseActivity() {
     private fun userTypeViewClick() {
 
         view2.setOnClickListener {
-            SearchableDialog(this@AddQuotationActivity,
-                itemUserType!!,
-                getString(R.string.staff_selection), { item, _ ->
-                    spUserType.setSelection(item.id.toInt())
-                }).show()
+
+
+            if (serviceName.equals("Deep cleaning"))
+                SearchableDialog(
+                    this@AddQuotationActivity,
+                    itemUserType!!,
+                    "Select Service Item",
+                    { item, _ -> spUserType.setSelection(item.id.toInt()) }).show()
+            else
+                SearchableDialog(
+                    this@AddQuotationActivity,
+                    itemUserType!!,
+                    getString(R.string.staff_selection),
+                    { item, _ -> spUserType.setSelection(item.id.toInt()) }).show()
         }
 
     }
@@ -540,8 +559,15 @@ class AddQuotationActivity : BaseActivity() {
         var edRateChild: EditText = rowView.findViewById(R.id.edRateChild)
         edRateChild.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
         var edDaysChild: EditText = rowView.findViewById(R.id.edtChildDays)
-        var txtUserTitle: TextView = rowView.findViewById(R.id.txtUserTitle)
-        txtUserTitle.setText("Staff")
+        var txtUserTitleChild: TextView = rowView.findViewById(R.id.txtUserTitle)
+
+        if (serviceName.equals("Deep cleaning")) {
+            txtUserTitleChild.setText("Service Item")
+        } else {
+            txtUserTitleChild.setText("Staff")
+        }
+
+
         edDaysChild.setText("1")
 
         btnRemove.setOnClickListener {
@@ -626,11 +652,20 @@ class AddQuotationActivity : BaseActivity() {
 
 
         viewChild.setOnClickListener {
-            SearchableDialog(
-                this@AddQuotationActivity,
-                itemUserType!!,
-                getString(R.string.staff_selection),
-                { item, _ -> spUserTypeChild.setSelection(item.id.toInt()) }).show()
+
+            if (serviceName.equals("Deep cleaning"))
+
+                SearchableDialog(
+                    this@AddQuotationActivity,
+                    itemUserType!!,
+                    "Select Service Item",
+                    { item, _ -> spUserTypeChild.setSelection(item.id.toInt()) }).show()
+            else
+                SearchableDialog(
+                    this@AddQuotationActivity,
+                    itemUserType!!,
+                    getString(R.string.staff_selection),
+                    { item, _ -> spUserTypeChild.setSelection(item.id.toInt()) }).show()
         }
         edDaysChild.setText("1")
         lin_add_user!!.addView(rowView)
@@ -789,6 +824,26 @@ class AddQuotationActivity : BaseActivity() {
                     } else {
                         compnyID = companyListArray.get(position - 1).companyID.toString()
                         Logger.d("companyID", compnyID)
+
+
+                        if (compnyID.equals("1")) {
+                            if (siteListItem!!.stateID.equals("12")) {
+                                tilCGST.visible()
+                                tilSGST.visible()
+                                tilIGST.invisible()
+                            } else {
+                                tilCGST.invisible()
+                                tilSGST.invisible()
+                                tilIGST.visible()
+                            }
+
+                        } else {
+                            tilCGST.invisible()
+                            tilSGST.invisible()
+                            tilIGST.invisible()
+                        }
+
+                        setUpdatedTotal()
                     }
 
                 }
@@ -886,7 +941,8 @@ class AddQuotationActivity : BaseActivity() {
                 }
 
                 override fun onFailed(code: Int, message: String) {
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
                 }
 
             }).addTo(autoDisposable)
@@ -915,13 +971,16 @@ class AddQuotationActivity : BaseActivity() {
                     userTypeListArray!!.addAll(response.data)
                     var myList: MutableList<SearchableItem> = mutableListOf()
 
-                    userTypeNameList!!.add(getString(R.string.staff_selection))
-                    myList.add(
-                        SearchableItem(
-                            0,
-                            getString(R.string.staff_selection)
-                        )
-                    )
+                    if (serviceName.equals("Deep cleaning")) {
+
+                        userTypeNameList!!.add("Select Service Item")
+                        myList.add(SearchableItem(0, "Select Service Item"))
+                    } else {
+                        userTypeNameList!!.add(getString(R.string.staff_selection))
+                        myList.add(SearchableItem(0, getString(R.string.staff_selection)))
+                    }
+
+
                     for (items in response.data.indices) {
                         userTypeNameList!!.add(response.data.get(items).usertype.toString())
                         myList.add(
@@ -946,7 +1005,8 @@ class AddQuotationActivity : BaseActivity() {
 
                 override fun onFailed(code: Int, message: String) {
 
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
 
                 }
 
@@ -1006,7 +1066,8 @@ class AddQuotationActivity : BaseActivity() {
 
                 override fun onFailed(code: Int, message: String) {
 
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
 
                 }
 
@@ -1119,7 +1180,8 @@ class AddQuotationActivity : BaseActivity() {
 
                 override fun onFailed(code: Int, message: String) {
 
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
 
                 }
 
@@ -1152,15 +1214,6 @@ class AddQuotationActivity : BaseActivity() {
                     ).edRateChild.isEmpty() && !lin_add_user.getChildAt(item).edtChildDays.isEmpty()
                 ) {
 
-                    Logger.d(
-                        "qta " + (lin_add_user.getChildAt(item).edQtyChild.getValue().toFloat())
-                    )
-                    Logger.d(
-                        "rate " + (lin_add_user.getChildAt(item).edRateChild.getValue().toFloat())
-                    )
-                    Logger.d(
-                        "days " + (lin_add_user.getChildAt(item).edtChildDays.getValue().toFloat())
-                    )
                     TotalAmount = TotalAmount + (lin_add_user.getChildAt(item).edQtyChild.getValue()
                         .toFloat() * lin_add_user.getChildAt(item).edRateChild.getValue()
                         .toFloat() * lin_add_user.getChildAt(item).edtChildDays.getValue()
@@ -1216,7 +1269,15 @@ class AddQuotationActivity : BaseActivity() {
             SGST = SGST + ((TotalAmount * session.configData.data?.sGST!!.toFloat()) / 100)
             IGST = IGST + ((TotalAmount * session.configData.data?.iGST!!.toFloat()) / 100)
 
-            var df: DecimalFormat = DecimalFormat("##.##")
+            var df = DecimalFormat("##.##")
+
+
+            if (!compnyID.equals("1")) {
+                CGST = 0f
+                SGST = 0f
+                IGST = 0f
+
+            }
 
             if (siteListItem?.stateID?.toInt() == 12) {
                 edCGST.setText(df.format(CGST))
@@ -1354,7 +1415,11 @@ class AddQuotationActivity : BaseActivity() {
 
 
             if (jsonArray1.length() == 0) {
-                root.showSnackBar("Please Select Staff")
+                if (serviceName.equals("Deep cleaning"))
+                    root.showSnackBar("Please Select Service Item")
+                else
+                    root.showSnackBar("Please Select Staff")
+
                 hideProgressbar()
                 return
             }
@@ -1420,7 +1485,8 @@ class AddQuotationActivity : BaseActivity() {
 
                 override fun onFailed(code: Int, message: String) {
 
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
 
                 }
 

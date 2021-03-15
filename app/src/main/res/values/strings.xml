@@ -167,7 +167,7 @@
     <string name="amount_type">Amount Type</string>
     <string name="excluding_gst_amount">Excluding GST Amount</string>
     <string name="including_gst_amount">Including GST Amount</string>
-    <string name="other_gst_amount">Other GST Amount</string>
+    <string name="other_gst_amount">GST Amount</string>
     <string name="payment_amount">Payment Amount</string>
     <string name="gst_amount">GST Amount</string>
     <string name="account_no">Account No</string>
@@ -249,4 +249,7 @@
     <string name="advance_salary">Advance Amount</string>
     <string name="add_salary">Add Salary</string>
     <string name="penalty">Penalty</string>
+    <string name="account_holder_name">Account Holder Name</string>
+    <string name="all">All</string>
+    <string name="show_server_error">Server Connetion Failed.</string>
 </resources>

@@ -356,7 +356,8 @@ class AddLeadActivity : BaseActivity(), SiteAddressAdapter.OnItemSelected {
 
                 override fun onFailed(code: Int, message: String) {
 
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
 
                 }
 
@@ -574,7 +575,8 @@ class AddLeadActivity : BaseActivity(), SiteAddressAdapter.OnItemSelected {
                 }
 
                 override fun onFailed(code: Int, message: String) {
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
                     hideProgressbar()
                 }
 
@@ -636,7 +638,8 @@ class AddLeadActivity : BaseActivity(), SiteAddressAdapter.OnItemSelected {
                 }
 
                 override fun onFailed(code: Int, message: String) {
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
                     hideProgressbar()
                 }
 

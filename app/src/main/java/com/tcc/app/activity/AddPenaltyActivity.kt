@@ -217,7 +217,8 @@ class AddPenaltyActivity : BaseActivity(), ReasonListAdapter.OnItemSelected {
 
                 override fun onFailed(code: Int, message: String) {
 
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
 
                 }
 
@@ -279,7 +280,8 @@ class AddPenaltyActivity : BaseActivity(), ReasonListAdapter.OnItemSelected {
                 }
 
                 override fun onFailed(code: Int, message: String) {
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
                 }
 
             }).addTo(autoDisposable)
@@ -337,7 +339,8 @@ class AddPenaltyActivity : BaseActivity(), ReasonListAdapter.OnItemSelected {
                 }
 
                 override fun onFailed(code: Int, message: String) {
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
                 }
 
             }).addTo(autoDisposable)
@@ -349,7 +352,7 @@ class AddPenaltyActivity : BaseActivity(), ReasonListAdapter.OnItemSelected {
         var result = ""
         try {
             val jsonBody = JSONObject()
-
+            jsonBody.put("ReasonType", "Employee")
             result = Networking.setParentJsonData(Constant.METHOD_GET_REASON, jsonBody)
 
         } catch (e: JSONException) {
@@ -375,7 +378,8 @@ class AddPenaltyActivity : BaseActivity(), ReasonListAdapter.OnItemSelected {
                 }
 
                 override fun onFailed(code: Int, message: String) {
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
                 }
 
             }).addTo(autoDisposable)

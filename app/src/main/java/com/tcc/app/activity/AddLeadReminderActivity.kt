@@ -48,11 +48,12 @@ class AddLeadReminderActivity : BaseActivity() {
         edtProcessTime.setText(getCurentTime(getCurrentDateTime()))
 
         val namepass: Array<String> = edtReminderTime.getValue().split(":").toTypedArray()
-        val startTime = namepass[0]
-        val endTime = namepass[1]
+        val hours = namepass[0]
+        val minut = namepass[1]
+
         edtReminderTime.setOnClickListener {
-            SnapTimePickerDialog.Builder().apply {
-                setPreselectedTime(TimeValue(startTime.toInt(), endTime.toInt()))
+            SnapTimePickerDialog.Builder().setThemeColor(R.color.colorPrimary).apply {
+                setPreselectedTime(TimeValue(hours.toInt(), minut.toInt()))
                 setTitle(R.string.reminder_time)
             }.build().apply {
 
@@ -60,9 +61,7 @@ class AddLeadReminderActivity : BaseActivity() {
                     Logger.d("time", hour.toString() + ":" + minute.toString())
                     var edStartTime1: EditText = findViewById(R.id.edtReminderTime)
                     edStartTime1.setText(
-                        convertIntoTowDigit(hour) + ":" + convertIntoTowDigit(
-                            minute
-                        )
+                        convertIntoTowDigit(hour) + ":" + convertIntoTowDigit(minute)
                     )
                     reminderTime = convertIntoTowDigit(hour) + ":" + convertIntoTowDigit(minute)
 
@@ -75,11 +74,14 @@ class AddLeadReminderActivity : BaseActivity() {
         val namepass1: Array<String> = edtProcessTime.getValue().split(":").toTypedArray()
         val startTime1 = namepass1[0]
         val endTime1 = namepass1[1]
+
+        val hours1 = namepass1[0]
+        val minut1 = namepass1[1]
         edtProcessTime.setOnClickListener {
 
-            SnapTimePickerDialog.Builder().apply {
+            SnapTimePickerDialog.Builder().setThemeColor(R.color.colorPrimary).apply {
                 setTitle(R.string.procces_time)
-                setPreselectedTime(TimeValue(startTime1.toInt(), endTime1.toInt()))
+                setPreselectedTime(TimeValue(hours1.toInt(), minut1.toInt()))
             }.build().apply {
                 setListener { hour, minute ->
                     Logger.d("time", hour.toString() + ":" + minute.toString())
@@ -163,7 +165,8 @@ class AddLeadReminderActivity : BaseActivity() {
                 }
 
                 override fun onFailed(code: Int, message: String) {
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
                     hideProgressbar()
                 }
 

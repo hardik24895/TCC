@@ -34,6 +34,8 @@ class AddPaymentActivity : BaseActivity() {
         tilIFSC.invisible()
         tilBankName.invisible()
         tilBranchName.invisible()
+        tilAccountHolderName.invisible()
+        cardView3.invisible()
         if (intent.hasExtra(Constant.DATA)) {
             invoiceDataItem = intent.getSerializableExtra(Constant.DATA) as InvoiceDataItem
 
@@ -95,24 +97,30 @@ class AddPaymentActivity : BaseActivity() {
         rgPaymentMode.setOnCheckedChangeListener({ group, checkedId ->
             val radio: RadioButton = findViewById(checkedId)
             if (radio.text.equals(getString(R.string.cheque))) {
-                tilAccountNo.visible()
+                tilAccountNo.invisible()
+                tilAccountHolderName.visible()
                 tilChequeNo.visible()
                 tilIFSC.invisible()
                 tilBankName.visible()
                 tilBranchName.visible()
+                cardView3.visible()
 
             } else if (radio.text.equals(getString(R.string.online))) {
                 tilAccountNo.visible()
+                tilAccountHolderName.invisible()
                 tilChequeNo.invisible()
                 tilIFSC.visible()
                 tilBankName.visible()
                 tilBranchName.visible()
+                cardView3.visible()
             } else {
                 tilAccountNo.invisible()
+                tilAccountHolderName.invisible()
                 tilChequeNo.invisible()
                 tilIFSC.invisible()
                 tilBankName.invisible()
                 tilBranchName.invisible()
+                cardView3.invisible()
             }
         })
     }
@@ -139,6 +147,10 @@ class AddPaymentActivity : BaseActivity() {
             edtAccountNo.isEmpty() && tilAccountNo.isVisible -> {
                 root.showSnackBar("Enter Account No.")
                 edtAccountNo.requestFocus()
+            }
+            edtHolderName.isEmpty() && tilAccountHolderName.isVisible -> {
+                root.showSnackBar("Enter Account Holder Name")
+                edtHolderName.requestFocus()
             }
             edtChequeNo.isEmpty() && tilChequeNo.isVisible -> {
                 root.showSnackBar("Enter Cheque No.")
@@ -173,11 +185,20 @@ class AddPaymentActivity : BaseActivity() {
             val jsonBody = JSONObject()
             jsonBody.put("UserID", session.user.data?.userID)
             jsonBody.put("InvoiceID", invoiceDataItem?.invoiceID)
-            jsonBody.put("PaymentAmount", edtPaymentAmount.getValue())
-            jsonBody.put("GSTAmount", edtGSTAmount.getValue())
+            if (rg.indexOfChild(findViewById(rg.getCheckedRadioButtonId())) == 0) {
+                jsonBody.put("PaymentAmount", edtPaymentAmount.getValue())
+                jsonBody.put("GSTAmount", edtGSTAmount.getValue())
+            } else if (rg.indexOfChild(findViewById(rg.getCheckedRadioButtonId())) == 1) {
+                jsonBody.put("PaymentAmount", edtPaymentAmount.getValue())
+                jsonBody.put("GSTAmount", "0")
+            } else {
+                jsonBody.put("PaymentAmount", "0")
+                jsonBody.put("GSTAmount", edtGSTAmount.getValue())
+            }
             jsonBody.put("AmountType", rg.indexOfChild(findViewById(rg.getCheckedRadioButtonId())))
             jsonBody.put("PaymentDate", formatDateFromString(edtPaymentDate.getValue()))
             jsonBody.put("PaymentMode", rb?.text.toString())
+            jsonBody.put("HolderName", edtHolderName.getValue())
             jsonBody.put("ChequeNo", edtChequeNo.getValue())
             jsonBody.put("IFCCode", edtIFSC.getValue())
             jsonBody.put("AccountNo", edtAccountNo.getValue())
@@ -213,7 +234,8 @@ class AddPaymentActivity : BaseActivity() {
 
                 override fun onFailed(code: Int, message: String) {
                     hideProgressbar()
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
 
                 }
 

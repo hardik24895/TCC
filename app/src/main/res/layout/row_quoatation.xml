@@ -440,7 +440,6 @@
                 android:layout_width="0dp"
                 android:layout_marginHorizontal="@dimen/_2sdp"
                 android:layout_height="wrap_content"
-                tools:visibility="gone"
                 android:background="@drawable/custom_sms_button_press_bg"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btnAttencence"

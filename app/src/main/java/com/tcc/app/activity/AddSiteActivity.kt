@@ -306,7 +306,8 @@ class AddSiteActivity : BaseActivity(), SiteAddressAdapter1.OnItemSelected {
 
                 override fun onFailed(code: Int, message: String) {
 
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
 
                 }
 
@@ -428,7 +429,8 @@ class AddSiteActivity : BaseActivity(), SiteAddressAdapter1.OnItemSelected {
                 }
 
                 override fun onFailed(code: Int, message: String) {
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
                     hideProgressbar()
                 }
 
@@ -487,7 +489,8 @@ class AddSiteActivity : BaseActivity(), SiteAddressAdapter1.OnItemSelected {
 
                 override fun onFailed(code: Int, message: String) {
 
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
 
                 }
 
@@ -599,7 +602,8 @@ class AddSiteActivity : BaseActivity(), SiteAddressAdapter1.OnItemSelected {
                     if (list.size > 0) {
                         progressbar.invisible()
                     }
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
 
                 }
 

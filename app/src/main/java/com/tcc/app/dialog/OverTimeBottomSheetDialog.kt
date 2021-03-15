@@ -48,7 +48,7 @@ class OverTimeBottomSheetDialog(context: Context) : BaseBottomSheetDialogFragmen
         // dismiss()
         when (view.id) {
             R.id.edtOverTime -> {
-                SnapTimePickerDialog.Builder().apply {
+                SnapTimePickerDialog.Builder().setThemeColor(R.color.colorPrimary).apply {
                     setTitle(R.string.overtime)
                 }.build().apply {
                     setListener { hour, minute ->

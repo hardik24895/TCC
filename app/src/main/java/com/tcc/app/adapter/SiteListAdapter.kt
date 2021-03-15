@@ -61,14 +61,22 @@ class SiteListAdapter(
             txtProposedDate.text = data.proposedDate
             txtStartDate.text = data.startDate
             txtEndDate.text = data.endDate
-            if (!data.address2?.isEmpty()!!)
-                txtAddress.text = data.address + "," + data.address2
-            else
-                txtAddress.text = data.address
 
-            if (data.customerID.toString() == "0" || data.customerID.toString() == ""){
+
+            var address = data.address
+
+            if (!data.address2?.isEmpty()!!)
+                address = address + ", " + data.address2
+
+            if (data.pinCode.equals(""))
+                address = address + ", " + data.pinCode
+
+            txtAddress.text = address + ", " + data.cityName + ", " + data.stateName
+
+
+            if (data.customerID.toString() == "0" || data.customerID.toString() == "") {
                 btnAddDocument.invisible()
-            }else{
+            } else {
                 btnAddDocument.visible()
             }
 

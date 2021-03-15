@@ -10,33 +10,37 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.LifecycleOwner
+import com.akexorcist.snaptimepicker.SnapTimePickerDialog
+import com.akexorcist.snaptimepicker.TimeValue
 import com.tcc.app.R
-import com.tcc.app.extention.getCurrentDate
-import com.tcc.app.extention.getValue
-import com.tcc.app.extention.showDateTimePicker
-import com.tcc.app.extention.showNextFromStartDateTimePicker
+import com.tcc.app.extention.*
+import com.tcc.app.modal.QuotationItem
 import com.tcc.app.network.AutoDisposable
 import com.tcc.app.utils.BlurDialogFragment
+import com.tcc.app.utils.Logger
 import com.tcc.app.utils.SessionManager
 import kotlinx.android.synthetic.main.dialog_accept_reason.*
 import kotlinx.android.synthetic.main.dialog_reject_reason.btnSubmit
 
 
-class AcceptReasonDailog(context: Context) : BlurDialogFragment(), LifecycleOwner {
+class AcceptReasonDailog(context: Context, data: QuotationItem) : BlurDialogFragment(),
+    LifecycleOwner {
     private val autoDisposable = AutoDisposable()
     private lateinit var session: SessionManager
-
+    var quotationData: QuotationItem = data
 
     companion object {
         private lateinit var listener: onItemClick
         fun newInstance(
             context: Context,
+            data: QuotationItem,
             listeners: onItemClick
         ): AcceptReasonDailog {
             this.listener = listeners
-            return AcceptReasonDailog(context)
+            return AcceptReasonDailog(context, data)
         }
     }
 
@@ -62,8 +66,9 @@ class AcceptReasonDailog(context: Context) : BlurDialogFragment(), LifecycleOwne
         populateData()
         dialog?.setCancelable(false)
         dialog?.setCanceledOnTouchOutside(false)
-        edtStartDate.setText(getCurrentDate())
-        edtEndDate.setText(getCurrentDate())
+        edtStartDate.setText(quotationData.startDate)
+        edtEndDate.setText(quotationData.startDate)
+        edtStartTime.setText(getCurentTime(getCurrentDateTime()))
 
         edtStartDate.setOnClickListener {
             showDateTimePicker(requireActivity(), edtStartDate)
@@ -82,6 +87,32 @@ class AcceptReasonDailog(context: Context) : BlurDialogFragment(), LifecycleOwne
             )
         }
 
+        edtStartTime.setOnClickListener {
+
+            val namepass: Array<String> = edtStartTime.getValue().split(":").toTypedArray()
+            val hours = namepass[0]
+            val minut = namepass[1]
+
+            SnapTimePickerDialog.Builder().setThemeColor(R.color.colorPrimary).apply {
+                setPreselectedTime(TimeValue(hours.toInt(), minut.toInt()))
+
+                setTitle(R.string.reminder_time)
+            }.build().apply {
+
+                setListener { hour, minute ->
+                    Logger.d("time", hour.toString() + ":" + minute.toString())
+                    var edtStartTime: EditText = view.findViewById(R.id.edtStartTime)
+                    edtStartTime.setText(
+                        convertIntoTowDigit(hour) + ":" + convertIntoTowDigit(
+                            minute
+                        )
+                    )
+
+
+                }
+            }.show(childFragmentManager, "")
+        }
+
         edtStartDate.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 edtEndDate.setText(edtStartDate.getValue())
@@ -96,7 +127,11 @@ class AcceptReasonDailog(context: Context) : BlurDialogFragment(), LifecycleOwne
 
 
         btnSubmit.setOnClickListener {
-            listener.onItemCLicked(edtStartDate.getValue(), edtEndDate.getValue())
+            listener.onItemCLicked(
+                edtStartDate.getValue(),
+                edtEndDate.getValue(),
+                edtStartTime.getValue()
+            )
             dismissAllowingStateLoss()
         }
 
@@ -136,7 +171,7 @@ class AcceptReasonDailog(context: Context) : BlurDialogFragment(), LifecycleOwne
     }
 
     interface onItemClick {
-        fun onItemCLicked(startDate: String, endDate: String)
+        fun onItemCLicked(startDate: String, endDate: String, startTime: String)
     }
 
     interface onDissmiss {

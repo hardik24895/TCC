@@ -20,7 +20,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_add_document.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
-import kotlinx.android.synthetic.main.toolbar_with_back_arrow.txtTitle
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -72,7 +71,8 @@ class EditUploadDocument : BaseActivity() {
                         }
 
                         override fun onError(message: String) {
-                            showAlert(message)
+                            // showAlert(message)
+                            showAlert(getString(R.string.show_server_error))
                         }
                     })
             dialog.show(supportFragmentManager, "ImagePicker")

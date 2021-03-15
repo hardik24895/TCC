@@ -42,6 +42,7 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
     companion object {
         var email: String = ""
         var name: String = ""
+        var leadType: String = ""
     }
 
     override fun onCreateView(
@@ -68,6 +69,7 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
         swipeRefreshLayout.setOnRefreshListener {
             email = ""
             name = ""
+            leadType = ""
             page = 1
             list.clear()
             hasNextPage = true
@@ -231,6 +233,7 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
             jsonBody.put("PageSize", Constant.PAGE_SIZE)
             jsonBody.put("CurrentPage", page)
             jsonBody.put("Name", name)
+            jsonBody.put("LeadType", leadType)
             jsonBody.put("EmailID", email)
             jsonBody.put("CityID", session.getDataByKey(SessionManager.KEY_CITY_ID))
             result = Networking.setParentJsonData(
@@ -269,7 +272,8 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
                     if (list.size > 0) {
                         progressbar.invisible()
                     }
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
                     refreshData(message, code)
                 }
 
@@ -327,7 +331,8 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
 
                 override fun onFailed(code: Int, message: String) {
                     hideProgressbar()
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
                 }
 
             }).addTo(autoDisposable)
@@ -354,12 +359,14 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
     override fun onDestroyView() {
         email = ""
         name = ""
+        leadType = ""
         super.onDestroyView()
     }
 
     override fun onDestroy() {
         email = ""
         name = ""
+        leadType = ""
         super.onDestroy()
     }
 
@@ -396,7 +403,8 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
                 }
 
                 override fun onFailed(code: Int, message: String) {
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
                     hideProgressbar()
                 }
 
@@ -436,7 +444,8 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
                 }
 
                 override fun onFailed(code: Int, message: String) {
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
                     hideProgressbar()
                 }
 

@@ -94,7 +94,8 @@ class InformationActivity : BaseActivity() {
 
                     hideProgressbar()
 
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
                 }
 
             }).addTo(autoDisposable)

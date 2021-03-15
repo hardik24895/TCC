@@ -72,11 +72,30 @@ class QuotationAdapter(
             txtHRS.text = data.service
             //txtName.text = data.name
             txtStatus.text = data.quotationStatus
-            txtCGST.text = data.cGST
-            txtSGST.text = data.sGST
-            txtIGST.text = data.iGST
+
+            if (data.cGST.equals(""))
+                txtCGST.text = "N/A"
+            else
+                txtCGST.text = data.cGST
+
+            if (data.sGST.equals(""))
+                txtSGST.text = "N/A"
+            else
+                txtSGST.text = data.sGST
+
+
+            if (data.iGST.equals(""))
+                txtIGST.text = "N/A"
+            else
+                txtIGST.text = data.iGST
+
             txtTotal.text = data.total
-            txtAddress.text = data.address + ", " + data.address2 + ", " + data.pinCode
+            if (data.pinCode.equals(""))
+                txtAddress.text =
+                    data.address + ", " + data.address2 + ",  " + data.cityName + ", " + data.stateName
+            else
+                txtAddress.text =
+                    data.address + ", " + data.address2 + ", " + data.pinCode + ", " + data.cityName + ", " + data.stateName
 
             imgProfile.setImageResource(R.drawable.bg_circle)
             imgProfile.setColorFilter(getRandomMaterialColor("400", context))

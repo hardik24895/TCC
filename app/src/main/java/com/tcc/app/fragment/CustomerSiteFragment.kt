@@ -25,6 +25,7 @@ import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
 import com.tcc.app.utils.SessionManager
+import com.tcc.app.utils.TimeStamp.formatDateFromString
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.reclerview_swipelayout.*
@@ -51,6 +52,9 @@ class CustomerSiteFragment() : BaseFragment(), SiteListAdapter.OnItemSelected {
     companion object {
 
         var name: String = ""
+        var startDate: String = ""
+        var endDate: String = ""
+        var siteType: String = ""
         fun getInstance(bundle: Bundle): CustomerSiteFragment {
             val fragment = CustomerSiteFragment()
             fragment.arguments = bundle
@@ -87,6 +91,9 @@ class CustomerSiteFragment() : BaseFragment(), SiteListAdapter.OnItemSelected {
         swipeRefreshLayout.setOnRefreshListener {
             page = 1
             name = ""
+            startDate = ""
+            endDate = ""
+            siteType = ""
             list.clear()
             hasNextPage = true
             recyclerView.isLoading = true
@@ -138,6 +145,9 @@ class CustomerSiteFragment() : BaseFragment(), SiteListAdapter.OnItemSelected {
             jsonBody.put("VisitorID", visitorId.toString())
             jsonBody.put("CustomerID", customerId)
             jsonBody.put("SiteName", name)
+            jsonBody.put("StartDate", formatDateFromString(startDate))
+            jsonBody.put("EndDate", formatDateFromString(endDate))
+            jsonBody.put("SiteType", siteType)
             jsonBody.put("CityID", session.getDataByKey(SessionManager.KEY_CITY_ID))
             result = Networking.setParentJsonData(
                 Constant.METHOD_SITE_LIST,
@@ -178,7 +188,8 @@ class CustomerSiteFragment() : BaseFragment(), SiteListAdapter.OnItemSelected {
                     if (list.size > 0) {
                         progressbar.invisible()
                     }
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
                     refreshData(message, code)
                 }
 
@@ -219,7 +230,7 @@ class CustomerSiteFragment() : BaseFragment(), SiteListAdapter.OnItemSelected {
         val add = menu.findItem(R.id.action_add)
         add.setVisible(false)
         val filter = menu.findItem(R.id.action_filter)
-        filter.setVisible(true)
+        filter.setVisible(false)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -244,21 +255,33 @@ class CustomerSiteFragment() : BaseFragment(), SiteListAdapter.OnItemSelected {
 
     override fun onDestroy() {
         name = ""
+        startDate = ""
+        endDate = ""
+        siteType = ""
         super.onDestroy()
     }
 
     override fun onDestroyView() {
         name = ""
+        startDate = ""
+        endDate = ""
+        siteType = ""
         super.onDestroyView()
     }
 
     override fun onAttach(context: Context) {
         name = ""
+        startDate = ""
+        endDate = ""
+        siteType = ""
         super.onAttach(context)
     }
 
     override fun onPause() {
         name = ""
+        startDate = ""
+        endDate = ""
+        siteType = ""
         super.onPause()
     }
 

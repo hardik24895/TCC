@@ -134,14 +134,15 @@ class CustomerFragment : BaseFragment(), CustomerListAdapter.OnItemSelected {
                     )
                     hasNextPage = list.size < response.rowcount!!
 
-                  refreshData(getString(R.string.no_data_found), 1)
+                    refreshData(getString(R.string.no_data_found), 1)
                 }
 
                 override fun onFailed(code: Int, message: String) {
                     if (list.size > 0) {
                         progressbar.invisible()
                     }
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
                     refreshData(message, code)
                 }
 
