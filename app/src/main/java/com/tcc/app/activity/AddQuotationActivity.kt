@@ -125,15 +125,9 @@ class AddQuotationActivity : BaseActivity() {
             txtService.text = serviceName
             serviceId = siteListItem!!.serviceID.toString()
 
-            if (siteListItem!!.stateID.equals("12")) {
-                edCGST.isEnabled = true
-                edSGST.isEnabled = true
-                edIGST.isEnabled = false
-            } else {
-                edCGST.isEnabled = false
-                edSGST.isEnabled = false
-                edIGST.isEnabled = true
-            }
+            tilIGST.invisible()
+            tilCGST.invisible()
+            tilSGST.invisible()
         }
         if (intent.hasExtra(Constant.DATA1)) {
             leadItem = intent.getSerializableExtra(Constant.DATA1) as LeadItem
@@ -372,7 +366,8 @@ class AddQuotationActivity : BaseActivity() {
 
                 override fun onFailed(code: Int, message: String) {
 
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
 
                 }
 
@@ -829,6 +824,26 @@ class AddQuotationActivity : BaseActivity() {
                     } else {
                         compnyID = companyListArray.get(position - 1).companyID.toString()
                         Logger.d("companyID", compnyID)
+
+
+                        if (compnyID.equals("1")) {
+                            if (siteListItem!!.stateID.equals("12")) {
+                                tilCGST.visible()
+                                tilSGST.visible()
+                                tilIGST.invisible()
+                            } else {
+                                tilCGST.invisible()
+                                tilSGST.invisible()
+                                tilIGST.visible()
+                            }
+
+                        } else {
+                            tilCGST.invisible()
+                            tilSGST.invisible()
+                            tilIGST.invisible()
+                        }
+
+                        setUpdatedTotal()
                     }
 
                 }
@@ -926,7 +941,8 @@ class AddQuotationActivity : BaseActivity() {
                 }
 
                 override fun onFailed(code: Int, message: String) {
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
                 }
 
             }).addTo(autoDisposable)
@@ -989,7 +1005,8 @@ class AddQuotationActivity : BaseActivity() {
 
                 override fun onFailed(code: Int, message: String) {
 
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
 
                 }
 
@@ -1049,7 +1066,8 @@ class AddQuotationActivity : BaseActivity() {
 
                 override fun onFailed(code: Int, message: String) {
 
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
 
                 }
 
@@ -1162,7 +1180,8 @@ class AddQuotationActivity : BaseActivity() {
 
                 override fun onFailed(code: Int, message: String) {
 
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
 
                 }
 
@@ -1195,15 +1214,6 @@ class AddQuotationActivity : BaseActivity() {
                     ).edRateChild.isEmpty() && !lin_add_user.getChildAt(item).edtChildDays.isEmpty()
                 ) {
 
-                    Logger.d(
-                        "qta " + (lin_add_user.getChildAt(item).edQtyChild.getValue().toFloat())
-                    )
-                    Logger.d(
-                        "rate " + (lin_add_user.getChildAt(item).edRateChild.getValue().toFloat())
-                    )
-                    Logger.d(
-                        "days " + (lin_add_user.getChildAt(item).edtChildDays.getValue().toFloat())
-                    )
                     TotalAmount = TotalAmount + (lin_add_user.getChildAt(item).edQtyChild.getValue()
                         .toFloat() * lin_add_user.getChildAt(item).edRateChild.getValue()
                         .toFloat() * lin_add_user.getChildAt(item).edtChildDays.getValue()
@@ -1259,7 +1269,15 @@ class AddQuotationActivity : BaseActivity() {
             SGST = SGST + ((TotalAmount * session.configData.data?.sGST!!.toFloat()) / 100)
             IGST = IGST + ((TotalAmount * session.configData.data?.iGST!!.toFloat()) / 100)
 
-            var df: DecimalFormat = DecimalFormat("##.##")
+            var df = DecimalFormat("##.##")
+
+
+            if (!compnyID.equals("1")) {
+                CGST = 0f
+                SGST = 0f
+                IGST = 0f
+
+            }
 
             if (siteListItem?.stateID?.toInt() == 12) {
                 edCGST.setText(df.format(CGST))
@@ -1467,7 +1485,8 @@ class AddQuotationActivity : BaseActivity() {
 
                 override fun onFailed(code: Int, message: String) {
 
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
 
                 }
 

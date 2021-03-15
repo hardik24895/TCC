@@ -61,9 +61,7 @@ class AddLeadReminderActivity : BaseActivity() {
                     Logger.d("time", hour.toString() + ":" + minute.toString())
                     var edStartTime1: EditText = findViewById(R.id.edtReminderTime)
                     edStartTime1.setText(
-                        convertIntoTowDigit(hour) + ":" + convertIntoTowDigit(
-                            minute
-                        )
+                        convertIntoTowDigit(hour) + ":" + convertIntoTowDigit(minute)
                     )
                     reminderTime = convertIntoTowDigit(hour) + ":" + convertIntoTowDigit(minute)
 
@@ -167,7 +165,8 @@ class AddLeadReminderActivity : BaseActivity() {
                 }
 
                 override fun onFailed(code: Int, message: String) {
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
                     hideProgressbar()
                 }
 

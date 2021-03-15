@@ -68,7 +68,8 @@ class AddUploadDocument : BaseActivity() {
                         }
 
                         override fun onError(message: String) {
-                            showAlert(message)
+                            // showAlert(message)
+                            showAlert(getString(R.string.show_server_error))
                         }
                     })
             dialog.show(supportFragmentManager, "ImagePicker")

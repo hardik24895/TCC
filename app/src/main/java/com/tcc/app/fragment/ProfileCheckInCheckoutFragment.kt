@@ -251,7 +251,8 @@ class ProfileCheckInCheckoutFragment : BaseFragment(), CheckInOutAdapter.OnItemS
                     if (list.size > 0) {
                         progressbar.invisible()
                     }
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
                     refreshData(message, code)
                 }
 
@@ -382,7 +383,8 @@ class ProfileCheckInCheckoutFragment : BaseFragment(), CheckInOutAdapter.OnItemS
 
                 override fun onFailed(code: Int, message: String) {
                     hideProgressbar()
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
                 }
             }).addTo(autoDisposable)
     }
@@ -426,7 +428,8 @@ class ProfileCheckInCheckoutFragment : BaseFragment(), CheckInOutAdapter.OnItemS
 
                 override fun onFailed(code: Int, message: String) {
                     hideProgressbar()
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
                 }
             }).addTo(autoDisposable)
     }

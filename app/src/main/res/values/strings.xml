@@ -250,4 +250,6 @@
     <string name="add_salary">Add Salary</string>
     <string name="penalty">Penalty</string>
     <string name="account_holder_name">Account Holder Name</string>
+    <string name="all">All</string>
+    <string name="show_server_error">Server Connetion Failed.</string>
 </resources>

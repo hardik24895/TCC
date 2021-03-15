@@ -2,13 +2,14 @@ package com.tcc.app.activity
 
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.RadioButton
 import com.tcc.app.R
-import com.tcc.app.extention.getValue
-import com.tcc.app.extention.showAlert
-import com.tcc.app.extention.visible
+import com.tcc.app.extention.*
 import com.tcc.app.fragment.*
 import com.tcc.app.modal.UserTypeDataItem
 import com.tcc.app.modal.UserTypeListModel
@@ -19,7 +20,12 @@ import com.tcc.app.utils.Constant
 import com.tcc.app.utils.Logger
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_add_room_allocation.*
+
 import kotlinx.android.synthetic.main.activity_search.*
+import kotlinx.android.synthetic.main.activity_search.btnSubmit
+import kotlinx.android.synthetic.main.activity_search.edtEndDate
+import kotlinx.android.synthetic.main.activity_search.edtStartDate
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 import org.json.JSONException
 import org.json.JSONObject
@@ -53,6 +59,36 @@ class SearchActivity : BaseActivity() {
 
 
 
+
+
+        edtStartDate.setOnClickListener {
+            showDateTimePicker(this@SearchActivity, edtStartDate)
+        }
+
+
+        edtEndDate.setOnClickListener {
+            showNextFromStartDateTimePicker(
+                this@SearchActivity,
+                edtEndDate,
+                edtStartDate.getValue()
+            )
+        }
+
+        edtStartDate.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                edtEndDate.setText(edtStartDate.getValue())
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+        })
+        edtStartDate.setText(getCurrentDate())
+        edtEndDate.setText(getCurrentDate())
+
+
         btnSubmit.setOnClickListener {
             filter()
         }
@@ -63,6 +99,7 @@ class SearchActivity : BaseActivity() {
         if (type.equals(Constant.LEAD) || type.equals(Constant.CUSTOMER)) {
             inEmail.visible()
             inName.visible()
+            crdLeadType.visible()
         }
         if (type.equals(Constant.EMPLOYEE)) {
             inEmail.visible()
@@ -70,13 +107,14 @@ class SearchActivity : BaseActivity() {
             linlayUserType.visible()
 
             getUserTypeList()
-
             userTypeViewClick()
-
             userTypeSpinnerListner()
         }
-        if (type.equals(Constant.SITE)) {
+        if (type.equals(Constant.SITE) || type.equals(Constant.SITE_BY_TYPE)) {
             inSiteName.visible()
+            inStartDate.visible()
+            inEndDate.visible()
+            crdSiteType.visible()
         }
         if (type.equals(Constant.TICKET)) {
             inTicket.visible()
@@ -84,30 +122,40 @@ class SearchActivity : BaseActivity() {
     }
 
     fun filter() {
+
         if (type.equals(Constant.LEAD)) {
+            val rbType = findViewById<View>(rg.getCheckedRadioButtonId()) as? RadioButton
             LeadFragment.email = edtEmail.getValue()
             LeadFragment.name = edtName.getValue()
-            finish()
+            LeadFragment.leadType = rbType?.text.toString()
         }
         if (type.equals(Constant.CUSTOMER)) {
             CustomerFragment.email = edtEmail.getValue()
             CustomerFragment.name = edtName.getValue()
-            finish()
         }
         if (type.equals(Constant.SITE)) {
+            val rbType = findViewById<View>(rg1.getCheckedRadioButtonId()) as? RadioButton
             CustomerSiteFragment.name = edtSiteName.getValue()
-            finish()
+            CustomerSiteFragment.startDate = edtStartDate.getValue()
+            CustomerSiteFragment.endDate = edtEndDate.getValue()
+            CustomerSiteFragment.siteType = rbType?.text.toString()
+        }
+        if (type.equals(Constant.SITE_BY_TYPE)) {
+            val rbType = findViewById<View>(rg1.getCheckedRadioButtonId()) as? RadioButton
+            SiteListMainFragment.name = edtSiteName.getValue()
+            SiteListMainFragment.startDate = edtStartDate.getValue()
+            SiteListMainFragment.endDate = edtEndDate.getValue()
+            SiteListMainFragment.siteType = rbType?.text.toString()
         }
         if (type.equals(Constant.TICKET)) {
             TicketListFragment.Ticket = edtTicketName.getValue()
-            finish()
         }
         if (type.equals(Constant.EMPLOYEE)) {
             EmployeeFragment.email = edtEmail.getValue()
             EmployeeFragment.name = edtName.getValue()
             EmployeeFragment.usertypeid = usertypeId
-            finish()
         }
+        finish()
     }
 
     private fun userTypeViewClick() {
@@ -189,7 +237,8 @@ class SearchActivity : BaseActivity() {
 
                 override fun onFailed(code: Int, message: String) {
 
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
 
                 }
 

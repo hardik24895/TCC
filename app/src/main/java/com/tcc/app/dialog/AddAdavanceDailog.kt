@@ -165,7 +165,8 @@ class AddAdavanceDailog(context: Context) : BlurDialogFragment(), LifecycleOwner
 
                 override fun onFailed(code: Int, message: String) {
                     hideProgressbar()
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
                 }
             }).addTo(autoDisposable)
     }

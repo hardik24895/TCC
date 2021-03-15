@@ -197,7 +197,8 @@ class AddSalaryActivity : BaseActivity() {
 
                     hideProgressbar()
 
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
 
                 }
 
@@ -285,7 +286,8 @@ class AddSalaryActivity : BaseActivity() {
 
                     hideProgressbar()
 
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
 
                 }
 

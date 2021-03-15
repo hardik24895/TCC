@@ -152,7 +152,8 @@ class PenaltyFragment : BaseFragment(), PenaltiAdapter.OnItemSelected {
                     if (list.size > 0) {
                         progressbar.invisible()
                     }
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
                     refreshData(message, code)
                 }
 

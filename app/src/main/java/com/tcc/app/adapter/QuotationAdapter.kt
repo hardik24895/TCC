@@ -90,7 +90,12 @@ class QuotationAdapter(
                 txtIGST.text = data.iGST
 
             txtTotal.text = data.total
-            txtAddress.text = data.address + ", " + data.address2 + ", " + data.pinCode
+            if (data.pinCode.equals(""))
+                txtAddress.text =
+                    data.address + ", " + data.address2 + ",  " + data.cityName + ", " + data.stateName
+            else
+                txtAddress.text =
+                    data.address + ", " + data.address2 + ", " + data.pinCode + ", " + data.cityName + ", " + data.stateName
 
             imgProfile.setImageResource(R.drawable.bg_circle)
             imgProfile.setColorFilter(getRandomMaterialColor("400", context))

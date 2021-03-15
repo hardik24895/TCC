@@ -233,7 +233,8 @@ class AddGlobalAttendanceActivity : BaseActivity(), GlobalAttendanceAdapter.OnIt
                     if (list.size > 0) {
                         progressbar.invisible()
                     }
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
                     refreshData(message, code)
                 }
 
@@ -294,7 +295,8 @@ class AddGlobalAttendanceActivity : BaseActivity(), GlobalAttendanceAdapter.OnIt
                 }
 
                 override fun onFailed(code: Int, message: String) {
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
                     hideProgressbar()
                 }
 

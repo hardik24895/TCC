@@ -17,6 +17,7 @@ import com.akexorcist.snaptimepicker.SnapTimePickerDialog
 import com.akexorcist.snaptimepicker.TimeValue
 import com.tcc.app.R
 import com.tcc.app.extention.*
+import com.tcc.app.modal.QuotationItem
 import com.tcc.app.network.AutoDisposable
 import com.tcc.app.utils.BlurDialogFragment
 import com.tcc.app.utils.Logger
@@ -25,19 +26,21 @@ import kotlinx.android.synthetic.main.dialog_accept_reason.*
 import kotlinx.android.synthetic.main.dialog_reject_reason.btnSubmit
 
 
-class AcceptReasonDailog(context: Context) : BlurDialogFragment(), LifecycleOwner {
+class AcceptReasonDailog(context: Context, data: QuotationItem) : BlurDialogFragment(),
+    LifecycleOwner {
     private val autoDisposable = AutoDisposable()
     private lateinit var session: SessionManager
-
+    var quotationData: QuotationItem = data
 
     companion object {
         private lateinit var listener: onItemClick
         fun newInstance(
             context: Context,
+            data: QuotationItem,
             listeners: onItemClick
         ): AcceptReasonDailog {
             this.listener = listeners
-            return AcceptReasonDailog(context)
+            return AcceptReasonDailog(context, data)
         }
     }
 
@@ -63,8 +66,8 @@ class AcceptReasonDailog(context: Context) : BlurDialogFragment(), LifecycleOwne
         populateData()
         dialog?.setCancelable(false)
         dialog?.setCanceledOnTouchOutside(false)
-        edtStartDate.setText(getCurrentDate())
-        edtEndDate.setText(getCurrentDate())
+        edtStartDate.setText(quotationData.startDate)
+        edtEndDate.setText(quotationData.startDate)
         edtStartTime.setText(getCurentTime(getCurrentDateTime()))
 
         edtStartDate.setOnClickListener {

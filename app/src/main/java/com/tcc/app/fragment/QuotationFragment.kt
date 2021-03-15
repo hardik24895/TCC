@@ -217,10 +217,10 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
     }
 
     private fun showAcceptDialog(data: QuotationItem, position: Int) {
-        AcceptReasonDailog(requireContext())
+        AcceptReasonDailog(requireContext(), data)
         var data: QuotationItem = data
         val dialog = AcceptReasonDailog.newInstance(
-            requireContext(),
+            requireContext(), data,
             object : AcceptReasonDailog.onItemClick {
                 override fun onItemCLicked(startDate: String, endDate: String, startTime: String) {
                     AcceptQuotation(
@@ -306,7 +306,8 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
                     if (list.size > 0) {
                         progressbar.invisible()
                     }
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
                     refreshData(message, code)
                 }
 
@@ -368,7 +369,8 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
 
                 override fun onFailed(code: Int, message: String) {
                     hideProgressbar()
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
 
                 }
 
@@ -426,7 +428,8 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
 
                 override fun onFailed(code: Int, message: String) {
                     hideProgressbar()
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
 
                 }
 

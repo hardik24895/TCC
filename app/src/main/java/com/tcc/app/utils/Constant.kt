@@ -5,6 +5,7 @@ object Constant {
     const val ISCHECKED = "isChecked"
     const val LEAD = "lead"
     const val SITE = "site"
+    const val SITE_BY_TYPE = "sitebytype"
     const val TICKET = "ticket"
     const val CUSTOMER = "customer"
     const val EMPLOYEE = "employee"

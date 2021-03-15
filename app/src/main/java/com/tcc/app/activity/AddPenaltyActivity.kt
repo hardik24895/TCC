@@ -217,7 +217,8 @@ class AddPenaltyActivity : BaseActivity(), ReasonListAdapter.OnItemSelected {
 
                 override fun onFailed(code: Int, message: String) {
 
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
 
                 }
 
@@ -279,7 +280,8 @@ class AddPenaltyActivity : BaseActivity(), ReasonListAdapter.OnItemSelected {
                 }
 
                 override fun onFailed(code: Int, message: String) {
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
                 }
 
             }).addTo(autoDisposable)
@@ -337,7 +339,8 @@ class AddPenaltyActivity : BaseActivity(), ReasonListAdapter.OnItemSelected {
                 }
 
                 override fun onFailed(code: Int, message: String) {
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
                 }
 
             }).addTo(autoDisposable)
@@ -375,7 +378,8 @@ class AddPenaltyActivity : BaseActivity(), ReasonListAdapter.OnItemSelected {
                 }
 
                 override fun onFailed(code: Int, message: String) {
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
                 }
 
             }).addTo(autoDisposable)

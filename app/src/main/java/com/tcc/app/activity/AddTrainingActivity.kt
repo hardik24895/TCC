@@ -133,7 +133,8 @@ class AddTrainingActivity : BaseActivity() {
 
                 override fun onFailed(code: Int, message: String) {
 
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
 
                 }
 
@@ -173,7 +174,8 @@ class AddTrainingActivity : BaseActivity() {
 
                 override fun onFailed(code: Int, message: String) {
 
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
 
                 }
 

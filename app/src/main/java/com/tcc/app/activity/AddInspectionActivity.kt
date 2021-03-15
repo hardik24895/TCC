@@ -288,7 +288,8 @@ class AddInspectionActivity : BaseActivity(), InspectionQuesiontAdapter.OnItemSe
 
                 override fun onFailed(code: Int, message: String) {
 
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
 
                 }
 
@@ -354,7 +355,8 @@ class AddInspectionActivity : BaseActivity(), InspectionQuesiontAdapter.OnItemSe
 
                 override fun onFailed(code: Int, message: String) {
 
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
 
                 }
 
@@ -503,7 +505,8 @@ class AddInspectionActivity : BaseActivity(), InspectionQuesiontAdapter.OnItemSe
 
                 override fun onFailed(code: Int, message: String) {
 
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
 
                 }
 
@@ -664,7 +667,8 @@ class AddInspectionActivity : BaseActivity(), InspectionQuesiontAdapter.OnItemSe
 
                 override fun onFailed(code: Int, message: String) {
                     hideProgressbar()
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
 
                 }
 

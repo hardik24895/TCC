@@ -1031,9 +1031,9 @@
                             android:backgroundTint="@color/colorWhite"
                             android:fontFamily="@font/opensans_regular"
                             android:inputType="textMultiLine"
-                            android:lines="2"
+                            android:lines="8"
                             android:maxLength="1000"
-                            android:maxLines="5"
+                            android:maxLines="10"
                             android:textColor="@color/black"
                             android:textColorHint="@color/black" />
                     </com.google.android.material.textfield.TextInputLayout>

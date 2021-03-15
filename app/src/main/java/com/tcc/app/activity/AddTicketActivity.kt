@@ -1,5 +1,6 @@
 package com.tcc.app.activity
 
+
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -17,21 +18,11 @@ import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
-import com.tcc.app.utils.GSTINValidator
 import com.tcc.app.utils.Logger
-import com.tcc.app.utils.TimeStamp
 import com.yalantis.ucrop.UCrop
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-
-
 import kotlinx.android.synthetic.main.activity_add_ticket.*
-import kotlinx.android.synthetic.main.activity_add_ticket.rg
-import kotlinx.android.synthetic.main.activity_add_ticket.root
-import kotlinx.android.synthetic.main.activity_add_ticket.spCity
-import kotlinx.android.synthetic.main.activity_add_ticket.spState
-import kotlinx.android.synthetic.main.activity_add_ticket.view
-
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -287,7 +278,8 @@ class AddTicketActivity : BaseActivity() {
 
                 override fun onFailed(code: Int, message: String) {
 
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
 
                 }
 

@@ -234,7 +234,8 @@ class AddPaymentActivity : BaseActivity() {
 
                 override fun onFailed(code: Int, message: String) {
                     hideProgressbar()
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
 
                 }
 

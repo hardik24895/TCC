@@ -143,7 +143,8 @@ class PartiallyPaidFragment() : BaseFragment(), InvoicePaidAdapter.OnItemSelecte
                     if (list.size > 0) {
                         progressbar.invisible()
                     }
-                    showAlert(message)
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
                     refreshData(message, code)
                 }
 
