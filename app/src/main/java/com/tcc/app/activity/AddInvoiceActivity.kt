@@ -1260,6 +1260,16 @@ class AddInvoiceActivity : BaseActivity() {
             IGST = IGST + ((TotalAmount * session.configData.data?.iGST!!.toFloat()) / 100)
 
             edTotalAmount.setText(df.format(TotalAmount + CGST + SGST + IGST))
+
+
+            if (!quotationIteam?.companyID.equals("1")) {
+                CGST = 0f
+                SGST = 0f
+                IGST = 0f
+                tilIGST.invisible()
+                tilCGST.invisible()
+                tilSGST.invisible()
+            }
             if (quotationIteam?.stateID?.toInt() == 12) {
                 edCGST.setText(df.format(CGST))
                 edSGST.setText(df.format(SGST))
@@ -1442,6 +1452,4 @@ class AddInvoiceActivity : BaseActivity() {
             }).addTo(autoDisposable)
 
     }
-
-
 }

@@ -1,6 +1,7 @@
 package com.tcc.app.activity
 
 import android.os.Bundle
+import android.text.InputFilter
 import android.view.View
 import android.widget.RadioButton
 import androidx.core.view.isVisible
@@ -13,9 +14,14 @@ import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
 import com.tcc.app.utils.TimeStamp.formatDateFromString
+import com.tcc.app.widgets.DecimalDigitsInputFilter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_add_invoice.*
 import kotlinx.android.synthetic.main.activity_add_payment.*
+import kotlinx.android.synthetic.main.activity_add_payment.btnSubmit
+import kotlinx.android.synthetic.main.activity_add_payment.edtCompanyName
+import kotlinx.android.synthetic.main.activity_add_payment.root
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 import org.json.JSONException
 import org.json.JSONObject
@@ -70,14 +76,15 @@ class AddPaymentActivity : BaseActivity() {
         edtPaymentDate.setText(getCurrentDate())
         edtPaymentAmount.setText(invoiceDataItem?.remainingPayment)
         edtGSTAmount.setText(invoiceDataItem?.remainingGSTPayment)
+        edtPaymentAmount.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
+        edtGSTAmount.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
+
 
 
         btnSubmit.setOnClickListener {
             validation()
 
         }
-
-
 
         rg.setOnCheckedChangeListener({ group, checkedId ->
             val radio: RadioButton = findViewById(checkedId)
@@ -137,7 +144,7 @@ class AddPaymentActivity : BaseActivity() {
 
             tilPaymentAmount.isVisible && edtPaymentAmount.getValue()
                 .toBigDecimal() > invoiceDataItem?.remainingPayment!!.toBigDecimal() -> {
-                root.showSnackBar("Enter less than or equal to ${invoiceDataItem?.remainingPayment!!.toBigDecimal()}")
+                root.showSnackBar("Enter Payment Amount less than or equal to ${invoiceDataItem?.remainingPayment!!.toBigDecimal()}")
                 edtPaymentAmount.requestFocus()
             }
             edtGSTAmount.isEmpty() && tilGSTAmount.isVisible -> {
@@ -168,6 +175,12 @@ class AddPaymentActivity : BaseActivity() {
             edtBranchName.isEmpty() && tilBranchName.isVisible -> {
                 root.showSnackBar("Enter Branch Name")
                 edtBranchName.requestFocus()
+            }
+
+            tilGSTAmount.isVisible && edtGSTAmount.getValue()
+                .toBigDecimal() > invoiceDataItem?.remainingGSTPayment!!.toBigDecimal() -> {
+                root.showSnackBar("Enter GST Amount less than or equal to ${invoiceDataItem?.remainingGSTPayment!!.toBigDecimal()}")
+                edtGSTAmount.requestFocus()
             }
             else -> {
                 AddPaymentApi()

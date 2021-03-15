@@ -58,9 +58,6 @@ class SearchActivity : BaseActivity() {
         getBundleData()
 
 
-
-
-
         edtStartDate.setOnClickListener {
             showDateTimePicker(this@SearchActivity, edtStartDate)
         }

@@ -1282,11 +1282,11 @@ class AddQuotationActivity : BaseActivity() {
             if (siteListItem?.stateID?.toInt() == 12) {
                 edCGST.setText(df.format(CGST))
                 edSGST.setText(df.format(SGST))
-                edIGST.setText("")
+                edIGST.setText("0")
                 edTotalAmount.setText(df.format(TotalAmount + CGST + SGST))
             } else {
-                edCGST.setText("")
-                edSGST.setText("")
+                edCGST.setText("0")
+                edSGST.setText("0")
                 edIGST.setText(df.format(IGST))
                 edTotalAmount.setText(df.format(TotalAmount + CGST + SGST))
 
