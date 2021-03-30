@@ -191,7 +191,7 @@
                         android:layout_marginTop="@dimen/_8sdp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/total_basic_amount"
+                        android:text="@string/sub_total"
                         android:textSize="@dimen/_12sdp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -358,6 +358,7 @@
 
                         <com.tcc.app.customview.RadioButtonReguler
                             android:id="@+id/rb_include"
+                            app:buttonTint="@color/colorPrimary"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:checked="true"
@@ -365,12 +366,14 @@
 
                         <com.tcc.app.customview.RadioButtonReguler
                             android:id="@+id/rb_exclude"
+                            app:buttonTint="@color/colorPrimary"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/excluding_gst_amount" />
 
                         <com.tcc.app.customview.RadioButtonReguler
                             android:id="@+id/rb_other"
+                            app:buttonTint="@color/colorPrimary"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/other_gst_amount" />
@@ -491,12 +494,14 @@
                         <com.tcc.app.customview.RadioButtonReguler
                             android:id="@+id/rb_cash"
                             android:layout_width="wrap_content"
+                            app:buttonTint="@color/colorPrimary"
                             android:layout_height="wrap_content"
                             android:checked="true"
                             android:text="@string/cash" />
 
                         <com.tcc.app.customview.RadioButtonReguler
                             android:id="@+id/rb_online"
+                            app:buttonTint="@color/colorPrimary"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/online" />
@@ -504,6 +509,7 @@
                         <com.tcc.app.customview.RadioButtonReguler
                             android:id="@+id/rb_cheque"
                             android:layout_width="wrap_content"
+                            app:buttonTint="@color/colorPrimary"
                             android:layout_height="wrap_content"
                             android:text="@string/cheque" />
 

@@ -320,14 +320,15 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
             "" + data.emailID,
             "",
             "" + data.address,
-            "" + data.rowcount,
+            "" + data.address2,
+            "",
             "" + data.stateID,
             "" + data.leadType,
             "" + data.cityName,
             "" + data.customerID,
             "" + data.name,
             "" + data.pinCode,
-            "" + data.rno,
+            "" + data.name,
             "" + data.cityID
         )
         val intent = Intent(context, LeadDetailActivity::class.java)

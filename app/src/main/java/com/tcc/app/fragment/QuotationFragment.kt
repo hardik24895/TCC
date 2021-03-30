@@ -25,6 +25,7 @@ import com.tcc.app.utils.SessionManager
 import com.tcc.app.utils.TimeStamp.formatDateFromString
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_document_list.*
 import kotlinx.android.synthetic.main.fragment_quotation.*
 import kotlinx.android.synthetic.main.reclerview_swipelayout.*
 import org.json.JSONException
@@ -50,12 +51,15 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
     var leadItem: LeadItem? = null
 
 
+
     companion object {
         fun getInstance(bundle: Bundle): QuotationFragment {
             val fragment = QuotationFragment()
             fragment.arguments = bundle
             return fragment
         }
+
+        var isFromQuotation: Boolean = false
     }
 
     override fun onCreateView(
@@ -212,6 +216,11 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
                 Animatoo.animateCard(requireContext())
             }
 
+        } else if (action.equals("OPENPDF")) {
+            if (data.document.equals("")) {
+                root.showSnackBar("File not found")
+            } else
+                openPDF(Constant.PDF_QUOTATION_URL + data.document, requireContext())
         }
 
     }
@@ -222,13 +231,20 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
         val dialog = AcceptReasonDailog.newInstance(
             requireContext(), data,
             object : AcceptReasonDailog.onItemClick {
-                override fun onItemCLicked(startDate: String, endDate: String, startTime: String) {
+                override fun onItemCLicked(
+                    startDate: String,
+                    endDate: String,
+                    startTime: String,
+                    endTime: String
+                ) {
                     AcceptQuotation(
+                        data.visitorID!!,
                         startDate,
                         endDate,
                         data.quotationID!!,
                         data.customerID!!,
                         startTime,
+                        endTime,
                         position
                     )
                 }
@@ -330,6 +346,11 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
                 imgNodata.setImageResource(R.drawable.nodata)
             recyclerView.invisible()
         }
+
+        if (isFromQuotation) {
+            txtOther.performClick()
+            isFromQuotation = false
+        }
     }
 
     fun RejectQuotation(reasonId: String, QuotationId: String, position: Int) {
@@ -378,11 +399,13 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
     }
 
     fun AcceptQuotation(
+        visitorId: String,
         startDate: String,
         endDate: String,
         QuotationId: String,
         customerId: String,
         startTime: String,
+        endTime: String,
         position: Int
     ) {
         var result = ""
@@ -394,11 +417,12 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
             jsonBody.put("StartDate", formatDateFromString(startDate))
             jsonBody.put("EndDate", formatDateFromString(endDate))
             jsonBody.put("StartTime", startTime)
+            jsonBody.put("EndTime", endTime)
             jsonBody.put("CustomerID", customerId)
             if (leadItem != null)
                 jsonBody.put("VisitorID", leadItem?.visitorID.toString())
             else
-                jsonBody.put("VisitorID", visitorId.toString())
+                jsonBody.put("VisitorID", visitorId)
 
             result = Networking.setParentJsonData(
                 Constant.METHOD_ACCEPT_REASON,

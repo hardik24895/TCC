@@ -169,7 +169,7 @@ class AddInspectionActivity : BaseActivity(), InspectionQuesiontAdapter.OnItemSe
                     if (position == 0)
                         siteId = "-1"
                     else
-                        siteId = siteListArray!!.get(position).sitesID.toString()
+                        siteId = siteListArray!!.get(position - 1).sitesID.toString()
                 }
 
             }
@@ -225,7 +225,7 @@ class AddInspectionActivity : BaseActivity(), InspectionQuesiontAdapter.OnItemSe
             }
             edtRemark.isEmpty() -> {
                 root.showSnackBar("Enter Remark")
-                edtMessage.requestFocus()
+                edtRemark.requestFocus()
             }
             else -> {
                 AddInspectionData()
@@ -531,7 +531,7 @@ class AddInspectionActivity : BaseActivity(), InspectionQuesiontAdapter.OnItemSe
                         OperationMangerId = "-1"
                     else
                         OperationMangerId =
-                            operationMangerListArray!!.get(position).userID.toString()
+                            operationMangerListArray!!.get(position - 1).userID.toString()
 
                 }
 
@@ -565,7 +565,8 @@ class AddInspectionActivity : BaseActivity(), InspectionQuesiontAdapter.OnItemSe
                     if (position == 0)
                         fieldOperatorId = "-1"
                     else
-                        fieldOperatorId = fieldOperatorListArray!!.get(position).userID.toString()
+                        fieldOperatorId =
+                            fieldOperatorListArray!!.get(position - 1).userID.toString()
 
 
                 }
@@ -599,7 +600,8 @@ class AddInspectionActivity : BaseActivity(), InspectionQuesiontAdapter.OnItemSe
                     if (position == 0)
                         QualityManagerId = "-1"
                     else
-                        QualityManagerId = qualityManagerListArray!!.get(position).userID.toString()
+                        QualityManagerId =
+                            qualityManagerListArray!!.get(position - 1).userID.toString()
 
 
                 }

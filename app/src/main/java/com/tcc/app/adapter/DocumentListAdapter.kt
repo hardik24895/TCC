@@ -1,14 +1,14 @@
 package com.tcc.app.adapter
 
-import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.ablanco.zoomy.Zoomy
 import com.bumptech.glide.Glide
 import com.tcc.app.R
+import com.tcc.app.extention.hide
+import com.tcc.app.extention.visible
 import com.tcc.app.modal.DocumentListDataItem
 import com.tcc.app.utils.Constant
 import kotlinx.android.extensions.LayoutContainer
@@ -37,7 +37,6 @@ class DocumentListAdapter(
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         val data = list[position]
 
-
         holder.bindData(mContext, data, listener)
     }
 
@@ -61,10 +60,33 @@ class DocumentListAdapter(
                 .placeholder(R.drawable.ic_document).into(imgProfile)
             txtTitle.text = data.title
 
-            val builder: Zoomy.Builder = Zoomy.Builder(context as Activity).target(itemView)
-            builder.register()
+            /*  val builder: Zoomy.Builder = Zoomy.Builder(context as Activity).target(itemView)
+              builder.register()*/
 
-            itemView.setOnClickListener { listener.onItemSelect(adapterPosition, data) }
+
+            val namepass: Array<String> = data.document!!.split(".").toTypedArray()
+
+            if (namepass[namepass.size - 1].toLowerCase().equals("jpg") ||
+                namepass[namepass.size - 1].toLowerCase().equals("png") ||
+                namepass[namepass.size - 1].toLowerCase().equals("jpeg") ||
+                namepass[namepass.size - 1].toLowerCase().equals("PNG")
+            ) {
+                Glide.with(context).load(Constant.DOCUMENT_URL + data.document)
+                    .placeholder(R.drawable.ic_document).into(imgProfile)
+
+                txtIcon.hide()
+                imgProfile.visible()
+            } else {
+
+
+                imgProfile.hide()
+                txtIcon.visible()
+                Glide.with(context).load(R.drawable.ic_selected_doc)
+                    .placeholder(R.drawable.ic_document).into(txtIcon)
+            }
+
+            txtIcon.setOnClickListener { listener.onItemSelect(adapterPosition, data) }
+            imgProfile.setOnClickListener { listener.onItemSelect(adapterPosition, data) }
             imgEdit.setOnClickListener { listener.editDocument(adapterPosition, data) }
             imgDelete.setOnClickListener { listener.deleteDocument(adapterPosition, data) }
         }

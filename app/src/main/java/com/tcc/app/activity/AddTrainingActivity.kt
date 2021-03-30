@@ -15,6 +15,7 @@ import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_add_quotation.*
 import kotlinx.android.synthetic.main.activity_add_room_allocation.*
 import kotlinx.android.synthetic.main.activity_add_training.*
 import kotlinx.android.synthetic.main.activity_add_training.btnSubmit
@@ -33,7 +34,7 @@ class AddTrainingActivity : BaseActivity() {
     var trainingNameArray: ArrayList<String>? = null
     var adapterTraining: ArrayAdapter<String>? = null
     var itemTraining: List<SearchableItem>? = null
-    var trainingId: String? = ""
+    var trainingId: String? = "-1"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,9 +58,7 @@ class AddTrainingActivity : BaseActivity() {
 
 
         spTrainingType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
 
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -67,10 +66,12 @@ class AddTrainingActivity : BaseActivity() {
                 position: Int,
                 id: Long
             ) {
-                if (position != -1 && trainingListArray!!.size > position) {
-                    trainingId = trainingListArray!!.get(position).trainingID
-                }
 
+                if (position == 0) {
+                    trainingId = "-1"
+                } else {
+                    trainingId = trainingListArray!!.get(position - 1).trainingID
+                }
             }
         }
 
@@ -78,14 +79,18 @@ class AddTrainingActivity : BaseActivity() {
 
             SearchableDialog(this,
                 itemTraining!!,
-                getString(R.string.select_city),
+                getString(R.string.select_training),
                 { item, _ ->
                     spTrainingType.setSelection(item.id.toInt())
                 }).show()
         }
 
         btnSubmit.setOnClickListener {
-            AddTraining()
+            if (!trainingId.equals("-1")) {
+                AddTraining()
+            } else {
+                root.showSnackBar("Please select training")
+            }
         }
 
     }
@@ -111,17 +116,24 @@ class AddTrainingActivity : BaseActivity() {
                     trainingListArray?.addAll(response.data)
 
                     var myList: MutableList<SearchableItem> = mutableListOf()
+
+                    trainingNameArray!!.add(getString(R.string.select_training))
+                    myList.add(SearchableItem(0, getString(R.string.select_training)))
                     for (items in response.data.indices) {
                         trainingNameArray?.add(
-                            response.data.get(items).training.toString() + " - " +
-                                    response.data.get(items).trainingDate.toString() + " - "
-                                    + response.data.get(items).trainingTime.toString()
+                            response.data.get(items).training.toString() + " - " + response.data.get(
+                                items
+                            ).trainingDate.toString() + " - " + response.data.get(items).trainingTime.toString()
                         )
-                        myList.add(SearchableItem(items.toLong(), trainingNameArray!!.get(items)))
+                        myList.add(
+                            SearchableItem(
+                                items.toLong() + 1,
+                                trainingNameArray!!.get(items + 1)
+                            )
+                        )
                     }
 
                     itemTraining = myList
-
                     adapterTraining = ArrayAdapter(
                         this@AddTrainingActivity,
                         R.layout.custom_spinner_item,

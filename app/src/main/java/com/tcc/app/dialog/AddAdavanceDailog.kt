@@ -69,8 +69,8 @@ class AddAdavanceDailog(context: Context) : BlurDialogFragment(), LifecycleOwner
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         populateData()
-        dialog?.setCancelable(false)
-        dialog?.setCanceledOnTouchOutside(false)
+        dialog?.setCancelable(true)
+        dialog?.setCanceledOnTouchOutside(true)
         rbPaid.isChecked = true
         edtDate.setText(getCurrentDate())
         btnSubmit.setOnClickListener {

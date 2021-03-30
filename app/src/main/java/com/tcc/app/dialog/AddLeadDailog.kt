@@ -1,17 +1,30 @@
 package com.tcc.app.dialog
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
+import android.database.Cursor
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
+import android.provider.ContactsContract
+import android.provider.ContactsContract.CommonDataKinds
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
+import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.LifecycleOwner
+import com.github.florent37.runtimepermission.kotlin.askPermission
 import com.tcc.app.R
 import com.tcc.app.extention.getValue
 import com.tcc.app.extention.isEmpty
@@ -36,7 +49,7 @@ import tech.hibk.searchablespinnerlibrary.SearchableDialog
 import tech.hibk.searchablespinnerlibrary.SearchableItem
 
 
-class AddVisitorDailog(context: Context) : BlurDialogFragment(), LifecycleOwner {
+class AddLeadDailog(context: Context) : BlurDialogFragment(), LifecycleOwner {
     private val autoDisposable = AutoDisposable()
     private lateinit var session: SessionManager
     var serviceNameList: ArrayList<String> = ArrayList()
@@ -44,15 +57,16 @@ class AddVisitorDailog(context: Context) : BlurDialogFragment(), LifecycleOwner 
     var serviceListArray: ArrayList<ServiceDataItem> = ArrayList()
     var itemService: List<SearchableItem> = ArrayList()
     var serviceId: String = ""
+    private val REQUEST_CONTACT = 201
 
     companion object {
         private lateinit var listener: onItemClick
         fun newInstance(
             context: Context,
             listeners: onItemClick
-        ): AddVisitorDailog {
+        ): AddLeadDailog {
             this.listener = listeners
-            return AddVisitorDailog(context)
+            return AddLeadDailog(context)
         }
     }
 
@@ -73,6 +87,7 @@ class AddVisitorDailog(context: Context) : BlurDialogFragment(), LifecycleOwner 
     }
 
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         populateData()
@@ -93,7 +108,64 @@ class AddVisitorDailog(context: Context) : BlurDialogFragment(), LifecycleOwner 
         serviceViewClick()
 
 
+        edtPhone.setOnTouchListener(OnTouchListener { v, event ->
+            val DRAWABLE_LEFT = 0
+            val DRAWABLE_TOP = 1
+            val DRAWABLE_RIGHT = 2
+            val DRAWABLE_BOTTOM = 3
+            if (event.action == MotionEvent.ACTION_UP) {
+                if (event.rawX >= edtPhone.getRight() - edtPhone.getCompoundDrawables()
+                        .get(DRAWABLE_RIGHT).getBounds().width()
+                ) {
+
+                    checkPermission()
+                    return@OnTouchListener true
+                }
+            }
+            false
+        })
+
+
     }
+
+
+    fun checkPermission() {
+        askPermission(Manifest.permission.READ_CONTACTS) {
+            val intent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
+            intent.type = CommonDataKinds.Phone.CONTENT_TYPE
+            startActivityForResult(intent, REQUEST_CONTACT)
+        }.onDeclined { e ->
+            if (e.hasDenied()) {
+
+                AlertDialog.Builder(requireContext()).setMessage("Please accept our permissions")
+                    .setPositiveButton("yes") { dialog, which ->
+                        e.askAgain();
+                    } //ask again
+                    .show();
+            }
+
+            if (e.hasForeverDenied()) {
+                AlertDialog.Builder(requireContext()).setMessage("Please accept our permissions")
+                    .setPositiveButton("yes") { dialog, which ->
+                        e.goToSettings()
+                    } //ask again
+                    .show();
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        val intent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
+        intent.type = CommonDataKinds.Phone.CONTENT_TYPE
+        startActivityForResult(intent, REQUEST_CONTACT)
+
+    }
+
 
     fun validation() {
         when {
@@ -143,8 +215,6 @@ class AddVisitorDailog(context: Context) : BlurDialogFragment(), LifecycleOwner 
         var result = ""
         try {
             val jsonBody = JSONObject()
-
-
             result = Networking.setParentJsonData(Constant.METHOD_SERVICE_LIST, jsonBody)
 
         } catch (e: JSONException) {
@@ -221,6 +291,49 @@ class AddVisitorDailog(context: Context) : BlurDialogFragment(), LifecycleOwner 
                 }
 
             }
+        }
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode === RESULT_OK) {
+            // Check for the request code, we might be usign multiple startActivityForReslut
+            when (requestCode) {
+                REQUEST_CONTACT -> {
+                    var cursor: Cursor? = null
+                    try {
+                        val uri: Uri = data?.data!!
+                        cursor = requireActivity().getContentResolver().query(
+                            uri,
+                            arrayOf(CommonDataKinds.Phone.NUMBER),
+                            null,
+                            null,
+                            null
+                        )
+                        if (cursor != null && cursor.moveToNext()) {
+                            val phone = cursor.getString(0)
+                            // Do something with phone
+
+                            var selectedContact =
+                                phone.replace(" ", "").replace("+91", "").replace("(", "")
+                                    .replace("+", "")
+                                    .replace(")", "").replace("*", "").replace("#", "")
+                            if (selectedContact.length > 10) {
+                                selectedContact = selectedContact.substring(1)
+
+                            }
+
+                            edtPhone.setText(selectedContact)
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+        } else {
+            Log.d("MainActivity", "Failed to pick contact")
         }
     }
 

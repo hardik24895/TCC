@@ -25,6 +25,9 @@ data class UserTypeDataItem(
     @field:SerializedName("Rno")
     val rno: String? = null,
 
+    @field:SerializedName("Qty")
+    val qty: String? = null,
+
     @field:SerializedName("rowcount")
     val rowcount: String? = null,
 

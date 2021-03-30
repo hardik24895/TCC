@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.rm.enterprise.modal.PaymentListDataItem
 import com.tcc.app.R
 import com.tcc.app.extention.getRandomMaterialColor
 import com.tcc.app.extention.visible
-import com.tcc.app.modal.PaymentListDataItem
 import com.tcc.app.utils.Constant
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.row_payment_list.*
@@ -100,6 +100,18 @@ class PaymentListAdapter(
                 txtGSTAmount.setText(Constant.NA)
             } else {
                 txtGSTAmount.setText(data.gSTAmount)
+            }
+
+            if (data.remainingPayment.toString().isEmpty()) {
+                txtRemainingPayment.setText("0")
+            } else {
+                txtRemainingPayment.setText(data.remainingPayment)
+            }
+
+            if (data.remainingGSTPayment.toString().isEmpty()) {
+                txtRemainingGst.setText("0")
+            } else {
+                txtRemainingGst.setText(data.remainingGSTPayment)
             }
 
             if (data.chequeNo.toString().isEmpty()) {

@@ -14,6 +14,7 @@ import android.widget.TextView
 import com.google.android.material.textfield.TextInputLayout
 import com.tcc.app.R
 import com.tcc.app.extention.*
+import com.tcc.app.fragment.QuotationFragment
 import com.tcc.app.modal.*
 import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
@@ -117,8 +118,8 @@ class AddQuotationActivity : BaseActivity() {
                 btnAddUser.setText("Add Service Item")
 
             } else {
-                txtUserTitle.setText("Staff")
-                btnAddUser.setText("ADD STAFF")
+                txtUserTitle.setText("item")
+                btnAddUser.setText("ADD item")
             }
 
 
@@ -401,7 +402,7 @@ class AddQuotationActivity : BaseActivity() {
                 SearchableDialog(
                     this@AddQuotationActivity,
                     itemUserType!!,
-                    getString(R.string.staff_selection),
+                    getString(R.string.select_item),
                     { item, _ -> spUserType.setSelection(item.id.toInt()) }).show()
         }
 
@@ -557,6 +558,7 @@ class AddQuotationActivity : BaseActivity() {
         var edHSNChild: EditText = rowView.findViewById(R.id.edHSNChild)
         var edQtyChild: EditText = rowView.findViewById(R.id.edQtyChild)
         var edRateChild: EditText = rowView.findViewById(R.id.edRateChild)
+        var txtItemTotalAmount: TextView = rowView.findViewById(R.id.txtItemTotalAmount)
         edRateChild.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
         var edDaysChild: EditText = rowView.findViewById(R.id.edtChildDays)
         var txtUserTitleChild: TextView = rowView.findViewById(R.id.txtUserTitle)
@@ -564,7 +566,7 @@ class AddQuotationActivity : BaseActivity() {
         if (serviceName.equals("Deep cleaning")) {
             txtUserTitleChild.setText("Service Item")
         } else {
-            txtUserTitleChild.setText("Staff")
+            txtUserTitleChild.setText("item")
         }
 
 
@@ -664,7 +666,7 @@ class AddQuotationActivity : BaseActivity() {
                 SearchableDialog(
                     this@AddQuotationActivity,
                     itemUserType!!,
-                    getString(R.string.staff_selection),
+                    getString(R.string.select_item),
                     { item, _ -> spUserTypeChild.setSelection(item.id.toInt()) }).show()
         }
         edDaysChild.setText("1")
@@ -681,6 +683,7 @@ class AddQuotationActivity : BaseActivity() {
         var edHSNChild: EditText = rowView.findViewById(R.id.edHSNChild)
         var edQtyChild: EditText = rowView.findViewById(R.id.edQtyChild)
         var edRateChild: EditText = rowView.findViewById(R.id.edRateChild)
+        var txtMaterialAmount: TextView = rowView.findViewById(R.id.txtItemTotalAmount)
         edRateChild.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
         var edDaysChild: EditText = rowView.findViewById(R.id.edtChildDays)
         var til22: TextInputLayout = rowView.findViewById(R.id.til22)
@@ -739,6 +742,13 @@ class AddQuotationActivity : BaseActivity() {
         edRateChild.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 setUpdatedTotal()
+
+                if (!edQtyChild.isEmpty() && !edRateChild.isEmpty()) {
+                    txtMaterialAmount.text = getString(R.string.RS) + " " + (edQtyChild.getValue()
+                        .toFloat() * edRateChild.getValue().toFloat()).toString()
+                } else {
+                    txtItemTotalAmount.text = getString(R.string.RS) + " 0"
+                }
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -750,6 +760,12 @@ class AddQuotationActivity : BaseActivity() {
         edQtyChild.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 setUpdatedTotal()
+                if (!edQtyChild.isEmpty() && !edRateChild.isEmpty()) {
+                    txtMaterialAmount.text = getString(R.string.RS) + " " + (edQtyChild.getValue()
+                        .toFloat() * edRateChild.getValue().toFloat()).toString()
+                } else {
+                    txtItemTotalAmount.text = getString(R.string.RS) + " 0"
+                }
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -976,8 +992,8 @@ class AddQuotationActivity : BaseActivity() {
                         userTypeNameList!!.add("Select Service Item")
                         myList.add(SearchableItem(0, "Select Service Item"))
                     } else {
-                        userTypeNameList!!.add(getString(R.string.staff_selection))
-                        myList.add(SearchableItem(0, getString(R.string.staff_selection)))
+                        userTypeNameList!!.add(getString(R.string.select_item))
+                        myList.add(SearchableItem(0, getString(R.string.select_item)))
                     }
 
 
@@ -1202,8 +1218,11 @@ class AddQuotationActivity : BaseActivity() {
 
             TotalAmount = TotalAmount + (edQty.getValue().toFloat() * edRate.getValue()
                 .toFloat()) * edtDays.getValue().toFloat()
-
-        }
+            txtItemTotalAmount.text =
+                getString(R.string.RS) + " " + (edQty.getValue().toFloat() * edRate.getValue()
+                    .toFloat()).toString()
+        } else
+            txtItemTotalAmount.text = getString(R.string.RS) + " 0"
 
 
 
@@ -1219,6 +1238,11 @@ class AddQuotationActivity : BaseActivity() {
                         .toFloat() * lin_add_user.getChildAt(item).edtChildDays.getValue()
                         .toFloat())
 
+                    lin_add_user.getChildAt(item).txtItemTotalAmount.text =
+                        getString(R.string.RS) + " " + (lin_add_user.getChildAt(item).edQtyChild.getValue()
+                            .toFloat() * lin_add_user.getChildAt(item).edRateChild.getValue()
+                            .toFloat()).toString()
+
                 }
 
             }
@@ -1231,8 +1255,10 @@ class AddQuotationActivity : BaseActivity() {
             TotalAmount =
                 TotalAmount + (edMaterialQty.getValue().toFloat() * edMaterialRate.getValue()
                     .toFloat()) * edtMaterialDays.getValue().toFloat()
-
-        }
+            txtMaterialTotalAmount.text = getString(R.string.RS) + " " + (edMaterialQty.getValue()
+                .toFloat() * edMaterialRate.getValue().toFloat()).toString()
+        } else
+            txtMaterialTotalAmount.text = getString(R.string.RS) + " 0"
 
 
 
@@ -1288,7 +1314,7 @@ class AddQuotationActivity : BaseActivity() {
                 edCGST.setText("0")
                 edSGST.setText("0")
                 edIGST.setText(df.format(IGST))
-                edTotalAmount.setText(df.format(TotalAmount + CGST + SGST))
+                edTotalAmount.setText(df.format(TotalAmount + IGST))
 
             }
         }
@@ -1317,6 +1343,8 @@ class AddQuotationActivity : BaseActivity() {
             jsonBody.put("IGST", edIGST.getValue())
             jsonBody.put("Notes", edtNote.getValue())
             jsonBody.put("Terms", edtTerms.getValue())
+            jsonBody.put("StartDate", siteListItem?.startDate.toString())
+            jsonBody.put("EndDate", siteListItem?.endDate.toString())
             jsonBody.put("ServiceID", serviceId)
             if (leadItem != null) {
                 jsonBody.put("VisitorID", leadItem?.visitorID)
@@ -1418,7 +1446,7 @@ class AddQuotationActivity : BaseActivity() {
                 if (serviceName.equals("Deep cleaning"))
                     root.showSnackBar("Please Select Service Item")
                 else
-                    root.showSnackBar("Please Select Staff")
+                    root.showSnackBar("Please Select item")
 
                 hideProgressbar()
                 return
@@ -1441,6 +1469,7 @@ class AddQuotationActivity : BaseActivity() {
                     hideProgressbar()
                     if (response.error == 200) {
                         root.showSnackBar(response.message.toString())
+                        QuotationFragment.isFromQuotation = true
                         finish()
                     }
                 }

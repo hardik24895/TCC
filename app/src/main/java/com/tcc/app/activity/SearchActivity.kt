@@ -116,6 +116,14 @@ class SearchActivity : BaseActivity() {
         if (type.equals(Constant.TICKET)) {
             inTicket.visible()
         }
+        if (type.equals(Constant.PAYMENT)) {
+            inSiteName.visible()
+            inStartDate.visible()
+            inEndDate.visible()
+            inInvoiceNum.visible()
+        }
+
+
     }
 
     fun filter() {
@@ -145,13 +153,21 @@ class SearchActivity : BaseActivity() {
             SiteListMainFragment.siteType = rbType?.text.toString()
         }
         if (type.equals(Constant.TICKET)) {
-            TicketListFragment.Ticket = edtTicketName.getValue()
+            TicketActivity.Ticket = edtTicketName.getValue()
         }
         if (type.equals(Constant.EMPLOYEE)) {
             EmployeeFragment.email = edtEmail.getValue()
             EmployeeFragment.name = edtName.getValue()
             EmployeeFragment.usertypeid = usertypeId
         }
+        if (type.equals(Constant.PAYMENT)) {
+            PaymentListFragment.startDate = edtStartDate.getValue()
+            PaymentListFragment.endDate = edtEndDate.getValue()
+            PaymentListFragment.invoiceNum = edtInvoiceNum.getValue()
+            PaymentListFragment.siteName = edtSiteName.getValue()
+        }
+
+
         finish()
     }
 
@@ -160,7 +176,7 @@ class SearchActivity : BaseActivity() {
         view2.setOnClickListener {
             SearchableDialog(this@SearchActivity,
                 itemUserType!!,
-                getString(R.string.staff_selection), { item, _ ->
+                getString(R.string.select_usertype), { item, _ ->
                     spUserType.setSelection(item.id.toInt())
                 }).show()
         }
@@ -215,7 +231,7 @@ class SearchActivity : BaseActivity() {
                     userTypeListArray!!.addAll(response.data)
 
                     var myList: MutableList<SearchableItem> = mutableListOf()
-                    userTypeNameList!!.add(getString(R.string.staff_selection))
+                    userTypeNameList!!.add(getString(R.string.select_usertype))
                     for (items in response.data.indices) {
                         userTypeNameList!!.add(response.data.get(items).usertype.toString())
                         myList.add(SearchableItem(items.toLong(), userTypeNameList!!.get(items)))

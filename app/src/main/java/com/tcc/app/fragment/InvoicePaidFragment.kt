@@ -7,9 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tcc.app.R
 import com.tcc.app.adapter.InvoicePaidAdapter
-import com.tcc.app.extention.invisible
-import com.tcc.app.extention.showAlert
-import com.tcc.app.extention.visible
+import com.tcc.app.extention.*
 import com.tcc.app.interfaces.LoadMoreListener
 import com.tcc.app.modal.InvoiceDataItem
 import com.tcc.app.modal.InvoiceListModal
@@ -85,6 +83,13 @@ class InvoicePaidFragment : BaseFragment(), InvoicePaidAdapter.OnItemSelected {
 
     override fun onItemSelect(position: Int, data: InvoiceDataItem) {
 
+    }
+
+    override fun openSelectedPDF(position: Int, data: InvoiceDataItem) {
+        if (data.document.equals("")) {
+            swipeRefreshLayout.showSnackBar("File not found")
+        } else
+            openPDF(Constant.PDF_INVOICE_URL + data.document, requireContext())
     }
 
     fun getInvoiceList(page: Int) {

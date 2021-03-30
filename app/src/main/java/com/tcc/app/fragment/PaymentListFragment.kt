@@ -1,11 +1,15 @@
 package com.tcc.app.fragment
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.blogspot.atifsoftwares.animatoolib.Animatoo
+import com.rm.enterprise.modal.PaymentListDataItem
+import com.rm.enterprise.modal.PaymentListModel
 import com.tcc.app.R
+import com.tcc.app.activity.SearchActivity
 import com.tcc.app.adapter.PaymentListAdapter
 import com.tcc.app.extention.invisible
 import com.tcc.app.extention.setHomeScreenTitle
@@ -14,19 +18,18 @@ import com.tcc.app.extention.visible
 import com.tcc.app.interfaces.LoadMoreListener
 import com.tcc.app.modal.CustomerDataItem
 import com.tcc.app.modal.LeadItem
-import com.tcc.app.modal.PaymentListDataItem
-import com.tcc.app.modal.PaymentListModel
+
 import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
 import com.tcc.app.utils.SessionManager
+import com.tcc.app.utils.TimeStamp.formatDateFromString
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.reclerview_swipelayout.*
 import org.json.JSONException
 import org.json.JSONObject
-
 
 class PaymentListFragment() : BaseFragment(), PaymentListAdapter.OnItemSelected {
     var customerId: Int? = -1
@@ -52,6 +55,14 @@ class PaymentListFragment() : BaseFragment(), PaymentListAdapter.OnItemSelected 
         return root
     }
 
+
+    companion object {
+        var startDate: String = ""
+        var endDate: String = ""
+        var invoiceNum: String = ""
+        var siteName: String = ""
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (customerId == -1)
@@ -66,6 +77,10 @@ class PaymentListFragment() : BaseFragment(), PaymentListAdapter.OnItemSelected 
         })
 
         swipeRefreshLayout.setOnRefreshListener {
+            startDate = ""
+            endDate = ""
+            invoiceNum = ""
+            siteName = ""
             page = 1
             list.clear()
             hasNextPage = true
@@ -82,6 +97,35 @@ class PaymentListFragment() : BaseFragment(), PaymentListAdapter.OnItemSelected 
         adapter = PaymentListAdapter(requireContext(), list, this)
         recyclerView.adapter = adapter
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.home, menu)
+        val filter = menu.findItem(R.id.action_filter)
+        filter.setVisible(true)
+
+        val add = menu.findItem(R.id.action_add)
+        add.setVisible(false)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+
+            R.id.action_filter -> {
+                val intent = Intent(context, SearchActivity::class.java)
+                intent.putExtra(Constant.DATA, Constant.PAYMENT)
+                startActivity(intent)
+                Animatoo.animateCard(context)
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
     override fun onItemSelect(position: Int, data: PaymentListDataItem) {
@@ -103,6 +147,10 @@ class PaymentListFragment() : BaseFragment(), PaymentListAdapter.OnItemSelected 
             jsonBody.put("CurrentPage", page)
             jsonBody.put("InvoiceID", -1)
             jsonBody.put("CustomerID", -1)
+            jsonBody.put("StartDate", formatDateFromString(startDate))
+            jsonBody.put("EndDate", formatDateFromString(endDate))
+            jsonBody.put("InvoiceNumber", invoiceNum)
+            jsonBody.put("SiteName", siteName)
             jsonBody.put("CityID", session.getDataByKey(SessionManager.KEY_CITY_ID))
             result = Networking.setParentJsonData(
                 Constant.METHOD_PAYMENT_LIST,
@@ -175,6 +223,38 @@ class PaymentListFragment() : BaseFragment(), PaymentListAdapter.OnItemSelected 
         recyclerView.isLoading = true
         getSiteList(page)
         super.onResume()
+    }
+
+    override fun onDestroyView() {
+        startDate = ""
+        endDate = ""
+        invoiceNum = ""
+        siteName = ""
+        super.onDestroyView()
+    }
+
+    override fun onDestroy() {
+        startDate = ""
+        endDate = ""
+        invoiceNum = ""
+        siteName = ""
+        super.onDestroy()
+    }
+
+    override fun onPause() {
+        startDate = ""
+        endDate = ""
+        invoiceNum = ""
+        siteName = ""
+        super.onPause()
+    }
+
+    override fun onAttach(context: Context) {
+        startDate = ""
+        endDate = ""
+        invoiceNum = ""
+        siteName = ""
+        super.onAttach(context)
     }
 
 }

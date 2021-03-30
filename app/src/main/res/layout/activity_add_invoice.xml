@@ -199,6 +199,7 @@
 
                            <com.tcc.app.customview.RadioButtonReguler
                                android:id="@+id/rbResidential"
+                               app:buttonTint="@color/colorPrimary"
                                android:layout_width="wrap_content"
                                android:layout_height="@dimen/_30sdp"
                                android:text="@string/residential" />
@@ -207,11 +208,13 @@
                                android:id="@+id/rbCommercial"
                                android:layout_width="wrap_content"
                                android:layout_height="@dimen/_30sdp"
+                               app:buttonTint="@color/colorPrimary"
                                android:text="@string/commercial" />
 
                            <com.tcc.app.customview.RadioButtonReguler
                                android:id="@+id/rbIndustrial"
                                android:layout_width="wrap_content"
+                               app:buttonTint="@color/colorPrimary"
                                android:layout_height="@dimen/_30sdp"
                                android:text="@string/industrial" />
 
@@ -244,7 +247,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_12sdp"
-                        android:text="@string/staff"
+                        android:text="@string/item"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_14sdp"
                         app:layout_constraintStart_toStartOf="parent"
@@ -273,12 +276,12 @@
                             android:padding="@dimen/_5sdp"
                             app:cancelButtonColor="@color/black"
                             app:cancelButtontext="CLOSE"
-                            app:dialogTitle="@+id/spUserType"
+                            app:dialogTitle="@+id/select_item"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:nothingSelectedText="@string/staff_selection"
+                            app:nothingSelectedText="@string/select_item"
                             app:onlyLightTheme="true" />
 
                         <View
@@ -366,6 +369,27 @@
                             android:textColor="@color/black"
                             android:textColorHint="@color/black" />
                     </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.tcc.app.customview.TextviewReguler
+                        android:id="@+id/txtItemTotal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/item_total"
+                        android:textColor="@color/black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/btnAddUser" />
+
+
+                    <com.tcc.app.customview.TextviewReguler
+                        android:id="@+id/txtItemTotalAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:text="\u20b9 0"
+                        android:textColor="@color/black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txtItemTotal" />
 
 
                     <com.tcc.app.customview.ButtonReguler
@@ -567,6 +591,26 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
 
+                    <com.tcc.app.customview.TextviewReguler
+                        android:id="@+id/txtMaterialTotal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/item_total"
+                        android:textColor="@color/black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/btnAddMaterial" />
+
+
+                    <com.tcc.app.customview.TextviewReguler
+                        android:id="@+id/txtMaterialTotalAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:text="\u20b9 0"
+                        android:textColor="@color/black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txtMaterialTotal" />
+
                     <com.tcc.app.customview.ButtonReguler
                         android:id="@+id/btnAddMaterial"
                         style="@style/CustomPressButton_Green"
@@ -639,6 +683,7 @@
                             android:id="@+id/edSubTotalAmount"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:focusable="false"
                             android:backgroundTint="@color/colorWhite"
                             android:fontFamily="@font/opensans_regular"
                             android:inputType="numberDecimal"
@@ -665,6 +710,7 @@
                             android:backgroundTint="@color/colorWhite"
                             android:fontFamily="@font/opensans_regular"
                             android:inputType="numberDecimal"
+                            android:focusable="false"
                             android:maxLength="10"
                             android:singleLine="true"
                             android:textColor="@color/black"
@@ -688,6 +734,7 @@
                             android:backgroundTint="@color/colorWhite"
                             android:fontFamily="@font/opensans_regular"
                             android:inputType="numberDecimal"
+                            android:focusable="false"
                             android:maxLength="10"
                             android:singleLine="true"
                             android:textColor="@color/black"
@@ -711,6 +758,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/colorWhite"
+                            android:focusable="false"
                             android:fontFamily="@font/opensans_regular"
                             android:inputType="numberDecimal"
                             android:maxLength="10"
@@ -738,6 +786,7 @@
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/colorWhite"
                             android:fontFamily="@font/opensans_regular"
+                            android:focusable="false"
                             android:inputType="numberDecimal"
                             android:maxLength="10"
                             android:singleLine="true"
@@ -797,9 +846,9 @@
                             android:backgroundTint="@color/colorWhite"
                             android:fontFamily="@font/opensans_regular"
                             android:inputType="textMultiLine"
-                            android:lines="2"
+                            android:lines="5"
                             android:maxLength="1000"
-                            android:maxLines="3"
+                            android:maxLines="10"
                             android:textColor="@color/black"
                             android:textColorHint="@color/black" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -823,9 +872,9 @@
                             android:backgroundTint="@color/colorWhite"
                             android:fontFamily="@font/opensans_regular"
                             android:inputType="textMultiLine"
-                            android:lines="2"
+                            android:lines="5"
                             android:maxLength="1000"
-                            android:maxLines="3"
+                            android:maxLines="10"
                             android:textColor="@color/black"
                             android:textColorHint="@color/black" />
                     </com.google.android.material.textfield.TextInputLayout>

@@ -53,7 +53,7 @@ class InspectionAdapter(
             data: InspectionDataItem,
             listener: InspectionAdapter.OnItemSelected
         ) {
-            txtName.text = data.employeeName
+            txtEmpName.text = data.employeeName
             txtCompanyName.text = data.companyName
             txtUserType.text = data.userType
             txtSiteName.text = data.sitesName

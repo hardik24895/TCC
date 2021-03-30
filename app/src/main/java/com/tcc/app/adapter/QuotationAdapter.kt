@@ -8,10 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tcc.app.R
 import com.tcc.app.extention.getRandomMaterialColor
 import com.tcc.app.extention.invisible
-import com.tcc.app.extention.openPDF
 import com.tcc.app.extention.visible
 import com.tcc.app.modal.QuotationItem
-import com.tcc.app.utils.Constant
 import com.tcc.app.utils.SessionManager
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.row_quoatation.*
@@ -106,10 +104,18 @@ class QuotationAdapter(
             btnAccept.setOnClickListener { listener.onItemSelect(adapterPosition, data, "ACCEPT") }
             btnReject.setOnClickListener { listener.onItemSelect(adapterPosition, data, "REJECT") }
             btnTeamDefination.setOnClickListener {
-                listener.onItemSelect(adapterPosition, data, "TEAM-DEFINATION")
+                listener.onItemSelect(
+                    adapterPosition,
+                    data,
+                    "TEAM-DEFINATION"
+                )
             }
             btnInvoice.setOnClickListener {
-                listener.onItemSelect(adapterPosition, data, "INVOICE")
+                listener.onItemSelect(
+                    adapterPosition,
+                    data,
+                    "INVOICE"
+                )
             }
 
 
@@ -132,10 +138,10 @@ class QuotationAdapter(
             }
 
             imgPrint.setOnClickListener {
-                openPDF(
-                    Constant.PDF_QUOTATION_URL + data.document,
-                    context
-                )
+
+                listener.onItemSelect(adapterPosition, data, "OPENPDF")
+
+
             }
 
         }

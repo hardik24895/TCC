@@ -21,6 +21,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.tcc.app.R
 import com.tcc.app.extention.addFragment
 import com.tcc.app.fragment.ProfileMainFragment
+import com.tcc.app.fragment.QuotationFragment
 import com.tcc.app.utils.Constant
 import com.tcc.app.utils.SessionManager
 import de.hdodenhof.circleimageview.CircleImageView
@@ -171,6 +172,12 @@ class HomeActivity : AppCompatActivity() {
             )
             .into(profileImage!!)
 
+
+        if (QuotationFragment.isFromQuotation) {
+            val navView: NavigationView = findViewById(R.id.nav_view)
+            val view: View = navView.findViewById(R.id.nav_quotation)
+            view.performClick()
+        }
         super.onResume()
     }
 

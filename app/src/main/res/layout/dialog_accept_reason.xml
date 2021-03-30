@@ -102,6 +102,30 @@
             </com.google.android.material.textfield.TextInputLayout>
 
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/start_time"
+                app:hintTextColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til5">
+
+                <EditText
+                    android:id="@+id/edtEndTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorWhite"
+                    android:focusable="false"
+                    android:fontFamily="@font/opensans_regular"
+                    android:inputType="date"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
             <com.tcc.app.customview.ButtonReguler
                 android:id="@+id/btnSubmit"
                 style="@style/CustomPressButton"
@@ -113,7 +137,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/til5" />
+                app:layout_constraintTop_toBottomOf="@+id/til6" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -128,6 +128,8 @@
 
                 <com.tcc.app.customview.RadioButtonReguler
                     android:id="@+id/rbPaid"
+                    android:checked="true"
+                    app:buttonTint="@color/colorPrimary"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -136,6 +138,7 @@
                 <com.tcc.app.customview.RadioButtonReguler
                     android:id="@+id/rbReceived"
                     android:layout_width="0dp"
+                    app:buttonTint="@color/colorPrimary"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Received" />

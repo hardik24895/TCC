@@ -24,7 +24,7 @@ class EmployeeDetailActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_employee_detail)
-        imgAdd.visible()
+        imgAdd.invisible()
         imgBack.visible()
 
         if (intent.hasExtra(Constant.DATA)) {
@@ -44,14 +44,14 @@ class EmployeeDetailActivity : BaseActivity() {
 
         imgAdd.setOnClickListener {
             var intent: Intent? = null
-            if (viewPager.currentItem == 0) {
+            if (viewPager.currentItem == 1) {
                 if (checkUserRole(session.roleData.data?.training?.isInsert.toString(), this)) {
                     intent = Intent(this@EmployeeDetailActivity, AddTrainingActivity::class.java)
                     intent.putExtra(Constant.DATA, employeeData)
                     startActivity(intent)
                 }
                 Animatoo.animateCard(this@EmployeeDetailActivity)
-            } else if (viewPager.currentItem == 1) {
+            } else if (viewPager.currentItem == 2) {
 
                 if (checkUserRole(session.roleData.data?.uniform?.isInsert.toString(), this)) {
                     intent = Intent(this@EmployeeDetailActivity, AddUniformActivity::class.java)
@@ -59,16 +59,16 @@ class EmployeeDetailActivity : BaseActivity() {
                     startActivity(intent)
                     Animatoo.animateCard(this@EmployeeDetailActivity)
                 }
-            } else if (viewPager.currentItem == 3) {
+            } else if (viewPager.currentItem == 4) {
 
                 intent =
                     Intent(this@EmployeeDetailActivity, AddRoomAllocationActivity::class.java)
                 intent.putExtra(Constant.DATA, employeeData)
                 startActivity(intent)
                 Animatoo.animateCard(this@EmployeeDetailActivity)
-            } else if (viewPager.currentItem == 4) {
-                showDateFilteryDialog()
             } else if (viewPager.currentItem == 5) {
+                showDateFilteryDialog()
+            } else if (viewPager.currentItem == 6) {
                 showAdavanceDialog()
             }
 
@@ -122,8 +122,14 @@ class EmployeeDetailActivity : BaseActivity() {
         val args = Bundle()
         args.putBoolean("flag", false)
         args.putSerializable(Constant.DATA, employeeData)
-
         viewPageradapter = ViewPagerPagerAdapter(supportFragmentManager)
+
+
+
+        if (checkUserRole(session.roleData.data?.employee?.isView.toString(), this)) {
+            viewPageradapter?.addFragment(EmployeeDetailFragment(employeeData), "Detail")
+        }
+
         if (checkUserRole(session.roleData.data?.training?.isView.toString(), this)) {
             viewPageradapter?.addFragment(EmployeeTrainingFragment(employeeData), "Training")
         }
@@ -147,18 +153,18 @@ class EmployeeDetailActivity : BaseActivity() {
 
         tabs!!.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-                if (tab.position == 2) {
+                if (tab.position == 0 || tab.position == 3) {
                     imgAdd.invisible()
                 } else {
                     imgAdd.visible()
                 }
 
-                if (tab.position == 4) {
-                    imgAdd.invisible()
-                    //   imgAdd.setImageResource(R.drawable.ic_start_date)
+                if (tab.position == 5) {
+                    imgAdd.setImageResource(R.drawable.ic_filter_list)
                 } else {
                     imgAdd.setImageResource(R.drawable.ic_add)
                 }
+
 
             }
 

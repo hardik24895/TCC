@@ -45,23 +45,25 @@ class AddPaymentActivity : BaseActivity() {
         if (intent.hasExtra(Constant.DATA)) {
             invoiceDataItem = intent.getSerializableExtra(Constant.DATA) as InvoiceDataItem
 
-            edtCompanyName.setText(invoiceDataItem?.siteUserFrindlyName)
+            edtCompanyName.setText(invoiceDataItem?.siteUserFrindlyName + "(${invoiceDataItem?.mobileNo})")
             edtEstimateno.setText(invoiceDataItem?.invoiceNo)
             var df = DecimalFormat("##.##")
 
-            total_basic_amount.text = getString(R.string.RS) + " " + invoiceDataItem?.totalAmount
+            var subTot: Float =
+                invoiceDataItem?.totalAmount!!.toFloat() - (invoiceDataItem?.cGST?.toFloat()!! + invoiceDataItem?.sGST?.toFloat()!! + invoiceDataItem?.iGST?.toFloat()!!)
+
+            total_basic_amount.text = getString(R.string.RS) + " " + df.format(subTot).toString()
             remaining_basic_payment.text =
                 getString(R.string.RS) + " " + invoiceDataItem?.remainingPayment
 
             total_gst_amount.text =
-                getString(R.string.RS) + " " + df.format(invoiceDataItem?.cGST?.toFloat()!! * invoiceDataItem?.sGST?.toFloat()!! * invoiceDataItem?.iGST?.toFloat()!!)
+                getString(R.string.RS) + " " + df.format(invoiceDataItem?.cGST?.toFloat()!! + invoiceDataItem?.sGST?.toFloat()!! + invoiceDataItem?.iGST?.toFloat()!!)
                     .toString()
             remaining_gst_payment.text =
                 getString(R.string.RS) + " " + df.format(invoiceDataItem?.remainingGSTPayment!!.toBigDecimal())
                     .toString()
 
         }
-
 
         imgBack.visible()
         imgBack.setOnClickListener {
@@ -199,14 +201,37 @@ class AddPaymentActivity : BaseActivity() {
             jsonBody.put("UserID", session.user.data?.userID)
             jsonBody.put("InvoiceID", invoiceDataItem?.invoiceID)
             if (rg.indexOfChild(findViewById(rg.getCheckedRadioButtonId())) == 0) {
-                jsonBody.put("PaymentAmount", edtPaymentAmount.getValue())
-                jsonBody.put("GSTAmount", edtGSTAmount.getValue())
+
+                if (edtPaymentAmount.getValue().toFloat() > 0 && edtGSTAmount.getValue()
+                        .toFloat() > 0
+                ) {
+                    jsonBody.put("PaymentAmount", edtPaymentAmount.getValue())
+                    jsonBody.put("GSTAmount", edtGSTAmount.getValue())
+                } else {
+                    root.showSnackBar("Payment and Gst should not be 0")
+                    hideProgressbar()
+                    return
+                }
+
             } else if (rg.indexOfChild(findViewById(rg.getCheckedRadioButtonId())) == 1) {
-                jsonBody.put("PaymentAmount", edtPaymentAmount.getValue())
-                jsonBody.put("GSTAmount", "0")
+
+                if (edtPaymentAmount.getValue().toFloat() > 0) {
+                    jsonBody.put("PaymentAmount", edtPaymentAmount.getValue())
+                    jsonBody.put("GSTAmount", "0")
+                } else {
+                    hideProgressbar()
+                    root.showSnackBar("Payment should not be 0")
+                    return
+                }
             } else {
-                jsonBody.put("PaymentAmount", "0")
-                jsonBody.put("GSTAmount", edtGSTAmount.getValue())
+                if (edtGSTAmount.getValue().toFloat() > 0) {
+                    jsonBody.put("PaymentAmount", "0")
+                    jsonBody.put("GSTAmount", edtGSTAmount.getValue())
+                } else {
+                    hideProgressbar()
+                    root.showSnackBar("GST should not be 0")
+                    return
+                }
             }
             jsonBody.put("AmountType", rg.indexOfChild(findViewById(rg.getCheckedRadioButtonId())))
             jsonBody.put("PaymentDate", formatDateFromString(edtPaymentDate.getValue()))

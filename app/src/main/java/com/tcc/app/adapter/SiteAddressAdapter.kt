@@ -18,7 +18,7 @@ class SiteAddressAdapter(
     var list: MutableList<SitesItem> = mutableListOf(),
     private val listener: SiteAddressAdapter.OnItemSelected
 
-    ) : RecyclerView.Adapter<SiteAddressAdapter.ItemHolder>() {
+) : RecyclerView.Adapter<SiteAddressAdapter.ItemHolder>() {
     var lastPos = -1
     override fun getItemCount(): Int {
         return list.size
@@ -47,8 +47,14 @@ class SiteAddressAdapter(
             holder.txtSiteAddress.visible()
             holder.txtAddNew.invisible()
             holder.txtSiteName.text = data.siteName
-            holder.txtSiteAddress.text =
-                data.address + ", " + data.address2 + ", " + data.pinCode + ", " + data.cityName + ", " + data.stateName
+
+
+            if (data.pinCode.equals(""))
+                holder.txtSiteAddress.text =
+                    data.address + ", " + data.address2 + ", " + data.cityName + ", " + data.stateName
+            else
+                holder.txtSiteAddress.text =
+                    data.address + ", " + data.address2 + ", " + data.pinCode + ", " + data.cityName + ", " + data.stateName
         }
 
 

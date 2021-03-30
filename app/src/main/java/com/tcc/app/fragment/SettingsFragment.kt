@@ -6,14 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.tcc.app.R
-import com.tcc.app.activity.ChangePasswordActivity
-import com.tcc.app.activity.InformationActivity
-import com.tcc.app.activity.LoginActivity
-import com.tcc.app.activity.NotificationActivity
+import com.tcc.app.activity.*
 import com.tcc.app.dialog.LogoutDailog
 import com.tcc.app.extention.goToActivity
 import com.tcc.app.extention.goToActivityAndClearTask
-import com.tcc.app.extention.replaceFragment
 import com.tcc.app.extention.setHomeScreenTitle
 import com.tcc.app.utils.Constant
 import com.tcc.app.utils.SessionManager
@@ -35,32 +31,40 @@ class SettingsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHomeScreenTitle(requireActivity(), getString(R.string.nav_setting))
-        intent = Intent(requireContext(), InformationActivity::class.java)
+
 
         relayNotification.setOnClickListener { goToActivity<NotificationActivity>() }
         relayAboutus.setOnClickListener {
+            intent = Intent(requireContext(), InformationActivity::class.java)
             intent.putExtra(Constant.TITLE, "2")
             intent.putExtra("Desc", "AboutUS")
             startActivity(intent)
         }
         relayPrivacy.setOnClickListener {
+            intent = Intent(requireContext(), InformationActivity::class.java)
             intent.putExtra(Constant.TITLE, "3")
             intent.putExtra("Desc", "PrivacyPolicy")
             startActivity(intent)
         }
         relayTerms.setOnClickListener {
+            intent = Intent(requireContext(), InformationActivity::class.java)
             intent.putExtra(Constant.TITLE, "1")
             intent.putExtra("Desc", "TermandCondition")
             startActivity(intent)
         }
 
         relayTickets.setOnClickListener {
-            replaceFragment(TicketListFragment(), R.id.nav_host_fragment)
+
+            intent = Intent(requireContext(), TicketActivity::class.java)
+            startActivity(intent)
         }
 
         relayPenalty.setOnClickListener {
-            replaceFragment(PenaltyFragment(), R.id.nav_host_fragment)
+
+            intent = Intent(requireContext(), PenaltyActivity::class.java)
+            startActivity(intent)
         }
+
 
         relayPwd.setOnClickListener { goToActivity<ChangePasswordActivity>() }
         relayLogout.setOnClickListener {

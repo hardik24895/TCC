@@ -83,23 +83,25 @@
             app:layout_constraintTop_toBottomOf="@+id/txtSitetypetitle" />
 
 
+
         <com.tcc.app.customview.TextviewSemiBold
-            android:id="@+id/txtWorkingHrstitle"
+            android:id="@+id/txtProposedDatetitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/working_hrs"
+            android:text="@string/proposed_date"
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/txtSitetypetitle" />
+            app:layout_constraintTop_toTopOf="@+id/txtSitetypetitle" />
 
         <com.tcc.app.customview.TextviewReguler
-            android:id="@+id/txtHRS"
+            android:id="@+id/txtProposedDate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/_2sdp"
-            android:text="5 Hrs"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:text="05/02/2021"
+            android:textColor="@color/txtgray"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/txtSityType" />
+            app:layout_constraintTop_toBottomOf="@+id/txtProposedDatetitle" />
 
         <View
             android:id="@+id/view1"
@@ -110,7 +112,7 @@
             android:scaleY="0.5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txtHRS" />
+            app:layout_constraintTop_toBottomOf="@id/txtProposedDate" />
 
         <com.tcc.app.customview.TextviewSemiBold
             android:id="@+id/txtWorkingDaytitle"
@@ -135,23 +137,22 @@
 
 
         <com.tcc.app.customview.TextviewSemiBold
-            android:id="@+id/txtProposedDatetitle"
+            android:id="@+id/txtWorkingHrstitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/proposed_date"
+            android:text="@string/working_hrs"
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/txtWorkingDaytitle" />
+            app:layout_constraintTop_toTopOf="@id/txtWorkingDaytitle" />
 
         <com.tcc.app.customview.TextviewReguler
-            android:id="@+id/txtProposedDate"
+            android:id="@+id/txtHRS"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_2sdp"
-            android:text="05/02/2021"
-            android:textColor="@color/txtgray"
+            android:paddingTop="@dimen/_2sdp"
+            android:text="5 Hrs"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtProposedDatetitle" />
+            app:layout_constraintTop_toTopOf="@id/txtDay" />
 
 
         <View
@@ -163,7 +164,7 @@
             android:scaleY="0.5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txtProposedDate" />
+            app:layout_constraintTop_toBottomOf="@id/txtDay" />
 
 
         <com.tcc.app.customview.TextviewSemiBold

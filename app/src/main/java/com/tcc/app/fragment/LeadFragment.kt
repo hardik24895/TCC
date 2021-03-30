@@ -11,7 +11,7 @@ import com.tcc.app.activity.AddLeadActivity
 import com.tcc.app.activity.LeadDetailActivity
 import com.tcc.app.activity.SearchActivity
 import com.tcc.app.adapter.LeadAdapter
-import com.tcc.app.dialog.AddVisitorDailog
+import com.tcc.app.dialog.AddLeadDailog
 import com.tcc.app.dialog.SendMailDailog
 import com.tcc.app.dialog.SendMessageDailog
 import com.tcc.app.extention.*
@@ -210,8 +210,8 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
     }
 
     fun showDialog() {
-        val dialog = AddVisitorDailog.newInstance(requireContext(),
-            object : AddVisitorDailog.onItemClick {
+        val dialog = AddLeadDailog.newInstance(requireContext(),
+            object : AddLeadDailog.onItemClick {
                 override fun onItemCLicked(mobile: String, serviceId: String) {
                     checkLead(mobile, serviceId)
                 }
@@ -290,6 +290,7 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
             jsonBody.put("CurrentPage", 1)
             jsonBody.put("Name", "")
             jsonBody.put("EmailID", mobile)
+            jsonBody.put("LeadType", "")
             jsonBody.put("ServiceID", serviceId)
             jsonBody.put("CityID", session.getDataByKey(SessionManager.KEY_CITY_ID))
             result = Networking.setParentJsonData(

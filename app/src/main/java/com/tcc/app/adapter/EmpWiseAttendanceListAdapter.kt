@@ -64,6 +64,8 @@ class EmpWiseAttendanceListAdapter(
                 txtStatus.text = context.getText(R.string.half_day)
             } else if (data.attendance.equals("0")) {
                 txtStatus.text = context.getText(R.string.absent)
+            } else {
+                txtStatus.text = "N/A"
             }
 
             if (data.overTime.equals("1")) {
@@ -71,7 +73,9 @@ class EmpWiseAttendanceListAdapter(
             } else if (data.overTime.equals("0.5")) {
                 txtOverTime.text = context.getText(R.string.half_day)
             } else if (data.overTime.equals("0")) {
-                txtOverTime.text = ""
+                txtOverTime.text = "N/A"
+            } else {
+                txtOverTime.text = "N/A"
             }
 
 

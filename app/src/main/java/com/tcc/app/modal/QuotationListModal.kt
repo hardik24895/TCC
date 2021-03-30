@@ -173,6 +173,12 @@ data class QuotationItem(
     @field: SerializedName("Term")
     val term: String? = null,
 
+    @field:SerializedName("StartTime")
+    val startTime: String? = null,
+
+    @field:SerializedName("EndTime")
+    val endTime: String? = null,
+
     @field:SerializedName("EndDate")
     val endDate: String? = null
 

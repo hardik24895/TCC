@@ -1,10 +1,8 @@
-package com.tcc.app.fragment
+package com.tcc.app.activity
 
 import android.os.Bundle
-import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tcc.app.R
-import com.tcc.app.activity.AddPenaltyActivity
 import com.tcc.app.adapter.PenaltiAdapter
 import com.tcc.app.extention.*
 import com.tcc.app.interfaces.LoadMoreListener
@@ -19,11 +17,11 @@ import com.tcc.app.utils.SessionManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.reclerview_swipelayout.*
+import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 import org.json.JSONException
 import org.json.JSONObject
 
-
-class PenaltyFragment : BaseFragment(), PenaltiAdapter.OnItemSelected {
+class PenaltyActivity : BaseActivity(), PenaltiAdapter.OnItemSelected {
 
     var adapter: PenaltiAdapter? = null
     private val list: MutableList<PaneltyDataItem> = mutableListOf()
@@ -31,20 +29,34 @@ class PenaltyFragment : BaseFragment(), PenaltiAdapter.OnItemSelected {
     var hasNextPage: Boolean = true
     var leadItem: LeadItem? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val root = inflater.inflate(R.layout.reclerview_swipelayout, container, false)
-        return root
+    fun setupRecyclerView() {
+
+        val layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = layoutManager
+        adapter = PenaltiAdapter(this, list, this)
+        recyclerView.adapter = adapter
+
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
-        setHomeScreenTitle(requireActivity(), getString(R.string.nav_penalti))
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_penaltys_list)
 
+        txtTitle.setText(getString(R.string.nav_penalti))
+
+        if (checkUserRole(session.roleData.data?.penlty?.isInsert.toString(), this)) {
+            imgAdd.visible()
+        }
+
+        imgBack.setOnClickListener {
+            finish()
+        }
+
+        imgAdd.setOnClickListener {
+            goToActivity<AddPenaltyActivity>()
+
+        }
 
         recyclerView.setLoadMoreListener(object : LoadMoreListener {
             override fun onLoadMore() {
@@ -63,43 +75,6 @@ class PenaltyFragment : BaseFragment(), PenaltiAdapter.OnItemSelected {
             adapter?.notifyDataSetChanged()
             getPenaltyList(page)
         }
-
-    }
-
-    fun setupRecyclerView() {
-
-        val layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.layoutManager = layoutManager
-        adapter = PenaltiAdapter(requireContext(), list, this)
-        recyclerView.adapter = adapter
-
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.home, menu)
-
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_add -> {
-
-                if (checkUserRole(
-                        session.roleData.data?.penlty?.isInsert.toString(),
-                        requireContext()
-                    )
-                )
-                    goToActivity<AddPenaltyActivity>()
-                return true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
     }
 
     override fun onItemSelect(position: Int, data: PaneltyDataItem) {
@@ -127,7 +102,7 @@ class PenaltyFragment : BaseFragment(), PenaltiAdapter.OnItemSelected {
 
 
         Networking
-            .with(requireContext())
+            .with(this)
             .getServices()
             .getPaneltyList(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
             .subscribeOn(Schedulers.io())

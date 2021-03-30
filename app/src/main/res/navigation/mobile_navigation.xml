@@ -47,7 +47,7 @@
 
     <fragment
         android:id="@+id/nav_penalti"
-        android:name="com.tcc.app.fragment.PenaltyFragment"
+        android:name="com.tcc.app.activity.PenaltyActivity"
         android:label="@string/nav_penalti"
         tools:layout="@layout/fragment_setting" />
 
@@ -68,7 +68,7 @@
         tools:layout="@layout/reclerview_swipelayout" />
     <fragment
         android:id="@+id/nav_ticket"
-        android:name="com.tcc.app.fragment.TicketListFragment"
+        android:name="com.tcc.app.activity.TicketActivity"
         android:label="@string/ticket"
         tools:layout="@layout/fragment_ticket" />
     <fragment

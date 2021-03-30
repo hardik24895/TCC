@@ -107,7 +107,7 @@ class SiteListMainFragment() : BaseFragment() {
         val add = menu.findItem(R.id.action_add)
         add.setVisible(false)
         val filter = menu.findItem(R.id.action_filter)
-        filter.setVisible(true)
+        filter.setVisible(false)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
