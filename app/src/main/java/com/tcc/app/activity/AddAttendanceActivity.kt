@@ -50,23 +50,15 @@ class AddAttendanceActivity : BaseActivity(), AttendanceAdapter.OnItemSelected {
         imgBack.setOnClickListener {
             finish()
         }
-        horizontalCalender()
 
         if (intent.hasExtra(Constant.DATA)) {
             quotationItem = intent.getSerializableExtra(Constant.DATA) as QuotationItem
-            calendarView.invisible()
-            crd_check_all.invisible()
-        } else {
-            calendarView.visible()
+            //  calendarView.invisible()
+            //  crd_check_all.invisible()
+            // } else {
+            //     calendarView.visible()
         }
-
-        btnSubmit.setOnClickListener {
-            AddAttendence()
-        }
-
-        //    chbAllPresent.setch
-
-
+        selectedDateStr = getCurrentDate()
         page = 1
         list.clear()
         hasNextPage = true
@@ -75,6 +67,10 @@ class AddAttendanceActivity : BaseActivity(), AttendanceAdapter.OnItemSelected {
         recyclerView.isLoading = true
         getAttendenceList(page)
 
+        horizontalCalender()
+        btnSubmit.setOnClickListener {
+            AddAttendence()
+        }
 
         recyclerView.setLoadMoreListener(object : LoadMoreListener {
             override fun onLoadMore() {
@@ -105,12 +101,18 @@ class AddAttendanceActivity : BaseActivity(), AttendanceAdapter.OnItemSelected {
         val horizontalCalendar: HorizontalCalendar =
             HorizontalCalendar.Builder(this, R.id.calendarView)
                 .range(startDate, endDate)
-                .datesNumberOnScreen(7)
+                .datesNumberOnScreen(5)
                 .build()
         horizontalCalendar.calendarListener = object : HorizontalCalendarListener() {
             override fun onDateSelected(date: Calendar?, position: Int) {
                 selectedDateStr = DateFormat.format("dd/MM/yyyy", date).toString()
-
+                page = 1
+                list.clear()
+                hasNextPage = true
+                swipeRefreshLayout.isRefreshing = true
+                setupRecyclerView()
+                recyclerView.isLoading = true
+                getAttendenceList(page)
 
             }
         }
@@ -174,7 +176,8 @@ class AddAttendanceActivity : BaseActivity(), AttendanceAdapter.OnItemSelected {
 //                    }
 //
 //                    override fun onError(message: String) {
-//                        showAlert(message)
+//                         // showAlert(message)
+//                    showAlert(getString(R.string.show_server_error))
 //                    }
 //                })
 //        dialog.show(supportFragmentManager, "ImagePicker")
@@ -194,7 +197,8 @@ class AddAttendanceActivity : BaseActivity(), AttendanceAdapter.OnItemSelected {
 //
 //
 //                    override fun onError(message: String) {
-//                        showAlert(message)
+//                         // showAlert(message)
+//                    showAlert(getString(R.string.show_server_error))
 //                    }
 //                })
 //        dialog.show(supportFragmentManager, "ImagePicker")
@@ -212,7 +216,8 @@ class AddAttendanceActivity : BaseActivity(), AttendanceAdapter.OnItemSelected {
 //                    }
 //
 //                    override fun onError(message: String) {
-//                        showAlert(message)
+//                         // showAlert(message)
+//                    showAlert(getString(R.string.show_server_error))
 //                    }
 //                })
 //        dialog.show(supportFragmentManager, "ImagePicker")
@@ -274,7 +279,6 @@ class AddAttendanceActivity : BaseActivity(), AttendanceAdapter.OnItemSelected {
 
             }).addTo(autoDisposable)
     }
-
 
     fun AddAttendence() {
         showProgressbar()

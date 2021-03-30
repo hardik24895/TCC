@@ -1,7 +1,6 @@
 package com.tcc.app.adapter
 
 import android.content.Context
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -143,7 +142,7 @@ class AttendanceAdapter(
             data: AttendanceListDataItem, listener: AttendanceAdapter.OnItemSelected
         ) {
 
-
+            imgProfile.setImageResource(R.drawable.bg_circle)
             txtName.text = data.employeeName
             txtEmail.text = data.mobileNo
             imgProfile.setColorFilter(getRandomMaterialColor("400", context))

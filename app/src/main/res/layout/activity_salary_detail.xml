@@ -138,7 +138,6 @@
                 android:id="@+id/txtPaymentDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/_4sdp"
                 android:text=""
                 android:textColor="@color/colorGreen"
                 android:textSize="@dimen/_14sdp"
@@ -230,7 +229,7 @@
                 android:id="@+id/txtOverTimeAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/_4sdp"
+
                 android:text="\u20b9 2500"
                 android:textColor="@color/colorGreen"
                 android:textSize="@dimen/_14sdp"
@@ -247,7 +246,7 @@
                 android:background="@color/light_grey"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/txtTotalOverTime" />
+                app:layout_constraintTop_toBottomOf="@id/txtPaidAmount" />
 
             <com.tcc.app.customview.TextviewSemiBold
                 android:id="@+id/txtAdvance"
@@ -265,10 +264,10 @@
                 android:id="@+id/txtAdvanceAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/_4sdp"
                 android:text="\u20b9 1000"
                 android:textColor="@color/colorRed"
                 android:textSize="@dimen/_14sdp"
+                app:layout_constraintBottom_toBottomOf="@+id/txtAdvance"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/txtAdvance" />
 
@@ -299,10 +298,10 @@
                 android:id="@+id/txtPenaltyAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/_4sdp"
                 android:text="\u20b9 1000"
                 android:textColor="@color/colorRed"
                 android:textSize="@dimen/_14sdp"
+                app:layout_constraintBottom_toBottomOf="@+id/txtPenalty"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/txtPenalty" />
 
@@ -316,7 +315,7 @@
                 android:background="@color/light_grey"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/txtPenaltyAmount" />
+                app:layout_constraintTop_toBottomOf="@id/txtOverTimeAmount" />
 
             <com.tcc.app.customview.TextviewSemiBold
                 android:id="@+id/txtPaidAmountTxt"
@@ -334,10 +333,11 @@
                 android:id="@+id/txtPaidAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/_4sdp"
+
                 android:text="\u20b9 1000"
                 android:textColor="@color/colorGreen"
                 android:textSize="@dimen/_14sdp"
+                app:layout_constraintBottom_toBottomOf="@+id/txtPaidAmountTxt"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/txtPaidAmountTxt" />
 

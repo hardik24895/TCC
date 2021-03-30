@@ -121,6 +121,9 @@
             android:name="com.tcc.app.activity.AddTicketActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.tcc.app.activity.SiteAttendanceListActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.AddInvoiceActivity"
             android:screenOrientation="portrait" />
         <activity

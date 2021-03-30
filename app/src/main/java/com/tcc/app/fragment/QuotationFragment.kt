@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.tcc.app.R
-import com.tcc.app.activity.AddAttendanceActivity
 import com.tcc.app.activity.AddInvoiceActivity
+import com.tcc.app.activity.SiteAttendanceListActivity
 import com.tcc.app.activity.TeamDefinitionListActivity
 import com.tcc.app.adapter.QuotationAdapter
 import com.tcc.app.dialog.AcceptReasonDailog
@@ -210,7 +210,7 @@ class QuotationFragment() : BaseFragment(), QuotationAdapter.OnItemSelected {
                     requireContext()
                 )
             ) {
-                val i = Intent(requireContext(), AddAttendanceActivity::class.java)
+                val i = Intent(requireContext(), SiteAttendanceListActivity::class.java)
                 i.putExtra(Constant.DATA, data)
                 startActivity(i)
                 Animatoo.animateCard(requireContext())

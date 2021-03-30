@@ -3,7 +3,6 @@ package com.tcc.app.activity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.View
 import android.widget.RadioButton
 import com.tcc.app.R
 import com.tcc.app.extention.*
@@ -224,19 +223,19 @@ class AddSalaryActivity : BaseActivity() {
                 Penalty = edtPanaltyAmount.getValue().toInt()
             }
 
+            val jsonBody = JSONObject()
+
             if (rg.indexOfChild(findViewById(rg.getCheckedRadioButtonId())) == 0) {
                 payAmount = edtPayment.getValue().toFloat() - adavance - Penalty
+                jsonBody.put("Type", "Received")
             } else if (rg.indexOfChild(findViewById(rg.getCheckedRadioButtonId())) == 1) {
                 payAmount = edtPayment.getValue().toFloat() + adavance - Penalty
+                jsonBody.put("Type", "Paid")
             } else {
                 payAmount = edtPayment.getValue().toFloat() - Penalty
+                jsonBody.put("Type", "None")
             }
 
-
-            val rbType = findViewById<View>(rg.getCheckedRadioButtonId()) as? RadioButton
-
-
-            val jsonBody = JSONObject()
             jsonBody.put("UserID", session.user.data?.userID)
             jsonBody.put("EmployeeID", employeeDataItem?.userID.toString())
             jsonBody.put("SalaryDate", formatDateFromString(getCurrentDate()))
@@ -251,8 +250,6 @@ class AddSalaryActivity : BaseActivity() {
             jsonBody.put("Penalty", edtPanaltyAmount.getValue())
             jsonBody.put("PayAmount", payAmount)
             jsonBody.put("Amount", edtAdvanceAmount.getValue())
-            jsonBody.put("Type", rbType?.text.toString())
-
 
             result = Networking.setParentJsonData(
                 Constant.METHOD_ADD_SALARY,
@@ -274,7 +271,6 @@ class AddSalaryActivity : BaseActivity() {
                 override fun onSuccess(response: CommonAddModal) {
                     hideProgressbar()
                     if (response.error == 200) {
-
                         finish()
                     } else {
                         showAlert(response.message.toString())

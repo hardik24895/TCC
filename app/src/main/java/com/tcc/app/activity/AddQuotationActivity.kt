@@ -66,8 +66,6 @@ class AddQuotationActivity : BaseActivity() {
     var itemMaterialType: List<SearchableItem>? = null
     var materialtypeId: String = "-1"
 
-    //  var usertypeChildId: String = ""
-
     var stateNameList: ArrayList<String> = ArrayList()
     var adapterState: ArrayAdapter<String>? = null
     var stateIteams: List<SearchableItem>? = null
@@ -140,6 +138,7 @@ class AddQuotationActivity : BaseActivity() {
 
         serviceNameList = ArrayList()
         serviceListArray = ArrayList()
+
 
         edEstimationDate.setText(getCurrentDate())
         edEstimationDate.setOnClickListener {
@@ -248,14 +247,12 @@ class AddQuotationActivity : BaseActivity() {
         getCityList(siteListItem!!.stateID.toString())
 
         companySpinnerListner()
-        //   serviceSpinnerListner()
         userTypeSpinnerListner()
         stateSpinnerListner()
         citySpinnerListner()
         materialTypeSpinnerListner()
 
         compnyViewClick()
-        //  serviceViewClick()
         userTypeViewClick()
         materialTypeViewClick()
         stateViewClick()
@@ -302,79 +299,6 @@ class AddQuotationActivity : BaseActivity() {
         }
     }
 
-
-    private fun getServiceList() {
-        var result = ""
-        try {
-            val jsonBody = JSONObject()
-            jsonBody.put("StateID", "")
-
-            result = Networking.setParentJsonData(Constant.METHOD_SERVICE_LIST, jsonBody)
-
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
-        Networking
-            .with(this@AddQuotationActivity)
-            .getServices()
-            .getServiceList(Networking.wrapParams(result))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeWith(object : CallbackObserver<ServiceListModel>() {
-                override fun onSuccess(response: ServiceListModel) {
-                    serviceListArray!!.addAll(response.data)
-                    var myList: MutableList<SearchableItem> = mutableListOf()
-                    serviceNameList!!.add("Select Service")
-                    myList.add(
-                        SearchableItem(0, "Select Service")
-                    )
-
-                    for (items in response.data.indices) {
-                        serviceNameList!!.add(response.data.get(items).service.toString())
-                        myList.add(
-                            SearchableItem(
-                                items.toLong() + 1,
-                                serviceNameList.get(items + 1)
-                            )
-                        )
-
-                    }
-                    itemService = myList
-
-                    adapterService = ArrayAdapter(
-                        this@AddQuotationActivity,
-                        R.layout.custom_spinner_item,
-                        serviceNameList!!
-                    )
-                    spService.setAdapter(adapterService)
-
-
-                    if (siteListItem != null) {
-
-                        for (i in serviceListArray.indices) {
-                            if (serviceListArray.get(i).serviceID.toString() == siteListItem!!.serviceID.toString()) {
-                                spService.setSelection(i + 1)
-                                // txtService.text = siteListItem!!.name
-
-                                break
-                            }
-
-                        }
-
-                    }
-
-                }
-
-                override fun onFailed(code: Int, message: String) {
-
-                    // showAlert(message)
-                    showAlert(getString(R.string.show_server_error))
-
-                }
-
-            }).addTo(autoDisposable)
-    }
-
     private fun cityViewClick() {
         view3.setOnClickListener {
 
@@ -393,17 +317,20 @@ class AddQuotationActivity : BaseActivity() {
 
 
             if (serviceName.equals("Deep cleaning"))
-                SearchableDialog(
-                    this@AddQuotationActivity,
-                    itemUserType!!,
-                    "Select Service Item",
-                    { item, _ -> spUserType.setSelection(item.id.toInt()) }).show()
+                SearchableDialog(this@AddQuotationActivity, itemUserType!!, "Select Service Item",
+                    { item, _ ->
+                        spUserType.setSelection(item.id.toInt())
+
+                    }).show()
             else
-                SearchableDialog(
-                    this@AddQuotationActivity,
+                SearchableDialog(this@AddQuotationActivity,
                     itemUserType!!,
                     getString(R.string.select_item),
-                    { item, _ -> spUserType.setSelection(item.id.toInt()) }).show()
+                    { item, _ ->
+                        spUserType.setSelection(item.id.toInt())
+
+                    }).show()
+
         }
 
     }
@@ -449,9 +376,7 @@ class AddQuotationActivity : BaseActivity() {
 
                     }
 
-
                 }
-
                 setUpdatedTotal()
             }
         }
@@ -487,11 +412,9 @@ class AddQuotationActivity : BaseActivity() {
 
                     }
 
-
                 }
 
                 setUpdatedTotal()
-
             }
         }
     }
@@ -811,18 +734,6 @@ class AddQuotationActivity : BaseActivity() {
         }
     }
 
-    fun serviceViewClick() {
-        view5.setOnClickListener {
-
-            SearchableDialog(this,
-                itemService!!,
-                getString(R.string.select_service),
-                { item, _ ->
-                    spService.setSelection(item.id.toInt())
-                }).show()
-        }
-    }
-
     fun companySpinnerListner() {
         spCompany.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -860,31 +771,6 @@ class AddQuotationActivity : BaseActivity() {
                         }
 
                         setUpdatedTotal()
-                    }
-
-                }
-
-            }
-        }
-    }
-
-    fun serviceSpinnerListner() {
-        spService.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
-
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                if (position != -1 && serviceListArray.size > position - 1) {
-                    if (position == 0) {
-                        serviceId = "-1"
-                    } else {
-                        serviceId = serviceListArray.get(position - 1).serviceID.toString()
-                        Logger.d("serviceID : ", serviceId)
                     }
 
                 }
@@ -1008,14 +894,12 @@ class AddQuotationActivity : BaseActivity() {
 
                     }
                     itemUserType = myList
-
                     adapterUserType = ArrayAdapter(
                         this@AddQuotationActivity,
                         R.layout.custom_spinner_item,
                         userTypeNameList!!
                     )
                     spUserType.setAdapter(adapterUserType)
-
 
                 }
 
@@ -1204,7 +1088,6 @@ class AddQuotationActivity : BaseActivity() {
             }).addTo(autoDisposable)
     }
 
-
     fun setUpdatedTotal() {
         UserAmount = 0f
         var df = DecimalFormat("##.##")
@@ -1325,8 +1208,8 @@ class AddQuotationActivity : BaseActivity() {
         showProgressbar()
         try {
             val jsonBody = JSONObject()
-            val jsonArray = JSONArray()
-            val jsonArray1 = JSONArray()
+            val materialJsonArray = JSONArray()
+            val itemJsonArray = JSONArray()
 
             jsonBody.put("SitesID", siteListItem?.sitesID)
 
@@ -1357,7 +1240,7 @@ class AddQuotationActivity : BaseActivity() {
                 jsonBody.put("CustomerID", siteListItem?.customerID)
             }
             jsonBody.put("UserID", session.user.data?.userID)
-            jsonBody.put("Item", jsonArray)
+            jsonBody.put("Item", materialJsonArray)
 
             if (!edQty.isEmpty() && !edQty.getValue()
                     .equals("0") && !edRate.isEmpty() && !edRate.getValue()
@@ -1368,8 +1251,8 @@ class AddQuotationActivity : BaseActivity() {
                 jsonObj.put("Qty", edQty.getValue())
                 jsonObj.put("Rate", edRate.getValue())
                 jsonObj.put("Days", edtDays.getValue())
-                jsonArray1.put(jsonObj)
-                jsonArray.put(jsonObj)
+                itemJsonArray.put(jsonObj)
+                materialJsonArray.put(jsonObj)
             }
 
             if (!edMaterialQty.isEmpty() && !edMaterialQty.getValue()
@@ -1382,7 +1265,7 @@ class AddQuotationActivity : BaseActivity() {
                 jsonObj.put("Rate", edMaterialRate.getValue())
                 jsonObj.put("Days", edtMaterialDays.getValue())
 
-                jsonArray.put(jsonObj)
+                materialJsonArray.put(jsonObj)
             }
 
             if (lin_add_user.childCount > 0) {
@@ -1402,8 +1285,8 @@ class AddQuotationActivity : BaseActivity() {
                         jsonObj.put("Qty", lin_add_user.getChildAt(item).edQtyChild.getValue())
                         jsonObj.put("Rate", lin_add_user.getChildAt(item).edRateChild.getValue())
                         jsonObj.put("Days", lin_add_user.getChildAt(item).edtChildDays.getValue())
-                        jsonArray1.put(jsonObj)
-                        jsonArray.put(jsonObj)
+                        itemJsonArray.put(jsonObj)
+                        materialJsonArray.put(jsonObj)
 
                     }
 
@@ -1434,7 +1317,7 @@ class AddQuotationActivity : BaseActivity() {
                             "Days",
                             lin_add_material.getChildAt(item).edtChildDays.getValue()
                         )
-                        jsonArray.put(jsonObj)
+                        materialJsonArray.put(jsonObj)
 
                     }
 
@@ -1442,7 +1325,7 @@ class AddQuotationActivity : BaseActivity() {
             }
 
 
-            if (jsonArray1.length() == 0) {
+            if (itemJsonArray.length() == 0) {
                 if (serviceName.equals("Deep cleaning"))
                     root.showSnackBar("Please Select Service Item")
                 else
@@ -1452,6 +1335,57 @@ class AddQuotationActivity : BaseActivity() {
                 return
             }
 
+            for (i in 0 until itemJsonArray.length()) {
+                for (j in i + 1 until itemJsonArray.length()) {
+                    if (itemJsonArray.getJSONObject(i).getString("UsertypeID")
+                            .equals(itemJsonArray.getJSONObject(j).getString("UsertypeID"))
+                    ) {
+                        for (k in userTypeListArray!!.indices) {
+                            if (itemJsonArray.getJSONObject(i).getString("UsertypeID")
+                                    .equals(userTypeListArray!!.get(k).usertypeID)
+                            ) {
+                                root.showSnackBar(
+                                    "Romove Duplicated Item (${
+                                        userTypeListArray!!.get(
+                                            k
+                                        ).usertype
+                                    })"
+                                )
+                                hideProgressbar()
+                                return
+                            }
+                        }
+
+                    }
+                }
+            }
+
+
+
+            for (i in 0 until materialJsonArray.length()) {
+                for (j in i + 1 until materialJsonArray.length()) {
+                    if (materialJsonArray.getJSONObject(i).getString("UsertypeID")
+                            .equals(materialJsonArray.getJSONObject(j).getString("UsertypeID"))
+                    ) {
+                        for (k in materialTypeListArray!!.indices) {
+                            if (materialJsonArray.getJSONObject(i).getString("UsertypeID")
+                                    .equals(materialTypeListArray!!.get(k).usertypeID)
+                            ) {
+                                root.showSnackBar(
+                                    "Romove Duplicated Item (${
+                                        materialTypeListArray!!.get(
+                                            k
+                                        ).usertype
+                                    })"
+                                )
+                                hideProgressbar()
+                                return
+                            }
+                        }
+
+                    }
+                }
+            }
 
             result = Networking.setParentJsonData(Constant.METHOD_ADD_QUOTATIOON, jsonBody)
 
@@ -1481,7 +1415,6 @@ class AddQuotationActivity : BaseActivity() {
 
             }).addTo(autoDisposable)
     }
-
 
     fun getNotes() {
         showProgressbar()
