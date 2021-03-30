@@ -43,6 +43,81 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+
+                    android:paddingVertical="@dimen/_8sdp">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/ti"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:hint="@string/site_name"
+                        app:hintTextColor="@color/black"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <EditText
+                            android:id="@+id/edtCompanyName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorWhite"
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:fontFamily="@font/opensans_regular"
+                            android:inputType="date"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/ti1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:hint="@string/estimation_no"
+                        app:hintTextColor="@color/black"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/ti">
+
+                        <EditText
+                            android:id="@+id/edtEstimateno"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorWhite"
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:fontFamily="@font/opensans_regular"
+                            android:inputType="date"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/crdview2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="@dimen/_2ssp"
+                app:cardCornerRadius="@dimen/_4sdp"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/crdview1">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:paddingHorizontal="@dimen/_16ssp"
                     android:paddingVertical="@dimen/_8sdp">
 
@@ -60,6 +135,7 @@
                         <com.tcc.app.customview.RadioButtonReguler
                             android:id="@+id/rb_new"
                             android:layout_width="wrap_content"
+                            app:buttonTint="@color/colorPrimary"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:checked="true"
@@ -67,6 +143,7 @@
 
                         <com.tcc.app.customview.RadioButtonReguler
                             android:id="@+id/rb_rokdi"
+                            app:buttonTint="@color/colorPrimary"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -75,6 +152,7 @@
                         <com.tcc.app.customview.RadioButtonReguler
                             android:id="@+id/rb_suffle"
                             android:layout_width="wrap_content"
+                            app:buttonTint="@color/colorPrimary"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/shuffle" />
@@ -96,7 +174,7 @@
                 app:cardUseCompatPadding="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/crdview1">
+                app:layout_constraintTop_toBottomOf="@id/crdview2">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"

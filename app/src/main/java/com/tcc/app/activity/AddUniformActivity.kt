@@ -28,7 +28,7 @@ class AddUniformActivity : BaseActivity() {
     var UniformNameArray: ArrayList<String>? = null
     var adapterUniform: ArrayAdapter<String>? = null
     var itemUniform: List<SearchableItem>? = null
-    var UniformId: String? = ""
+    var UniformId: String? = "-1"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +66,11 @@ class AddUniformActivity : BaseActivity() {
                     UniformId = uniformListArray!!.get(position).uniformTypeID
                 }
 
+                if (position == 0) {
+                    UniformId = "-1"
+                } else {
+                    UniformId = uniformListArray!!.get(position - 1).uniformTypeID
+                }
             }
         }
 
@@ -73,14 +78,18 @@ class AddUniformActivity : BaseActivity() {
 
             SearchableDialog(this,
                 itemUniform!!,
-                getString(R.string.select_city),
+                getString(R.string.select_uniform_date),
                 { item, _ ->
                     spUniform.setSelection(item.id.toInt())
                 }).show()
         }
 
         btnSubmit.setOnClickListener {
-            AddUniform()
+            if (UniformId.equals("-1")) {
+                root.showSnackBar("Please select Uniform type")
+            } else {
+                AddUniform()
+            }
         }
 
 
@@ -108,11 +117,17 @@ class AddUniformActivity : BaseActivity() {
                     uniformListArray?.addAll(response.data)
 
                     var myList: MutableList<SearchableItem> = mutableListOf()
+                    UniformNameArray!!.add(getString(R.string.select_uniform_date))
+                    myList.add(SearchableItem(0, getString(R.string.select_uniform_date)))
+
                     for (items in response.data.indices) {
-                        UniformNameArray?.add(
-                            response.data.get(items).uniformtype.toString()
+                        UniformNameArray?.add(response.data.get(items).uniformtype.toString())
+                        myList.add(
+                            SearchableItem(
+                                items.toLong() + 1,
+                                UniformNameArray!!.get(items + 1)
+                            )
                         )
-                        myList.add(SearchableItem(items.toLong(), UniformNameArray!!.get(items)))
                     }
 
                     itemUniform = myList

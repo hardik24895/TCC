@@ -236,18 +236,21 @@
 
                         <com.tcc.app.customview.RadioButtonReguler
                             android:id="@+id/rbHigh"
+                            app:buttonTint="@color/colorPrimary"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/_30sdp"
                             android:text="@string/high" />
 
                         <com.tcc.app.customview.RadioButtonReguler
                             android:id="@+id/rbMeduim"
+                            app:buttonTint="@color/colorPrimary"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/_30sdp"
                             android:text="@string/medium" />
 
                         <com.tcc.app.customview.RadioButtonReguler
                             android:id="@+id/rbLow"
+                            app:buttonTint="@color/colorPrimary"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/_30sdp"
                             android:text="@string/low" />

@@ -1,5 +1,6 @@
 package com.tcc.app.activity
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import com.tcc.app.R
 import com.tcc.app.extention.getValue
@@ -14,6 +15,7 @@ class SalaryDetailActivity : BaseActivity() {
     var salaryDataIteam: SalaryDataItem? = null
     var df: DecimalFormat = DecimalFormat("##.##")
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
@@ -31,10 +33,19 @@ class SalaryDetailActivity : BaseActivity() {
                 ?.times(salaryDataIteam?.rate?.toBigDecimal()!!))
         )
 
-        txtTotalPresent.text = salaryDataIteam?.present + " Presents"
+
+        txtPerDayCalculation.text =
+            getString(R.string.RS) + " " + df.format(salaryDataIteam?.salary?.toBigDecimal()) + " / 30 Day"
+
+        txtTotalPresent.text =
+            "${getString(R.string.RS)} ${salaryDataIteam?.rate?.toBigDecimal()!!} X ${salaryDataIteam?.present}"
 
         txtPresentAmount.text =
             getString(R.string.RS) + " " + df.format((salaryDataIteam?.rate?.toDouble()))
+
+
+        txtPaidAmount.text =
+            getString(R.string.RS) + " " + df.format((salaryDataIteam?.payAmount?.toDouble()))
 
 
         txtPenaltyAmount.text =
@@ -45,13 +56,13 @@ class SalaryDetailActivity : BaseActivity() {
         txtOverTimeAmount.text =
             getString(R.string.RS) + " " + df.format((salaryDataIteam?.rate?.toDouble())?.times((salaryDataIteam?.halfOverTime?.toDouble()!!) + (salaryDataIteam?.fullOverTime?.toDouble()!!)))
 
-        textviewSemiBold2.text = salaryDataIteam?.salaryDate
+        txtPaymentDate.text = salaryDataIteam?.salaryDate
 
 
         txtAdvanceAmount.text = getString(R.string.RS) + " " + df.format(
             (salaryDataIteam?.payAmount?.toBigDecimal()!! - ((salaryDataIteam?.present?.toBigDecimal()!! + salaryDataIteam?.halfDay?.toBigDecimal()!! + salaryDataIteam?.halfOverTime?.toBigDecimal()!! + salaryDataIteam?.fullOverTime?.toBigDecimal()!!)?.times(
                 salaryDataIteam?.rate?.toBigDecimal()!!
-            )!!))
+            )))
         )
         txtAdvanceAmount.text = txtAdvanceAmount.getValue().replace("-", "")
 

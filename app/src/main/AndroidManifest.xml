@@ -8,6 +8,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <uses-feature
@@ -73,6 +75,16 @@
             android:name="com.tcc.app.activity.AddSiteActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.tcc.app.activity.FullscreenSingleImageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.tcc.app.activity.PenaltyActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.tcc.app.activity.TicketActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.tcc.app.activity.LeadDetailActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -107,6 +119,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.tcc.app.activity.AddTicketActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.tcc.app.activity.SiteAttendanceListActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.AddInvoiceActivity"

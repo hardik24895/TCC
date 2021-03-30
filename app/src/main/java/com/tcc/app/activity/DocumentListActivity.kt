@@ -7,10 +7,7 @@ import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.tcc.app.R
 import com.tcc.app.adapter.DocumentListAdapter
 import com.tcc.app.dialog.LogoutDailog
-import com.tcc.app.extention.invisible
-import com.tcc.app.extention.showAlert
-import com.tcc.app.extention.showSnackBar
-import com.tcc.app.extention.visible
+import com.tcc.app.extention.*
 import com.tcc.app.interfaces.LoadMoreListener
 import com.tcc.app.modal.CommonAddModal
 import com.tcc.app.modal.DocumentListDataItem
@@ -171,6 +168,23 @@ class DocumentListActivity : BaseActivity(), DocumentListAdapter.OnItemSelected 
 
     override fun onItemSelect(position: Int, data: DocumentListDataItem) {
 
+        val namepass: Array<String> = data.document!!.split(".").toTypedArray()
+        if (namepass[namepass.size - 1].toLowerCase().equals("jpg") ||
+            namepass[namepass.size - 1].toLowerCase().equals("png") ||
+            namepass[namepass.size - 1].toLowerCase().equals("jpeg") ||
+            namepass[namepass.size - 1].toLowerCase().equals("PNG")
+        ) {
+
+            val intent = Intent(this, FullscreenSingleImageActivity::class.java)
+            intent.putExtra(Constant.DATA, Constant.DOCUMENT_URL + data.document.toString())
+            startActivity(intent)
+        } else {
+            if (data.document.equals("")) {
+                root.showSnackBar("File not found")
+            } else
+                openPDF(Constant.DOCUMENT_URL + data.document, this)
+
+        }
 
     }
 

@@ -17,8 +17,9 @@
             android:id="@+id/imgProfile"
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
-            android:layout_marginStart="@dimen/_5sdp"
             android:src="@mipmap/new_icon"
+            app:civ_border_width="@dimen/_1sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,25 +27,21 @@
             android:id="@+id/txtTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_3sdp"
             android:layout_marginStart="@dimen/_5sdp"
             android:ellipsize="end"
             android:singleLine="true"
-
             android:textSize="@dimen/_14ssp"
+
             app:layout_constraintEnd_toStartOf="@+id/imgEdit"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/imgProfile"
             app:layout_constraintTop_toTopOf="@+id/imgProfile" />
 
-        <com.tcc.app.customview.TextviewBold
+        <ImageView
             android:id="@+id/txtIcon"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="A"
-            android:textAllCaps="true"
-            android:textColor="@color/colorWhite"
-            android:textSize="@dimen/text_extra_large"
+            android:layout_height="0dp"
+            android:padding="@dimen/_4sdp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/imgProfile"
             app:layout_constraintEnd_toEndOf="@+id/imgProfile"
@@ -55,7 +52,6 @@
             android:id="@+id/txtDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_2sdp"
             android:text="test@gmail.com"
             app:layout_constraintStart_toStartOf="@+id/txtTitle"
             app:layout_constraintTop_toBottomOf="@+id/txtTitle" />
@@ -66,20 +62,21 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/_5sdp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/txtTitle"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_edit" />
 
         <ImageView
-            android:layout_marginTop="@dimen/_2sdp"
             android:id="@+id/imgDelete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:padding="@dimen/_5sdp"
-            app:layout_constraintBottom_toBottomOf="@+id/imgProfile"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imgEdit"
+
             app:srcCompat="@drawable/ic_delete" />
-        
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

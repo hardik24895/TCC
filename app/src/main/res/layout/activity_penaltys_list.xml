@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ic_background"
+    android:orientation="vertical"
+    tools:context=".activity.TeamDefinitionListActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_with_back_arrow" />
+
+    <include layout="@layout/reclerview_swipelayout" />
+
+</LinearLayout>

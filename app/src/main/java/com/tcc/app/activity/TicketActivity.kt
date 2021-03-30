@@ -1,14 +1,11 @@
-package com.tcc.app.fragment
+package com.tcc.app.activity
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
+import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.tcc.app.R
-import com.tcc.app.activity.AddTicketActivity
-import com.tcc.app.activity.SearchActivity
 import com.tcc.app.adapter.TicketAdapter
 import com.tcc.app.extention.*
 import com.tcc.app.interfaces.LoadMoreListener
@@ -22,11 +19,12 @@ import com.tcc.app.utils.SessionManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.reclerview_swipelayout.*
+import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 import org.json.JSONException
 import org.json.JSONObject
 
 
-class TicketListFragment() : BaseFragment(), TicketAdapter.OnItemSelected {
+class TicketActivity : BaseActivity(), TicketAdapter.OnItemSelected {
 
 
     var adapter: TicketAdapter? = null
@@ -34,24 +32,37 @@ class TicketListFragment() : BaseFragment(), TicketAdapter.OnItemSelected {
     var page: Int = 1
     var hasNextPage: Boolean = true
     var filter: MenuItem? = null
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val root = inflater.inflate(R.layout.reclerview_swipelayout, container, false)
-        return root
-    }
+
 
     companion object {
         var Ticket: String = ""
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        supportActionBar?.hide()
+        setContentView(R.layout.activity_ticket_list)
+        txtTitle.setText(getString(R.string.ticket))
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setHomeScreenTitle(requireActivity(), getString(R.string.ticket))
+        if (checkUserRole(session.roleData.data?.tickets?.isInsert.toString(), this)) {
+            imgAdd.visible()
+        }
+        imgFilter.visible()
+        imgBack.setOnClickListener {
+            finish()
+        }
 
+        imgAdd.setOnClickListener {
+            goToActivity<AddTicketActivity>()
+
+        }
+
+        imgFilter.setOnClickListener {
+            val intent = Intent(this, SearchActivity::class.java)
+            intent.putExtra(Constant.DATA, Constant.TICKET)
+            startActivity(intent)
+            Animatoo.animateCard(this)
+        }
         recyclerView.setLoadMoreListener(object : LoadMoreListener {
             override fun onLoadMore() {
                 if (hasNextPage && !recyclerView.isLoading) {
@@ -74,9 +85,9 @@ class TicketListFragment() : BaseFragment(), TicketAdapter.OnItemSelected {
 
 
     fun setupRecyclerView() {
-        val layoutManager = LinearLayoutManager(requireContext())
+        val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
-        adapter = TicketAdapter(requireContext(), list, this)
+        adapter = TicketAdapter(this, list, this)
         recyclerView.adapter = adapter
 
     }
@@ -102,7 +113,7 @@ class TicketListFragment() : BaseFragment(), TicketAdapter.OnItemSelected {
 
 
         Networking
-            .with(requireContext())
+            .with(this)
             .getServices()
             .getTicketList(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
             .subscribeOn(Schedulers.io())
@@ -164,42 +175,6 @@ class TicketListFragment() : BaseFragment(), TicketAdapter.OnItemSelected {
         super.onResume()
     }
 
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.home, menu)
-        filter = menu.findItem(R.id.action_filter)
-        filter?.setVisible(true)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_add -> {
-                if (checkUserRole(
-                        session.roleData.data?.tickets?.isInsert.toString(),
-                        requireContext()
-                    )
-                ) {
-                    goToActivity<AddTicketActivity>()
-                }
-                return true
-            }
-            R.id.action_filter -> {
-                val intent = Intent(context, SearchActivity::class.java)
-                intent.putExtra(Constant.DATA, Constant.TICKET)
-                startActivity(intent)
-                Animatoo.animateCard(context)
-                return true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
-
     override fun onItemSelect(position: Int, data: TicketDataItem) {
 
     }
@@ -211,17 +186,6 @@ class TicketListFragment() : BaseFragment(), TicketAdapter.OnItemSelected {
         super.onDestroy()
     }
 
-    override fun onDestroyView() {
-        Ticket = ""
-        //   setHasOptionsMenu(false);
-        //  filter?.setVisible(false)
-        super.onDestroyView()
-    }
-
-    override fun onAttach(context: Context) {
-        Ticket = ""
-        super.onAttach(context)
-    }
 
     override fun onPause() {
         Ticket = ""

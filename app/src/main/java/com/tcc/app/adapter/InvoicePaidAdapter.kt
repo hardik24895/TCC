@@ -8,10 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tcc.app.R
 import com.tcc.app.extention.getRandomMaterialColor
 import com.tcc.app.extention.invisible
-import com.tcc.app.extention.openPDF
 import com.tcc.app.extention.visible
 import com.tcc.app.modal.InvoiceDataItem
-import com.tcc.app.utils.Constant
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.row_invoice.*
 
@@ -44,6 +42,7 @@ class InvoicePaidAdapter(
 
     interface OnItemSelected {
         fun onItemSelect(position: Int, data: InvoiceDataItem)
+        fun openSelectedPDF(position: Int, data: InvoiceDataItem)
     }
 
     class ItemHolder(override val containerView: View) :
@@ -87,17 +86,13 @@ class InvoicePaidAdapter(
 
 
 
+            crd_remaining.visible()
+            texRemainingPayment.text = data.remainingPayment
+            texRemainingGST.text = data.remainingGSTPayment
 
-            if (!flag.equals("Paid")) {
-                crd_remaining.visible()
-                texRemainingPayment.text = data.remainingPayment
-                texRemainingGST.text = data.remainingGSTPayment
-            } else {
-                crd_remaining.invisible()
-            }
 
             if (isPaid) {
-                txtNotes.invisible()
+
                 btnPay.invisible()
             } else {
                 txtNotes.visible()
@@ -115,10 +110,9 @@ class InvoicePaidAdapter(
             btnPay.setOnClickListener { listener.onItemSelect(adapterPosition, data) }
 
             imgPrint.setOnClickListener {
-                openPDF(
-                    Constant.PDF_INVOICE_URL + data.document,
-                    context
-                )
+
+                listener.openSelectedPDF(adapterPosition, data)
+
             }
         }
 

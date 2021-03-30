@@ -5,6 +5,11 @@
     android:background="@drawable/ic_background"
     android:layout_height="match_parent">
 
+    <include
+        android:id="@+id/toolbarView"
+        layout="@layout/toolbar_with_back_arrow"
+        android:visibility="gone" />
+
     <com.tcc.app.customview.TextviewSemiBold
         android:id="@+id/txtDateRage"
         android:layout_width="0dp"
@@ -17,7 +22,7 @@
         android:textSize="@dimen/_14ssp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/toolbarView" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

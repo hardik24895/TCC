@@ -1,13 +1,15 @@
 package com.tcc.app.activity
 
-
-import android.app.Activity
+import android.Manifest
 import android.content.Intent
+import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
+import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
+import com.github.florent37.runtimepermission.kotlin.askPermission
 import com.tcc.app.R
-import com.tcc.app.dialog.ImagePickerBottomSheetDialog
 import com.tcc.app.extention.*
 import com.tcc.app.modal.CommonAddModal
 import com.tcc.app.modal.SiteListItem
@@ -15,7 +17,6 @@ import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.utils.Constant
 import com.tcc.app.utils.Logger
-import com.yalantis.ucrop.UCrop
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_add_document.*
@@ -25,11 +26,14 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
 
+
 class AddUploadDocument : BaseActivity() {
 
     var resultUri: Uri? = null
-    var resultUriProfile: Uri? = null
     var siteListItem: SiteListItem? = null
+    var path = ""
+    var file: File? = null
+    private val REQUEST_STORAGE = 201
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,38 +50,10 @@ class AddUploadDocument : BaseActivity() {
         }
         txtTitle.text = "Upload Document"
 
-
-
-
         imgDocument.setOnClickListener {
+            checkPermission()
 
-            val dialog = ImagePickerBottomSheetDialog
-                .newInstance(
-                    this,
-                    object : ImagePickerBottomSheetDialog.OnModeSelected {
-                        override fun onMediaPicked(uri: Uri) {
-                            val destinationUri = Uri.fromFile(
-                                File(
-                                    cacheDir,
-                                    "IMG_" + System.currentTimeMillis()
-                                )
-                            )
-                            UCrop.of(uri, destinationUri)
-                                .withAspectRatio(1f, 1f)
-                                .start(this@AddUploadDocument, 1)
-                        }
-
-                        override fun onError(message: String) {
-                            // showAlert(message)
-                            showAlert(getString(R.string.show_server_error))
-                        }
-                    })
-            dialog.show(supportFragmentManager, "ImagePicker")
         }
-
-
-
-
         btnSubmit.setOnClickListener {
             validation()
         }
@@ -85,15 +61,79 @@ class AddUploadDocument : BaseActivity() {
     }
 
 
+    fun checkPermission() {
+        askPermission(Manifest.permission.READ_EXTERNAL_STORAGE) {
+            selectImageFromStorage()
+        }.onDeclined { e ->
+            if (e.hasDenied()) {
+
+                AlertDialog.Builder(this).setMessage("Please accept our permissions")
+                    .setPositiveButton("yes") { dialog, which ->
+                        e.askAgain();
+                    } //ask again
+                    .show();
+            }
+
+            if (e.hasForeverDenied()) {
+                AlertDialog.Builder(this).setMessage("Please accept our permissions")
+                    .setPositiveButton("yes") { dialog, which ->
+                        e.goToSettings()
+                    } //ask again
+                    .show();
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        selectImageFromStorage()
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+    }
+
+    private fun selectImageFromStorage() {
+
+        var intent: Intent? = null
+        if (android.os.Build.MANUFACTURER.equals("samsung")) {
+            intent = Intent("com.sec.android.app.myfiles.PICK_DATA")
+            intent.putExtra("CONTENT_TYPE", "*/*")
+            intent.addCategory(Intent.CATEGORY_DEFAULT)
+        } else {
+
+            val mimeTypes = arrayOf(
+                "application/pdf",
+                "image/jpeg",
+                "image/jpg",
+                "image/png",
+                "image/PNG",
+                "application/msword",
+                "application/doc",
+                "application/docx",
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                "application/vnd.ms-powerpoint",
+                "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+                "application/vnd.ms-excel",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            )
 
 
-
+            intent = Intent(Intent.ACTION_GET_CONTENT)
+            intent.setType("*/*")
+            intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
+            intent.addCategory(Intent.CATEGORY_OPENABLE)
+            intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true)
+        }
+        startActivityForResult(intent, REQUEST_STORAGE)
+    }
 
 
     fun validation() {
         when {
-            resultUriProfile == null -> {
-                root.showSnackBar("Upload  Image")
+            resultUri == null -> {
+                root.showSnackBar("Upload Document")
             }
 
             edtTitle.isEmpty() -> {
@@ -109,43 +149,104 @@ class AddUploadDocument : BaseActivity() {
     }
 
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when {
-            requestCode == UCrop.REQUEST_CROP -> {
-                if (resultCode == Activity.RESULT_OK) {
-                    resultUri = UCrop.getOutput(data!!)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data1: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data1)
+        // when {
+//            requestCode == UCrop.REQUEST_CROP -> {
+//                if (resultCode == Activity.RESULT_OK) {
+//                    resultUri = UCrop.getOutput(data!!.getParcelableExtra(EXTRA_OUTPUT_URI))
+//                }
+//            }
+//            requestCode == 1 -> {
+//                resultUriProfile = UCrop.getOutput(data!!)
+//                Glide.with(this)
+//                    .load(resultUriProfile)
+//                    .apply(
+//                        com.bumptech.glide.request.RequestOptions().centerCrop()
+//                            .placeholder(com.rm.enterprise.R.drawable.ic_profile)
+//                    )
+//                    .into(imgDocument)
+//
+//            }
+
+        if (resultCode === RESULT_OK) {
+            // Check for the request code, we might be usign multiple startActivityForReslut
+            when (requestCode) {
+                REQUEST_STORAGE -> {
+                    var selectedFile = File(getRealPathFromURI(data1?.data))
+
+
+                    var selectedFileExt = selectedFile.extension
+
+                    if (selectedFileExt.toLowerCase().equals("jpg")
+                        || selectedFileExt.toLowerCase().equals("png")
+                        || selectedFileExt.toLowerCase().equals("jpeg")
+                        || selectedFileExt.toLowerCase().equals("PNG")
+                        || selectedFileExt.toLowerCase().equals("pdf")
+                        || selectedFileExt.toLowerCase().equals("doc")
+                        || selectedFileExt.toLowerCase().equals("docs")
+                        || selectedFileExt.toLowerCase().equals("xls")
+                        || selectedFileExt.toLowerCase().equals("xlsx")
+                        || selectedFileExt.toLowerCase().equals("ppt")
+                    ) {
+                        resultUri = data1?.data
+
+                        if (selectedFileExt.toLowerCase()
+                                .equals("jpg") || selectedFileExt.toLowerCase()
+                                .equals("png") || selectedFileExt.toLowerCase()
+                                .equals("jpeg") || selectedFileExt.toLowerCase().equals("PNG")
+                        ) {
+                            Glide.with(this)
+                                .load(resultUri)
+                                .apply(
+                                    com.bumptech.glide.request.RequestOptions().centerCrop()
+                                        .placeholder(R.drawable.ic_profile)
+                                )
+                                .into(imgDocument)
+                        } else {
+                            imgDocument.setImageResource(R.drawable.ic_selected_doc)
+                        }
+
+
+                    } else {
+                        root.showSnackBar("This File Format not supported")
+                    }
                 }
             }
-            requestCode == 1 -> {
-                resultUriProfile = UCrop.getOutput(data!!)
-                Glide.with(this)
-                    .load(resultUriProfile)
-                    .apply(
-                        com.bumptech.glide.request.RequestOptions().centerCrop()
-                            .placeholder(com.tcc.app.R.drawable.ic_profile)
-                    )
-                    .into(imgDocument)
+        }
+    }
 
+
+    fun getRealPathFromURI(contentUri: Uri?): String? {
+        var cursor: Cursor? = null
+        return try {
+            val proj = arrayOf(MediaStore.Images.Media.DATA)
+            cursor = this.getContentResolver().query(contentUri!!, proj, null, null, null)
+            val column_index: Int = cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+            cursor!!.moveToFirst()
+            cursor!!.getString(column_index)
+        } finally {
+            if (cursor != null) {
+                cursor.close()
             }
-
         }
     }
 
     fun AddDocument() {
-        showProgressbar()
 
+        var selectedFile = File(getRealPathFromURI(resultUri))
+
+        val methodName: RequestBody = RequestBody.create(
+            "text/plain".toMediaTypeOrNull(),
+            Constant.METHOD_ADD_CUSTOMER_SITE_DOCUMENT
+        )
         val requestFile: RequestBody =
-            RequestBody.create("image/*".toMediaTypeOrNull(), File(resultUriProfile?.path))
+            RequestBody.create("*/*".toMediaTypeOrNull(), File(selectedFile.path))
         val body: MultipartBody.Part = MultipartBody.Part.createFormData(
             "ImageData",
-            File(resultUriProfile?.path).name + ".jpg",
+            selectedFile.name,
             requestFile
         )
-
-
-        val methodName: RequestBody =
-            RequestBody.create("text/plain".toMediaTypeOrNull(), Constant.METHOD_ADD_CUSTOMER_SITE_DOCUMENT)
 
         Networking
             .with(this)
@@ -153,16 +254,24 @@ class AddUploadDocument : BaseActivity() {
             .AddCustomerSiteDocument(
                 body,
                 methodName,
-                RequestBody.create("text/plain".toMediaTypeOrNull(), session.user.data?.userID.toString()),
+                RequestBody.create(
+                    "text/plain".toMediaTypeOrNull(),
+                    session.user.data?.userID.toString()
+                ),
                 RequestBody.create("text/plain".toMediaTypeOrNull(), edtTitle.getValue()),
-                RequestBody.create("text/plain".toMediaTypeOrNull(), siteListItem?.sitesID.toString())
+                RequestBody.create(
+                    "text/plain".toMediaTypeOrNull(),
+                    siteListItem?.sitesID.toString()
+                )
 
             )//wrapParams Wraps parameters in to Request body Json format
+
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : CallbackObserver<CommonAddModal>() {
                 override fun onSuccess(response: CommonAddModal) {
                     hideProgressbar()
+
                     if (response.error == 200) {
                         root.showSnackBar(response.message.toString())
                         finish()
@@ -179,6 +288,4 @@ class AddUploadDocument : BaseActivity() {
 
 
     }
-
-
 }

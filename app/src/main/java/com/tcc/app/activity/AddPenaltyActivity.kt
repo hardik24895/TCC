@@ -22,6 +22,11 @@ import com.tcc.app.utils.TimeStamp.formatDateFromString
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_add_penalty.*
+import kotlinx.android.synthetic.main.activity_add_penalty.btnSubmit
+import kotlinx.android.synthetic.main.activity_add_penalty.lin_add_user
+import kotlinx.android.synthetic.main.activity_add_penalty.root
+import kotlinx.android.synthetic.main.activity_add_quotation.*
+import kotlinx.android.synthetic.main.row_dynamic_user.view.*
 import kotlinx.android.synthetic.main.row_penalty_employee.view.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 import org.json.JSONArray
@@ -44,7 +49,7 @@ class AddPenaltyActivity : BaseActivity(), ReasonListAdapter.OnItemSelected {
     var adapterUserType: ArrayAdapter<String>? = null
     var userTypeListArray: ArrayList<EmployeeDataItem> = ArrayList()
     var itemUserType: List<SearchableItem>? = null
-    var usertypeId: String = ""
+    var usertypeId: String = "-1"
 
     var ReasonListArray: ArrayList<RejectReasonDataItem> = ArrayList()
     var adapter: ReasonListAdapter? = null
@@ -72,7 +77,11 @@ class AddPenaltyActivity : BaseActivity(), ReasonListAdapter.OnItemSelected {
         getReasonList()
 
         btnSubmit.setOnClickListener {
-            AddPanelty()
+            if (lin_add_user.childCount > 0) {
+                AddPanelty()
+            } else {
+                root.showSnackBar("Please Select atleast 1 employee")
+            }
         }
 
     }
@@ -117,10 +126,7 @@ class AddPenaltyActivity : BaseActivity(), ReasonListAdapter.OnItemSelected {
                 id: Long
             ) {
                 if (position != -1 && userTypeListArray!!.size > position) {
-
-
                 }
-
             }
         }
 
@@ -255,6 +261,9 @@ class AddPenaltyActivity : BaseActivity(), ReasonListAdapter.OnItemSelected {
                     if (response.error == 200) {
                         userTypeListArray!!.addAll(response.data)
                         var myList: MutableList<SearchableItem> = mutableListOf()
+                        userTypeNameList!!.add("Select Employee")
+                        myList.add(SearchableItem(0, "Select Employee"))
+
                         for (items in response.data.indices) {
                             userTypeNameList!!.add(
                                 "${response.data.get(items).firstName.toString()} ${
@@ -265,8 +274,8 @@ class AddPenaltyActivity : BaseActivity(), ReasonListAdapter.OnItemSelected {
                             )
                             myList.add(
                                 SearchableItem(
-                                    items.toLong(),
-                                    userTypeNameList!!.get(items)
+                                    items.toLong() + 1,
+                                    userTypeNameList!!.get(items + 1)
                                 )
                             )
 
@@ -294,56 +303,65 @@ class AddPenaltyActivity : BaseActivity(), ReasonListAdapter.OnItemSelected {
 
             if (lin_add_user.childCount > 0) {
                 for (item in 0 until lin_add_user.childCount) {
-                    val jsonObj1 = JSONObject()
-                    jsonObj1.put(
-                        "EmployeeID",
-                        userTypeListArray.get(lin_add_user.getChildAt(item).spEmployee.selectedItemPosition).userID.toString()
-                    )
-                    jsonObj1.put("Penalty", lin_add_user.getChildAt(item).edtAmount.getValue())
-                    jsonArray.put(jsonObj1)
+                    if (lin_add_user.getChildAt(item).spEmployee.selectedItemPosition != 0 && !lin_add_user.getChildAt(
+                            item
+                        ).edtAmount.getValue().isEmpty()
+                    ) {
+                        val jsonObj1 = JSONObject()
+                        jsonObj1.put(
+                            "EmployeeID",
+                            userTypeListArray.get(lin_add_user.getChildAt(item).spEmployee.selectedItemPosition - 1).userID.toString()
+                        )
+                        jsonObj1.put("Penalty", lin_add_user.getChildAt(item).edtAmount.getValue())
+                        jsonArray.put(jsonObj1)
+                    }
                 }
             }
+            if (jsonArray.length() == 0) {
+                root.showSnackBar("Please Select employee and add amount")
+                return
+            } else {
+                val jsonBody = JSONObject()
+                jsonBody.put("UserID", session.user.data?.userID)
+                jsonBody.put("Reason", selectedReason)
+                jsonBody.put("SitesID", siteId)
+                jsonBody.put("PenaltyDate", formatDateFromString(getCurrentDate()))
+                jsonBody.put("Item", jsonArray)
 
-            val jsonBody = JSONObject()
-            jsonBody.put("UserID", session.user.data?.userID)
-            jsonBody.put("Reason", selectedReason)
-            jsonBody.put("SitesID", siteId)
-            jsonBody.put("PenaltyDate", formatDateFromString(getCurrentDate()))
-            jsonBody.put("Item", jsonArray)
+
+                result = Networking.setParentJsonData(Constant.METHOD_ADD_PANELTLY, jsonBody)
 
 
+                Networking
+                    .with(this@AddPenaltyActivity)
+                    .getServices()
+                    .addPanelty(Networking.wrapParams(result))
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeWith(object : CallbackObserver<CommonAddModal>() {
+                        override fun onSuccess(response: CommonAddModal) {
 
+                            if (response.error == 200) {
+                                root.showSnackBar(response.message.toString())
+                                finish()
 
-            result = Networking.setParentJsonData(Constant.METHOD_ADD_PANELTLY, jsonBody)
+                            } else {
+                                showAlert(response.message.toString())
+                            }
+
+                        }
+
+                        override fun onFailed(code: Int, message: String) {
+                            // showAlert(message)
+                            showAlert(getString(R.string.show_server_error))
+                        }
+
+                    }).addTo(autoDisposable)
+            }
 
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-        Networking
-            .with(this@AddPenaltyActivity)
-            .getServices()
-            .addPanelty(Networking.wrapParams(result))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeWith(object : CallbackObserver<CommonAddModal>() {
-                override fun onSuccess(response: CommonAddModal) {
-
-                    if (response.error == 200) {
-                        root.showSnackBar(response.message.toString())
-                        finish()
-
-                    } else {
-                        showAlert(response.message.toString())
-                    }
-
-                }
-
-                override fun onFailed(code: Int, message: String) {
-                    // showAlert(message)
-                    showAlert(getString(R.string.show_server_error))
-                }
-
-            }).addTo(autoDisposable)
     }
 
 

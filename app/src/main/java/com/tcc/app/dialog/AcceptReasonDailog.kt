@@ -16,7 +16,10 @@ import androidx.lifecycle.LifecycleOwner
 import com.akexorcist.snaptimepicker.SnapTimePickerDialog
 import com.akexorcist.snaptimepicker.TimeValue
 import com.tcc.app.R
-import com.tcc.app.extention.*
+import com.tcc.app.extention.convertIntoTowDigit
+import com.tcc.app.extention.getValue
+import com.tcc.app.extention.showDateTimePicker
+import com.tcc.app.extention.showNextFromStartDateTimePicker
 import com.tcc.app.modal.QuotationItem
 import com.tcc.app.network.AutoDisposable
 import com.tcc.app.utils.BlurDialogFragment
@@ -64,11 +67,12 @@ class AcceptReasonDailog(context: Context, data: QuotationItem) : BlurDialogFrag
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         populateData()
-        dialog?.setCancelable(false)
-        dialog?.setCanceledOnTouchOutside(false)
-        edtStartDate.setText(quotationData.startDate)
-        edtEndDate.setText(quotationData.startDate)
-        edtStartTime.setText(getCurentTime(getCurrentDateTime()))
+        dialog?.setCancelable(true)
+        dialog?.setCanceledOnTouchOutside(true)
+        edtStartDate.setText(quotationData.startDate!!.replace("-", "/"))
+        edtEndDate.setText(quotationData.endDate!!.replace("-", "/"))
+        edtStartTime.setText("09:30")
+        edtEndTime.setText("18:30")
 
         edtStartDate.setOnClickListener {
             showDateTimePicker(requireActivity(), edtStartDate)
@@ -112,6 +116,27 @@ class AcceptReasonDailog(context: Context, data: QuotationItem) : BlurDialogFrag
                 }
             }.show(childFragmentManager, "")
         }
+        edtEndTime.setOnClickListener {
+
+            val namepass: Array<String> = edtEndTime.getValue().split(":").toTypedArray()
+            val hours = namepass[0]
+            val minut = namepass[1]
+
+            SnapTimePickerDialog.Builder().setThemeColor(R.color.colorPrimary).apply {
+                setPreselectedTime(TimeValue(hours.toInt(), minut.toInt()))
+
+                setTitle(R.string.reminder_time)
+            }.build().apply {
+
+                setListener { hour, minute ->
+                    Logger.d("time", hour.toString() + ":" + minute.toString())
+                    var edtEndTime: EditText = view.findViewById(R.id.edtEndTime)
+                    edtEndTime.setText(convertIntoTowDigit(hour) + ":" + convertIntoTowDigit(minute))
+
+
+                }
+            }.show(childFragmentManager, "")
+        }
 
         edtStartDate.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
@@ -130,7 +155,8 @@ class AcceptReasonDailog(context: Context, data: QuotationItem) : BlurDialogFrag
             listener.onItemCLicked(
                 edtStartDate.getValue(),
                 edtEndDate.getValue(),
-                edtStartTime.getValue()
+                edtStartTime.getValue(),
+                edtEndTime.getValue()
             )
             dismissAllowingStateLoss()
         }
@@ -171,20 +197,10 @@ class AcceptReasonDailog(context: Context, data: QuotationItem) : BlurDialogFrag
     }
 
     interface onItemClick {
-        fun onItemCLicked(startDate: String, endDate: String, startTime: String)
+        fun onItemCLicked(startDate: String, endDate: String, startTime: String, endTime: String)
     }
 
     interface onDissmiss {
         fun onDismiss()
     }
-
-
 }
-
-
-
-
-
-
-
-

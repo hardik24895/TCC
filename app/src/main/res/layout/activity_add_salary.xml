@@ -323,6 +323,7 @@
                         <com.tcc.app.customview.RadioButtonReguler
                             android:id="@+id/rbReceived"
                             android:layout_width="wrap_content"
+                            app:buttonTint="@color/colorPrimary"
                             android:layout_height="@dimen/_30sdp"
                             android:checked="true"
                             android:text="@string/received" />
@@ -330,12 +331,14 @@
                         <com.tcc.app.customview.RadioButtonReguler
                             android:id="@+id/rbPaid"
                             android:layout_width="wrap_content"
+                            app:buttonTint="@color/colorPrimary"
                             android:layout_height="@dimen/_30sdp"
                             android:text="@string/paid" />
 
                         <com.tcc.app.customview.RadioButtonReguler
                             android:id="@+id/rbNone"
                             android:layout_width="wrap_content"
+                            app:buttonTint="@color/colorPrimary"
                             android:layout_height="@dimen/_30sdp"
                             android:text="@string/none" />
 

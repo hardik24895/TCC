@@ -1,6 +1,7 @@
 package com.tcc.app.activity
 
 import android.os.Bundle
+import android.text.InputFilter
 import android.view.View
 import android.widget.RadioButton
 import androidx.core.view.isVisible
@@ -13,9 +14,14 @@ import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
 import com.tcc.app.utils.TimeStamp.formatDateFromString
+import com.tcc.app.widgets.DecimalDigitsInputFilter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_add_invoice.*
 import kotlinx.android.synthetic.main.activity_add_payment.*
+import kotlinx.android.synthetic.main.activity_add_payment.btnSubmit
+import kotlinx.android.synthetic.main.activity_add_payment.edtCompanyName
+import kotlinx.android.synthetic.main.activity_add_payment.root
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 import org.json.JSONException
 import org.json.JSONObject
@@ -39,23 +45,25 @@ class AddPaymentActivity : BaseActivity() {
         if (intent.hasExtra(Constant.DATA)) {
             invoiceDataItem = intent.getSerializableExtra(Constant.DATA) as InvoiceDataItem
 
-            edtCompanyName.setText(invoiceDataItem?.siteUserFrindlyName)
+            edtCompanyName.setText(invoiceDataItem?.siteUserFrindlyName + "(${invoiceDataItem?.mobileNo})")
             edtEstimateno.setText(invoiceDataItem?.invoiceNo)
             var df = DecimalFormat("##.##")
 
-            total_basic_amount.text = getString(R.string.RS) + " " + invoiceDataItem?.totalAmount
+            var subTot: Float =
+                invoiceDataItem?.totalAmount!!.toFloat() - (invoiceDataItem?.cGST?.toFloat()!! + invoiceDataItem?.sGST?.toFloat()!! + invoiceDataItem?.iGST?.toFloat()!!)
+
+            total_basic_amount.text = getString(R.string.RS) + " " + df.format(subTot).toString()
             remaining_basic_payment.text =
                 getString(R.string.RS) + " " + invoiceDataItem?.remainingPayment
 
             total_gst_amount.text =
-                getString(R.string.RS) + " " + df.format(invoiceDataItem?.cGST?.toFloat()!! * invoiceDataItem?.sGST?.toFloat()!! * invoiceDataItem?.iGST?.toFloat()!!)
+                getString(R.string.RS) + " " + df.format(invoiceDataItem?.cGST?.toFloat()!! + invoiceDataItem?.sGST?.toFloat()!! + invoiceDataItem?.iGST?.toFloat()!!)
                     .toString()
             remaining_gst_payment.text =
                 getString(R.string.RS) + " " + df.format(invoiceDataItem?.remainingGSTPayment!!.toBigDecimal())
                     .toString()
 
         }
-
 
         imgBack.visible()
         imgBack.setOnClickListener {
@@ -70,14 +78,15 @@ class AddPaymentActivity : BaseActivity() {
         edtPaymentDate.setText(getCurrentDate())
         edtPaymentAmount.setText(invoiceDataItem?.remainingPayment)
         edtGSTAmount.setText(invoiceDataItem?.remainingGSTPayment)
+        edtPaymentAmount.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
+        edtGSTAmount.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
+
 
 
         btnSubmit.setOnClickListener {
             validation()
 
         }
-
-
 
         rg.setOnCheckedChangeListener({ group, checkedId ->
             val radio: RadioButton = findViewById(checkedId)
@@ -137,7 +146,7 @@ class AddPaymentActivity : BaseActivity() {
 
             tilPaymentAmount.isVisible && edtPaymentAmount.getValue()
                 .toBigDecimal() > invoiceDataItem?.remainingPayment!!.toBigDecimal() -> {
-                root.showSnackBar("Enter less than or equal to ${invoiceDataItem?.remainingPayment!!.toBigDecimal()}")
+                root.showSnackBar("Enter Payment Amount less than or equal to ${invoiceDataItem?.remainingPayment!!.toBigDecimal()}")
                 edtPaymentAmount.requestFocus()
             }
             edtGSTAmount.isEmpty() && tilGSTAmount.isVisible -> {
@@ -169,6 +178,12 @@ class AddPaymentActivity : BaseActivity() {
                 root.showSnackBar("Enter Branch Name")
                 edtBranchName.requestFocus()
             }
+
+            tilGSTAmount.isVisible && edtGSTAmount.getValue()
+                .toBigDecimal() > invoiceDataItem?.remainingGSTPayment!!.toBigDecimal() -> {
+                root.showSnackBar("Enter GST Amount less than or equal to ${invoiceDataItem?.remainingGSTPayment!!.toBigDecimal()}")
+                edtGSTAmount.requestFocus()
+            }
             else -> {
                 AddPaymentApi()
             }
@@ -186,14 +201,37 @@ class AddPaymentActivity : BaseActivity() {
             jsonBody.put("UserID", session.user.data?.userID)
             jsonBody.put("InvoiceID", invoiceDataItem?.invoiceID)
             if (rg.indexOfChild(findViewById(rg.getCheckedRadioButtonId())) == 0) {
-                jsonBody.put("PaymentAmount", edtPaymentAmount.getValue())
-                jsonBody.put("GSTAmount", edtGSTAmount.getValue())
+
+                if (edtPaymentAmount.getValue().toFloat() > 0 && edtGSTAmount.getValue()
+                        .toFloat() > 0
+                ) {
+                    jsonBody.put("PaymentAmount", edtPaymentAmount.getValue())
+                    jsonBody.put("GSTAmount", edtGSTAmount.getValue())
+                } else {
+                    root.showSnackBar("Payment and Gst should not be 0")
+                    hideProgressbar()
+                    return
+                }
+
             } else if (rg.indexOfChild(findViewById(rg.getCheckedRadioButtonId())) == 1) {
-                jsonBody.put("PaymentAmount", edtPaymentAmount.getValue())
-                jsonBody.put("GSTAmount", "0")
+
+                if (edtPaymentAmount.getValue().toFloat() > 0) {
+                    jsonBody.put("PaymentAmount", edtPaymentAmount.getValue())
+                    jsonBody.put("GSTAmount", "0")
+                } else {
+                    hideProgressbar()
+                    root.showSnackBar("Payment should not be 0")
+                    return
+                }
             } else {
-                jsonBody.put("PaymentAmount", "0")
-                jsonBody.put("GSTAmount", edtGSTAmount.getValue())
+                if (edtGSTAmount.getValue().toFloat() > 0) {
+                    jsonBody.put("PaymentAmount", "0")
+                    jsonBody.put("GSTAmount", edtGSTAmount.getValue())
+                } else {
+                    hideProgressbar()
+                    root.showSnackBar("GST should not be 0")
+                    return
+                }
             }
             jsonBody.put("AmountType", rg.indexOfChild(findViewById(rg.getCheckedRadioButtonId())))
             jsonBody.put("PaymentDate", formatDateFromString(edtPaymentDate.getValue()))

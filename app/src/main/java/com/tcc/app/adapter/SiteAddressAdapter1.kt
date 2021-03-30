@@ -47,8 +47,12 @@ class SiteAddressAdapter1(
             holder.txtSiteAddress.visible()
             holder.txtAddNew.invisible()
             holder.txtSiteName.text = data.siteName
-            holder.txtSiteAddress.text =
-                data.address + ", " + data.address2 + ", " + data.pinCode + ", " + data.cityName + ", " + data.stateName
+            if (data.pinCode.equals(""))
+                holder.txtSiteAddress.text =
+                    data.address + ", " + data.address2 + ", " + data.cityName + ", " + data.stateName
+            else
+                holder.txtSiteAddress.text =
+                    data.address + ", " + data.address2 + ", " + data.pinCode + ", " + data.cityName + ", " + data.stateName
         }
 
 

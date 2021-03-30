@@ -1,22 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/ic_background">
+    android:layout_height="match_parent">
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_with_back_arrow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:background="@drawable/ic_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/toolbar_with_back_arrow"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -118,6 +122,33 @@
 
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inInvoiceNum"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_16sdp"
+                    android:hint="@string/invoice_number"
+                    android:visibility="gone"
+                    app:hintTextColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/inName"
+                    tools:visibility="visible">
+
+                    <EditText
+                        android:id="@+id/edtInvoiceNum"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/colorWhite"
+                        android:fontFamily="@font/opensans_regular"
+                        android:inputType="number"
+                        android:maxLength="15"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/inStartDate"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -127,7 +158,7 @@
                     app:hintTextColor="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/inName"
+                    app:layout_constraintTop_toBottomOf="@+id/inInvoiceNum"
                     tools:visibility="visible">
 
                     <EditText
@@ -142,6 +173,7 @@
                         android:textColor="@color/black"
                         android:textColorHint="@color/black" />
                 </com.google.android.material.textfield.TextInputLayout>
+
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/inEndDate"
@@ -201,7 +233,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:nothingSelectedText="Select Staff"
+                        app:nothingSelectedText="Select Item"
                         app:onlyLightTheme="true" />
 
                     <View
@@ -302,6 +334,7 @@
 
                         <com.tcc.app.customview.RadioButtonReguler
                             android:id="@+id/rbAll"
+                            app:buttonTint="@color/colorPrimary"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/_30sdp"
                             android:checked="true"
@@ -309,24 +342,29 @@
 
                         <com.tcc.app.customview.RadioButtonReguler
                             android:id="@+id/rbHot"
+                            app:buttonTint="@color/colorPrimary"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/_30sdp"
                             android:text="@string/hot" />
 
                         <com.tcc.app.customview.RadioButtonReguler
                             android:id="@+id/rbWarm"
+
+                            app:buttonTint="@color/colorPrimary"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/_30sdp"
                             android:text="@string/warm" />
 
                         <com.tcc.app.customview.RadioButtonReguler
                             android:id="@+id/rbCold"
+                            app:buttonTint="@color/colorPrimary"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/_30sdp"
                             android:text="@string/cold" />
 
                         <com.tcc.app.customview.RadioButtonReguler
                             android:id="@+id/rbSilent"
+                            app:buttonTint="@color/colorPrimary"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/_30sdp"
                             android:text="@string/Silent" />
@@ -368,24 +406,28 @@
                         <com.tcc.app.customview.RadioButtonReguler
                             android:id="@+id/rbAll1"
                             android:layout_width="wrap_content"
+                            app:buttonTint="@color/colorPrimary"
                             android:layout_height="@dimen/_30sdp"
                             android:checked="true"
                             android:text="@string/all" />
 
                         <com.tcc.app.customview.RadioButtonReguler
                             android:id="@+id/rbResidential"
+                            app:buttonTint="@color/colorPrimary"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/_30sdp"
                             android:text="@string/residential" />
 
                         <com.tcc.app.customview.RadioButtonReguler
                             android:id="@+id/rbCommercial"
+                            app:buttonTint="@color/colorPrimary"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/_30sdp"
                             android:text="@string/commercial" />
 
                         <com.tcc.app.customview.RadioButtonReguler
                             android:id="@+id/rbIndustrial"
+                            app:buttonTint="@color/colorPrimary"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/_30sdp"
                             android:text="@string/industrial" />
@@ -413,5 +455,6 @@
 
 
         </androidx.cardview.widget.CardView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

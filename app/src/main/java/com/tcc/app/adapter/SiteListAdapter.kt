@@ -63,12 +63,27 @@ class SiteListAdapter(
             txtEndDate.text = data.endDate
 
 
+            if (!data.serviceID.equals("1")) {
+                txtWorkingDaytitle.invisible()
+                txtDay.invisible()
+                txtWorkingHrstitle.invisible()
+                txtHRS.invisible()
+                view2.invisible()
+            } else {
+                txtWorkingDaytitle.visible()
+                txtDay.visible()
+                txtWorkingHrstitle.visible()
+                txtHRS.visible()
+                view2.visible()
+            }
+
+
             var address = data.address
 
             if (!data.address2?.isEmpty()!!)
                 address = address + ", " + data.address2
 
-            if (data.pinCode.equals(""))
+            if (!data.pinCode.equals(""))
                 address = address + ", " + data.pinCode
 
             txtAddress.text = address + ", " + data.cityName + ", " + data.stateName
@@ -86,6 +101,8 @@ class SiteListAdapter(
             txtIcon.visible()
             btnAddDocument.setOnClickListener { listener.onDocumentClick(adapterPosition, data) }
             btnAddQuotation.setOnClickListener { listener.onItemSelect(adapterPosition, data) }
+
+
         }
 
 

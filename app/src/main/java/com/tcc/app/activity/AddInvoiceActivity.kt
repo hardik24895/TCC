@@ -1,6 +1,5 @@
 package com.tcc.app.activity
 
-
 import android.app.DatePickerDialog
 import android.content.Context
 import android.os.Bundle
@@ -29,34 +28,6 @@ import com.tcc.app.widgets.DecimalDigitsInputFilter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_add_invoice.*
-import kotlinx.android.synthetic.main.activity_add_invoice.btnAddMaterial
-import kotlinx.android.synthetic.main.activity_add_invoice.btnAddUser
-import kotlinx.android.synthetic.main.activity_add_invoice.btnSubmit
-import kotlinx.android.synthetic.main.activity_add_invoice.edCGST
-import kotlinx.android.synthetic.main.activity_add_invoice.edHSN
-import kotlinx.android.synthetic.main.activity_add_invoice.edIGST
-import kotlinx.android.synthetic.main.activity_add_invoice.edMaterialHSN
-import kotlinx.android.synthetic.main.activity_add_invoice.edMaterialQty
-import kotlinx.android.synthetic.main.activity_add_invoice.edMaterialRate
-import kotlinx.android.synthetic.main.activity_add_invoice.edQty
-import kotlinx.android.synthetic.main.activity_add_invoice.edRate
-import kotlinx.android.synthetic.main.activity_add_invoice.edSGST
-import kotlinx.android.synthetic.main.activity_add_invoice.edSubTotalAmount
-import kotlinx.android.synthetic.main.activity_add_invoice.edTotalAmount
-import kotlinx.android.synthetic.main.activity_add_invoice.edtMaterialDays
-import kotlinx.android.synthetic.main.activity_add_invoice.edtNote
-import kotlinx.android.synthetic.main.activity_add_invoice.edtTerms
-import kotlinx.android.synthetic.main.activity_add_invoice.lin_add_material
-import kotlinx.android.synthetic.main.activity_add_invoice.lin_add_user
-import kotlinx.android.synthetic.main.activity_add_invoice.root
-import kotlinx.android.synthetic.main.activity_add_invoice.spMaterialType
-import kotlinx.android.synthetic.main.activity_add_invoice.spUserType
-import kotlinx.android.synthetic.main.activity_add_invoice.view2
-import kotlinx.android.synthetic.main.activity_add_invoice.view7
-import kotlinx.android.synthetic.main.activity_add_quotation.*
-import kotlinx.android.synthetic.main.activity_add_quotation.tilCGST
-import kotlinx.android.synthetic.main.activity_add_quotation.tilIGST
-import kotlinx.android.synthetic.main.activity_add_quotation.tilSGST
 import kotlinx.android.synthetic.main.row_dynamic_user.view.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 import org.json.JSONArray
@@ -121,8 +92,6 @@ class AddInvoiceActivity : BaseActivity() {
         }
         txtTitle.text = getString(R.string.invoice)
 
-
-
         edStartDate.setText(getCurrentDate())
         edEndDate.setText(getCurrentDate())
         btnAddUser.setOnClickListener { onAddField() }
@@ -184,7 +153,7 @@ class AddInvoiceActivity : BaseActivity() {
             val day = c.get(Calendar.DAY_OF_MONTH)
 
             val dpd = DatePickerDialog(
-                this,
+                this, R.style.DialogTheme,
                 { view, year, monthOfYear, dayOfMonth ->
 
                     var selectedMonth: String = ""
@@ -208,6 +177,10 @@ class AddInvoiceActivity : BaseActivity() {
                 day
             )
             dpd.show()
+            dpd.getButton(DatePickerDialog.BUTTON_NEGATIVE)
+                .setTextColor(getColorCompat(R.color.colorPrimary))
+            dpd.getButton(DatePickerDialog.BUTTON_POSITIVE)
+                .setTextColor(getColorCompat(R.color.colorPrimary))
         }
 
         edEndDate.setOnClickListener {
@@ -221,7 +194,7 @@ class AddInvoiceActivity : BaseActivity() {
             val day = c.get(Calendar.DAY_OF_MONTH)
 
             val dpd = DatePickerDialog(
-                this,
+                this, R.style.DialogTheme,
                 { view, year, monthOfYear, dayOfMonth ->
 
                     var selectedMonth: String = ""
@@ -245,6 +218,10 @@ class AddInvoiceActivity : BaseActivity() {
                 day
             )
             dpd.show()
+            dpd.getButton(DatePickerDialog.BUTTON_NEGATIVE)
+                .setTextColor(getColorCompat(R.color.colorPrimary))
+            dpd.getButton(DatePickerDialog.BUTTON_POSITIVE)
+                .setTextColor(getColorCompat(R.color.colorPrimary))
 
         }
 
@@ -321,7 +298,7 @@ class AddInvoiceActivity : BaseActivity() {
                 edtTerms.requestFocus()
             }
             edTotalAmount.isEmpty() -> {
-                root.showSnackBar("Select Staff")
+                root.showSnackBar("Select Item")
                 //  edTotalAmount.requestFocus()
             }
 
@@ -338,7 +315,7 @@ class AddInvoiceActivity : BaseActivity() {
         view2.setOnClickListener {
             SearchableDialog(this@AddInvoiceActivity,
                 itemUserType!!,
-                getString(R.string.staff_selection), { item, _ ->
+                getString(R.string.select_item), { item, _ ->
                     spUserType.setSelection(item.id.toInt())
                 }).show()
         }
@@ -406,9 +383,9 @@ class AddInvoiceActivity : BaseActivity() {
                                                 userTypeListArray!!.get(position - 1).usertypeID.toString()
                                             edHSN.setText(quotationIteam?.item?.user!!.get(i)!!.hSNNo)
                                             val qua =
-                                                quotationIteam?.item?.user!!.get(i)!!.qty!!.toInt() * quotationIteam?.item?.user!!.get(
+                                                quotationIteam?.item?.user!!.get(i)!!.qty!!.toBigDecimal() * quotationIteam?.item?.user!!.get(
                                                     i
-                                                )!!.days!!.toInt()
+                                                )!!.days!!.toBigDecimal()
                                             edQty.setText(qua.toString())
                                             edRate.setText(quotationIteam?.item?.user!!.get(i)!!.rate)
 
@@ -432,9 +409,9 @@ class AddInvoiceActivity : BaseActivity() {
                                         userTypeListArray!!.get(position - 1).usertypeID.toString()
                                     edHSN.setText(quotationIteam?.item?.user!!.get(i)!!.hSNNo)
                                     val qua =
-                                        quotationIteam?.item?.user!!.get(i)!!.qty!!.toInt() * quotationIteam?.item?.user!!.get(
+                                        quotationIteam?.item?.user!!.get(i)!!.qty!!.toBigDecimal() * quotationIteam?.item?.user!!.get(
                                             i
-                                        )!!.days!!.toInt()
+                                        )!!.days!!.toBigDecimal()
                                     edQty.setText(qua.toString())
                                     edRate.setText(quotationIteam?.item?.user!!.get(i)!!.rate)
 
@@ -461,13 +438,14 @@ class AddInvoiceActivity : BaseActivity() {
         var edHSNChild: EditText = rowView.findViewById(R.id.edHSNChild)
         var edQtyChild: EditText = rowView.findViewById(R.id.edQtyChild)
         var edRateChild: EditText = rowView.findViewById(R.id.edRateChild)
+        var txtItemAmount: TextView = rowView.findViewById(R.id.txtItemTotalAmount)
         edRateChild.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
         var edtChildDays: EditText = rowView.findViewById(R.id.edtChildDays)
         var txtUserTitle: TextView = rowView.findViewById(R.id.txtUserTitle)
         var til22: TextInputLayout = rowView.findViewById(R.id.til22)
         edtChildDays.setText("1")
         til22.invisible()
-        txtUserTitle.setText(getString(R.string.staff))
+        txtUserTitle.setText(getString(R.string.item))
         // userTypeChildId.add("")
         // Log.e("TAG", "onAddField:      "+userTypeChildId.size )
 
@@ -531,9 +509,9 @@ class AddInvoiceActivity : BaseActivity() {
                                             //  usertypeChildId =quotationIteam?.item?.user!!.get(i)!!.usertypeID.toString()
                                             edHSNChild.setText(quotationIteam?.item?.user!!.get(i)!!.hSNNo)
                                             val qua =
-                                                quotationIteam?.item?.user!!.get(i)!!.qty!!.toInt() * quotationIteam?.item?.user!!.get(
+                                                quotationIteam?.item?.user!!.get(i)!!.qty!!.toBigDecimal() * quotationIteam?.item?.user!!.get(
                                                     i
-                                                )!!.days!!.toInt()
+                                                )!!.days!!.toBigDecimal()
                                             edQtyChild.setText(qua.toString())
                                             edRateChild.setText(quotationIteam?.item?.user!!.get(i)!!.rate)
 
@@ -558,9 +536,9 @@ class AddInvoiceActivity : BaseActivity() {
                                     //  usertypeChildId =quotationIteam?.item?.user!!.get(i)!!.usertypeID.toString()
                                     edHSNChild.setText(quotationIteam?.item?.user!!.get(i)!!.hSNNo)
                                     val qua =
-                                        quotationIteam?.item?.user!!.get(i)!!.qty!!.toInt() * quotationIteam?.item?.user!!.get(
+                                        quotationIteam?.item?.user!!.get(i)!!.qty!!.toBigDecimal() * quotationIteam?.item?.user!!.get(
                                             i
-                                        )!!.days!!.toInt()
+                                        )!!.days!!.toBigDecimal()
                                     edQtyChild.setText(qua.toString())
                                     edRateChild.setText(quotationIteam?.item?.user!!.get(i)!!.rate)
 
@@ -581,6 +559,13 @@ class AddInvoiceActivity : BaseActivity() {
         edRateChild.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 setUpdatedTotal()
+
+                if (!edQtyChild.isEmpty() && !edRateChild.isEmpty()) {
+                    txtItemAmount.text = getString(R.string.RS) + " " + (edQtyChild.getValue()
+                        .toFloat() * edRateChild.getValue().toFloat()).toString()
+                } else {
+                    txtItemTotalAmount.text = getString(R.string.RS) + " 0"
+                }
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -592,6 +577,13 @@ class AddInvoiceActivity : BaseActivity() {
         edQtyChild.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 setUpdatedTotal()
+
+                if (!edQtyChild.isEmpty() && !edRateChild.isEmpty()) {
+                    txtItemAmount.text = getString(R.string.RS) + " " + (edQtyChild.getValue()
+                        .toFloat() * edRateChild.getValue().toFloat()).toString()
+                } else {
+                    txtItemTotalAmount.text = getString(R.string.RS) + " 0"
+                }
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -606,7 +598,7 @@ class AddInvoiceActivity : BaseActivity() {
             SearchableDialog(
                 this@AddInvoiceActivity,
                 itemUserType!!,
-                getString(R.string.staff_selection),
+                getString(R.string.select_item),
                 { item, _ -> spUserTypeChild.setSelection(item.id.toInt()) }).show()
         }
 
@@ -635,11 +627,11 @@ class AddInvoiceActivity : BaseActivity() {
                 override fun onSuccess(response: UserTypeListModel) {
                     userTypeListArray!!.addAll(response.data)
                     var myList: MutableList<SearchableItem> = mutableListOf()
-                    userTypeNameList!!.add(getString(R.string.staff_selection))
+                    userTypeNameList!!.add(getString(R.string.select_item))
                     myList.add(
                         SearchableItem(
                             0,
-                            getString(R.string.staff_selection)
+                            getString(R.string.select_item)
                         )
                     )
 
@@ -879,9 +871,9 @@ class AddInvoiceActivity : BaseActivity() {
                                     edMaterialHSN.setText(quotationIteam?.item?.material!!.get(i)!!.hSNNo)
 
                                     val qua =
-                                        quotationIteam?.item?.material!!.get(i)!!.qty!!.toInt() * quotationIteam?.item?.material!!.get(
+                                        quotationIteam?.item?.material!!.get(i)!!.qty!!.toBigDecimal() * quotationIteam?.item?.material!!.get(
                                             i
-                                        )!!.days!!.toInt()
+                                        )!!.days!!.toBigDecimal()
                                     edMaterialQty.setText(qua.toString())
                                     edMaterialRate.setText(quotationIteam?.item?.material!!.get(i)!!.rate)
                                 }
@@ -907,6 +899,7 @@ class AddInvoiceActivity : BaseActivity() {
         var edHSNChild: EditText = rowView.findViewById(R.id.edHSNChild)
         var edQtyChild: EditText = rowView.findViewById(R.id.edQtyChild)
         var edRateChild: EditText = rowView.findViewById(R.id.edRateChild)
+        var txtMaterialAmount: TextView = rowView.findViewById(R.id.txtItemTotalAmount)
         edRateChild.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
         var edDaysChild: EditText = rowView.findViewById(R.id.edtChildDays)
         var til22: TextInputLayout = rowView.findViewById(R.id.til22)
@@ -1032,6 +1025,12 @@ class AddInvoiceActivity : BaseActivity() {
         edRateChild.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 setUpdatedTotal()
+                if (!edQtyChild.isEmpty() && !edRateChild.isEmpty()) {
+                    txtMaterialAmount.text = getString(R.string.RS) + " " + (edQtyChild.getValue()
+                        .toFloat() * edRateChild.getValue().toFloat()).toString()
+                } else {
+                    txtItemTotalAmount.text = getString(R.string.RS) + " 0"
+                }
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -1043,6 +1042,12 @@ class AddInvoiceActivity : BaseActivity() {
         edQtyChild.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 setUpdatedTotal()
+                if (!edQtyChild.isEmpty() && !edRateChild.isEmpty()) {
+                    txtMaterialAmount.text = getString(R.string.RS) + " " + (edQtyChild.getValue()
+                        .toFloat() * edRateChild.getValue().toFloat()).toString()
+                } else {
+                    txtItemTotalAmount.text = getString(R.string.RS) + " 0"
+                }
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -1169,8 +1174,6 @@ class AddInvoiceActivity : BaseActivity() {
                                         lin_add_material.getChildAt(iteam - 1).spUserTypeChild.setSelection(
                                             i + 1
                                         )
-
-
                                     }
                                 }
                             }
@@ -1202,6 +1205,9 @@ class AddInvoiceActivity : BaseActivity() {
 
         if (!edQty.isEmpty() && !edRate.isEmpty()) {
             TotalAmount = TotalAmount + (edQty.getValue().toFloat() * edRate.getValue().toFloat())
+            txtItemTotalAmount.text =
+                getString(R.string.RS) + " " + (edQty.getValue().toFloat() * edRate.getValue()
+                    .toFloat()).toString()
         }
 
         if (lin_add_user.childCount > 0) {
@@ -1224,7 +1230,8 @@ class AddInvoiceActivity : BaseActivity() {
             TotalAmount =
                 TotalAmount + (edMaterialQty.getValue().toFloat() * edMaterialRate.getValue()
                     .toFloat()) * edtMaterialDays.getValue().toFloat()
-
+            txtMaterialTotalAmount.text = getString(R.string.RS) + " " + (edMaterialQty.getValue()
+                .toFloat() * edMaterialRate.getValue().toFloat()).toString()
         }
 
         if (lin_add_material.childCount > 0) {
@@ -1260,6 +1267,16 @@ class AddInvoiceActivity : BaseActivity() {
             IGST = IGST + ((TotalAmount * session.configData.data?.iGST!!.toFloat()) / 100)
 
             edTotalAmount.setText(df.format(TotalAmount + CGST + SGST + IGST))
+
+
+            if (!quotationIteam?.companyID.equals("1")) {
+                CGST = 0f
+                SGST = 0f
+                IGST = 0f
+                tilIGST.invisible()
+                tilCGST.invisible()
+                tilSGST.invisible()
+            }
             if (quotationIteam?.stateID?.toInt() == 12) {
                 edCGST.setText(df.format(CGST))
                 edSGST.setText(df.format(SGST))
@@ -1414,7 +1431,7 @@ class AddInvoiceActivity : BaseActivity() {
 
         if (jsonArray1.length() == 0) {
             hideProgressbar()
-            root.showSnackBar("staff not selected....")
+            root.showSnackBar("Item not selected....")
             return
         }
 
@@ -1442,6 +1459,4 @@ class AddInvoiceActivity : BaseActivity() {
             }).addTo(autoDisposable)
 
     }
-
-
 }

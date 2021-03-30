@@ -1,6 +1,7 @@
-package com.tcc.app.modal
+package com.rm.enterprise.modal
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class PaymentListModel(
 
@@ -40,6 +41,9 @@ data class PaymentListDataItem(
     @field:SerializedName("GSTAmount")
     val gSTAmount: String? = null,
 
+    @field:SerializedName("RemainingGSTPayment")
+    val remainingGSTPayment: String? = null,
+
     @field:SerializedName("InvoiceNo")
     val invoiceNo: String? = null,
 
@@ -48,6 +52,9 @@ data class PaymentListDataItem(
 
     @field:SerializedName("PaymentAmount")
     val paymentAmount: String? = null,
+
+    @field:SerializedName("RemainingPayment")
+    val remainingPayment: String? = null,
 
     @field:SerializedName("Rno")
     val rno: String? = null,
@@ -69,4 +76,4 @@ data class PaymentListDataItem(
 
     @field:SerializedName("PaymentMode")
     val paymentMode: String? = null
-)
+) : Serializable

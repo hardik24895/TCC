@@ -332,6 +332,7 @@
 
                         <com.tcc.app.customview.RadioButtonReguler
                             android:id="@+id/rb1725"
+                            app:buttonTint="@color/colorPrimary"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/_30sdp"
                             android:text="17-25" />
@@ -339,11 +340,13 @@
                         <com.tcc.app.customview.RadioButtonReguler
                             android:id="@+id/rb2540"
                             android:layout_width="wrap_content"
+                            app:buttonTint="@color/colorPrimary"
                             android:layout_height="@dimen/_30sdp"
                             android:text="25-40" />
 
                         <com.tcc.app.customview.RadioButtonReguler
                             android:id="@+id/rb4060"
+                            app:buttonTint="@color/colorPrimary"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/_30sdp"
                             android:text="40-60" />
@@ -351,6 +354,7 @@
                         <com.tcc.app.customview.RadioButtonReguler
                             android:id="@+id/rb60"
                             android:layout_width="wrap_content"
+                            app:buttonTint="@color/colorPrimary"
                             android:layout_height="@dimen/_30sdp"
                             android:text="60+" />
                     </RadioGroup>

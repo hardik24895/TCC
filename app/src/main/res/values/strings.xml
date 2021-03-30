@@ -136,6 +136,7 @@
     <string name="option_camera">Camera</string>
     <string name="option_gallery">Gallery</string>
     <string name="select_usertype">Select UserType</string>
+    <string name="select_training">Select Training</string>
     <string name="company_name_indu_name">Company Name/Individual Name</string>
     <string name="address_line1">Address Line 1</string>
     <string name="address_line2">Address Line 2</string>
@@ -252,4 +253,11 @@
     <string name="account_holder_name">Account Holder Name</string>
     <string name="all">All</string>
     <string name="show_server_error">Server Connetion Failed.</string>
+    <string name="adhaar_card">Adhaar Card</string>
+    <string name="city">City</string>
+    <string name="user_type">User Type</string>
+    <string name="joining_date">Joining Date</string>
+    <string name="item_total">Item Total</string>
+    <string name="item">Item</string>
+    <string name="select_item">Select Item</string>
 </resources>

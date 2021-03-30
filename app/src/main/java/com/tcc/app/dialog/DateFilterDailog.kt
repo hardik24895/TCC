@@ -60,8 +60,8 @@ class DateFilterDailog(context: Context) : BlurDialogFragment(), LifecycleOwner 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         populateData()
-        dialog?.setCancelable(false)
-        dialog?.setCanceledOnTouchOutside(false)
+        dialog?.setCancelable(true)
+        dialog?.setCanceledOnTouchOutside(true)
         btnSubmit.setOnClickListener {
             listener.onItemCLicked(edtStartDate.getValue(), edtEndDate.getValue())
             dismissAllowingStateLoss()

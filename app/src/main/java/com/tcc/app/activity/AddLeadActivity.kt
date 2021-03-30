@@ -104,23 +104,28 @@ class AddLeadActivity : BaseActivity(), SiteAddressAdapter.OnItemSelected {
 
 
             if (intent.hasExtra(Constant.DATA_SITE)) {
+
                 val gson = Gson()
                 val type: Type = object : TypeToken<List<SitesItem?>?>() {}.type
                 val siteList: List<SitesItem> =
                     gson.fromJson(intent.getStringExtra(Constant.DATA_SITE), type)
                 list.addAll(siteList)
-                list.add(siteList.get(0))
-                bottomSheetBehavior = BottomSheetBehavior.from(bottom)
 
-                txtExistSite.setOnClickListener {
-                    if (bottomSheetBehavior!!.state == BottomSheetBehavior.STATE_EXPANDED)
-                        bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_COLLAPSED
-                    else
-                        bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_EXPANDED
-                }
+                if (list.size > 0) {
+                    list.add(siteList.get(0))
+                    bottomSheetBehavior = BottomSheetBehavior.from(bottom)
 
-                setupRecyclerView()
-                txtExistSite.visible()
+                    txtExistSite.setOnClickListener {
+                        if (bottomSheetBehavior!!.state == BottomSheetBehavior.STATE_EXPANDED)
+                            bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_COLLAPSED
+                        else
+                            bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_EXPANDED
+                    }
+
+                    setupRecyclerView()
+                    txtExistSite.visible()
+                } else
+                    txtExistSite.invisible()
             } else {
                 txtExistSite.invisible()
 
@@ -250,7 +255,7 @@ class AddLeadActivity : BaseActivity(), SiteAddressAdapter.OnItemSelected {
         edtEmail.setText(leadItem?.emailID.toString())
         edtMobile.setText(leadItem?.mobileNo.toString())
         edtAddress.setText(leadItem?.address.toString())
-        edtAddress1.setText(leadItem?.address.toString())
+        edtAddress1.setText(leadItem?.address2.toString())
         edtPincode.setText(leadItem?.pinCode.toString())
         stateID = leadItem?.stateID.toString()
         cityID = leadItem?.cityID.toString()
@@ -427,13 +432,14 @@ class AddLeadActivity : BaseActivity(), SiteAddressAdapter.OnItemSelected {
             cityID == "-1" -> {
                 root.showSnackBar("City Not Found")
             }
-            inWorkingd.isVisible && edtWorkingHour.isEmpty() -> {
-                root.showSnackBar("Enter Working Hours")
-                edtWorkingHour.requestFocus()
-            }
+
             inWorkingh.isVisible && edtWorkingDays.isEmpty() -> {
                 root.showSnackBar("Enter Working Days")
                 edtWorkingDays.requestFocus()
+            }
+            inWorkingd.isVisible && edtWorkingHour.isEmpty() -> {
+                root.showSnackBar("Enter Working Hours")
+                edtWorkingHour.requestFocus()
             }
 
             else -> {
@@ -533,7 +539,6 @@ class AddLeadActivity : BaseActivity(), SiteAddressAdapter.OnItemSelected {
                 jsonBody.put("WorkingHours", "1")
                 jsonBody.put("WorkingDays", "1")
             }
-
             jsonBody.put("StartDate", formatDateFromString(edtSdate.getValue()))
             jsonBody.put("EndDate", formatDateFromString(edtEdate.getValue()))
             jsonBody.put("ProposedDate", formatDateFromString(edtPdate.getValue()))

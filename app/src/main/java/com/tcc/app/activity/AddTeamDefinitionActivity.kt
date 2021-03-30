@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import com.akexorcist.snaptimepicker.SnapTimePickerDialog
+import com.akexorcist.snaptimepicker.TimeValue
 import com.tcc.app.R
 import com.tcc.app.extention.*
 import com.tcc.app.modal.AvailableEmployeeDataItem
@@ -29,6 +30,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import tech.hibk.searchablespinnerlibrary.SearchableDialog
 import tech.hibk.searchablespinnerlibrary.SearchableItem
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -56,7 +58,16 @@ class AddTeamDefinitionActivity : BaseActivity() {
         if (intent.hasExtra(Constant.DATA)) {
             quotationItem = intent.getSerializableExtra(Constant.DATA) as QuotationItem
 
+            edtCompanyName.setText(quotationItem!!.siteName)
+            edtEstimateno.setText(quotationItem!!.estimateNo)
+            edStartTime.setText(quotationItem!!.startTime)
+            edEndTime.setText(quotationItem!!.endTime)
         }
+
+        if (edStartTime.getValue().isEmpty())
+            edStartTime.setText("09:30")
+        if (edEndTime.getValue().isEmpty())
+            edEndTime.setText("18:30")
         imgBack.visible()
         imgBack.setOnClickListener {
             finish()
@@ -75,7 +86,7 @@ class AddTeamDefinitionActivity : BaseActivity() {
         edStartDate.setOnClickListener {
 
             val dpd = DatePickerDialog(
-                this@AddTeamDefinitionActivity,
+                this@AddTeamDefinitionActivity, R.style.DialogTheme,
                 { view, year, monthOfYear, dayOfMonth ->
 
                     var selectedMonth: String = ""
@@ -100,14 +111,20 @@ class AddTeamDefinitionActivity : BaseActivity() {
                 month,
                 day
             )
+
             dpd.show()
+            dpd.getButton(DatePickerDialog.BUTTON_NEGATIVE)
+                .setTextColor(getColorCompat(R.color.colorPrimary))
+            dpd.getButton(DatePickerDialog.BUTTON_POSITIVE)
+                .setTextColor(getColorCompat(R.color.colorPrimary))
 
         }
+
 
         edEndDate.setOnClickListener {
 
             val dpd = DatePickerDialog(
-                this@AddTeamDefinitionActivity,
+                this@AddTeamDefinitionActivity, R.style.DialogTheme,
                 { view, year, monthOfYear, dayOfMonth ->
 
                     var selectedMonth: String = ""
@@ -132,7 +149,15 @@ class AddTeamDefinitionActivity : BaseActivity() {
                 month,
                 day
             )
+            val f = SimpleDateFormat("dd/MM/yyyy")
+            val d = f.parse(edStartDate.getValue())
+
+            dpd.getDatePicker().setMinDate(d.time)
             dpd.show()
+            dpd.getButton(DatePickerDialog.BUTTON_NEGATIVE)
+                .setTextColor(getColorCompat(R.color.colorPrimary))
+            dpd.getButton(DatePickerDialog.BUTTON_POSITIVE)
+                .setTextColor(getColorCompat(R.color.colorPrimary))
         }
 
         rgType.setOnCheckedChangeListener({ group, checkedId ->
@@ -149,110 +174,137 @@ class AddTeamDefinitionActivity : BaseActivity() {
                 onAddField(userName)
                 spUserType.setSelection(0)
             } else {
-                root.showSnackBar("Please select Staff")
+                root.showSnackBar("Please select Item")
             }
         }
         btnSubmit.setOnClickListener { AddTeamDefinitionList() }
 
         edStartTime.setOnClickListener {
-            SnapTimePickerDialog.Builder().setThemeColor(R.color.colorPrimary).apply {
-                setTitle(R.string.start_time)
-            }.build().apply {
-                setListener { hour, minute ->
-                    Logger.d("time", hour.toString() + ":" + minute.toString())
-                    var edStartTime1: EditText = findViewById(R.id.edStartTime)
-                    edStartTime1.setText(
-                        convertIntoTowDigit(hour) + ":" + convertIntoTowDigit(
-                            minute
-                        )
-                    )
 
-                }
-            }.show(supportFragmentManager, "")
+            val namepass: Array<String> = edStartTime.getValue().split(":").toTypedArray()
+            val hours = namepass[0]
+            val minut = namepass[1]
+
+
+            SnapTimePickerDialog.Builder()
+                .setPreselectedTime(TimeValue(hours.toInt(), minut.toInt()))
+                .setThemeColor(R.color.colorPrimary).apply {
+                    setTitle(R.string.start_time)
+                }.build().apply {
+                    setListener { hour, minute ->
+                        Logger.d("time", hour.toString() + ":" + minute.toString())
+                        var edStartTime1: EditText = findViewById(R.id.edStartTime)
+                        edStartTime1.setText(
+                            convertIntoTowDigit(hour) + ":" + convertIntoTowDigit(
+                                minute
+                            )
+                        )
+
+                    }
+                }.show(supportFragmentManager, "")
 
         }
         edEndTime.setOnClickListener {
-            SnapTimePickerDialog.Builder().setThemeColor(R.color.colorPrimary).apply {
-                setTitle(R.string.end_time)
-            }.build().apply {
-                setListener { hour, minute ->
-                    Logger.d("time", hour.toString() + ":" + minute.toString())
 
 
-                    var edEndTime1: EditText = findViewById(R.id.edEndTime)
-                    edEndTime1.setText(convertIntoTowDigit(hour) + ":" + convertIntoTowDigit(minute))
-                }
-            }.show(supportFragmentManager, "")
+            val namepass: Array<String> = edEndTime.getValue().split(":").toTypedArray()
+            val hours = namepass[0]
+            val minut = namepass[1]
+            SnapTimePickerDialog.Builder()
+                .setPreselectedTime(TimeValue(hours.toInt(), minut.toInt()))
+                .setThemeColor(R.color.colorPrimary).apply {
+                    setTitle(R.string.end_time)
+                }.build().apply {
+                    setListener { hour, minute ->
+                        Logger.d("time", hour.toString() + ":" + minute.toString())
+
+
+                        var edEndTime1: EditText = findViewById(R.id.edEndTime)
+                        edEndTime1.setText(
+                            convertIntoTowDigit(hour) + ":" + convertIntoTowDigit(
+                                minute
+                            )
+                        )
+                    }
+                }.show(supportFragmentManager, "")
 
         }
     }
 
     private fun AddTeamDefinitionList() {
-        showProgressbar()
-        var result = ""
 
-        try {
-            val jsonObj = JSONObject()
-            val jsonArray = JSONArray()
+        val jsonObj = JSONObject()
+        val jsonArray = JSONArray()
+        if (!userId.equals("-1")) {
             jsonObj.put("EmployeeID", userId)
             jsonArray.put(jsonObj)
-
-
-            for (item in selectedArrayList.indices) {
-
-
-                val jsonObj1 = JSONObject()
-                jsonObj1.put("EmployeeID", selectedArrayList.get(item).userID)
-                jsonArray.put(jsonObj1)
-            }
-
-
-            val jsonBody = JSONObject()
-
-            var id: Int = rgType.checkedRadioButtonId
-            val radio: RadioButton = findViewById(id)
-
-
-            jsonBody.put("UserID", session.user.data?.userID)
-            jsonBody.put("SitesID", quotationItem?.sitesID)
-            jsonBody.put("QuotationID", quotationItem?.quotationID)
-            jsonBody.put("Type", radio.text)
-            jsonBody.put("StartDate", formatDateFromString(edStartDate.getValue()))
-            jsonBody.put("EndDate", formatDateFromString(edEndDate.getValue()))
-            jsonBody.put("StartTime", formatDateFromString(edStartTime.getValue()))
-            jsonBody.put("EndTime", formatDateFromString(edEndTime.getValue()))
-            jsonBody.put("UserList", jsonArray)
-
-            result = Networking.setParentJsonData(Constant.METHOD_ADD_TEAM_DEFINITION, jsonBody)
-
-        } catch (e: JSONException) {
-            e.printStackTrace()
         }
-        Networking
-            .with(this@AddTeamDefinitionActivity)
-            .getServices()
-            .AddTeamDefinition(Networking.wrapParams(result))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeWith(object : CallbackObserver<CommonAddModal>() {
-                override fun onSuccess(response: CommonAddModal) {
-                    hideProgressbar()
-                    if (response.error == 200) {
-                        root.showSnackBar(response.message.toString())
-                        finish()
-                    } else {
-                        showAlert(response.message.toString())
+
+
+        for (item in selectedArrayList.indices) {
+            val jsonObj1 = JSONObject()
+            jsonObj1.put("EmployeeID", selectedArrayList.get(item).userID)
+            jsonArray.put(jsonObj1)
+        }
+
+
+
+        if (jsonArray.length() == 0) {
+            root.showSnackBar("Please Select Atleast 1 Employee")
+
+        } else {
+
+            showProgressbar()
+            var result = ""
+
+            try {
+
+
+                val jsonBody = JSONObject()
+
+                var id: Int = rgType.checkedRadioButtonId
+                val radio: RadioButton = findViewById(id)
+                jsonBody.put("UserID", session.user.data?.userID)
+                jsonBody.put("SitesID", quotationItem?.sitesID)
+                jsonBody.put("QuotationID", quotationItem?.quotationID)
+                jsonBody.put("Type", radio.text)
+                jsonBody.put("StartDate", formatDateFromString(edStartDate.getValue()))
+                jsonBody.put("EndDate", formatDateFromString(edEndDate.getValue()))
+                jsonBody.put("StartTime", formatDateFromString(edStartTime.getValue()))
+                jsonBody.put("EndTime", formatDateFromString(edEndTime.getValue()))
+                jsonBody.put("UserList", jsonArray)
+
+                result = Networking.setParentJsonData(Constant.METHOD_ADD_TEAM_DEFINITION, jsonBody)
+
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+            Networking
+                .with(this@AddTeamDefinitionActivity)
+                .getServices()
+                .AddTeamDefinition(Networking.wrapParams(result))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(object : CallbackObserver<CommonAddModal>() {
+                    override fun onSuccess(response: CommonAddModal) {
+                        hideProgressbar()
+                        if (response.error == 200) {
+                            root.showSnackBar(response.message.toString())
+                            finish()
+                        } else {
+                            showAlert(response.message.toString())
+                        }
+
                     }
 
-                }
+                    override fun onFailed(code: Int, message: String) {
+                        hideProgressbar()
+                        // showAlert(message)
+                        showAlert(getString(R.string.show_server_error))
+                    }
 
-                override fun onFailed(code: Int, message: String) {
-                    hideProgressbar()
-                    // showAlert(message)
-                    showAlert(getString(R.string.show_server_error))
-                }
-
-            }).addTo(autoDisposable)
+                }).addTo(autoDisposable)
+        }
 
 
     }
@@ -311,8 +363,8 @@ class AddTeamDefinitionActivity : BaseActivity() {
                         userTypeListArray.addAll(response.data)
                         var myList: MutableList<SearchableItem> = mutableListOf()
 
-                        userTypeNameList!!.add("Select Staff")
-                        myList.add(SearchableItem(0, "Select Staff"))
+                        userTypeNameList!!.add("Select Item")
+                        myList.add(SearchableItem(0, "Select Item"))
 
                         for (items in response.data.indices) {
                             userTypeNameList.add(
@@ -365,7 +417,7 @@ class AddTeamDefinitionActivity : BaseActivity() {
                 var tempuserTypeNameList: ArrayList<String> = ArrayList()
                 var myList: MutableList<SearchableItem> = mutableListOf()
 
-                myList.add(SearchableItem(0, "Select Staff"))
+                myList.add(SearchableItem(0, "Select Item"))
 
                 for (items in userTypeListArray.indices) {
                     var isAdd: Boolean? = null
@@ -425,7 +477,7 @@ class AddTeamDefinitionActivity : BaseActivity() {
                     if (position == 0) {
                         userId = "-1"
                     } else {
-                        userId = userTypeListArray.get(position).userID.toString()
+                        userId = userTypeListArray.get(position - 1).userID.toString()
                     }
 
 
