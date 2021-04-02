@@ -635,7 +635,6 @@ class AddInvoiceActivity : BaseActivity() {
                         )
                     )
 
-
                     for (items in response.data.indices) {
                         userTypeNameList!!.add(response.data.get(items).usertype.toString())
                         myList.add(

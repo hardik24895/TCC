@@ -401,7 +401,7 @@
                         android:layout_marginBottom="@dimen/_8sdp"
                         android:paddingHorizontal="@dimen/_10sdp"
                         android:paddingVertical="@dimen/_5sdp"
-                        android:text="@string/add_user"
+                        android:text="@string/add_item"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="1.0"
