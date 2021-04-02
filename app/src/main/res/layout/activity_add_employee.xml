@@ -17,8 +17,10 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar">
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintVertical_bias="1.0">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -516,7 +518,7 @@
 
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/linCity"
+                        android:id="@+id/linRole"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_12sdp"
@@ -525,6 +527,46 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/linlayUserType">
+
+
+                        <tech.hibk.searchablespinnerlibrary.SearchableSpinner
+                            android:id="@+id/spRole"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:padding="@dimen/_5sdp"
+                            app:cancelButtonColor="@color/black"
+                            app:cancelButtontext="CLOSE"
+                            app:dialogTitle="@string/select_role"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:nothingSelectedText="@string/select_role"
+                            app:onlyLightTheme="true" />
+
+                        <View
+                            android:id="@+id/viewRole"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/spRole"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/spRole" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/linCity"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:background="@drawable/bg_spinner"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/linRole">
 
 
                         <tech.hibk.searchablespinnerlibrary.SearchableSpinner
@@ -598,9 +640,9 @@
                 style="@style/CustomPressButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_24ssp"
                 android:layout_marginTop="@dimen/_18sdp"
                 android:layout_marginBottom="@dimen/_12sdp"
-                android:layout_marginHorizontal="@dimen/_24ssp"
                 android:text="@string/submit"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

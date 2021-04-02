@@ -73,6 +73,10 @@ interface APIInterface {
     @POST("service/")
     fun getUserTypeList(@Body body: RequestBody): Observable<Response<UserTypeListModel>>
 
+
+    @POST("service/")
+    fun getRoleList(@Body body: RequestBody): Observable<Response<RoleListModel>>
+
     @POST("service/")
     fun getConfigData(@Body body: RequestBody): Observable<Response<ConfigDataModel>>
 
@@ -109,7 +113,8 @@ interface APIInterface {
         @Part("AccountNo") AccountNo: RequestBody,
         @Part("IFSCCode") IFSCCode: RequestBody,
         @Part("GSTNo") GSTNo: RequestBody,
-        @Part("CityID") CityID: RequestBody
+        @Part("CityID") CityID: RequestBody,
+        @Part("RoleID") RoleID: RequestBody
     ): Observable<Response<CommonAddModal>>
 
 

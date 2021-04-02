@@ -261,4 +261,5 @@
     <string name="item">Item</string>
     <string name="select_item">Select Item</string>
     <string name="add_item">Add Item</string>
+    <string name="select_role">Select Role</string>
 </resources>

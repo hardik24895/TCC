@@ -23,6 +23,10 @@ import com.yalantis.ucrop.UCrop
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_add_employee.*
+import kotlinx.android.synthetic.main.activity_add_employee.btnSubmit
+import kotlinx.android.synthetic.main.activity_add_employee.edtEmail
+import kotlinx.android.synthetic.main.activity_add_employee.root
+import kotlinx.android.synthetic.main.activity_forgot_password.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -39,15 +43,24 @@ class AddEmployeeActivity : BaseActivity() {
     var resultUriProfile: Uri? = null
     var resultUriAdhar: Uri? = null
     var resultUriOfferLetter: Uri? = null
+
     var cityNameList: ArrayList<String>? = null
-    var cityListArray: ArrayList<CityDataItem>? = null
-    var userTypeNameList: ArrayList<String>? = null
-    var userTypeListArray: ArrayList<UserTypeDataItem>? = null
-    var adapterCity: ArrayAdapter<String>? = null
     var itemCity: List<SearchableItem>? = null
-    var itemUserType: List<SearchableItem>? = null
-    var usertypeId: String = ""
+    var adapterCity: ArrayAdapter<String>? = null
+    var cityListArray: ArrayList<CityDataItem>? = null
     var cityId: String = ""
+
+    var userTypeNameList: ArrayList<String>? = null
+    var itemUserType: List<SearchableItem>? = null
+    var userTypeListArray: ArrayList<UserTypeDataItem>? = null
+    var adapterUserType: ArrayAdapter<String>? = null
+    var usertypeId: String = ""
+
+    var RoleNameList: ArrayList<String>? = null
+    var itemRole: List<SearchableItem>? = null
+    var roleListArray: ArrayList<RoleDataItem>? = null
+    var adapterRole: ArrayAdapter<String>? = null
+    var roleId: String = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,6 +75,8 @@ class AddEmployeeActivity : BaseActivity() {
         cityListArray = ArrayList()
         userTypeNameList = ArrayList()
         userTypeListArray = ArrayList()
+        roleListArray = ArrayList()
+        RoleNameList = ArrayList()
 
         txtTitle.text = getString(R.string.employee)
         edtJoiningDate.setText(getCurrentDate())
@@ -70,6 +85,7 @@ class AddEmployeeActivity : BaseActivity() {
         }
         getCityList()
         getUserTypeList()
+        getRoleList()
 
         ivUpload.setOnClickListener {
 
@@ -202,6 +218,35 @@ class AddEmployeeActivity : BaseActivity() {
                 }).show()
         }
 
+
+        spRole.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                if (position != -1 && roleListArray!!.size > position) {
+                    roleId = roleListArray!!.get(position).roleID.toString()
+
+                }
+
+            }
+        }
+
+
+        viewRole.setOnClickListener {
+
+            SearchableDialog(this@AddEmployeeActivity,
+                itemRole!!, getString(R.string.select_role), { item, _ ->
+                    spRole.setSelection(item.id.toInt())
+                }).show()
+        }
+
         btnSubmit.setOnClickListener {
             validation()
         }
@@ -230,11 +275,14 @@ class AddEmployeeActivity : BaseActivity() {
                 root.showSnackBar("Enter Last Name")
                 edtLastName.requestFocus()
             }
-            edtEmail.length() > 0 -> {
-                if (!isValidEmail(edtEmail.getValue())) {
-                    root.showSnackBar("Enter valid email")
-                    edtEmail.requestFocus()
-                }
+            edtEmail.isEmpty() -> {
+                root.showSnackBar("Enter Email")
+                edtEmail.requestFocus()
+            }
+
+            !isValidEmail(edtEmail.getValue()) -> {
+                root.showSnackBar("Enter Valid Email")
+                edtEmail.requestFocus()
             }
             edtMobile.isEmpty() -> {
                 root.showSnackBar("Enter Mobile No.")
@@ -275,10 +323,7 @@ class AddEmployeeActivity : BaseActivity() {
                     root.showSnackBar("Enter Valid GST No.")
                     edtGST.requestFocus()
                 }
-
-
             }
-
 
             else -> {
                 AddEmployee()
@@ -385,6 +430,8 @@ class AddEmployeeActivity : BaseActivity() {
         try {
             val jsonBody = JSONObject()
             jsonBody.put("StateID", "-1")
+            jsonBody.put("IsUserType", "1")
+            jsonBody.put("ServiceID", "-1")
 
             result = Networking.setParentJsonData(Constant.METHOD_USERTYPE_LIST, jsonBody)
 
@@ -408,12 +455,61 @@ class AddEmployeeActivity : BaseActivity() {
                     }
                     itemUserType = myList
 
-                    adapterCity = ArrayAdapter(
+                    adapterUserType = ArrayAdapter(
                         this@AddEmployeeActivity,
                         R.layout.custom_spinner_item,
                         userTypeNameList!!
                     )
-                    spUserType.setAdapter(adapterCity)
+                    spUserType.setAdapter(adapterUserType)
+
+
+                }
+
+                override fun onFailed(code: Int, message: String) {
+
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
+
+                }
+
+            }).addTo(autoDisposable)
+    }
+
+
+    fun getRoleList() {
+        var result = ""
+        try {
+            val jsonBody = JSONObject()
+
+
+            result = Networking.setParentJsonData(Constant.METHOD_ROLE_LIST, jsonBody)
+
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+        Networking
+            .with(this@AddEmployeeActivity)
+            .getServices()
+            .getRoleList(Networking.wrapParams(result))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : CallbackObserver<RoleListModel>() {
+                override fun onSuccess(response: RoleListModel) {
+                    roleListArray!!.addAll(response.data)
+                    var myList: MutableList<SearchableItem> = mutableListOf()
+                    for (items in response.data.indices) {
+                        RoleNameList!!.add(response.data.get(items).roleName.toString())
+                        myList.add(SearchableItem(items.toLong(), RoleNameList!!.get(items)))
+
+                    }
+                    itemRole = myList
+
+                    adapterRole = ArrayAdapter(
+                        this@AddEmployeeActivity,
+                        R.layout.custom_spinner_item,
+                        RoleNameList!!
+                    )
+                    spRole.setAdapter(adapterRole)
 
 
                 }
@@ -487,7 +583,8 @@ class AddEmployeeActivity : BaseActivity() {
                 RequestBody.create("text/plain".toMediaTypeOrNull(), edtAccountNumber.getValue()),
                 RequestBody.create("text/plain".toMediaTypeOrNull(), edtIfsc.getValue()),
                 RequestBody.create("text/plain".toMediaTypeOrNull(), edtGST.getValue()),
-                RequestBody.create("text/plain".toMediaTypeOrNull(), cityId)
+                RequestBody.create("text/plain".toMediaTypeOrNull(), cityId),
+                RequestBody.create("text/plain".toMediaTypeOrNull(), roleId)
 
             )//wrapParams Wraps parameters in to Request body Json format
             .subscribeOn(Schedulers.newThread())
@@ -497,6 +594,7 @@ class AddEmployeeActivity : BaseActivity() {
                     hideProgressbar()
                     if (response.error == 200) {
                         root.showSnackBar(response.message.toString())
+                        finish()
                     } else {
                         showAlert(response.message.toString())
                     }
