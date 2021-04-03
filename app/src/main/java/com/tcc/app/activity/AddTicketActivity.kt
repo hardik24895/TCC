@@ -150,6 +150,8 @@ class AddTicketActivity : BaseActivity() {
                 if (position != -1 && stateNameList.size > position) {
                     stateID = session.stetList.get(position).stateID.toString()
                     Logger.d("state", stateID)
+                    cityNameList!!.clear()
+                    cityListArray!!.clear()
                     getCityList(stateID)
                 }
 

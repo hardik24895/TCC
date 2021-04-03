@@ -21,6 +21,7 @@ import com.tcc.app.utils.Constant
 import com.tcc.app.utils.SessionManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.fragment_emp_attedance_wise_list.*
 import kotlinx.android.synthetic.main.reclerview_swipelayout.*
 import org.json.JSONException
 import org.json.JSONObject
@@ -51,30 +52,42 @@ class EmployeeAttendanceListFragment() : BaseFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        page = 1
-        list.clear()
-        hasNextPage = true
-        swipeRefreshLayout.isRefreshing = true
-        setupRecyclerView()
-        recyclerView.isLoading = true
-        getAttendenceList(page)
 
-        recyclerView.setLoadMoreListener(object : LoadMoreListener {
-            override fun onLoadMore() {
-                if (hasNextPage && !recyclerView.isLoading) {
-                    progressbar.visible()
-                    getAttendenceList(++page)
-                }
-            }
-        })
+        if (!session.roleData.data?.attendance?.isInsert.toString().equals("1")) {
 
-        swipeRefreshLayout.setOnRefreshListener {
+            txtNoRight.visible()
+            crd_data1.invisible()
+
+        } else {
+            txtNoRight.invisible()
+            crd_data1.visible()
+
+
             page = 1
             list.clear()
             hasNextPage = true
+            swipeRefreshLayout.isRefreshing = true
+            setupRecyclerView()
             recyclerView.isLoading = true
-            adapter?.notifyDataSetChanged()
             getAttendenceList(page)
+
+            recyclerView.setLoadMoreListener(object : LoadMoreListener {
+                override fun onLoadMore() {
+                    if (hasNextPage && !recyclerView.isLoading) {
+                        progressbar.visible()
+                        getAttendenceList(++page)
+                    }
+                }
+            })
+
+            swipeRefreshLayout.setOnRefreshListener {
+                page = 1
+                list.clear()
+                hasNextPage = true
+                recyclerView.isLoading = true
+                adapter?.notifyDataSetChanged()
+                getAttendenceList(page)
+            }
         }
 
     }

@@ -17,6 +17,7 @@ import com.tcc.app.utils.Constant
 import kotlinx.android.synthetic.main.activity_employee_detail.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 
+
 class EmployeeDetailActivity : BaseActivity() {
 
     var viewPageradapter: ViewPagerPagerAdapter? = null
@@ -125,22 +126,25 @@ class EmployeeDetailActivity : BaseActivity() {
         viewPageradapter = ViewPagerPagerAdapter(supportFragmentManager)
 
 
+        //if (session.roleData.data?.employee?.isView.toString().equals("1")) {
+        viewPageradapter?.addFragment(EmployeeDetailFragment(employeeData), "Detail")
 
-        if (checkUserRole(session.roleData.data?.employee?.isView.toString(), this)) {
-            viewPageradapter?.addFragment(EmployeeDetailFragment(employeeData), "Detail")
-        }
+        // }
 
-        if (checkUserRole(session.roleData.data?.training?.isView.toString(), this)) {
-            viewPageradapter?.addFragment(EmployeeTrainingFragment(employeeData), "Training")
-        }
+        // if (session.roleData.data?.training?.isView.toString().equals("1")) {
+        viewPageradapter?.addFragment(EmployeeTrainingFragment(employeeData), "Training")
+        //  }
 
-        if (checkUserRole(session.roleData.data?.uniform?.isView.toString(), this)) {
-            viewPageradapter?.addFragment(EmployeeUniformFragment(employeeData), "Uniform")
-        }
+        // if (session.roleData.data?.uniform?.isView.toString().equals("1")) {
+        viewPageradapter?.addFragment(EmployeeUniformFragment(employeeData), "Uniform")
+        //  }
 
-        if (checkUserRole(session.roleData.data?.attendance?.isInsert.toString(), this)) {
-            viewPageradapter?.addFragment(EmployeeAttendanceListFragment(employeeData), "Attendace")
-        }
+        //  if (session.roleData.data?.attendance?.isInsert.toString().equals("1")) {
+        viewPageradapter?.addFragment(
+            EmployeeAttendanceListFragment(employeeData),
+            "Attendance"
+        )
+        //  }
         viewPageradapter?.addFragment(
             EmployeeRoomAllocationFragment(employeeData),
             "Room Allocation"
@@ -148,7 +152,11 @@ class EmployeeDetailActivity : BaseActivity() {
         viewPageradapter?.addFragment(EmployeeSalaryFragment(employeeData), "Salary")
         viewPageradapter?.addFragment(EmployeeAdvanceListFragment(employeeData), "Advance")
         viewPager.adapter = viewPageradapter
+
         tabs.setupWithViewPager(viewPager, true)
+
+
+
 
 
         tabs!!.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {

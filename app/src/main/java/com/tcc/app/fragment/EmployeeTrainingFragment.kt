@@ -19,7 +19,8 @@ import com.tcc.app.utils.Constant
 import com.tcc.app.utils.SessionManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.reclerview_swipelayout.*
+import kotlinx.android.synthetic.main.fragment_employee_training.*
+
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -43,7 +44,7 @@ class EmployeeTrainingFragment() : BaseFragment(), TrainingAdapter.OnItemSelecte
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.reclerview_swipelayout, container, false)
+        val root = inflater.inflate(R.layout.fragment_employee_training, container, false)
         return root
     }
 
@@ -53,22 +54,33 @@ class EmployeeTrainingFragment() : BaseFragment(), TrainingAdapter.OnItemSelecte
 
 
 
-        recyclerView.setLoadMoreListener(object : LoadMoreListener {
-            override fun onLoadMore() {
-                if (hasNextPage && !recyclerView.isLoading) {
-                    progressbar.visible()
-                    getTrainingList(++page)
-                }
-            }
-        })
+        if (!session.roleData.data?.training?.isView.toString().equals("1")) {
 
-        swipeRefreshLayout.setOnRefreshListener {
-            page = 1
-            list.clear()
-            hasNextPage = true
-            recyclerView.isLoading = true
-            adapter?.notifyDataSetChanged()
-            getTrainingList(page)
+            txtNoRight.visible()
+            crd_data.invisible()
+
+        } else {
+            txtNoRight.invisible()
+            crd_data.visible()
+
+
+            recyclerView.setLoadMoreListener(object : LoadMoreListener {
+                override fun onLoadMore() {
+                    if (hasNextPage && !recyclerView.isLoading) {
+                        progressbar.visible()
+                        getTrainingList(++page)
+                    }
+                }
+            })
+
+            swipeRefreshLayout.setOnRefreshListener {
+                page = 1
+                list.clear()
+                hasNextPage = true
+                recyclerView.isLoading = true
+                adapter?.notifyDataSetChanged()
+                getTrainingList(page)
+            }
         }
     }
 

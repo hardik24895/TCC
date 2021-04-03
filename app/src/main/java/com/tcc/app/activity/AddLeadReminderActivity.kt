@@ -6,7 +6,7 @@ import com.akexorcist.snaptimepicker.SnapTimePickerDialog
 import com.akexorcist.snaptimepicker.TimeValue
 import com.tcc.app.R
 import com.tcc.app.extention.*
-import com.tcc.app.modal.GetRoleModal
+import com.tcc.app.modal.CommonAddModal
 import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
 import com.tcc.app.network.addTo
@@ -145,11 +145,11 @@ class AddLeadReminderActivity : BaseActivity() {
         Networking
             .with(this)
             .getServices()
-            .getRole(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
+            .AddLeadReminder(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeWith(object : CallbackObserver<GetRoleModal>() {
-                override fun onSuccess(response: GetRoleModal) {
+            .subscribeWith(object : CallbackObserver<CommonAddModal>() {
+                override fun onSuccess(response: CommonAddModal) {
                     val data = response.data
                     hideProgressbar()
                     if (data != null) {

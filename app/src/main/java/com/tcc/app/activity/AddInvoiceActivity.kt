@@ -1438,7 +1438,7 @@ class AddInvoiceActivity : BaseActivity() {
         Networking
             .with(this@AddInvoiceActivity)
             .getServices()
-            .AddQuotationData(Networking.wrapParams(result))
+            .AddInvoice(Networking.wrapParams(result))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeWith(object : CallbackObserver<CommonAddModal>() {

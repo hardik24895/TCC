@@ -89,6 +89,14 @@ interface APIInterface {
 
 
     @POST("service/")
+    fun AddEmployee(@Body body: RequestBody): Observable<Response<CommonAddModal>>
+
+
+    @POST("service/")
+    fun AddLeadReminder(@Body body: RequestBody): Observable<Response<CommonAddModal>>
+
+
+    @POST("service/")
     fun getServiceList(@Body body: RequestBody): Observable<Response<ServiceListModel>>
 
     @Multipart
