@@ -90,20 +90,27 @@ object TimeStamp {
     }
 
     fun formatDateFromString(inputDate: String): String {
-        var parsed: Date? = null
-        var outputDate = ""
 
-        val dfInput = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        val dfOutput = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        if (inputDate.equals("")) {
 
-        try {
-            parsed = dfInput.parse(inputDate)
-            outputDate = dfOutput.format(parsed)
+            return ""
+        } else {
 
-        } catch (e: ParseException) {
-            e.printStackTrace()
+            var parsed: Date? = null
+            var outputDate = ""
+
+            val dfInput = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val dfOutput = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+
+            try {
+                parsed = dfInput.parse(inputDate)
+                outputDate = dfOutput.format(parsed)
+
+            } catch (e: ParseException) {
+                e.printStackTrace()
+            }
+            return outputDate
         }
-        return outputDate
     }
 
     fun formatServerDateToLocal(inputDate: String): String {

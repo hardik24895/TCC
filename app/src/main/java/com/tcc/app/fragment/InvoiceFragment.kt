@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import com.google.android.material.tabs.TabLayout
 import com.tcc.app.R
 import com.tcc.app.adapter.ViewPagerPagerAdapter
+import com.tcc.app.extention.invisible
 import com.tcc.app.extention.setHomeScreenTitle
+import com.tcc.app.extention.visible
 import com.tcc.app.modal.CustomerDataItem
 import kotlinx.android.synthetic.main.fragment_invoice.*
 
@@ -39,32 +41,46 @@ class InvoiceFragment() : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         if (customerId == -1)
             setHomeScreenTitle(requireActivity(), getString(R.string.nav_invoice))
-        setStatePageAdapter()
-        tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                viewPager.currentItem = tab.position
-                val fm = childFragmentManager
-                val ft = fm.beginTransaction()
-                val count = fm.backStackEntryCount
-                if (count >= 1) {
-                    childFragmentManager.popBackStack()
+
+
+        if (!session.roleData.data?.invoice?.isView.toString().equals("1")) {
+
+            txtNoRight.visible()
+            crd_data.invisible()
+
+        } else {
+            txtNoRight.invisible()
+            crd_data.visible()
+
+
+            setStatePageAdapter()
+            tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab) {
+                    viewPager.currentItem = tab.position
+                    val fm = childFragmentManager
+                    val ft = fm.beginTransaction()
+                    val count = fm.backStackEntryCount
+                    if (count >= 1) {
+                        childFragmentManager.popBackStack()
+                    }
+                    ft.commit()
                 }
-                ft.commit()
-            }
 
-            override fun onTabUnselected(tab: TabLayout.Tab) {
-                // setAdapter();
+                override fun onTabUnselected(tab: TabLayout.Tab) {
+                    // setAdapter();
 
 
-            }
+                }
 
-            override fun onTabReselected(tab: TabLayout.Tab) {
+                override fun onTabReselected(tab: TabLayout.Tab) {
 
-                //   viewPager.notifyAll();
-            }
-        })
+                    //   viewPager.notifyAll();
+                }
+            })
+        }
     }
 
 

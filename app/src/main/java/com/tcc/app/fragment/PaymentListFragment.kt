@@ -27,6 +27,7 @@ import com.tcc.app.utils.SessionManager
 import com.tcc.app.utils.TimeStamp.formatDateFromString
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.fragment_invoice.*
 import kotlinx.android.synthetic.main.reclerview_swipelayout.*
 import org.json.JSONException
 import org.json.JSONObject
@@ -51,7 +52,7 @@ class PaymentListFragment() : BaseFragment(), PaymentListAdapter.OnItemSelected 
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.reclerview_swipelayout, container, false)
+        val root = inflater.inflate(R.layout.fragment_employee_training, container, false)
         return root
     }
 
@@ -67,26 +68,36 @@ class PaymentListFragment() : BaseFragment(), PaymentListAdapter.OnItemSelected 
         super.onViewCreated(view, savedInstanceState)
         if (customerId == -1)
             setHomeScreenTitle(requireActivity(), getString(R.string.nav_payment))
-        recyclerView.setLoadMoreListener(object : LoadMoreListener {
-            override fun onLoadMore() {
-                if (hasNextPage && !recyclerView.isLoading) {
-                    progressbar.visible()
-                    getSiteList(++page)
-                }
-            }
-        })
 
-        swipeRefreshLayout.setOnRefreshListener {
-            startDate = ""
-            endDate = ""
-            invoiceNum = ""
-            siteName = ""
-            page = 1
-            list.clear()
-            hasNextPage = true
-            recyclerView.isLoading = true
-            adapter?.notifyDataSetChanged()
-            getSiteList(page)
+        if (!session.roleData.data?.payment?.isView.toString().equals("1")) {
+
+            txtNoRight.visible()
+            crd_data.invisible()
+
+        } else {
+            txtNoRight.invisible()
+            crd_data.visible()
+            recyclerView.setLoadMoreListener(object : LoadMoreListener {
+                override fun onLoadMore() {
+                    if (hasNextPage && !recyclerView.isLoading) {
+                        progressbar.visible()
+                        getSiteList(++page)
+                    }
+                }
+            })
+
+            swipeRefreshLayout.setOnRefreshListener {
+                startDate = ""
+                endDate = ""
+                invoiceNum = ""
+                siteName = ""
+                page = 1
+                list.clear()
+                hasNextPage = true
+                recyclerView.isLoading = true
+                adapter?.notifyDataSetChanged()
+                getSiteList(page)
+            }
         }
     }
 

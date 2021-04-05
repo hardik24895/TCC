@@ -92,6 +92,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:text="@string/you_dont_have_a_rights"
+        android:visibility="gone"
         android:textSize="@dimen/_14ssp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

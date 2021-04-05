@@ -52,8 +52,6 @@ class EmployeeTrainingFragment() : BaseFragment(), TrainingAdapter.OnItemSelecte
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
         if (!session.roleData.data?.training?.isView.toString().equals("1")) {
 
             txtNoRight.visible()

@@ -61,24 +61,22 @@ class CustomerDetailActivity : BaseActivity() {
     private fun setStatePageAdapter() {
         viewPageradapter = ViewPagerPagerAdapter(supportFragmentManager)
         viewPageradapter?.addFragment(CustomerInfoFragment(customerData), "Information")
-        if (checkUserRole(session.roleData.data?.sites?.isView.toString(), this)) {
-            viewPageradapter?.addFragment(CustomerSiteFragment(customerData), "Sites")
-        }
+        //     if (checkUserRole(session.roleData.data?.sites?.isView.toString(), this)) {
+        viewPageradapter?.addFragment(CustomerSiteFragment(customerData), "Sites")
+        //     }
 
         viewPageradapter?.addFragment(CustomerProcessFragment(customerData), "Process")
         viewPageradapter?.addFragment(QuotationFragment(customerData), "Quotation")
         viewPageradapter?.addFragment(TeamDefinitionListFragment(customerData), "Team Defination")
-        if (checkUserRole(session.roleData.data?.attendance?.isView.toString(), this)) {
-            viewPageradapter?.addFragment(
-                CustomerAttendanceListFragment(customerData), "Attendance"
-            )
-        }
-        if (checkUserRole(session.roleData.data?.invoice?.isView.toString(), this)) {
-            viewPageradapter?.addFragment(InvoiceFragment(customerData), "Invoice")
-        }
-        if (checkUserRole(session.roleData.data?.payment?.isView.toString(), this)) {
-            viewPageradapter?.addFragment(PaymentListFragment(customerData), "Payment")
-        }
+        //  if (checkUserRole(session.roleData.data?.attendance?.isView.toString(), this)) {
+        viewPageradapter?.addFragment(CustomerAttendanceListFragment(customerData), "Attendance")
+        //   }
+        //   if (checkUserRole(session.roleData.data?.invoice?.isView.toString(), this)) {
+        viewPageradapter?.addFragment(InvoiceFragment(customerData), "Invoice")
+        //}
+        //      if (checkUserRole(session.roleData.data?.payment?.isView.toString(), this)) {
+        viewPageradapter?.addFragment(PaymentListFragment(customerData), "Payment")
+        //     }
 
         view_pager.adapter = viewPageradapter
         tabs.setupWithViewPager(view_pager, true)

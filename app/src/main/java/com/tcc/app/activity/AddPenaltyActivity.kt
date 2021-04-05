@@ -202,23 +202,24 @@ class AddPenaltyActivity : BaseActivity(), ReasonListAdapter.OnItemSelected {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeWith(object : CallbackObserver<SiteListModal>() {
                 override fun onSuccess(response: SiteListModal) {
-                    siteListArray!!.addAll(response.data)
-                    var myList: MutableList<SearchableItem> = mutableListOf()
-                    for (items in response.data.indices) {
-                        siteNameList!!.add(response.data.get(items).siteName.toString())
-                        myList.add(SearchableItem(items.toLong(), siteNameList!!.get(items)))
+                    if (response.error == 200) {
+                        siteListArray!!.addAll(response.data)
+                        var myList: MutableList<SearchableItem> = mutableListOf()
+                        for (items in response.data.indices) {
+                            siteNameList!!.add(response.data.get(items).siteName.toString())
+                            myList.add(SearchableItem(items.toLong(), siteNameList!!.get(items)))
 
-                    }
-                    itemSite = myList
+                        }
+                        itemSite = myList
 
-                    adapterSite = ArrayAdapter(
-                        this@AddPenaltyActivity,
-                        R.layout.custom_spinner_item,
-                        siteNameList!!
-                    )
-                    spSite.setAdapter(adapterSite)
-
-
+                        adapterSite = ArrayAdapter(
+                            this@AddPenaltyActivity,
+                            R.layout.custom_spinner_item,
+                            siteNameList!!
+                        )
+                        spSite.setAdapter(adapterSite)
+                    } else
+                        showAlert(response.message.toString())
                 }
 
                 override fun onFailed(code: Int, message: String) {
@@ -257,15 +258,14 @@ class AddPenaltyActivity : BaseActivity(), ReasonListAdapter.OnItemSelected {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeWith(object : CallbackObserver<EmployeeListModel>() {
                 override fun onSuccess(response: EmployeeListModel) {
-
+                    var myList: MutableList<SearchableItem> = mutableListOf()
                     if (response.error == 200) {
-                        userTypeListArray!!.addAll(response.data)
-                        var myList: MutableList<SearchableItem> = mutableListOf()
-                        userTypeNameList!!.add("Select Employee")
+                        userTypeListArray.addAll(response.data)
+                        userTypeNameList.add("Select Employee")
                         myList.add(SearchableItem(0, "Select Employee"))
 
                         for (items in response.data.indices) {
-                            userTypeNameList!!.add(
+                            userTypeNameList.add(
                                 "${response.data.get(items).firstName.toString()} ${
                                     response.data.get(
                                         items
@@ -275,7 +275,7 @@ class AddPenaltyActivity : BaseActivity(), ReasonListAdapter.OnItemSelected {
                             myList.add(
                                 SearchableItem(
                                     items.toLong() + 1,
-                                    userTypeNameList!!.get(items + 1)
+                                    userTypeNameList.get(items + 1)
                                 )
                             )
 
@@ -283,7 +283,10 @@ class AddPenaltyActivity : BaseActivity(), ReasonListAdapter.OnItemSelected {
                         itemUserType = myList
 
                     } else {
-                        showAlert(response.message.toString())
+
+                        userTypeNameList.add("Select Employee")
+                        myList.add(SearchableItem(0, "Select Employee"))
+                        itemUserType = myList
                     }
 
                 }
@@ -303,9 +306,10 @@ class AddPenaltyActivity : BaseActivity(), ReasonListAdapter.OnItemSelected {
 
             if (lin_add_user.childCount > 0) {
                 for (item in 0 until lin_add_user.childCount) {
-                    if (lin_add_user.getChildAt(item).spEmployee.selectedItemPosition != 0 && !lin_add_user.getChildAt(
+                    if (!lin_add_user.getChildAt(item).spEmployee.selectedItemPosition.equals(null) && lin_add_user.getChildAt(
                             item
-                        ).edtAmount.getValue().isEmpty()
+                        ).spEmployee.selectedItemPosition != 0 && !lin_add_user.getChildAt(item).edtAmount.getValue()
+                            .isEmpty()
                     ) {
                         val jsonObj1 = JSONObject()
                         jsonObj1.put(
