@@ -1,9 +1,7 @@
 package com.tcc.app.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.google.android.material.tabs.TabLayout
 import com.tcc.app.R
 import com.tcc.app.adapter.ViewPagerPagerAdapter
@@ -57,5 +55,32 @@ class ProfileMainFragment : BaseFragment() {
         viewPager.adapter = viewPageradapter
         tabs.setupWithViewPager(viewPager, true)
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        /* inflater.inflate(R.menu.home, menu)
+         var filter = menu.findItem(R.id.action_filter)
+         filter?.setVisible(false)
+         var add = menu.findItem(R.id.action_add)
+         add?.setVisible(false)*/
+        super.onCreateOptionsMenu(menu, inflater)
+        menu.clear();
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_add -> {
+                return true
+            }
+            R.id.action_filter -> {
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 }
