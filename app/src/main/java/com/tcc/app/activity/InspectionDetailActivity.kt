@@ -1,5 +1,6 @@
 package com.tcc.app.activity
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -41,6 +42,14 @@ class InspectionDetailActivity : BaseActivity() {
 
         Glide.with(this).load(Constant.PDF_INSPECTION_URL + inspectionDataItem.image)
             .placeholder(R.drawable.ic_profile).into(ivUpload)
+
+
+        ivUpload.setOnClickListener {
+
+            val intent = Intent(this, FullscreenSingleImageActivity::class.java)
+            intent.putExtra(Constant.DATA, Constant.PDF_INSPECTION_URL + inspectionDataItem.image)
+            startActivity(intent)
+        }
 
 
         setupRecyclerView()

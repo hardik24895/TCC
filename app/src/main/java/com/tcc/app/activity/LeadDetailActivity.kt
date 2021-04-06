@@ -60,6 +60,15 @@ class LeadDetailActivity : BaseActivity() {
 
     }
 
+    override fun onResume() {
+
+        if (QuotationFragment.isFromQuotation) {
+            finish()
+        }
+
+        super.onResume()
+    }
+
     private fun mDeclaration() {
 
         tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {

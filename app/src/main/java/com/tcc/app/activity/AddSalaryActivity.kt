@@ -2,6 +2,7 @@ package com.tcc.app.activity
 
 import android.os.Bundle
 import android.text.Editable
+import android.text.InputFilter
 import android.text.TextWatcher
 import android.widget.RadioButton
 import com.tcc.app.R
@@ -16,18 +17,11 @@ import com.tcc.app.utils.Constant
 import com.tcc.app.utils.SessionManager
 import com.tcc.app.utils.TimeStamp
 import com.tcc.app.utils.TimeStamp.formatDateFromString
+import com.tcc.app.widgets.DecimalDigitsInputFilter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_add_salary.*
-import kotlinx.android.synthetic.main.activity_add_salary.btnSubmit
-import kotlinx.android.synthetic.main.activity_add_salary.edtEndDate
-import kotlinx.android.synthetic.main.activity_add_salary.edtStartDate
-import kotlinx.android.synthetic.main.activity_add_salary.rg
-import kotlinx.android.synthetic.main.activity_add_salary.root
-import kotlinx.android.synthetic.main.dialog_accept_reason.*
-import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
-import kotlinx.android.synthetic.main.toolbar_with_back_arrow.txtTitle
 import org.json.JSONException
 import org.json.JSONObject
 import java.text.DecimalFormat
@@ -60,6 +54,10 @@ class AddSalaryActivity : BaseActivity() {
         edtStartDate.setOnClickListener { showDateTimePicker(this@AddSalaryActivity, edtStartDate) }
 
         edtEndDate.setOnClickListener { showDateTimePicker(this@AddSalaryActivity, edtEndDate) }
+
+        edtPayment.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
+        edtAdvanceAmount.setFilters(arrayOf<InputFilter>(DecimalDigitsInputFilter(8, 2)))
+
 
 
         edtEndDate.setOnClickListener {
@@ -102,10 +100,15 @@ class AddSalaryActivity : BaseActivity() {
             if (edtPayment.getValue().isEmpty()) {
                 root.showSnackBar("Please enter Payable amount")
                 edtPayment.requestFocus()
+            } else if (edtPayment.getValue().toInt() <= 0 && edtAdvanceAmount.getValue()
+                    .toInt() <= 0
+            ) {
+                root.showSnackBar("Salary or advance should not 0")
             } else {
                 AddSalary()
             }
         }
+
 
 
         rg.setOnCheckedChangeListener({ group, checkedId ->

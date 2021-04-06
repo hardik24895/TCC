@@ -1055,6 +1055,7 @@
                             android:lines="5"
                             android:maxLength="1000"
                             android:maxLines="10"
+                            android:scrollbars="vertical"
                             android:textColor="@color/black"
                             android:textColorHint="@color/black" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -1066,6 +1067,7 @@
                         android:layout_marginBottom="@dimen/_10sdp"
                         android:hint="@string/terms"
                         app:hintTextColor="@color/black"
+                        android:scrollbars="vertical"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"

@@ -77,7 +77,11 @@ class AddPenaltyActivity : BaseActivity(), ReasonListAdapter.OnItemSelected {
         getReasonList()
 
         btnSubmit.setOnClickListener {
-            if (lin_add_user.childCount > 0) {
+
+            if (siteId.equals("0")) {
+                root.showSnackBar("Please Select Site")
+
+            } else if (lin_add_user.childCount > 0) {
                 AddPanelty()
             } else {
                 root.showSnackBar("Please Select atleast 1 employee")
@@ -202,24 +206,41 @@ class AddPenaltyActivity : BaseActivity(), ReasonListAdapter.OnItemSelected {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeWith(object : CallbackObserver<SiteListModal>() {
                 override fun onSuccess(response: SiteListModal) {
+                    var myList: MutableList<SearchableItem> = mutableListOf()
                     if (response.error == 200) {
                         siteListArray!!.addAll(response.data)
-                        var myList: MutableList<SearchableItem> = mutableListOf()
+
+                        siteNameList!!.add("Select Site")
+                        myList.add(SearchableItem(0, "Select Site"))
+
                         for (items in response.data.indices) {
                             siteNameList!!.add(response.data.get(items).siteName.toString())
-                            myList.add(SearchableItem(items.toLong(), siteNameList!!.get(items)))
+                            myList.add(
+                                SearchableItem(
+                                    items.toLong() + 1,
+                                    siteNameList!!.get(items + 1)
+                                )
+                            )
 
                         }
                         itemSite = myList
-
                         adapterSite = ArrayAdapter(
                             this@AddPenaltyActivity,
                             R.layout.custom_spinner_item,
                             siteNameList!!
                         )
                         spSite.setAdapter(adapterSite)
-                    } else
-                        showAlert(response.message.toString())
+                    } else {
+                        siteNameList!!.add("Select Site")
+                        myList.add(SearchableItem(0, "Select Site"))
+                        itemSite = myList
+                        adapterSite = ArrayAdapter(
+                            this@AddPenaltyActivity,
+                            R.layout.custom_spinner_item,
+                            siteNameList!!
+                        )
+                        spSite.setAdapter(adapterSite)
+                    }
                 }
 
                 override fun onFailed(code: Int, message: String) {

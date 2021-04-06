@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.tcc.app.R
 import com.tcc.app.activity.AddInspectionActivity
+import com.tcc.app.activity.FullscreenSingleImageActivity
 import com.tcc.app.activity.InspectionDetailActivity
 import com.tcc.app.adapter.InspectionAdapter
 import com.tcc.app.extention.*
@@ -194,6 +195,13 @@ class InspectionFragment : BaseFragment(), InspectionAdapter.OnItemSelected {
         intent.putExtra(Constant.DATA, data)
         startActivity(intent)
         Animatoo.animateCard(context)
+    }
+
+    override fun onOpenImage(position: Int, data: InspectionDataItem) {
+
+        val intent = Intent(requireContext(), FullscreenSingleImageActivity::class.java)
+        intent.putExtra(Constant.DATA, Constant.PDF_INSPECTION_URL + data.image)
+        startActivity(intent)
     }
 
 

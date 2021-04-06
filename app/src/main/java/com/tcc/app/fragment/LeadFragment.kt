@@ -98,7 +98,7 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
         } else if (action.equals("SMS")) {
             sendMeassageDialog(data.mobileNo.toString())
         } else if (action.equals("Email")) {
-            sendMailDialog(data.emailID.toString())
+            sendMailDialog(data.name.toString(), data.emailID.toString())
         } else if (action.equals("Edit")) {
 
             if (checkUserRole(
@@ -129,11 +129,13 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
     }
 
 
-    private fun sendMailDialog(EMail: String) {
+    private fun sendMailDialog(Lead: String, EMail: String) {
         SendMailDailog(requireContext())
 
         val dialog = SendMailDailog.newInstance(
             requireContext(),
+            Lead,
+            EMail,
             object : SendMailDailog.onItemClick {
                 override fun onItemCLicked(Subject: String, Description: String) {
                     SendEmail(EMail, Subject, Description)

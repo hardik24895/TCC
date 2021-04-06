@@ -39,7 +39,7 @@ class CustomerListAdapter(
     }
 
     interface OnItemSelected {
-        fun onItemSelect(position: Int, data: CustomerDataItem)
+        fun onItemSelect(position: Int, data: CustomerDataItem, action: String)
     }
 
     class ItemHolder(override val containerView: View) :
@@ -61,9 +61,30 @@ class CustomerListAdapter(
             imgProfile.setColorFilter(getRandomMaterialColor("400", context))
             txtIcon.text = data.name.toString().substring(0, 1)
             txtIcon.visible()
-            itemView.setOnClickListener { listener.onItemSelect(adapterPosition, data) }
-            txtMobile.setOnClickListener {
+            //  itemView.setOnClickListener { listener.onItemSelect(adapterPosition, data) }
+
+
+            itemView.setOnClickListener { listener.onItemSelect(adapterPosition, data, "MainView") }
+
+
+            linbtnCall.setOnClickListener {
+                linbtnCall.isSelected = true
+                linbtnSMS.isSelected = false
+                linbtnEmail.isSelected = false
                 callPhone(context, data.mobileNo.toString())
+
+            }
+            linbtnSMS.setOnClickListener {
+                linbtnCall.isSelected = false
+                linbtnSMS.isSelected = true
+                linbtnEmail.isSelected = false
+                listener.onItemSelect(adapterPosition, data, "SMS")
+            }
+            linbtnEmail.setOnClickListener {
+                linbtnCall.isSelected = false
+                linbtnSMS.isSelected = false
+                linbtnEmail.isSelected = true
+                listener.onItemSelect(adapterPosition, data, "Email")
             }
         }
 

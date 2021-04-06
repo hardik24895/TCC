@@ -199,6 +199,7 @@
 
                            <com.tcc.app.customview.RadioButtonReguler
                                android:id="@+id/rbResidential"
+                                 app:buttonTint="@color/colorPrimary"
                                app:buttonTint="@color/colorPrimary"
                                android:layout_width="wrap_content"
                                android:layout_height="@dimen/_30sdp"
@@ -206,6 +207,7 @@
 
                            <com.tcc.app.customview.RadioButtonReguler
                                android:id="@+id/rbCommercial"
+                                 app:buttonTint="@color/colorPrimary"
                                android:layout_width="wrap_content"
                                android:layout_height="@dimen/_30sdp"
                                app:buttonTint="@color/colorPrimary"
@@ -213,6 +215,7 @@
 
                            <com.tcc.app.customview.RadioButtonReguler
                                android:id="@+id/rbIndustrial"
+                                 app:buttonTint="@color/colorPrimary"
                                android:layout_width="wrap_content"
                                app:buttonTint="@color/colorPrimary"
                                android:layout_height="@dimen/_30sdp"

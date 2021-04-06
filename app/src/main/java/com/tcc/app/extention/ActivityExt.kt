@@ -210,7 +210,7 @@ fun showDateTimePicker(requireActivity: Activity, edittext: EditText) {
     val day = c.get(Calendar.DAY_OF_MONTH)
 
     val dpd = DatePickerDialog(
-        requireActivity,
+        requireActivity, R.style.DialogTheme,
         { view, year, monthOfYear, dayOfMonth ->
 
             var selectedMonth: String = ""
@@ -233,6 +233,10 @@ fun showDateTimePicker(requireActivity: Activity, edittext: EditText) {
         day
     )
     dpd.show()
+    dpd.getButton(DatePickerDialog.BUTTON_NEGATIVE)
+        .setTextColor(requireActivity.getColorCompat(R.color.colorPrimary))
+    dpd.getButton(DatePickerDialog.BUTTON_POSITIVE)
+        .setTextColor(requireActivity.getColorCompat(R.color.colorPrimary))
 }
 
 
@@ -244,7 +248,7 @@ fun showPastDateTimePicker(requireActivity: Activity, edittext: EditText) {
     val day = c.get(Calendar.DAY_OF_MONTH)
 
     val dpd = DatePickerDialog(
-        requireActivity,
+        requireActivity, R.style.DialogTheme,
         { view, year, monthOfYear, dayOfMonth ->
 
             var selectedMonth: String = ""
@@ -269,6 +273,10 @@ fun showPastDateTimePicker(requireActivity: Activity, edittext: EditText) {
     dpd.getDatePicker().setMaxDate(c.getTimeInMillis())
     //  dpd.getDatePicker().setMinDate(c.getTimeInMillis())
     dpd.show()
+    dpd.getButton(DatePickerDialog.BUTTON_NEGATIVE)
+        .setTextColor(requireActivity.getColorCompat(R.color.colorPrimary))
+    dpd.getButton(DatePickerDialog.BUTTON_POSITIVE)
+        .setTextColor(requireActivity.getColorCompat(R.color.colorPrimary))
 }
 
 
@@ -284,7 +292,7 @@ fun showNextFromStartDateTimePicker(
     val day = c.get(Calendar.DAY_OF_MONTH)
 
     val dpd = DatePickerDialog(
-        requireActivity,
+        requireActivity, R.style.DialogTheme,
         { view, year, monthOfYear, dayOfMonth ->
 
             var selectedMonth: String = ""
@@ -313,6 +321,10 @@ fun showNextFromStartDateTimePicker(
     dpd.getDatePicker().setMinDate(d.time)
 
     dpd.show()
+    dpd.getButton(DatePickerDialog.BUTTON_NEGATIVE)
+        .setTextColor(requireActivity.getColorCompat(R.color.colorPrimary))
+    dpd.getButton(DatePickerDialog.BUTTON_POSITIVE)
+        .setTextColor(requireActivity.getColorCompat(R.color.colorPrimary))
 }
 
 fun Context.getColorCompat(@ColorRes colorId: Int) = ContextCompat.getColor(this, colorId)
