@@ -5,8 +5,11 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
+import android.text.method.ScrollingMovementMethod
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
+import android.view.View.OnTouchListener
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
@@ -1437,6 +1440,22 @@ class AddQuotationActivity : BaseActivity() {
                 override fun onSuccess(response: GetNotesModal) {
                     hideProgressbar()
                     if (response.error == 200) {
+
+
+                        edtNote.setVerticalScrollBarEnabled(true)
+                        edtNote.setOverScrollMode(View.OVER_SCROLL_ALWAYS)
+                        edtNote.setScrollBarStyle(View.SCROLLBARS_INSIDE_INSET)
+                        edtNote.setMovementMethod(ScrollingMovementMethod.getInstance())
+
+                        edtNote.setOnTouchListener(OnTouchListener { view, motionEvent ->
+                            view.parent.requestDisallowInterceptTouchEvent(true)
+                            if (motionEvent.action and MotionEvent.ACTION_UP != 0 && motionEvent.actionMasked and MotionEvent.ACTION_UP != 0) {
+                                view.parent.requestDisallowInterceptTouchEvent(false)
+                            }
+                            false
+                        })
+
+
                         edtNote.setText(response.data?.note)
                         edtTerms.setText(response.data?.term)
                     } else {
