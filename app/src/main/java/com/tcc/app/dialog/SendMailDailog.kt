@@ -23,13 +23,20 @@ class SendMailDailog(context: Context) : BlurDialogFragment(), LifecycleOwner {
     private lateinit var session: SessionManager
 
 
+
     companion object {
         private lateinit var listener: onItemClick
+        private lateinit var Lead: String
+        private lateinit var Email: String
         fun newInstance(
             context: Context,
+            Lead: String,
+            Email: String,
             listeners: onItemClick
         ): SendMailDailog {
             this.listener = listeners
+            this.Lead = Lead
+            this.Email = Email
             return SendMailDailog(context)
         }
     }
@@ -56,6 +63,8 @@ class SendMailDailog(context: Context) : BlurDialogFragment(), LifecycleOwner {
         populateData()
         dialog?.setCancelable(true)
         dialog?.setCanceledOnTouchOutside(true)
+        edtLead.setText(Lead)
+        edtEmail.setText(Email)
 
 
         btnSubmit.setOnClickListener {

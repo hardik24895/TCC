@@ -167,10 +167,12 @@ class LoginActivity : BaseActivity() {
                             saveDataToSharedPreferencesforRole(response.data)
                         } else {
                             showAlert(response.message.toString())
+                            session.clearSession()
                         }
 
                     } else {
                         showAlert(response.message.toString())
+                        session.clearSession()
                     }
                 }
 

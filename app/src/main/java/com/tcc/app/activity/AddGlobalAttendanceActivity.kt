@@ -311,7 +311,12 @@ class AddGlobalAttendanceActivity : BaseActivity(), GlobalAttendanceAdapter.OnIt
         if (list.size > 0) {
             imgNodata.invisible()
             recyclerView.visible()
+            btnSubmit.isEnabled = true
+            btnSubmit.isClickable = true
+
         } else {
+            btnSubmit.isEnabled = false
+            btnSubmit.isClickable = false
             imgNodata.visible()
             if (code == 0)
                 imgNodata.setImageResource(R.drawable.no_internet_bg)

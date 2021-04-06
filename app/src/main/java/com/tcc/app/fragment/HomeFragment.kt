@@ -97,6 +97,8 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
                     val selectedId: Int = rg.getCheckedRadioButtonId()
                     val rbType = parent.findViewById<View>(selectedId) as? RadioButton
                     getDashBoardCount(rbType?.text.toString())
+                    leadList.clear()
+                    getDashBoardLead(page)
                 }
 
             }

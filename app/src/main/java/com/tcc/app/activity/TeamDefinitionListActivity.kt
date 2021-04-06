@@ -80,7 +80,6 @@ class TeamDefinitionListActivity : BaseActivity(), TeamDefinitionListAdapter.OnI
 
     }
 
-
     fun setupRecyclerView() {
         val layoutManager = LinearLayoutManager(this@TeamDefinitionListActivity)
         recyclerView.layoutManager = layoutManager
@@ -89,11 +88,9 @@ class TeamDefinitionListActivity : BaseActivity(), TeamDefinitionListAdapter.OnI
 
     }
 
-
     override fun onItemSelect(position: Int, data: TeamDefinitionDataItem) {
 
     }
-
 
     fun getTeamDefinition(page: Int) {
         var result = ""

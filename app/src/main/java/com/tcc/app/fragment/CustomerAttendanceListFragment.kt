@@ -21,7 +21,11 @@ import com.tcc.app.utils.Constant
 import com.tcc.app.utils.SessionManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.reclerview_swipelayout.*
+import kotlinx.android.synthetic.main.fragment_employee_training.*
+import kotlinx.android.synthetic.main.reclerview_swipelayout.imgNodata
+import kotlinx.android.synthetic.main.reclerview_swipelayout.progressbar
+import kotlinx.android.synthetic.main.reclerview_swipelayout.recyclerView
+import kotlinx.android.synthetic.main.reclerview_swipelayout.swipeRefreshLayout
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -42,28 +46,42 @@ class CustomerAttendanceListFragment() : BaseFragment(),
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.reclerview_swipelayout, container, false)
+        val root = inflater.inflate(R.layout.fragment_employee_training, container, false)
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recyclerView.setLoadMoreListener(object : LoadMoreListener {
-            override fun onLoadMore() {
-                if (hasNextPage && !recyclerView.isLoading) {
-                    progressbar.visible()
-                    getAttendanceList(++page)
-                }
-            }
-        })
 
-        swipeRefreshLayout.setOnRefreshListener {
-            page = 1
-            list.clear()
-            hasNextPage = true
-            recyclerView.isLoading = true
-            adapter?.notifyDataSetChanged()
-            getAttendanceList(page)
+
+        if (!session.roleData.data?.attendance?.isView.toString().equals("1")) {
+
+            txtNoRight.visible()
+            crd_data.invisible()
+
+        } else {
+            txtNoRight.invisible()
+            crd_data.visible()
+
+
+
+            recyclerView.setLoadMoreListener(object : LoadMoreListener {
+                override fun onLoadMore() {
+                    if (hasNextPage && !recyclerView.isLoading) {
+                        progressbar.visible()
+                        getAttendanceList(++page)
+                    }
+                }
+            })
+
+            swipeRefreshLayout.setOnRefreshListener {
+                page = 1
+                list.clear()
+                hasNextPage = true
+                recyclerView.isLoading = true
+                adapter?.notifyDataSetChanged()
+                getAttendanceList(page)
+            }
         }
     }
 

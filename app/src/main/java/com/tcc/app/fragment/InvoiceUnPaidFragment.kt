@@ -85,7 +85,7 @@ class InvoiceUnPaidFragment : BaseFragment(), InvoicePaidAdapter.OnItemSelected 
 
     override fun onItemSelect(position: Int, data: InvoiceDataItem) {
 
-        if (checkUserRole(session.roleData.data?.invoice?.isInsert.toString(), requireContext())) {
+        if (checkUserRole(session.roleData.data?.payment?.isInsert.toString(), requireContext())) {
             val intent = Intent(context, AddPaymentActivity::class.java)
             intent.putExtra(Constant.DATA, data)
             startActivity(intent)

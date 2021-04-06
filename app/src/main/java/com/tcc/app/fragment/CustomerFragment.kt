@@ -6,14 +6,15 @@ import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.tcc.app.R
+import com.tcc.app.activity.AddLeadActivity
 import com.tcc.app.activity.CustomerDetailActivity
 import com.tcc.app.activity.SearchActivity
 import com.tcc.app.adapter.CustomerListAdapter
-import com.tcc.app.extention.invisible
-import com.tcc.app.extention.setHomeScreenTitle
-import com.tcc.app.extention.showAlert
-import com.tcc.app.extention.visible
+import com.tcc.app.dialog.SendMailDailog
+import com.tcc.app.dialog.SendMessageDailog
+import com.tcc.app.extention.*
 import com.tcc.app.interfaces.LoadMoreListener
+import com.tcc.app.modal.CommonAddModal
 import com.tcc.app.modal.CustomerDataItem
 import com.tcc.app.modal.CustomerListModal
 import com.tcc.app.network.CallbackObserver
@@ -38,6 +39,7 @@ class CustomerFragment : BaseFragment(), CustomerListAdapter.OnItemSelected {
     companion object {
         var email: String = ""
         var name: String = ""
+        var leadtype: String = ""
     }
 
     override fun onCreateView(
@@ -70,6 +72,7 @@ class CustomerFragment : BaseFragment(), CustomerListAdapter.OnItemSelected {
         swipeRefreshLayout.setOnRefreshListener {
             email = ""
             name = ""
+            leadtype = ""
             page = 1
             list.clear()
             hasNextPage = true
@@ -88,12 +91,69 @@ class CustomerFragment : BaseFragment(), CustomerListAdapter.OnItemSelected {
 
     }
 
-    override fun onItemSelect(position: Int, data: CustomerDataItem) {
-        val intent = Intent(context, CustomerDetailActivity::class.java)
-        intent.putExtra(Constant.DATA, data)
-        startActivity(intent)
-        Animatoo.animateCard(context)
+    override fun onItemSelect(position: Int, data: CustomerDataItem, action: String) {
 
+        if (action.equals("MainView")) {
+            val intent = Intent(context, CustomerDetailActivity::class.java)
+            intent.putExtra(Constant.DATA, data)
+            startActivity(intent)
+            Animatoo.animateCard(context)
+        } else if (action.equals("SMS")) {
+            sendMeassageDialog(data.mobileNo.toString())
+        } else if (action.equals("Email")) {
+            sendMailDialog(data.name.toString(), data.emailID.toString())
+        } else if (action.equals("Edit")) {
+
+            if (checkUserRole(
+                    session.roleData.data?.visitor?.isInsert.toString(),
+                    requireContext()
+                )
+            ) {
+                val intent = Intent(context, AddLeadActivity::class.java)
+
+                intent.putExtra("Edit", true)
+                intent.putExtra(Constant.DATA, data)
+                startActivity(intent)
+                Animatoo.animateCard(context)
+
+            }
+        }
+    }
+
+    private fun sendMailDialog(Lead: String, EMail: String) {
+        SendMailDailog(requireContext())
+
+        val dialog = SendMailDailog.newInstance(
+            requireContext(),
+            Lead,
+            EMail,
+            object : SendMailDailog.onItemClick {
+                override fun onItemCLicked(Subject: String, Description: String) {
+                    SendEmail(EMail, Subject, Description)
+                }
+            })
+        val bundle = Bundle()
+        bundle.putString(Constant.TITLE, getString(R.string.app_name))
+
+        dialog.arguments = bundle
+        dialog.show(childFragmentManager, "YesNO")
+    }
+
+    private fun sendMeassageDialog(contact: String) {
+        SendMessageDailog(requireContext())
+
+        val dialog = SendMessageDailog.newInstance(
+            requireContext(),
+            object : SendMessageDailog.onItemClick {
+                override fun onItemCLicked(Message: String) {
+                    SendMessage(contact, Message)
+                }
+            })
+        val bundle = Bundle()
+        bundle.putString(Constant.TITLE, getString(R.string.app_name))
+
+        dialog.arguments = bundle
+        dialog.show(childFragmentManager, "YesNO")
     }
 
     fun getCustomerList(page: Int) {
@@ -104,6 +164,7 @@ class CustomerFragment : BaseFragment(), CustomerListAdapter.OnItemSelected {
             jsonBody.put("CurrentPage", page)
             jsonBody.put("Name", name)
             jsonBody.put("EmailID", email)
+            jsonBody.put("LeadType", leadtype)
             jsonBody.put("CityID", session.getDataByKey(SessionManager.KEY_CITY_ID))
             result = Networking.setParentJsonData(
                 Constant.METHOD_CUSTOMER_LIST,
@@ -208,14 +269,98 @@ class CustomerFragment : BaseFragment(), CustomerListAdapter.OnItemSelected {
 
     override fun onDestroyView() {
         email = ""
+        leadtype = ""
         name = ""
         super.onDestroyView()
     }
 
     override fun onDestroy() {
         email = ""
+        leadtype = ""
         name = ""
         super.onDestroy()
+    }
+
+    fun SendEmail(email: String, subject: String, Description: String) {
+        showProgressbar()
+        var result = ""
+        try {
+            val jsonBody = JSONObject()
+
+            jsonBody.put("EmailID", email)
+            jsonBody.put("Subject", subject)
+            jsonBody.put("Message", Description)
+            result = Networking.setParentJsonData(Constant.METHOD_SEND_MAIL, jsonBody)
+
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+
+
+        Networking
+            .with(requireContext())
+            .getServices()
+            .SendMail(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : CallbackObserver<CommonAddModal>() {
+                override fun onSuccess(response: CommonAddModal) {
+                    hideProgressbar()
+                    if (response.error == 200) {
+                        swipeRefreshLayout.showSnackBar(response.message.toString())
+                    } else {
+                        showAlert(response.message.toString())
+                    }
+                }
+
+                override fun onFailed(code: Int, message: String) {
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
+                    hideProgressbar()
+                }
+
+            }).addTo(autoDisposable)
+    }
+
+    fun SendMessage(Contact: String, Message: String) {
+        showProgressbar()
+        var result = ""
+        try {
+            val jsonBody = JSONObject()
+
+            jsonBody.put("MobileNo", Contact)
+            jsonBody.put("Message", Message)
+
+            result = Networking.setParentJsonData(Constant.METHOD_SEND_MESSAGE, jsonBody)
+
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+
+
+        Networking
+            .with(requireContext())
+            .getServices()
+            .SendMessage(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : CallbackObserver<CommonAddModal>() {
+                override fun onSuccess(response: CommonAddModal) {
+                    hideProgressbar()
+                    if (response.error == 200) {
+                        swipeRefreshLayout.showSnackBar(response.message.toString())
+                    } else {
+                        showAlert(response.message.toString())
+                    }
+                }
+
+                override fun onFailed(code: Int, message: String) {
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
+                    hideProgressbar()
+                }
+
+            }).addTo(autoDisposable)
     }
 
 }

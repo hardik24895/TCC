@@ -988,6 +988,8 @@ class AddQuotationActivity : BaseActivity() {
         if (siteListItem != null) {
 
             for (i in session.stetList.indices) {
+
+                siteListItem
                 if (session.stetList.get(i).stateID.toString() == siteListItem!!.stateID.toString()) {
                     spState.setSelection(i)
                     break
@@ -1004,7 +1006,6 @@ class AddQuotationActivity : BaseActivity() {
                 }
 
             }
-
 
             if (stateID.equals("")) {
                 spState.setSelection(11)

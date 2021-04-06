@@ -81,18 +81,20 @@ class AddSiteActivity : BaseActivity(), SiteAddressAdapter1.OnItemSelected {
         if (intent.hasExtra(Constant.DATA)) {
             customerData = intent.getSerializableExtra(Constant.DATA) as CustomerDataItem
             // edtCompanyName.setText(customerData!!.name)
+            cityID = customerData!!.cityID.toString()
         }
 
         if (intent.hasExtra(Constant.DATA_LEAD)) {
             leadItem = intent.getSerializableExtra(Constant.DATA_LEAD) as LeadItem
             //  edtCompanyName.setText(leadItem!!.name)
-
+            cityID = leadItem!!.cityID.toString()
         }
 
         if (intent.hasExtra(Constant.CUSTOMER_NAME)) {
 
             //  edtCompanyName.setText(intent.getStringExtra(Constant.CUSTOMER_NAME))
         }
+
         setupRecyclerView()
         btnAddQuatation.setOnClickListener { validation(true) }
         getStateSppinerData()
@@ -144,6 +146,24 @@ class AddSiteActivity : BaseActivity(), SiteAddressAdapter1.OnItemSelected {
                 bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_COLLAPSED
             else
                 bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_EXPANDED
+        }
+
+
+        for (i in session.stetList.indices) {
+            if (!leadItem!!.equals(null)) {
+
+                if (session.stetList.get(i).stateID.toString().equals(leadItem!!.stateID)) {
+                    spState.setSelection(i)
+                    break
+                }
+            } else {
+                if (cityListArray.get(i).cityID.equals(customerData!!.stateID)) {
+                    spCity.setSelection(i)
+
+                    break
+                }
+            }
+
         }
 
 
@@ -199,6 +219,7 @@ class AddSiteActivity : BaseActivity(), SiteAddressAdapter1.OnItemSelected {
                 getString(R.string.select_state),
                 { item, _ ->
                     spState.setSelection(item.id.toInt())
+
                 }).show()
         }
     }
@@ -260,7 +281,8 @@ class AddSiteActivity : BaseActivity(), SiteAddressAdapter1.OnItemSelected {
             .subscribeWith(object : CallbackObserver<CityListModel>() {
                 override fun onSuccess(response: CityListModel) {
                     hideProgressbar()
-
+                    cityListArray.clear()
+                    cityNameList.clear()
                     if (response.error == 200) {
                         view2.isEnabled = true
                         cityListArray?.addAll(response.data)
@@ -289,8 +311,7 @@ class AddSiteActivity : BaseActivity(), SiteAddressAdapter1.OnItemSelected {
                         }
 
                     } else {
-                        cityListArray.clear()
-                        cityNameList.clear()
+
                         cityID = "-1"
                         adapterCity?.clear()
                         // spCity.removeAllViews()
@@ -639,7 +660,6 @@ class AddSiteActivity : BaseActivity(), SiteAddressAdapter1.OnItemSelected {
         edtAddress2.isEnabled = false
         edtPincode.isEnabled = false
 
-
         for (i in cityListArray.indices) {
             if (cityListArray.get(i).cityID.equals(data.cityID)) {
                 spCity.setSelection(i)
@@ -706,5 +726,9 @@ class AddSiteActivity : BaseActivity(), SiteAddressAdapter1.OnItemSelected {
         view2.isClickable = true
         linlayCity.isClickable = true
         linlayState.isClickable = true
+        view.isEnabled = true
+        view2.isEnabled = true
+        linlayCity.isEnabled = true
+        linlayState.isEnabled = true
     }
 }

@@ -41,6 +41,7 @@ class InspectionAdapter(
 
     interface OnItemSelected {
         fun onItemSelect(position: Int, data: InspectionDataItem)
+        fun onOpenImage(position: Int, data: InspectionDataItem)
     }
 
     class ItemHolder(override val containerView: View) :
@@ -64,6 +65,8 @@ class InspectionAdapter(
             txtIcon.invisible()
 
             itemView.setOnClickListener { listener.onItemSelect(adapterPosition, data) }
+            imgProfile.setOnClickListener { listener.onOpenImage(adapterPosition, data) }
+
         }
 
 

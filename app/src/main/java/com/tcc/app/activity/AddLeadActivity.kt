@@ -137,8 +137,6 @@ class AddLeadActivity : BaseActivity(), SiteAddressAdapter.OnItemSelected {
         edtPdate.setText(getCurrentDate())
 
 
-
-
         edtSdate.setOnClickListener { showDateTimePicker(this@AddLeadActivity, edtSdate) }
         edtEdate.setOnClickListener {
             showNextFromStartDateTimePicker(
@@ -198,7 +196,8 @@ class AddLeadActivity : BaseActivity(), SiteAddressAdapter.OnItemSelected {
             ) {
                 if (position != -1 && stateNameList.size > position) {
                     stateID = session.stetList.get(position).stateID.toString()
-                    Logger.d("state", stateID)
+                    //   Logger.d("state", stateID)
+
                     getCityList(stateID)
                 }
 
@@ -218,6 +217,7 @@ class AddLeadActivity : BaseActivity(), SiteAddressAdapter.OnItemSelected {
                 id: Long
             ) {
                 if (position != -1 && cityListArray.size > position) {
+                    stateID = cityListArray.get(position).stateID.toString()
                     cityID = cityListArray.get(position).cityID.toString()
                     Logger.d("city", cityID)
                 }
@@ -315,10 +315,11 @@ class AddLeadActivity : BaseActivity(), SiteAddressAdapter.OnItemSelected {
             .subscribeWith(object : CallbackObserver<CityListModel>() {
                 override fun onSuccess(response: CityListModel) {
                     hideProgressbar()
-
+                    cityListArray.clear()
+                    cityNameList.clear()
                     if (response.error == 200) {
                         view2.isEnabled = true
-                        cityListArray?.addAll(response.data)
+                        cityListArray.addAll(response.data)
                         var myList: MutableList<SearchableItem> = mutableListOf()
                         for (items in response.data.indices) {
                             cityNameList.add(response.data.get(items).cityName.toString())
@@ -344,8 +345,7 @@ class AddLeadActivity : BaseActivity(), SiteAddressAdapter.OnItemSelected {
                         }
 
                     } else {
-                        cityListArray.clear()
-                        cityNameList.clear()
+
                         cityID = "-1"
                         adapterCity?.clear()
                         // spCity.removeAllViews()
@@ -429,10 +429,6 @@ class AddLeadActivity : BaseActivity(), SiteAddressAdapter.OnItemSelected {
             selectedId == -1 -> {
                 root.showSnackBar("Select Lead Type")
             }
-            cityID == "-1" -> {
-                root.showSnackBar("City Not Found")
-            }
-
             inWorkingh.isVisible && edtWorkingDays.isEmpty() -> {
                 root.showSnackBar("Enter Working Days")
                 edtWorkingDays.requestFocus()

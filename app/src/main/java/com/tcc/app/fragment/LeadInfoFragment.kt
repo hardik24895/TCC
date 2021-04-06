@@ -51,7 +51,11 @@ class LeadInfoFragment : BaseFragment() {
         txtEmail.text = leadItem?.emailID.toString()
         txtMobile.text = leadItem?.mobileNo.toString()
         txtCity.text = leadItem?.cityName.toString()
-        txtPincode.text = leadItem?.pinCode.toString()
+        if (!leadItem?.pinCode.equals(""))
+            txtPincode.text = leadItem?.pinCode.toString()
+        else {
+            txtPincode.text = "N/A"
+        }
         txtAddress.text = leadItem?.address.toString()
         txtLeadType.text = leadItem?.leadType.toString()
     }

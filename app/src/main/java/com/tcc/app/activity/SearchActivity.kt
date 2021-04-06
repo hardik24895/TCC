@@ -135,8 +135,10 @@ class SearchActivity : BaseActivity() {
             LeadFragment.leadType = rbType?.text.toString()
         }
         if (type.equals(Constant.CUSTOMER)) {
+            val rbType = findViewById<View>(rg.getCheckedRadioButtonId()) as? RadioButton
             CustomerFragment.email = edtEmail.getValue()
             CustomerFragment.name = edtName.getValue()
+            CustomerFragment.leadtype = rbType?.text.toString()
         }
         if (type.equals(Constant.SITE)) {
             val rbType = findViewById<View>(rg1.getCheckedRadioButtonId()) as? RadioButton

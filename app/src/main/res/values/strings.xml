@@ -260,4 +260,7 @@
     <string name="item_total">Item Total</string>
     <string name="item">Item</string>
     <string name="select_item">Select Item</string>
+    <string name="add_item">Add Item</string>
+    <string name="select_role">Select Role</string>
+    <string name="lead">Lead</string>
 </resources>

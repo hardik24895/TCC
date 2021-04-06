@@ -635,7 +635,6 @@ class AddInvoiceActivity : BaseActivity() {
                         )
                     )
 
-
                     for (items in response.data.indices) {
                         userTypeNameList!!.add(response.data.get(items).usertype.toString())
                         myList.add(
@@ -1439,7 +1438,7 @@ class AddInvoiceActivity : BaseActivity() {
         Networking
             .with(this@AddInvoiceActivity)
             .getServices()
-            .AddQuotationData(Networking.wrapParams(result))
+            .AddInvoice(Networking.wrapParams(result))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeWith(object : CallbackObserver<CommonAddModal>() {

@@ -109,12 +109,15 @@ class NotificationActivity : BaseActivity(), NotificationAdapter.OnItemSelected 
                         progressbar.invisible()
                     }
                     swipeRefreshLayout.isRefreshing = false
-                    list.addAll(response.data)
-                    adapter?.notifyItemRangeInserted(
-                        list.size.minus(response.data.size),
-                        list.size
-                    )
-                    hasNextPage = list.size < response.rowcount!!
+                    if (response.error == 200) {
+
+                        list.addAll(response.data)
+                        adapter?.notifyItemRangeInserted(
+                            list.size.minus(response.data.size),
+                            list.size
+                        )
+                        hasNextPage = list.size < response.rowcount!!
+                    }
 
                     refreshData(getString(R.string.no_data_found), 1)
                 }
