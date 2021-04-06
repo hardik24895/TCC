@@ -143,6 +143,7 @@ class PaymentListAdapter(
             } else {
                 txtBranchName.setText(data.branchName)
             }
+            txtTotal.setText("" + (data.paymentAmount!!.toBigDecimal() + data.remainingPayment!!.toBigDecimal()))
 
 
         }

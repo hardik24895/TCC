@@ -1456,6 +1456,19 @@ class AddQuotationActivity : BaseActivity() {
                         })
 
 
+                        edtTerms.setVerticalScrollBarEnabled(true)
+                        edtTerms.setOverScrollMode(View.OVER_SCROLL_ALWAYS)
+                        edtTerms.setScrollBarStyle(View.SCROLLBARS_INSIDE_INSET)
+                        edtTerms.setMovementMethod(ScrollingMovementMethod.getInstance())
+
+                        edtTerms.setOnTouchListener(OnTouchListener { view, motionEvent ->
+                            view.parent.requestDisallowInterceptTouchEvent(true)
+                            if (motionEvent.action and MotionEvent.ACTION_UP != 0 && motionEvent.actionMasked and MotionEvent.ACTION_UP != 0) {
+                                view.parent.requestDisallowInterceptTouchEvent(false)
+                            }
+                            false
+                        })
+
                         edtNote.setText(response.data?.note)
                         edtTerms.setText(response.data?.term)
                     } else {

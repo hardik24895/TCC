@@ -612,6 +612,23 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/til88" />
 
+                    <EditText
+                        android:id="@+id/edMaterialHSN"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/colorWhite"
+                        android:cursorVisible="false"
+                        android:enabled="false"
+                        android:focusable="false"
+                        android:fontFamily="@font/opensans_regular"
+                        android:inputType="none"
+                        android:maxLength="50"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
+                        tools:layout_editor_absoluteX="10dp"
+                        tools:layout_editor_absoluteY="304dp" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
@@ -705,20 +722,6 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/linlayMaterialType">
 
-                        <EditText
-                            android:id="@+id/edMaterialHSN"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:backgroundTint="@color/colorWhite"
-                            android:cursorVisible="false"
-                            android:enabled="false"
-                            android:focusable="false"
-                            android:fontFamily="@font/opensans_regular"
-                            android:inputType="none"
-                            android:maxLength="50"
-                            android:singleLine="true"
-                            android:textColor="@color/black"
-                            android:textColorHint="@color/black" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout

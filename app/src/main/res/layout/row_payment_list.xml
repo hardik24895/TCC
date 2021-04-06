@@ -29,11 +29,12 @@
             android:id="@+id/txtCompanyName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_8sdp"
             android:layout_marginStart="@dimen/_5sdp"
             android:ellipsize="end"
             android:singleLine="true"
             android:textSize="@dimen/_14ssp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/txtTotalTitle"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/imgProfile"
             app:layout_constraintTop_toTopOf="@+id/imgProfile" />
@@ -56,9 +57,11 @@
 
         <com.tcc.app.customview.TextviewReguler
             android:id="@+id/txtInvoiceNo"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_8sdp"
             android:layout_marginTop="@dimen/_2sdp"
+            app:layout_constraintEnd_toStartOf="@+id/txtTotal"
             app:layout_constraintStart_toStartOf="@+id/txtCompanyName"
             app:layout_constraintTop_toBottomOf="@+id/txtCompanyName" />
 
@@ -69,6 +72,7 @@
             android:layout_height="wrap_content"
             android:text="@string/total"
             android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/txtCompanyName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -77,8 +81,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/_2sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/txtInvoiceNo"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txtTotalTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/txtCompanyName"
+            tools:text="12000" />
 
 
         <com.tcc.app.customview.TextviewSemiBold
