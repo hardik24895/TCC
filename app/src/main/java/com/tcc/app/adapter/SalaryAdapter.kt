@@ -54,7 +54,7 @@ class SalaryAdapter(
             val finalAmount =
                 data.rate?.toBigDecimal()!! * (data.present?.toBigDecimal()!! + data.halfDay?.toBigDecimal()!! + data.halfOverTime?.toBigDecimal()!! + data.fullOverTime?.toBigDecimal()!!)
             txtAmount.text = context.getString(R.string.RS) + " " + df.format(finalAmount)
-            txtDate.text = data.startDate
+            txtDate.text = data.salaryDate
             itemView.setOnClickListener { listener.onItemSelect(adapterPosition, data) }
 
         }

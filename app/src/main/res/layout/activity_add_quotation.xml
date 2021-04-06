@@ -1068,6 +1068,7 @@
                         android:hint="@string/terms"
                         app:hintTextColor="@color/black"
                         android:scrollbars="vertical"
+
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -1082,7 +1083,12 @@
                             android:inputType="textMultiLine"
                             android:lines="5"
                             android:maxLength="1000"
+                            android:editable="true"
+                            android:enabled="true"
+                            android:focusable="true"
                             android:maxLines="10"
+                            android:isScrollContainer="true"
+                            android:minLines="6"
                             android:textColor="@color/black"
                             android:textColorHint="@color/black" />
                     </com.google.android.material.textfield.TextInputLayout>
