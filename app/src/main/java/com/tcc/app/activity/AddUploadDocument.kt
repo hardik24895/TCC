@@ -2,7 +2,6 @@ package com.tcc.app.activity
 
 import android.Manifest
 import android.content.Intent
-import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -217,7 +216,7 @@ class AddUploadDocument : BaseActivity() {
     }
 
 
-    fun getRealPathFromURI(contentUri: Uri?): String? {
+   /* fun getRealPathFromURI(contentUri: Uri?): String? {
         var cursor: Cursor? = null
         return try {
             val proj = arrayOf(MediaStore.Images.Media.DATA)
@@ -230,6 +229,32 @@ class AddUploadDocument : BaseActivity() {
                 cursor.close()
             }
         }
+    }*/
+
+
+    fun getRealPathFromURI(uri: Uri?): String? {
+        var path: String? = null
+        var image_id: String? = null
+        val cursor1 = contentResolver.query(uri!!, null, null, null, null)
+        if (cursor1 != null) {
+            cursor1.moveToFirst()
+            image_id = cursor1.getString(0)
+            image_id = image_id.substring(image_id.lastIndexOf(":") + 1)
+            cursor1.close()
+        }
+        val cursor = contentResolver.query(
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+            null,
+            MediaStore.Images.Media._ID + " = ? ",
+            arrayOf(image_id),
+            null
+        )
+        if (cursor != null) {
+            cursor.moveToFirst()
+            path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA))
+            cursor.close()
+        }
+        return path
     }
 
     fun AddDocument() {
