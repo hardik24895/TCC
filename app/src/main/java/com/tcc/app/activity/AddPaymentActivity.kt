@@ -7,10 +7,16 @@ import android.widget.RadioButton
 import androidx.core.view.isVisible
 import com.tcc.app.R
 import com.tcc.app.extention.*
+import com.tcc.app.modal.CommonAddModal
 import com.tcc.app.modal.InvoiceDataItem
+import com.tcc.app.network.CallbackObserver
+import com.tcc.app.network.Networking
+import com.tcc.app.network.addTo
 import com.tcc.app.utils.Constant
 import com.tcc.app.utils.TimeStamp.formatDateFromString
 import com.tcc.app.widgets.DecimalDigitsInputFilter
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_add_invoice.*
 import kotlinx.android.synthetic.main.activity_add_payment.*
 import kotlinx.android.synthetic.main.activity_add_payment.btnSubmit
@@ -186,8 +192,8 @@ class AddPaymentActivity : BaseActivity() {
     }
 
     fun AddPaymentApi() {
-        //    var result = ""
-        //    showProgressbar()
+        var result = ""
+        showProgressbar()
         val selectedId: Int = rgPaymentMode.getCheckedRadioButtonId()
         val rb = findViewById<View>(selectedId) as? RadioButton
         try {
@@ -248,41 +254,41 @@ class AddPaymentActivity : BaseActivity() {
             jsonBody.put("BankName", edtBankName.getValue())
             jsonBody.put("BranchName", edtBranchName.getValue())
 
-//
-            //    result = Networking.setParentJsonData(
-            //        Constant.METHOD_ADD_PAYMENT,
-            //        jsonBody
-            //    )
+
+            result = Networking.setParentJsonData(
+                Constant.METHOD_ADD_PAYMENT,
+                jsonBody
+            )
 
         } catch (e: JSONException) {
             e.printStackTrace()
         }
 
-//        Networking
-//            .with(this@AddPaymentActivity)
-//            .getServices()
-//            .AddPayment(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
-//            .subscribeOn(Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribeWith(object : CallbackObserver<CommonAddModal>() {
-//                override fun onSuccess(response: CommonAddModal) {
-//                    hideProgressbar()
-//                    if (response.error == 200) {
-//                        root.showSnackBar(response.message.toString())
-//                        finish()
-//                    } else {
-//                        showAlert(response.message.toString())
-//                    }
-//                }
-//
-//                override fun onFailed(code: Int, message: String) {
-//                    hideProgressbar()
-//                    // showAlert(message)
-//                    showAlert(getString(R.string.show_server_error))
-//
-//                }
-//
-//            }).addTo(autoDisposable)
+        Networking
+            .with(this@AddPaymentActivity)
+            .getServices()
+            .AddPayment(Networking.wrapParams(result))//wrapParams Wraps parameters in to Request body Json format
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : CallbackObserver<CommonAddModal>() {
+                override fun onSuccess(response: CommonAddModal) {
+                    hideProgressbar()
+                    if (response.error == 200) {
+                        root.showSnackBar(response.message.toString())
+                        finish()
+                    } else {
+                        showAlert(response.message.toString())
+                    }
+                }
+
+                override fun onFailed(code: Int, message: String) {
+                    hideProgressbar()
+                    // showAlert(message)
+                    showAlert(getString(R.string.show_server_error))
+
+                }
+
+            }).addTo(autoDisposable)
     }
 
 

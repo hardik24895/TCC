@@ -75,5 +75,9 @@ data class PaymentListDataItem(
     val chequeNo: String? = null,
 
     @field:SerializedName("PaymentMode")
-    val paymentMode: String? = null
+    val paymentMode: String? = null,
+
+    @field:SerializedName("TotalAmount")
+    val totalAmount: String? = null
+
 ) : Serializable
