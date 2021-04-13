@@ -1197,10 +1197,10 @@ class AddInvoiceActivity : BaseActivity() {
     fun setUpdatedTotal() {
         UserAmount = 0f
         var df = DecimalFormat("##.##")
-        var TotalAmount: Float = 0f
-        var CGST: Float = 0f
-        var SGST: Float = 0f
-        var IGST: Float = 0f
+        var TotalAmount: Double = 0.0
+        var CGST: Double = 0.0
+        var SGST: Double = 0.0
+        var IGST: Double = 0.0
 
         if (!edQty.isEmpty() && !edRate.isEmpty()) {
             TotalAmount = TotalAmount + (edQty.getValue().toFloat() * edRate.getValue().toFloat())
@@ -1251,7 +1251,7 @@ class AddInvoiceActivity : BaseActivity() {
 
 
 
-        if (TotalAmount == 0f) {
+        if (TotalAmount == 0.0) {
             edSubTotalAmount.setText("0")
             edTotalAmount.setText("0")
             edCGST.setText("0")
@@ -1259,7 +1259,7 @@ class AddInvoiceActivity : BaseActivity() {
             edIGST.setText("0")
         } else {
 
-            edSubTotalAmount.setText(df.format(TotalAmount))
+            edSubTotalAmount.setText(String.format("%.2f", TotalAmount))
 
             CGST = CGST + ((TotalAmount * session.configData.data?.cGST!!.toFloat()) / 100)
             SGST = SGST + ((TotalAmount * session.configData.data?.sGST!!.toFloat()) / 100)
@@ -1269,9 +1269,9 @@ class AddInvoiceActivity : BaseActivity() {
 
 
             if (!quotationIteam?.companyID.equals("1")) {
-                CGST = 0f
-                SGST = 0f
-                IGST = 0f
+                CGST = 0.0
+                SGST = 0.0
+                IGST = 0.0
                 tilIGST.invisible()
                 tilCGST.invisible()
                 tilSGST.invisible()
@@ -1279,13 +1279,13 @@ class AddInvoiceActivity : BaseActivity() {
             if (quotationIteam?.stateID?.toInt() == 12) {
                 edCGST.setText(df.format(CGST))
                 edSGST.setText(df.format(SGST))
-                edIGST.setText("0")
-                edTotalAmount.setText(df.format(TotalAmount + CGST + SGST))
+                edIGST.setText("0.0")
+                edTotalAmount.setText(String.format("%.2f", (TotalAmount + CGST + SGST)))
             } else {
-                edCGST.setText("0")
-                edSGST.setText("0")
+                edCGST.setText("0.0")
+                edSGST.setText("0.0")
                 edIGST.setText(df.format(IGST))
-                edTotalAmount.setText(df.format(TotalAmount + IGST))
+                edTotalAmount.setText(String.format("%.2f", (TotalAmount + IGST)))
             }
         }
     }
