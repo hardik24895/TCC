@@ -87,7 +87,8 @@ class QuotationAdapter(
             else
                 txtIGST.text = data.iGST
 
-            txtTotal.text = data.total
+
+            txtTotal.text = String.format("%.2f", data.total?.toDouble())
             if (data.pinCode.equals(""))
                 txtAddress.text =
                     data.address + ", " + data.address2 + ",  " + data.cityName + ", " + data.stateName

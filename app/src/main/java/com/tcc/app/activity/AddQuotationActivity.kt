@@ -43,6 +43,7 @@ import java.text.DecimalFormat
 class AddQuotationActivity : BaseActivity() {
 
     var compnyID: String = ""
+    var isGst: Boolean = false
     var siteListItem: SiteListItem? = null
     var leadItem: LeadItem? = null
     var companyNameList: ArrayList<String> = ArrayList()
@@ -758,8 +759,13 @@ class AddQuotationActivity : BaseActivity() {
                         compnyID = companyListArray.get(position - 1).companyID.toString()
                         Logger.d("companyID", compnyID)
 
+                        if (companyListArray.get(position - 1).iSGST.equals("No")) {
+                            isGst = false
+                        } else {
+                            isGst = true
+                        }
 
-                        if (compnyID.equals("1")) {
+                        if (isGst) {
                             if (siteListItem!!.stateID.equals("12")) {
                                 tilCGST.visible()
                                 tilSGST.visible()
@@ -1188,7 +1194,7 @@ class AddQuotationActivity : BaseActivity() {
             var df = DecimalFormat("##.##")
 
 
-            if (!compnyID.equals("1")) {
+            if (!isGst) {
                 CGST = 0.0
                 SGST = 0.0
                 IGST = 0.0
@@ -1411,6 +1417,7 @@ class AddQuotationActivity : BaseActivity() {
                     if (response.error == 200) {
                         root.showSnackBar(response.message.toString())
                         QuotationFragment.isFromQuotation = true
+                        //CustomerSiteFragment.isFromQuotation = true
                         finish()
                     }
                 }

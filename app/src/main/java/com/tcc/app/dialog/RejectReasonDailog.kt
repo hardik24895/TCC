@@ -14,6 +14,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.LifecycleOwner
 import com.tcc.app.R
 import com.tcc.app.extention.showAlert
+import com.tcc.app.extention.showSnackBar
 import com.tcc.app.modal.RejectReasonDataItem
 import com.tcc.app.modal.RejectReasonListModel
 import com.tcc.app.network.AutoDisposable
@@ -36,7 +37,7 @@ import tech.hibk.searchablespinnerlibrary.SearchableItem
 class RejectReasonDailog(context: Context) : BlurDialogFragment(), LifecycleOwner {
     private val autoDisposable = AutoDisposable()
     private lateinit var session: SessionManager
-    var ReasonID: String = ""
+    var ReasonID: String = "0"
     var ReasonNameList: ArrayList<String> = ArrayList()
     var ReasonListArray: ArrayList<RejectReasonDataItem> = ArrayList()
     var adapterReason: ArrayAdapter<String>? = null
@@ -82,12 +83,19 @@ class RejectReasonDailog(context: Context) : BlurDialogFragment(), LifecycleOwne
         ReasonSpinnerListner()
 
         btnSubmit.setOnClickListener {
-            listener.onItemCLicked(ReasonID)
-            dismissAllowingStateLoss()
+
+            if (ReasonID.equals("0")) {
+                root.showSnackBar("Please Select Reason")
+
+            } else {
+
+                listener.onItemCLicked(ReasonID.toString())
+                dismissAllowingStateLoss()
+            }
+
         }
-
-
     }
+
 
     fun validation() {
         when {
@@ -153,12 +161,20 @@ class RejectReasonDailog(context: Context) : BlurDialogFragment(), LifecycleOwne
                 override fun onSuccess(response: RejectReasonListModel) {
                     //     hideProgressbar()
 
-                    ReasonListArray?.addAll(response.data)
+                    ReasonListArray.addAll(response.data)
                     var myList: MutableList<SearchableItem> = mutableListOf()
+
+                    ReasonNameList.add(getString(R.string.select_reason))
+                    myList.add(SearchableItem(0, getString(R.string.select_reason)))
 
                     for (items in response.data.indices) {
                         ReasonNameList.add(response.data.get(items).reason.toString())
-                        myList.add(SearchableItem(items.toLong(), ReasonNameList.get(items)))
+                        myList.add(
+                            SearchableItem(
+                                items.toLong() + 1,
+                                ReasonNameList.get(items + 1)
+                            )
+                        )
                     }
                     ReasonIteams = myList
 

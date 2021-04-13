@@ -54,7 +54,8 @@ class TeamDefinitionListAdapter(
 
             txtCompanyName.text = data.siteUserFrindlyName
             textName.text = data.employeeName
-
+            txtEstimationNo.text = data.estimateNo
+            txtType.text = data.type
             txtStartDate.text = data.startDate
             txtEndDate.text = data.endDate
 

@@ -564,13 +564,13 @@ class AddLeadActivity : BaseActivity(), SiteAddressAdapter.OnItemSelected {
             jsonBody.put("LeadType", leadType)
             jsonBody.put("SiteName", edtSiteName.getValue())
 
-            if (intent.getStringExtra(Constant.SERVICE_ID).equals("1")) {
-                jsonBody.put("WorkingHours", edtWorkingHour.getValue())
-                jsonBody.put("WorkingDays", edtWorkingDays.getValue())
-            } else {
-                jsonBody.put("WorkingHours", "1")
-                jsonBody.put("WorkingDays", "1")
-            }
+//            if (intent.getStringExtra(Constant.SERVICE_ID).equals("1")) {
+//                jsonBody.put("WorkingHours", edtWorkingHour.getValue())
+//                jsonBody.put("WorkingDays", edtWorkingDays.getValue())
+//            } else {
+//                jsonBody.put("WorkingHours", "1")
+//                jsonBody.put("WorkingDays", "1")
+//            }
             jsonBody.put("StartDate", formatDateFromString(edtSdate.getValue()))
             jsonBody.put("EndDate", formatDateFromString(edtEdate.getValue()))
             jsonBody.put("ProposedDate", formatDateFromString(edtPdate.getValue()))
