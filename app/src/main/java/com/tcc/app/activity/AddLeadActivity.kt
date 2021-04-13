@@ -1,5 +1,6 @@
 package com.tcc.app.activity
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -34,6 +35,8 @@ import org.json.JSONObject
 import tech.hibk.searchablespinnerlibrary.SearchableDialog
 import tech.hibk.searchablespinnerlibrary.SearchableItem
 import java.lang.reflect.Type
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class AddLeadActivity : BaseActivity(), SiteAddressAdapter.OnItemSelected {
@@ -137,13 +140,46 @@ class AddLeadActivity : BaseActivity(), SiteAddressAdapter.OnItemSelected {
         edtPdate.setText(getCurrentDate())
 
 
-        edtSdate.setOnClickListener { showDateTimePicker(this@AddLeadActivity, edtSdate) }
-        edtEdate.setOnClickListener {
-            showNextFromStartDateTimePicker(
-                this@AddLeadActivity,
-                edtEdate,
-                edtSdate.getValue()
+        edtSdate.setOnClickListener {
+
+
+            val c = Calendar.getInstance()
+            val year = c.get(Calendar.YEAR)
+            val month = c.get(Calendar.MONTH)
+            val day = c.get(Calendar.DAY_OF_MONTH)
+
+            val dpd = DatePickerDialog(
+                this, R.style.DialogTheme,
+                { view, year, monthOfYear, dayOfMonth ->
+
+                    var selectedMonth: String = ""
+                    var selectedDay: String = ""
+                    if (dayOfMonth < 10) {
+                        selectedDay = "0" + dayOfMonth
+                    } else
+                        selectedDay = dayOfMonth.toString()
+
+
+                    if (monthOfYear < 10) {
+                        selectedMonth = "0" + (monthOfYear + 1)
+                    } else
+                        selectedMonth = monthOfYear.toString()
+
+                    edtSdate.setText("" + selectedDay + "/" + selectedMonth + "/" + year)
+                    edtEdate.setText("" + selectedDay + "/" + selectedMonth + "/" + year)
+                },
+                year,
+                month,
+                day
             )
+            dpd.show()
+            dpd.getButton(DatePickerDialog.BUTTON_NEGATIVE)
+                .setTextColor(this.getColorCompat(R.color.colorPrimary))
+            dpd.getButton(DatePickerDialog.BUTTON_POSITIVE)
+                .setTextColor(this.getColorCompat(R.color.colorPrimary))
+        }
+        edtEdate.setOnClickListener {
+            showNextFromStartDateTimePicker(this@AddLeadActivity, edtEdate, edtSdate.getValue())
         }
         edtPdate.setOnClickListener { showDateTimePicker(this@AddLeadActivity, edtPdate) }
 

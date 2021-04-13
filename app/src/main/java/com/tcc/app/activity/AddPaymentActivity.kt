@@ -49,10 +49,10 @@ class AddPaymentActivity : BaseActivity() {
             edtEstimateno.setText(invoiceDataItem?.invoiceNo)
             var df = DecimalFormat("##.##")
 
-            var subTot: Float =
-                invoiceDataItem?.totalAmount!!.toFloat() - (invoiceDataItem?.cGST?.toFloat()!! + invoiceDataItem?.sGST?.toFloat()!! + invoiceDataItem?.iGST?.toFloat()!!)
+            var subTot: Double =
+                invoiceDataItem?.totalAmount!!.toDouble() - (invoiceDataItem?.cGST?.toDouble()!! + invoiceDataItem?.sGST?.toDouble()!! + invoiceDataItem?.iGST?.toDouble()!!)
 
-            total_basic_amount.text = getString(R.string.RS) + " " + df.format(subTot).toString()
+            total_basic_amount.text = getString(R.string.RS) + " " + String.format("%.2f", subTot)
             remaining_basic_payment.text =
                 getString(R.string.RS) + " " + invoiceDataItem?.remainingPayment
 
