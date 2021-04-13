@@ -2,7 +2,7 @@ package com.tcc.app.utils
 
 object Constant {
     const val NA = "NA"
-    const val NOTIFICATION_TYPE = "notification_type"
+    const val NOTIFICATION_TYPE = "click_action"
     const val ISCHECKED = "isChecked"
     const val LEAD = "lead"
     const val SITE = "site"

@@ -1,5 +1,6 @@
 package com.tcc.app.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -192,76 +193,81 @@ class HomeActivity : AppCompatActivity() {
         super.onBackPressed()
     }
 
-    /* override fun onNewIntent(intent: Intent?) {
-         super.onNewIntent(intent)
-       //  handleRedirection(intent)
-     }*/
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        handleRedirection(intent)
+    }
 
-    /* private fun handleRedirection(intent: Intent?) {
-         val extras = intent?.extras
+    private fun handleRedirection(intent: Intent?) {
+        val extras = intent?.extras
 
-         if (intent != null && intent.hasExtra(Constant.DATA)) {
-             val bundle = intent.getBundleExtra(Constant.DATA)
+        if (intent != null && intent.hasExtra(Constant.DATA)) {
+            val bundle = intent.getBundleExtra(Constant.DATA)
 
-             val type = bundle?.getString(Constant.NOTIFICATION_TYPE)
-             if (type.equals("FEATURED_VIDEO", true) ||
-                 type.equals("GOT_VOTE", true)
-             ) {
-                 val intentToBeRedirect = Intent(this, UserProfileActivity::class.java)
+            val type = bundle?.getString(Constant.NOTIFICATION_TYPE)
+            if (type.equals("Site", true)
+            ) {
+
+                val navView: NavigationView = findViewById(R.id.nav_view)
+                val view: View = navView.findViewById(R.id.nav_site)
+                view.performClick()
+
+                /* val intentToBeRedirect = Intent(this, UserProfileActivity::class.java)
                  intentToBeRedirect.putExtra(Constant.USER_ID, bundle.getString(Constant.USER_ID))
                  intentToBeRedirect.putExtra(Constant.DATA, bundle.getString(Constant.DATA))
-                 startActivity(intentToBeRedirect)
-             } else if (type.equals("MEDIA_ACCEPTED", true)
-                 || type.equals("DEEP_LINK_POST", true)
-                 || type.equals("ADD_POST", true)
-             ) {
-                 val intentToBeRedirect = Intent(this, PostDetailsActivity::class.java)
-                 intentToBeRedirect.putExtra(Constant.MEDIA_ID, bundle.getString(Constant.MEDIA_ID))
-                 intentToBeRedirect.putExtra(Constant.DATA, bundle.getString(Constant.DATA))
-                 intentToBeRedirect.putExtra(
-                     Constant.USER_ID, bundle.getString(Constant.USER_ID)
-                 )
-                 startActivity(intentToBeRedirect)
-             } else if (type.equals("EVALUATE", true)
-                 || type.equals("HOST_STATUS_APPROVED", true)
-             ) {
-                 val intentToBeRedirect = Intent(this, UserProfileActivity::class.java)
-                 intentToBeRedirect.putExtra(Constant.DATA, bundle.getString(Constant.DATA))
-                 intentToBeRedirect.putExtra(Constant.USER_ID, session.user?._id)
-                 intentToBeRedirect.putExtra(Constant.AS_HOST, true)
-                 startActivity(intentToBeRedirect)
-             } else if (type.equals("DAILY_TICKETS", true)) {
-                 val intentToBeRedirect = Intent(this, MyVotingAllTickets::class.java)
-                 startActivity(intentToBeRedirect)
-             } else if (type.equals("CONTEST_DETAILS", true)
-                 || type.equals("DEEP_LINK_CONTEST_DETAILS", true)
-                 || type.equals("CONTEST_WINNER_PUSH", true)
-                 || type.equals("CONTEST_WINNER", true)
-             ) {
-                 Handler().postDelayed({
-                     val bundleTobeSend = Bundle()
-                     bundleTobeSend.putString(Constant.DATA, bundle.getString(Constant.DATA))
-                     if (type.equals("CONTEST_WINNER_PUSH", true)
-                         || type.equals("CONTEST_WINNER", true)
-                     ) {
-                         bundleTobeSend.putInt(Constant.POSITION, 1)
-                     }
-                     //bundleTobeSend.putString(Constant.GLOBAL, bundle.getString(Constant.DATA))
-                     val fragment = FragmentContest()
-                     fragment.arguments = bundleTobeSend
-                     showFragment(fragment)
-                 }, 1000)
-             } else if (type.equals("UNENROLL_PUSH", true)) {
-                 val dialog = UnenrollNotificationDialog.newInstance(this)
-                 bundle.putString(Constant.DATA, bundle.getString(Constant.DATA))
-                 bundle.putString(Constant.MSG, bundle.getString(Constant.MSG))
-                 bundle.putString(Constant.TITLE, bundle.getString(Constant.TITLE))
-                 bundle.putString(Constant.FNAME, bundle.getString(Constant.FNAME))
-                 bundle.putString(Constant.LNAME, bundle.getString(Constant.LNAME))
-                 dialog.arguments = bundle
-                 dialog.show(supportFragmentManager, "profile")
-             }
+                 startActivity(intentToBeRedirect)*/
+            }
+            /*  else if (type.equals("MEDIA_ACCEPTED", true)
+                  || type.equals("DEEP_LINK_POST", true)
+                  || type.equals("ADD_POST", true)
+              ) {
+                  val intentToBeRedirect = Intent(this, PostDetailsActivity::class.java)
+                  intentToBeRedirect.putExtra(Constant.MEDIA_ID, bundle.getString(Constant.MEDIA_ID))
+                  intentToBeRedirect.putExtra(Constant.DATA, bundle.getString(Constant.DATA))
+                  intentToBeRedirect.putExtra(
+                      Constant.USER_ID, bundle.getString(Constant.USER_ID)
+                  )
+                  startActivity(intentToBeRedirect)
+              } else if (type.equals("EVALUATE", true)
+                  || type.equals("HOST_STATUS_APPROVED", true)
+              ) {
+                  val intentToBeRedirect = Intent(this, UserProfileActivity::class.java)
+                  intentToBeRedirect.putExtra(Constant.DATA, bundle.getString(Constant.DATA))
+                  intentToBeRedirect.putExtra(Constant.USER_ID, session.user?._id)
+                  intentToBeRedirect.putExtra(Constant.AS_HOST, true)
+                  startActivity(intentToBeRedirect)
+              } else if (type.equals("DAILY_TICKETS", true)) {
+                  val intentToBeRedirect = Intent(this, MyVotingAllTickets::class.java)
+                  startActivity(intentToBeRedirect)
+              } else if (type.equals("CONTEST_DETAILS", true)
+                  || type.equals("DEEP_LINK_CONTEST_DETAILS", true)
+                  || type.equals("CONTEST_WINNER_PUSH", true)
+                  || type.equals("CONTEST_WINNER", true)
+              ) {
+                  Handler().postDelayed({
+                      val bundleTobeSend = Bundle()
+                      bundleTobeSend.putString(Constant.DATA, bundle.getString(Constant.DATA))
+                      if (type.equals("CONTEST_WINNER_PUSH", true)
+                          || type.equals("CONTEST_WINNER", true)
+                      ) {
+                          bundleTobeSend.putInt(Constant.POSITION, 1)
+                      }
+                      //bundleTobeSend.putString(Constant.GLOBAL, bundle.getString(Constant.DATA))
+                      val fragment = FragmentContest()
+                      fragment.arguments = bundleTobeSend
+                      showFragment(fragment)
+                  }, 1000)
+              } else if (type.equals("UNENROLL_PUSH", true)) {
+                  val dialog = UnenrollNotificationDialog.newInstance(this)
+                  bundle.putString(Constant.DATA, bundle.getString(Constant.DATA))
+                  bundle.putString(Constant.MSG, bundle.getString(Constant.MSG))
+                  bundle.putString(Constant.TITLE, bundle.getString(Constant.TITLE))
+                  bundle.putString(Constant.FNAME, bundle.getString(Constant.FNAME))
+                  bundle.putString(Constant.LNAME, bundle.getString(Constant.LNAME))
+                  dialog.arguments = bundle
+                  dialog.show(supportFragmentManager, "profile")
+              }*/
          }
-     }*/
+    }
 
 }
