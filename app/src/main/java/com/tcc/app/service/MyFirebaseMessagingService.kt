@@ -33,8 +33,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         super.onMessageReceived(remoteMessage)
         Logger.e(TAG, "From: " + remoteMessage.from)
 
-        println("data:--- "+Gson().toJson(remoteMessage.data))
-        println("notification:-- "+Gson().toJson(remoteMessage.notification))
+        println("data:--- " + Gson().toJson(remoteMessage.data))
+        println("notification:-- " + Gson().toJson(remoteMessage.notification))
 
         if (remoteMessage.data.isNotEmpty()) {
             val title = remoteMessage.data["title"]
@@ -68,7 +68,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         if (data != null) {
             val bundle = Bundle()
-            val userId = data["userId"]
+            //  val userId = data["userId"]
             if (title != null) bundle.putString(Constant.TITLE, title)
             intent.putExtra(Constant.DATA, bundle)
         }

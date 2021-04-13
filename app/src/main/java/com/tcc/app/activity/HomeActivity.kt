@@ -205,7 +205,7 @@ class HomeActivity : AppCompatActivity() {
             val bundle = intent.getBundleExtra(Constant.DATA)
 
             val type = bundle?.getString(Constant.NOTIFICATION_TYPE)
-            if (type.equals("Site", true)
+            if (type.equals("AddSite", true)
             ) {
 
                 val navView: NavigationView = findViewById(R.id.nav_view)
