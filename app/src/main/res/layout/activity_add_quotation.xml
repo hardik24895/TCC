@@ -201,6 +201,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:background="@drawable/bg_spinner"
+                        android:clickable="true"
+                        android:focusable="false"
                         android:orientation="vertical"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -216,6 +218,7 @@
                             android:focusable="false"
                             android:minHeight="@dimen/_30sdp"
                             android:padding="@dimen/_5sdp"
+                            android:visibility="invisible"
                             app:cancelButtonColor="@color/black"
                             app:cancelButtontext="CLOSE"
                             app:dialogTitle="@string/select_city"
@@ -230,10 +233,31 @@
                             android:id="@+id/view3"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:visibility="invisible"
                             app:layout_constraintBottom_toBottomOf="@+id/spCity"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/spCity" />
+
+
+                        <com.tcc.app.customview.TextviewReguler
+                            android:id="@+id/tvCity"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:gravity="center_vertical"
+                            android:paddingStart="@dimen/_12sdp"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_12ssp"
+                            app:layout_constraintBottom_toBottomOf="@+id/spCity"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/spCity" />
+
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -243,6 +267,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:background="@drawable/bg_spinner"
+                        android:clickable="false"
+                        android:focusable="false"
                         android:orientation="vertical"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -257,6 +283,7 @@
                             android:clickable="false"
                             android:focusable="false"
                             android:padding="@dimen/_5sdp"
+                            android:visibility="invisible"
                             app:cancelButtonColor="@color/black"
                             app:cancelButtontext="CLOSE"
                             app:dialogTitle="@string/select_state"
@@ -271,10 +298,29 @@
                             android:id="@+id/view4"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:visibility="invisible"
                             app:layout_constraintBottom_toBottomOf="@+id/spState"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/spState" />
+
+                        <com.tcc.app.customview.TextviewReguler
+                            android:id="@+id/tvState"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:gravity="center_vertical"
+                            android:paddingStart="@dimen/_12sdp"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_12ssp"
+                            app:layout_constraintBottom_toBottomOf="@+id/spState"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/spState" />
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -283,6 +329,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/_8sdp"
+
                         android:hint="@string/pincode"
                         app:hintTextColor="@color/black"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -1066,8 +1113,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/_10sdp"
                         android:hint="@string/terms"
-                        app:hintTextColor="@color/black"
                         android:scrollbars="vertical"
+                        app:hintTextColor="@color/black"
 
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -1079,15 +1126,15 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/colorWhite"
-                            android:fontFamily="@font/opensans_regular"
-                            android:inputType="textMultiLine"
-                            android:lines="5"
-                            android:maxLength="1000"
                             android:editable="true"
                             android:enabled="true"
                             android:focusable="true"
-                            android:maxLines="10"
+                            android:fontFamily="@font/opensans_regular"
+                            android:inputType="textMultiLine"
                             android:isScrollContainer="true"
+                            android:lines="5"
+                            android:maxLength="1000"
+                            android:maxLines="10"
                             android:minLines="6"
                             android:textColor="@color/black"
                             android:textColorHint="@color/black" />

@@ -123,6 +123,9 @@ class AddQuotationActivity : BaseActivity() {
             btnAddUser.setText("ADD Item")
             //         }
 
+            tvCity.text = siteListItem?.cityName
+            tvState.text = siteListItem?.stateName
+
 
             txtService.text = serviceName
             serviceId = siteListItem!!.serviceID.toString()
