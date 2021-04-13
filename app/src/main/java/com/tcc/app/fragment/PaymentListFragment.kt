@@ -157,7 +157,7 @@ class PaymentListFragment() : BaseFragment(), PaymentListAdapter.OnItemSelected 
             jsonBody.put("PageSize", Constant.PAGE_SIZE)
             jsonBody.put("CurrentPage", page)
             jsonBody.put("InvoiceID", -1)
-            jsonBody.put("CustomerID", -1)
+            jsonBody.put("CustomerID", customerId)
             jsonBody.put("StartDate", formatDateFromString(startDate))
             jsonBody.put("EndDate", formatDateFromString(endDate))
             jsonBody.put("InvoiceNumber", invoiceNum)

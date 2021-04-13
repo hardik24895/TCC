@@ -55,6 +55,9 @@ class AddTeamDefinitionActivity : BaseActivity() {
         supportActionBar?.hide()
         setContentView(R.layout.activity_add_team_definition)
 
+
+
+
         if (intent.hasExtra(Constant.DATA)) {
             quotationItem = intent.getSerializableExtra(Constant.DATA) as QuotationItem
 
@@ -62,22 +65,25 @@ class AddTeamDefinitionActivity : BaseActivity() {
             edtEstimateno.setText(quotationItem!!.estimateNo)
             edStartTime.setText(quotationItem!!.startTime)
             edEndTime.setText(quotationItem!!.endTime)
+
+            edStartDate.setText(quotationItem!!.startDate.toString().replace("-", "/"))
+            edEndDate.setText(quotationItem!!.endDate.toString().replace("-", "/"))
         }
 
+        if (edStartDate.getValue().isEmpty())
+            edStartDate.setText(getCurrentDate())
+        if (edEndDate.getValue().isEmpty())
+            edEndDate.setText(getCurrentDate())
         if (edStartTime.getValue().isEmpty())
             edStartTime.setText("09:30")
         if (edEndTime.getValue().isEmpty())
             edEndTime.setText("18:30")
+
         imgBack.visible()
         imgBack.setOnClickListener {
             finish()
         }
         txtTitle.text = getString(R.string.team_definition)
-
-
-        edStartDate.setText(getCurrentDate())
-        edEndDate.setText(getCurrentDate())
-
 
         getUserTypeList()
         userTypeSpinnerListner()

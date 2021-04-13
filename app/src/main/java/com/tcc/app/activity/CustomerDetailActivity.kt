@@ -36,6 +36,14 @@ class CustomerDetailActivity : BaseActivity() {
 
     }
 
+    companion object {
+        var startDate: String = ""
+        var endDate: String = ""
+        var invoiceNum: String = ""
+        var siteName: String = ""
+    }
+
+
     private fun clickEvent() {
         imgBack.setOnClickListener { onBackPressed() }
 
@@ -51,9 +59,20 @@ class CustomerDetailActivity : BaseActivity() {
                     Animatoo.animateCard(this)
                 }
             }
+
+
 //            } else {
 //                goToActivity<AddQuotationActivity>()
 //            }
+        }
+        imgFilter.setOnClickListener {
+            if (view_pager.currentItem == 7) {
+
+                val intent = Intent(this, SearchActivity::class.java)
+                intent.putExtra(Constant.DATA, Constant.PAYMENT)
+                startActivity(intent)
+                Animatoo.animateCard(this)
+            }
         }
 
     }
@@ -72,7 +91,7 @@ class CustomerDetailActivity : BaseActivity() {
         viewPageradapter?.addFragment(CustomerAttendanceListFragment(customerData), "Attendance")
         //   }
         //   if (checkUserRole(session.roleData.data?.invoice?.isView.toString(), this)) {
-        viewPageradapter?.addFragment(InvoiceFragment(customerData), "Invoice")
+        viewPageradapter?.addFragment(CustomerInvoiceFragment(customerData), "Invoice")
         //}
         //      if (checkUserRole(session.roleData.data?.payment?.isView.toString(), this)) {
         viewPageradapter?.addFragment(PaymentListFragment(customerData), "Payment")
@@ -84,10 +103,14 @@ class CustomerDetailActivity : BaseActivity() {
 
         tabs!!.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-                if (tab.position != 1) {
-                    imgAdd.invisible()
-                } else {
+                imgAdd.invisible()
+                imgFilter.invisible()
+
+                if (tab.position == 1) {
                     imgAdd.visible()
+                }
+                if (tab.position == 7) {
+                    imgFilter.visible()
                 }
 
 
@@ -101,6 +124,14 @@ class CustomerDetailActivity : BaseActivity() {
 
             }
         })
+    }
+
+    override fun onResume() {
+        if (QuotationFragment.isFromQuotation) {
+            finish()
+        }
+
+        super.onResume()
     }
 }
 

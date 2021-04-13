@@ -63,19 +63,19 @@ class SiteListAdapter(
             txtEndDate.text = data.endDate
 
 
-            if (!data.serviceID.equals("1")) {
-                txtWorkingDaytitle.invisible()
-                txtDay.invisible()
-                txtWorkingHrstitle.invisible()
-                txtHRS.invisible()
-                view2.invisible()
-            } else {
-                txtWorkingDaytitle.visible()
-                txtDay.visible()
-                txtWorkingHrstitle.visible()
-                txtHRS.visible()
-                view2.visible()
-            }
+            // if (!data.serviceID.equals("1")) {
+            txtWorkingDaytitle.invisible()
+            txtDay.invisible()
+            txtWorkingHrstitle.invisible()
+            txtHRS.invisible()
+            view2.invisible()
+            // } else {
+            //     txtWorkingDaytitle.visible()
+            //     txtDay.visible()
+            //     txtWorkingHrstitle.visible()
+            //     txtHRS.visible()
+            //     view2.visible()
+            // }
 
 
             var address = data.address

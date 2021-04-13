@@ -80,20 +80,18 @@ class AddSiteActivity : BaseActivity(), SiteAddressAdapter1.OnItemSelected {
         btnSubmit.setOnClickListener { validation(false) }
         if (intent.hasExtra(Constant.DATA)) {
             customerData = intent.getSerializableExtra(Constant.DATA) as CustomerDataItem
-            // edtCompanyName.setText(customerData!!.name)
             cityID = customerData!!.cityID.toString()
         }
 
         if (intent.hasExtra(Constant.DATA_LEAD)) {
             leadItem = intent.getSerializableExtra(Constant.DATA_LEAD) as LeadItem
-            //  edtCompanyName.setText(leadItem!!.name)
             cityID = leadItem!!.cityID.toString()
         }
 
         if (intent.hasExtra(Constant.CUSTOMER_NAME)) {
 
-            //  edtCompanyName.setText(intent.getStringExtra(Constant.CUSTOMER_NAME))
         }
+
 
         setupRecyclerView()
         btnAddQuatation.setOnClickListener { validation(true) }
@@ -135,7 +133,20 @@ class AddSiteActivity : BaseActivity(), SiteAddressAdapter1.OnItemSelected {
         })
 
         getSiteList()
+        for (i in session.stetList.indices) {
 
+            if (intent.hasExtra(Constant.DATA_LEAD)) {
+                if (session.stetList.get(i).stateID.toString().equals(leadItem!!.stateID)) {
+                    spState.setSelection(i)
+                    break
+                }
+            } else {
+                if (session.stetList.get(i).stateID.toString().equals(customerData!!.stateID)) {
+                    spState.setSelection(i)
+                    break
+                }
+            }
+        }
 
 
         bottomSheetBehavior = BottomSheetBehavior.from(bottom)
@@ -147,26 +158,6 @@ class AddSiteActivity : BaseActivity(), SiteAddressAdapter1.OnItemSelected {
             else
                 bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_EXPANDED
         }
-
-
-        for (i in session.stetList.indices) {
-            if (!leadItem!!.equals(null)) {
-
-                if (session.stetList.get(i).stateID.toString().equals(leadItem!!.stateID)) {
-                    spState.setSelection(i)
-                    break
-                }
-            } else {
-                if (cityListArray.get(i).cityID.equals(customerData!!.stateID)) {
-                    spCity.setSelection(i)
-
-                    break
-                }
-            }
-
-        }
-
-
     }
 
 
@@ -309,6 +300,7 @@ class AddSiteActivity : BaseActivity(), SiteAddressAdapter1.OnItemSelected {
                         if (cityID.equals("")) {
                             spCity.setSelection(-1)
                         }
+
 
                     } else {
 
@@ -654,6 +646,14 @@ class AddSiteActivity : BaseActivity(), SiteAddressAdapter1.OnItemSelected {
         edtWorkingDays.setText(data.workingDays)
         edtWorkingHour.setText(data.workingHours)
 
+
+        for (i in serviceListArray.indices) {
+            if (serviceListArray.get(i).serviceID.equals(data.serviceID)) {
+                spService.setSelection(i + 1)
+                break
+            }
+        }
+
         edtSiteName.isEnabled = false
         edtGST.isEnabled = false
         edtAddress.isEnabled = false
@@ -721,6 +721,8 @@ class AddSiteActivity : BaseActivity(), SiteAddressAdapter1.OnItemSelected {
             )
         }
         edtPdate.setOnClickListener { showDateTimePicker(this@AddSiteActivity, edtPdate) }
+
+        spService.setSelection(0)
 
         view.isClickable = true
         view2.isClickable = true
