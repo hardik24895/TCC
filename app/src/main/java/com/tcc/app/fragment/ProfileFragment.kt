@@ -1,10 +1,15 @@
 package com.tcc.app.fragment
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.tcc.app.R
-import com.tcc.app.extention.*
+import com.tcc.app.extention.getValue
+import com.tcc.app.extention.isEmpty
+import com.tcc.app.extention.showAlert
+import com.tcc.app.extention.showSnackBar
 import com.tcc.app.modal.LoginModal
 import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
@@ -31,7 +36,7 @@ class ProfileFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setHomeScreenTitle(requireActivity(), getString(R.string.menu_profile))
+        // setHomeScreenTitle(requireActivity(), getString(R.string.menu_profile))
 
 
         edtFirstName.setText(session.user.data?.firstName)
@@ -87,11 +92,9 @@ class ProfileFragment : BaseFragment() {
         }
     }
 
-
     override fun onDestroy() {
         super.onDestroy()
-
-        setHomeScreenTitle(requireActivity(), getString(R.string.menu_home))
+        // setHomeScreenTitle(requireActivity(), getString(R.string.menu_home))
     }
 
     fun UpdateProfile() {
@@ -148,29 +151,5 @@ class ProfileFragment : BaseFragment() {
                 }
 
             }).addTo(autoDisposable)
-    }
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(false)
-    }
-
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        menu.findItem(R.id.action_add).isVisible = false
-        menu.findItem(R.id.action_filter).isVisible = false
-        super.onPrepareOptionsMenu(menu)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.home, menu)
-
-        val filter = menu.findItem(R.id.action_filter)
-        filter.setVisible(false)
-
-        val add = menu.findItem(R.id.action_add)
-        add.setVisible(false)
     }
 }

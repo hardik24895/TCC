@@ -77,13 +77,14 @@ fun AppCompatActivity.replaceFragments(fragments: List<Fragment>, containerId: I
 }
 
 fun AppCompatActivity.replaceFragment(fragment: Fragment, containerId: Int) {
+
     val ft = supportFragmentManager.beginTransaction()
     ft.replace(containerId, fragment)
     ft.commitAllowingStateLoss()
 }
 
 fun Fragment.replaceFragment(fragment: Fragment, containerId: Int) {
-    val ft = fragmentManager?.beginTransaction()
+    val ft = childFragmentManager?.beginTransaction()
     ft?.replace(containerId, fragment)
     ft?.commitAllowingStateLoss()
 }
@@ -93,6 +94,7 @@ fun AppCompatActivity.addFragment(
     containerId: Int,
     addToStack: Boolean = true
 ) {
+
     val ft = supportFragmentManager.beginTransaction()
     ft.add(containerId, fragment)
     if (addToStack) ft.addToBackStack(fragment.javaClass.name)
@@ -100,7 +102,7 @@ fun AppCompatActivity.addFragment(
 }
 
 fun Fragment.addFragment(fragment: Fragment, containerId: Int, addToStack: Boolean = true) {
-    val ft = fragmentManager?.beginTransaction()
+    val ft = childFragmentManager?.beginTransaction()
     ft?.add(containerId, fragment)
     if (addToStack) ft?.addToBackStack(fragment.javaClass.name)
     ft?.commitAllowingStateLoss()
