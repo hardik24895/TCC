@@ -192,8 +192,21 @@ fun getCurentTime(): String {
     val c = Calendar.getInstance()
     val hour = c.get(Calendar.HOUR_OF_DAY)
     val minute = c.get(Calendar.MINUTE)
+    var mytime = ""
+    if (hour > 10)
+        mytime = hour.toString()
+    else {
+        mytime = "0" + hour.toString()
+    }
 
-    return hour.toString() + ":" + minute.toString()
+
+    if (minute > 10)
+        mytime = mytime + ":" + minute.toString()
+    else {
+        mytime = mytime + ":0" + minute.toString()
+    }
+
+    return mytime
 }
 
 fun showDateTimePicker(requireActivity: Activity, edittext: EditText) {

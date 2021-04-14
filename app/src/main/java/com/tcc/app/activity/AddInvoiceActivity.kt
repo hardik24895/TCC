@@ -365,6 +365,7 @@ class AddInvoiceActivity : BaseActivity() {
                                     edHSN.setText(invoiceUserList!!.get(iteam).hSNNo)
                                     edQty.setText(invoiceUserList!!.get(iteam).qty)
                                     edRate.setText(invoiceUserList!!.get(iteam).rate)
+                                    break
 
                                 } else {
                                     usertypeId =
@@ -373,11 +374,24 @@ class AddInvoiceActivity : BaseActivity() {
                                     edQty.setText("1")
                                     edRate.setText(userTypeListArray!!.get(position - 1).rate)
 
+//                                        for (i in invoiceUserList.indices) {
+//                                            if (userTypeListArray!!.get(position - 1).usertypeID.toString()
+//                                                    .equals(invoiceUserList.get(i).usertypeID)
+//                                            ) {
+//                                                usertypeId =
+//                                                    userTypeListArray!!.get(position - 1).usertypeID.toString()
+//                                                edHSN.setText(invoiceUserList.get(i).hSNNo)
+//                                                val qua =
+//                                                    invoiceUserList.get(i).qty!!.toBigDecimal()
+//                                                edQty.setText(qua.toString())
+//                                                edRate.setText(invoiceUserList.get(i).rate)
+//
+//                                            }
+//                                        }
+//                                    } else {
                                     for (i in quotationIteam?.item?.user!!.indices) {
                                         if (userTypeListArray!!.get(position - 1).usertypeID.toString()
                                                 .equals(quotationIteam?.item?.user!!.get(i)!!.usertypeID)
-
-
                                         ) {
                                             usertypeId =
                                                 userTypeListArray!!.get(position - 1).usertypeID.toString()
@@ -390,6 +404,7 @@ class AddInvoiceActivity : BaseActivity() {
                                             edRate.setText(quotationIteam?.item?.user!!.get(i)!!.rate)
 
                                         }
+//                                        }
                                     }
                                 }
                             }
@@ -493,7 +508,7 @@ class AddInvoiceActivity : BaseActivity() {
                                     edHSNChild.setText(invoiceUserList.get(iteam).hSNNo)
                                     edQtyChild.setText(invoiceUserList.get(iteam).qty)
                                     edRateChild.setText(invoiceUserList.get(iteam).rate)
-
+                                    break
                                 } else {
                                     // usertypeChildId = userTypeListArray!!.get(position - 1).usertypeID.toString()
                                     edHSNChild.setText(userTypeListArray!!.get(position - 1).hSNNo)
@@ -1289,7 +1304,6 @@ class AddInvoiceActivity : BaseActivity() {
             }
         }
     }
-
 
     fun AddInvoice() {
         var result = ""
