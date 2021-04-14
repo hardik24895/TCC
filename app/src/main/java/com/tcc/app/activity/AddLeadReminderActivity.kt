@@ -19,6 +19,7 @@ import kotlinx.android.synthetic.main.activity_add_lead_reminder.*
 import kotlinx.android.synthetic.main.toolbar_with_back_arrow.*
 import org.json.JSONException
 import org.json.JSONObject
+import java.util.*
 
 class AddLeadReminderActivity : BaseActivity() {
     var reminderTime: String = ""
@@ -43,9 +44,10 @@ class AddLeadReminderActivity : BaseActivity() {
         edtReminderDate.setText(getCurrentDate())
         edtProcessDate.setText(getCurrentDate())
 
-        edtReminderTime.setText(getCurentTime(getCurrentDateTime()))
+        edtReminderTime.setText(getCurentTime())
 
-        edtProcessTime.setText(getCurentTime(getCurrentDateTime()))
+        edtProcessTime.setText(getCurentTime())
+
 
         val namepass: Array<String> = edtReminderTime.getValue().split(":").toTypedArray()
         val hours = namepass[0]

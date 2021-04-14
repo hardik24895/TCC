@@ -34,7 +34,9 @@ import org.json.JSONObject
 class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
 
     var adapter: LeadAdapter? = null
-
+    var add: MenuItem? = null
+    var filter: MenuItem? = null
+    lateinit var inflater: MenuInflater
     private val list: MutableList<LeadItem> = mutableListOf()
     var page: Int = 1
     var hasNextPage: Boolean = true
@@ -165,11 +167,31 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
         dialog.show(childFragmentManager, "YesNO")
     }
 
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.home, menu)
-        val filter = menu.findItem(R.id.action_filter)
-        filter.setVisible(true)
+
         super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.home, menu)
+
+        filter = menu.findItem(R.id.action_filter)
+        filter?.setVisible(true)
+
+        add = menu.findItem(R.id.action_add)
+        add?.setVisible(true)
+
+    }
+
+    override fun onDestroyOptionsMenu() {
+
+        add?.setVisible(false)
+        filter?.setVisible(false)
+
+        super.onDestroyOptionsMenu()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -194,10 +216,6 @@ class LeadFragment : BaseFragment(), LeadAdapter.OnItemSelected {
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
 
     override fun onResume() {
         page = 1

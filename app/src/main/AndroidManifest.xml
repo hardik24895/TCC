@@ -33,6 +33,7 @@
             android:name="com.tcc.app.activity.HomeActivity"
             android:label="@string/title_activity_home"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"
             android:theme="@style/Theme.RMEnterPrise.NoActionBar" />
 
         <activity

@@ -21,6 +21,7 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.messaging.FirebaseMessaging
 import com.tcc.app.R
 import com.tcc.app.extention.addFragment
+import com.tcc.app.extention.replaceFragment
 import com.tcc.app.fragment.ProfileMainFragment
 import com.tcc.app.fragment.QuotationFragment
 import com.tcc.app.utils.Constant
@@ -82,7 +83,16 @@ class HomeActivity : AppCompatActivity() {
 
 
         nav_main.setOnClickListener {
-            this.addFragment(ProfileMainFragment(), R.id.nav_host_fragment)
+
+            val navView: NavigationView = findViewById(R.id.nav_view)
+            val view: View = navView.findViewById(R.id.nav_home)
+            view.performClick()
+
+            if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+                this.addFragment(ProfileMainFragment(), R.id.nav_host_fragment)
+            } else {
+                this.replaceFragment(ProfileMainFragment(), R.id.nav_host_fragment)
+            }
             drawerLayout.closeDrawers()
         }
 
@@ -188,9 +198,8 @@ class HomeActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-
-
         super.onBackPressed()
+
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -267,7 +276,7 @@ class HomeActivity : AppCompatActivity() {
                   dialog.arguments = bundle
                   dialog.show(supportFragmentManager, "profile")
               }*/
-         }
+        }
     }
 
 }

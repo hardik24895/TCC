@@ -56,31 +56,49 @@ class ProfileMainFragment : BaseFragment() {
         tabs.setupWithViewPager(viewPager, true)
 
     }
+    /*  override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+          super.onCreateOptionsMenu(menu, inflater)
+          inflater.inflate(R.menu.home, menu)
+          var filter = menu.findItem(R.id.action_filter)
+          filter?.setVisible(false)
+          var add = menu.findItem(R.id.action_add)
+          add?.setVisible(false)
+         //menu.clear()
+      }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        /* inflater.inflate(R.menu.home, menu)
-         var filter = menu.findItem(R.id.action_filter)
-         filter?.setVisible(false)
-         var add = menu.findItem(R.id.action_add)
-         add?.setVisible(false)*/
-        super.onCreateOptionsMenu(menu, inflater)
-        menu.clear();
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_add -> {
-                return true
-            }
-            R.id.action_filter -> {
-                return true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
+      override fun onOptionsItemSelected(item: MenuItem): Boolean {
+          return when (item.itemId) {
+              R.id.action_add -> {
+                  return true
+              }
+              R.id.action_filter -> {
+                  return true
+              }
+              else -> super.onOptionsItemSelected(item)
+          }
+      }*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
+        setHasOptionsMenu(false)
     }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        menu.findItem(R.id.action_add).isVisible = false
+        menu.findItem(R.id.action_filter).isVisible = false
+        super.onPrepareOptionsMenu(menu)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.home, menu)
+
+        val filter = menu.findItem(R.id.action_filter)
+        filter.setVisible(false)
+
+        val add = menu.findItem(R.id.action_add)
+        add.setVisible(false)
+    }
+
 }

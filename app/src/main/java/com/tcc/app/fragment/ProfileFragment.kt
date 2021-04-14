@@ -1,9 +1,7 @@
 package com.tcc.app.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.bumptech.glide.Glide
 import com.tcc.app.R
 import com.tcc.app.extention.*
@@ -89,8 +87,10 @@ class ProfileFragment : BaseFragment() {
         }
     }
 
+
     override fun onDestroy() {
         super.onDestroy()
+
         setHomeScreenTitle(requireActivity(), getString(R.string.menu_home))
     }
 
@@ -148,5 +148,29 @@ class ProfileFragment : BaseFragment() {
                 }
 
             }).addTo(autoDisposable)
+    }
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(false)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        menu.findItem(R.id.action_add).isVisible = false
+        menu.findItem(R.id.action_filter).isVisible = false
+        super.onPrepareOptionsMenu(menu)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.home, menu)
+
+        val filter = menu.findItem(R.id.action_filter)
+        filter.setVisible(false)
+
+        val add = menu.findItem(R.id.action_add)
+        add.setVisible(false)
     }
 }

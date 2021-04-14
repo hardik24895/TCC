@@ -2,7 +2,9 @@ package com.tcc.app.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.RadioButton
@@ -340,31 +342,31 @@ class HomeFragment : BaseFragment(), AutoImageSliderAdapter.OnItemSelected,
 
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        /* inflater.inflate(R.menu.home, menu)
+    /* override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+         inflater.inflate(R.menu.home, menu)
          var filter = menu.findItem(R.id.action_filter)
          filter?.setVisible(false)
          var add = menu.findItem(R.id.action_add)
-         add?.setVisible(false)*/
-        super.onCreateOptionsMenu(menu, inflater)
-        menu.clear();
-    }
+         add?.setVisible(false)
+         super.onCreateOptionsMenu(menu, inflater)
+         menu.clear();
+     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_add -> {
-                return true
-            }
-            R.id.action_filter -> {
-                return true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
+     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+         return when (item.itemId) {
+             R.id.action_add -> {
+                 return true
+             }
+             R.id.action_filter -> {
+                 return true
+             }
+             else -> super.onOptionsItemSelected(item)
+         }
+     }*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
+        setHasOptionsMenu(false)
     }
 
 }
