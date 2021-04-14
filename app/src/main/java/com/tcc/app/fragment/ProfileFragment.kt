@@ -6,7 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.tcc.app.R
-import com.tcc.app.extention.*
+import com.tcc.app.extention.getValue
+import com.tcc.app.extention.isEmpty
+import com.tcc.app.extention.showAlert
+import com.tcc.app.extention.showSnackBar
 import com.tcc.app.modal.LoginModal
 import com.tcc.app.network.CallbackObserver
 import com.tcc.app.network.Networking
@@ -33,7 +36,7 @@ class ProfileFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setHomeScreenTitle(requireActivity(), getString(R.string.menu_profile))
+        // setHomeScreenTitle(requireActivity(), getString(R.string.menu_profile))
 
 
         edtFirstName.setText(session.user.data?.firstName)
@@ -91,7 +94,7 @@ class ProfileFragment : BaseFragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        setHomeScreenTitle(requireActivity(), getString(R.string.menu_home))
+        // setHomeScreenTitle(requireActivity(), getString(R.string.menu_home))
     }
 
     fun UpdateProfile() {

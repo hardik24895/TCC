@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -20,8 +21,8 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.messaging.FirebaseMessaging
 import com.tcc.app.R
-import com.tcc.app.extention.addFragment
-import com.tcc.app.fragment.ProfileMainFragment
+import com.tcc.app.extention.goToActivity
+import com.tcc.app.fragment.ProfileMainActivity
 import com.tcc.app.fragment.QuotationFragment
 import com.tcc.app.utils.Constant
 import com.tcc.app.utils.SessionManager
@@ -55,6 +56,8 @@ class HomeActivity : AppCompatActivity() {
             }
 
             override fun onDrawerOpened(drawerView: View) {
+
+
                 txtName!!.setText("${session.user.data?.firstName} ${session.user.data?.lastName}")
                 txtEmail!!.setText("${session.user.data?.emailID}")
 
@@ -65,6 +68,7 @@ class HomeActivity : AppCompatActivity() {
                             .placeholder(com.tcc.app.R.drawable.ic_profile)
                     )
                     .into(profileImage!!)
+                //removeAllFragments(supportFragmentManager)
             }
 
             override fun onDrawerClosed(drawerView: View) {
@@ -75,6 +79,7 @@ class HomeActivity : AppCompatActivity() {
                 val inputMethodManager =
                     getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 inputMethodManager.hideSoftInputFromWindow(getCurrentFocus()?.getWindowToken(), 0)
+
             }
         })
 
@@ -82,8 +87,9 @@ class HomeActivity : AppCompatActivity() {
 
 
         nav_main.setOnClickListener {
-            this.addFragment(ProfileMainFragment(), R.id.nav_host_fragment)
+            goToActivity<ProfileMainActivity>()
             drawerLayout.closeDrawers()
+
         }
 
         val navController = findNavController(R.id.nav_host_fragment)
@@ -159,6 +165,13 @@ class HomeActivity : AppCompatActivity() {
             //  Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
         })
 
+        handleRedirection(intent)
+    }
+
+    private fun removeAllFragments(fragmentManager: FragmentManager) {
+        while (fragmentManager.getBackStackEntryCount() > 0) {
+            fragmentManager.popBackStackImmediate()
+        }
     }
 
     override fun onResume() {
@@ -193,10 +206,10 @@ class HomeActivity : AppCompatActivity() {
         super.onBackPressed()
     }
 
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-        handleRedirection(intent)
-    }
+    /* override fun onNewIntent(intent: Intent?) {
+         super.onNewIntent(intent)
+         handleRedirection(intent)
+     }*/
 
     private fun handleRedirection(intent: Intent?) {
         val extras = intent?.extras
@@ -267,7 +280,7 @@ class HomeActivity : AppCompatActivity() {
                   dialog.arguments = bundle
                   dialog.show(supportFragmentManager, "profile")
               }*/
-         }
+        }
     }
 
 }

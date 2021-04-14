@@ -147,6 +147,10 @@
         <activity
             android:name=".activity.EditUploadDocument"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".fragment.ProfileMainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.DocumentListActivity"
             android:screenOrientation="portrait" />
