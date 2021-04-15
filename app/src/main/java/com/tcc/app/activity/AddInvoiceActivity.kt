@@ -361,10 +361,10 @@ class AddInvoiceActivity : BaseActivity() {
                                 if (userTypeListArray!!.get(position - 1).usertypeID.toString()
                                         .equals(invoiceUserList.get(iteam).usertypeID)
                                 ) {
-                                    usertypeId = invoiceUserList!!.get(iteam).usertypeID.toString()
-                                    edHSN.setText(invoiceUserList!!.get(iteam).hSNNo)
-                                    edQty.setText(invoiceUserList!!.get(iteam).qty)
-                                    edRate.setText(invoiceUserList!!.get(iteam).rate)
+                                    usertypeId = invoiceUserList.get(iteam).usertypeID.toString()
+                                    edHSN.setText(invoiceUserList.get(iteam).hSNNo)
+                                    edQty.setText(invoiceUserList.get(iteam).qty)
+                                    edRate.setText(invoiceUserList.get(iteam).rate)
 
                                 } else {
                                     usertypeId =
@@ -376,8 +376,6 @@ class AddInvoiceActivity : BaseActivity() {
                                     for (i in quotationIteam?.item?.user!!.indices) {
                                         if (userTypeListArray!!.get(position - 1).usertypeID.toString()
                                                 .equals(quotationIteam?.item?.user!!.get(i)!!.usertypeID)
-
-
                                         ) {
                                             usertypeId =
                                                 userTypeListArray!!.get(position - 1).usertypeID.toString()

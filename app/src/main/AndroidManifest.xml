@@ -34,7 +34,15 @@
             android:label="@string/title_activity_home"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"
-            android:theme="@style/Theme.RMEnterPrise.NoActionBar" />
+            android:theme="@style/Theme.RMEnterPrise.NoActionBar">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+        </activity>
 
         <activity
             android:name="com.tcc.app.activity.SplashActivity"
