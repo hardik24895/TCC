@@ -65,7 +65,7 @@
                 android:id="@+id/txtContact"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="9999999999"
+                android:singleLine="true"
                 android:textColor="@color/txtgray"
                 android:textSize="@dimen/_10sdp"
                 app:layout_constraintStart_toStartOf="@+id/txtName"
@@ -75,7 +75,7 @@
                 android:id="@+id/txtEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="test@gmail.com"
+                android:singleLine="true"
                 android:textSize="@dimen/_10sdp"
                 app:layout_constraintStart_toStartOf="@+id/txtName"
                 app:layout_constraintTop_toBottomOf="@+id/txtContact" />

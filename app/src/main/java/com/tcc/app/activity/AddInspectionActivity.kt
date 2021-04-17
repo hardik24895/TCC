@@ -51,6 +51,7 @@ class AddInspectionActivity : BaseActivity(), InspectionQuesiontAdapter.OnItemSe
     var siteListArray: ArrayList<SiteListItem>? = ArrayList()
     var itemSite: List<SearchableItem>? = null
     var siteId: String = "-1"
+    var ServiceId: String = ""
 
 
     var fieldOperatorNameList: ArrayList<String>? = ArrayList()
@@ -94,7 +95,7 @@ class AddInspectionActivity : BaseActivity(), InspectionQuesiontAdapter.OnItemSe
         edtDate.setOnClickListener { showDateTimePicker(this@AddInspectionActivity, edtDate) }
         setupRecycler()
 
-        getQuationQuestionList()
+
         getUserTypeList("FieldOperator")
         getUserTypeList("OperationManager")
         getUserTypeList("QualityManager")
@@ -166,10 +167,14 @@ class AddInspectionActivity : BaseActivity(), InspectionQuesiontAdapter.OnItemSe
                 id: Long
             ) {
                 if (position != -1 && siteListArray!!.size > position - 1) {
-                    if (position == 0)
+                    if (position == 0) {
                         siteId = "-1"
-                    else
+                        ServiceId = ""
+                    } else {
                         siteId = siteListArray!!.get(position - 1).sitesID.toString()
+                        ServiceId = siteListArray!!.get(position - 1).serviceID.toString()
+                    }
+                    getQuationQuestionList()
                 }
 
             }
@@ -257,6 +262,7 @@ class AddInspectionActivity : BaseActivity(), InspectionQuesiontAdapter.OnItemSe
         var result = ""
         try {
             val jsonBody = JSONObject()
+            jsonBody.put("ServiceID", ServiceId)
             result = Networking.setParentJsonData(Constant.METHOD_QUESTION, jsonBody)
 
         } catch (e: JSONException) {

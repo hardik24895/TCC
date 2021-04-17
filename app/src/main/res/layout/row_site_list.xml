@@ -57,6 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_2sdp"
+            android:singleLine="true"
             android:text="Saggi Software Solutions"
             app:layout_constraintStart_toStartOf="@+id/txtSiteName"
             app:layout_constraintTop_toBottomOf="@+id/txtSiteName" />
