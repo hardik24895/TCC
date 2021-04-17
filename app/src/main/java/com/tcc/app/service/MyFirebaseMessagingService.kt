@@ -41,13 +41,18 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             val message = remoteMessage.data["message"]
 
             Logger.e(TAG, "Message Notification Data: " + remoteMessage.data)
-            if (session.isLoggedIn) buildNotification(title, message, remoteMessage.data)
+            if (session.isLoggedIn) buildNotification(title, message, remoteMessage.data, null)
         } else if (remoteMessage.notification != null) {
             val title = remoteMessage.notification?.title
             val message = remoteMessage.notification?.body
-
+            val clickAction = remoteMessage.notification?.clickAction
             Logger.e(TAG, "Message Notification: " + remoteMessage.notification)
-            if (session.isLoggedIn) buildNotification(title, message, null)
+            if (session.isLoggedIn) buildNotification(
+                title,
+                message,
+                remoteMessage.data,
+                clickAction
+            )
         }
     }
 
@@ -59,7 +64,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     private fun buildNotification(
         title: String?,
         message: String?,
-        data: MutableMap<String, String>?
+        data: MutableMap<String, String>?,
+        clickAction: String?
     ) {
         val intent = Intent(this, HomeActivity::class.java)
         intent.action = Intent.ACTION_MAIN
@@ -68,8 +74,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         if (data != null) {
             val bundle = Bundle()
-            //  val userId = data["userId"]
+            val event = data["event"]
             if (title != null) bundle.putString(Constant.TITLE, title)
+            if (title != null) bundle.putString(Constant.NOTIFICATION_TYPE, event)
             intent.putExtra(Constant.DATA, bundle)
         }
 

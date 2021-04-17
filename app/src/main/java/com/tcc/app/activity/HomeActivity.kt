@@ -2,6 +2,8 @@ package com.tcc.app.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -83,9 +85,6 @@ class HomeActivity : AppCompatActivity() {
             }
         })
 
-
-
-
         nav_main.setOnClickListener {
             goToActivity<ProfileMainActivity>()
             drawerLayout.closeDrawers()
@@ -165,6 +164,8 @@ class HomeActivity : AppCompatActivity() {
             //  Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
         })
 
+
+
         handleRedirection(intent)
     }
 
@@ -206,81 +207,49 @@ class HomeActivity : AppCompatActivity() {
         super.onBackPressed()
     }
 
-    /* override fun onNewIntent(intent: Intent?) {
-         super.onNewIntent(intent)
-         handleRedirection(intent)
-     }*/
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        handleRedirection(intent)
+    }
 
     private fun handleRedirection(intent: Intent?) {
         val extras = intent?.extras
+        val navController = findNavController(R.id.nav_host_fragment)
 
-        if (intent != null && intent.hasExtra(Constant.DATA)) {
-            val bundle = intent.getBundleExtra(Constant.DATA)
+        if (extras != null) {
+            for (key in intent.extras!!.keySet()) {
+                val type = intent.extras!!.getString(key)
 
-            val type = bundle?.getString(Constant.NOTIFICATION_TYPE)
-            if (type.equals("AddSite", true)
-            ) {
+                if (type.equals("AddSite", true)
+                ) {
 
-                val navView: NavigationView = findViewById(R.id.nav_view)
-                val view: View = navView.findViewById(R.id.nav_site)
-                view.performClick()
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        navController.navigate(R.id.nav_site)
+                    }, 1000)
 
-                /* val intentToBeRedirect = Intent(this, UserProfileActivity::class.java)
-                 intentToBeRedirect.putExtra(Constant.USER_ID, bundle.getString(Constant.USER_ID))
-                 intentToBeRedirect.putExtra(Constant.DATA, bundle.getString(Constant.DATA))
-                 startActivity(intentToBeRedirect)*/
+                } else if (type.equals("AddLead", true)) {
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        navController.navigate(R.id.nav_visitor)
+                    }, 1000)
+                } else if (type.equals("AddQuotation", true)) {
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        navController.navigate(R.id.nav_quotation)
+                    }, 1000)
+                } else if (type.equals("AddInvoice", true)) {
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        navController.navigate(R.id.nav_invoice)
+                    }, 1000)
+                } else if (type.equals("AddPayment", true)) {
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        navController.navigate(R.id.nav_invoice)
+                    }, 1000)
+                }
+
+
             }
-            /*  else if (type.equals("MEDIA_ACCEPTED", true)
-                  || type.equals("DEEP_LINK_POST", true)
-                  || type.equals("ADD_POST", true)
-              ) {
-                  val intentToBeRedirect = Intent(this, PostDetailsActivity::class.java)
-                  intentToBeRedirect.putExtra(Constant.MEDIA_ID, bundle.getString(Constant.MEDIA_ID))
-                  intentToBeRedirect.putExtra(Constant.DATA, bundle.getString(Constant.DATA))
-                  intentToBeRedirect.putExtra(
-                      Constant.USER_ID, bundle.getString(Constant.USER_ID)
-                  )
-                  startActivity(intentToBeRedirect)
-              } else if (type.equals("EVALUATE", true)
-                  || type.equals("HOST_STATUS_APPROVED", true)
-              ) {
-                  val intentToBeRedirect = Intent(this, UserProfileActivity::class.java)
-                  intentToBeRedirect.putExtra(Constant.DATA, bundle.getString(Constant.DATA))
-                  intentToBeRedirect.putExtra(Constant.USER_ID, session.user?._id)
-                  intentToBeRedirect.putExtra(Constant.AS_HOST, true)
-                  startActivity(intentToBeRedirect)
-              } else if (type.equals("DAILY_TICKETS", true)) {
-                  val intentToBeRedirect = Intent(this, MyVotingAllTickets::class.java)
-                  startActivity(intentToBeRedirect)
-              } else if (type.equals("CONTEST_DETAILS", true)
-                  || type.equals("DEEP_LINK_CONTEST_DETAILS", true)
-                  || type.equals("CONTEST_WINNER_PUSH", true)
-                  || type.equals("CONTEST_WINNER", true)
-              ) {
-                  Handler().postDelayed({
-                      val bundleTobeSend = Bundle()
-                      bundleTobeSend.putString(Constant.DATA, bundle.getString(Constant.DATA))
-                      if (type.equals("CONTEST_WINNER_PUSH", true)
-                          || type.equals("CONTEST_WINNER", true)
-                      ) {
-                          bundleTobeSend.putInt(Constant.POSITION, 1)
-                      }
-                      //bundleTobeSend.putString(Constant.GLOBAL, bundle.getString(Constant.DATA))
-                      val fragment = FragmentContest()
-                      fragment.arguments = bundleTobeSend
-                      showFragment(fragment)
-                  }, 1000)
-              } else if (type.equals("UNENROLL_PUSH", true)) {
-                  val dialog = UnenrollNotificationDialog.newInstance(this)
-                  bundle.putString(Constant.DATA, bundle.getString(Constant.DATA))
-                  bundle.putString(Constant.MSG, bundle.getString(Constant.MSG))
-                  bundle.putString(Constant.TITLE, bundle.getString(Constant.TITLE))
-                  bundle.putString(Constant.FNAME, bundle.getString(Constant.FNAME))
-                  bundle.putString(Constant.LNAME, bundle.getString(Constant.LNAME))
-                  dialog.arguments = bundle
-                  dialog.show(supportFragmentManager, "profile")
-              }*/
+
         }
+
     }
 
 }
