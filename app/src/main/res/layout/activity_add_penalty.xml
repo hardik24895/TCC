@@ -2,8 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/ic_background"
+    tools:context=".activity.AddPenaltyActivity">
 
     <include
         android:id="@+id/include"
@@ -24,81 +27,116 @@
             android:id="@+id/constrain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_10sdp"
-
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <com.tcc.app.customview.TextviewSemiBold
-                android:id="@+id/txtSite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="@dimen/_2sdp"
-                android:text="@string/site"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/linlaySp"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:background="@drawable/bg_spinner"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="@+id/inpsdate"
-                app:layout_constraintStart_toStartOf="@+id/txtSite"
-                app:layout_constraintTop_toBottomOf="@+id/txtSite">
-
-
-                <tech.hibk.searchablespinnerlibrary.SearchableSpinner
-                    android:id="@+id/spSite"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_3sdp"
-                    android:clickable="false"
-                    android:focusable="false"
-                    android:padding="@dimen/_5sdp"
-                    app:cancelButtonColor="@color/black"
-                    app:cancelButtontext="CLOSE"
-                    app:dialogTitle="Sample"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:nothingSelectedText="@string/select_site"
-                    app:onlyLightTheme="true" />
-
-                <View
-                    android:id="@+id/view"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/spSite"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/spSite" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvEmployee"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/crd_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginHorizontal="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_12ssp"
+                app:cardCornerRadius="@dimen/_8sdp"
+                app:cardUseCompatPadding="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linlaySp"
-                tools:listitem="@layout/row_penalty_employee" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_8sdp">
+
+                    <com.tcc.app.customview.TextviewSemiBold
+                        android:id="@+id/txtSite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/_2sdp"
+                        android:text="@string/site"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/linlaySp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:background="@drawable/bg_spinner"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="@+id/inpsdate"
+                        app:layout_constraintStart_toStartOf="@+id/txtSite"
+                        app:layout_constraintTop_toBottomOf="@+id/txtSite">
+
+
+                        <tech.hibk.searchablespinnerlibrary.SearchableSpinner
+                            android:id="@+id/spSite"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/_3sdp"
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:paddingHorizontal="@dimen/_5sdp"
+                            android:paddingVertical="@dimen/_2sdp"
+                            app:cancelButtonColor="@color/black"
+                            app:cancelButtontext="CLOSE"
+                            app:dialogTitle="Sample"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:nothingSelectedText="@string/select_site"
+                            app:onlyLightTheme="true" />
+
+                        <View
+                            android:id="@+id/view"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/spSite"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/spSite" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recReason"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        app:layout_constraintTop_toBottomOf="@+id/linlaySp" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
 
             <com.tcc.app.customview.ButtonReguler
                 android:id="@+id/btnAddEmployee"
                 style="@style/CustomPressButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:paddingHorizontal="@dimen/_12sdp"
+                android:layout_marginEnd="@dimen/_6sdp"
+                android:paddingVertical="@dimen/_5sdp"
                 android:text="@string/add_employee"
+                app:layout_constraintEnd_toEndOf="@+id/crd_1"
+                app:layout_constraintTop_toBottomOf="@+id/crd_1" />
+
+
+            <LinearLayout
+                android:id="@+id/lin_add_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginHorizontal="@dimen/_8sdp"
+                android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rvEmployee" />
+                app:layout_constraintTop_toBottomOf="@+id/btnAddEmployee" />
 
             <com.tcc.app.customview.ButtonReguler
                 android:id="@+id/btnSubmit"
@@ -106,12 +144,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_18sdp"
+                android:layout_marginHorizontal="@dimen/_24ssp"
                 android:layout_marginBottom="@dimen/_18sdp"
                 android:text="@string/submit"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnAddEmployee" />
+                app:layout_constraintTop_toBottomOf="@+id/lin_add_user" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

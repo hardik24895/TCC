@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/_5sdp"
+    app:cardElevation="@dimen/_2ssp"
+    app:cardCornerRadius="8dp"
+    app:cardUseCompatPadding="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:paddingHorizontal="@dimen/_4sdp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_5sdp">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/crd_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgProfile"
+                android:layout_width="@dimen/_44sdp"
+                android:layout_height="@dimen/_44sdp"
+                android:src="@mipmap/new_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.tcc.app.customview.TextviewSemiBold
+                android:id="@+id/txtName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintEnd_toStartOf="@+id/imgEdit"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/imgProfile"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.tcc.app.customview.TextviewBold
+                android:id="@+id/txtIcon"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="A"
+                android:textAllCaps="true"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_extra_large"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/imgProfile"
+                app:layout_constraintEnd_toEndOf="@+id/imgProfile"
+                app:layout_constraintStart_toStartOf="@+id/imgProfile"
+                app:layout_constraintTop_toTopOf="@+id/imgProfile" />
+
+
+            <com.tcc.app.customview.TextviewReguler
+                android:id="@+id/txtContact"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="9999999999"
+                android:textColor="@color/txtgray"
+                android:textSize="@dimen/_10sdp"
+                app:layout_constraintStart_toStartOf="@+id/txtName"
+                app:layout_constraintTop_toBottomOf="@+id/txtName" />
+
+            <com.tcc.app.customview.TextviewReguler
+                android:id="@+id/txtEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="test@gmail.com"
+                android:textSize="@dimen/_10sdp"
+                app:layout_constraintStart_toStartOf="@+id/txtName"
+                app:layout_constraintTop_toBottomOf="@+id/txtContact" />
+
+            <ImageView
+                android:id="@+id/imgEdit"
+                android:layout_width="wrap_content"
+                android:visibility="gone"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_5sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/txtName"
+                app:srcCompat="@drawable/ic_edit" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/crd_2"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/crd_1">
+
+
+            <com.tcc.app.customview.TextviewSemiBold
+                android:id="@+id/txtLeadTypeTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/lead_type"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toStartOf="@+id/txtNoOfSiteTitle"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.tcc.app.customview.TextviewReguler
+                android:id="@+id/txtLeadType"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_2ssp"
+                android:text="Cold"
+                android:textColor="@color/txtgray"
+                app:layout_constraintEnd_toStartOf="@+id/txtNoOfSite"
+                app:layout_constraintStart_toStartOf="@+id/txtLeadTypeTitle"
+                app:layout_constraintTop_toBottomOf="@+id/txtLeadTypeTitle" />
+
+            <View
+                android:id="@+id/view1"
+                android:layout_width="@dimen/_1sdp"
+                android:layout_height="0dp"
+                android:background="@color/light_grey"
+                app:layout_constraintBottom_toBottomOf="@+id/txtLeadType"
+                app:layout_constraintStart_toEndOf="@id/txtLeadTypeTitle"
+                app:layout_constraintTop_toTopOf="@+id/txtLeadTypeTitle" />
+
+
+            <com.tcc.app.customview.TextviewSemiBold
+                android:id="@+id/txtNoOfSiteTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/total_site"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toStartOf="@+id/txtStatusTitle"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/txtLeadTypeTitle"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <com.tcc.app.customview.TextviewReguler
+                android:id="@+id/txtNoOfSite"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_2ssp"
+                android:gravity="center"
+                android:text="23"
+                android:textColor="@color/txtgray"
+                app:layout_constraintEnd_toEndOf="@+id/txtNoOfSiteTitle"
+                app:layout_constraintStart_toEndOf="@+id/view1"
+                app:layout_constraintTop_toBottomOf="@+id/txtNoOfSiteTitle" />
+
+
+            <com.tcc.app.customview.TextviewSemiBold
+                android:id="@+id/txtStatusTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="@string/status"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/txtNoOfSiteTitle"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="@dimen/_1sdp"
+                android:layout_height="0dp"
+                android:background="@color/light_grey"
+                app:layout_constraintBottom_toBottomOf="@+id/txtLeadType"
+                app:layout_constraintStart_toEndOf="@id/txtNoOfSiteTitle"
+                app:layout_constraintTop_toTopOf="@+id/txtLeadTypeTitle" />
+
+            <com.tcc.app.customview.TextviewReguler
+                android:id="@+id/txtStatus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_2ssp"
+                android:drawableLeft="@drawable/bg_lead_status_pending_circle"
+                android:drawablePadding="@dimen/_4sdp"
+                android:gravity="right"
+                android:text="Convert"
+                android:textColor="@color/txtgray"
+                app:layout_constraintEnd_toEndOf="@+id/txtStatusTitle"
+                app:layout_constraintTop_toBottomOf="@+id/txtStatusTitle" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtCity"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/_4sdp"
+            android:drawableStart="@drawable/ic_location"
+            android:gravity="center_vertical"
+            android:text="508, Sontorini squre, jodhpur, Ahmedabad, 380015"
+            android:textColor="@color/txtgray"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/crd_2" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtCity">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/linbtnCall"
+                android:background="@drawable/custom_call_button_press_bg"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toStartOf="@+id/linbtnSMS"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <com.tcc.app.customview.TextviewReguler
+                    android:id="@+id/btnCall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_call_white"
+                    android:drawablePadding="@dimen/_4sdp"
+                    android:paddingVertical="@dimen/_6sdp"
+                    android:text="@string/call"
+                    android:textAllCaps="true"
+                    android:textColor="@drawable/custom_button_press_text_bg"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/linbtnSMS"
+                android:layout_marginHorizontal="@dimen/_8ssp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_sms_button_press_bg"
+                app:layout_constraintEnd_toStartOf="@+id/linbtnEmail"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/linbtnCall"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <com.tcc.app.customview.TextviewReguler
+                    android:id="@+id/btnSMS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_8sdp"
+                    android:drawableStart="@drawable/ic_comment_white"
+                    android:drawablePadding="@dimen/_4sdp"
+                    android:paddingVertical="@dimen/_6sdp"
+                    android:text="@string/sms"
+                    android:textAllCaps="true"
+                    android:textColor="@drawable/custom_button_press_text_bg"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/linbtnEmail"
+                android:background="@drawable/custom_email_button_press_bg"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_mail_white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/linbtnSMS"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <com.tcc.app.customview.TextviewReguler
+                    android:id="@+id/btnEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_mail_white"
+                    android:drawablePadding="@dimen/_4sdp"
+                    android:paddingVertical="@dimen/_6sdp"
+                    android:text="@string/email"
+                    android:textAllCaps="true"
+                    android:textColor="@drawable/custom_button_press_text_bg"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

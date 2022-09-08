@@ -25,18 +25,20 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_4sdp"
         android:text="John Smith"
+        android:gravity="center"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/_14sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/circleImageView" />
 
-    <com.tcc.app.customview.TextviewMedium
+    <com.tcc.app.customview.TextviewSemiBold
         android:id="@+id/txtEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_4sdp"
         android:text="johnsmith123@gmail.com"
+        android:gravity="center"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/_12sdp"
         app:layout_constraintEnd_toEndOf="parent"

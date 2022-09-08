@@ -49,7 +49,7 @@ class LateFineBottomSheetDialog(context: Context) : BaseBottomSheetDialogFragmen
         // dismiss()
         when (view.id) {
             R.id.edtLateFine -> {
-                SnapTimePickerDialog.Builder().apply {
+                SnapTimePickerDialog.Builder().setThemeColor(R.color.colorPrimary).apply {
                     setTitle(R.string.late_fine)
                 }.build().apply {
                     setListener { hour, minute ->

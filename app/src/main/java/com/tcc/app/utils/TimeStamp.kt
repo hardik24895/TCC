@@ -1,6 +1,7 @@
 package com.tcc.app.utils
 
 import android.text.TextUtils
+import java.lang.Math.abs
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -88,12 +89,36 @@ object TimeStamp {
         return sdf.format(cal.time)
     }
 
-    fun formatDateFromString(inputFormat: String, outputFormat: String, inputDate: String): String {
+    fun formatDateFromString(inputDate: String): String {
+
+        if (inputDate.equals("")) {
+
+            return ""
+        } else {
+
+            var parsed: Date? = null
+            var outputDate = ""
+
+            val dfInput = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val dfOutput = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+
+            try {
+                parsed = dfInput.parse(inputDate)
+                outputDate = dfOutput.format(parsed)
+
+            } catch (e: ParseException) {
+                e.printStackTrace()
+            }
+            return outputDate
+        }
+    }
+
+    fun formatServerDateToLocal(inputDate: String): String {
         var parsed: Date? = null
         var outputDate = ""
 
-        val dfInput = SimpleDateFormat(inputFormat, Locale.getDefault())
-        val dfOutput = SimpleDateFormat(outputFormat, Locale.getDefault())
+        val dfInput = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        val dfOutput = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
 
         try {
             parsed = dfInput.parse(inputDate)
@@ -104,6 +129,50 @@ object TimeStamp {
         }
         return outputDate
     }
+
+    fun getDateFromCheckInTime(Checkindate: String): String {
+
+
+        if (!Checkindate.equals("")) {
+            var parsed: Date? = null
+            var outputDate = ""
+
+            val dfInput = SimpleDateFormat("dd-MM-yyyy hh:mm:ss", Locale.getDefault())
+            val dfOutput = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+
+            try {
+                parsed = dfInput.parse(Checkindate)
+                outputDate = dfOutput.format(parsed)
+
+            } catch (e: ParseException) {
+                e.printStackTrace()
+            }
+            return outputDate
+        } else
+            return ""
+
+    }
+
+    fun getTimeFromCheckInOUtTime(Checkindate: String): String {
+
+
+        var parsed: Date? = null
+        var outputDate = ""
+
+        val dfInput = SimpleDateFormat("dd-MM-yyyy hh:mm:ss", Locale.getDefault())
+        val dfOutput = SimpleDateFormat("hh:mm:ss", Locale.getDefault())
+
+        try {
+            parsed = dfInput.parse(Checkindate)
+            outputDate = dfOutput.format(parsed)
+
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        return outputDate
+
+    }
+
 
     fun getLocalfromUtc(utc_data: String, inputPattern: String, outputPattern: String): String {
         var formattedDate = ""
@@ -203,5 +272,69 @@ object TimeStamp {
 
 
         return ageInt + 1
+    }
+
+    fun getStartDateRange(): String {
+        var begining: Date
+
+        run {
+            val calendar = getCalendarForNow()
+            calendar[Calendar.DAY_OF_MONTH] = calendar.getActualMinimum(Calendar.DAY_OF_MONTH)
+            setTimeToBeginningOfDay(calendar)
+            begining = calendar.time
+        }
+        val simpleDate = SimpleDateFormat("dd/MM/yyyy")
+        val strDt = simpleDate.format(begining)
+        return strDt
+    }
+
+    fun getEndDateRange(): String {
+        var end: Date
+        run {
+            val calendar = getCalendarForNow()
+            calendar[Calendar.DAY_OF_MONTH] = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
+            setTimeToEndofDay(calendar)
+            end = calendar.time
+        }
+        val simpleDate = SimpleDateFormat("dd/MM/yyyy")
+        val strDt = simpleDate.format(end)
+        return strDt
+    }
+
+
+    private fun getCalendarForNow(): Calendar {
+        val calendar = GregorianCalendar.getInstance()
+        calendar.time = Date()
+        return calendar
+    }
+
+    private fun setTimeToBeginningOfDay(calendar: Calendar) {
+        calendar[Calendar.HOUR_OF_DAY] = 0
+        calendar[Calendar.MINUTE] = 0
+        calendar[Calendar.SECOND] = 0
+        calendar[Calendar.MILLISECOND] = 0
+    }
+
+    private fun setTimeToEndofDay(calendar: Calendar) {
+        calendar[Calendar.HOUR_OF_DAY] = 23
+        calendar[Calendar.MINUTE] = 59
+        calendar[Calendar.SECOND] = 59
+        calendar[Calendar.MILLISECOND] = 999
+    }
+
+    fun getCountOfDays(
+        createdDateString: String?,
+        expireDateString: String?
+    ): Int? {
+
+        val date1: Date
+        val date2: Date
+        val dates = SimpleDateFormat("dd/MM/yyyy")
+        date1 = dates.parse(createdDateString)
+        date2 = dates.parse(expireDateString)
+        val difference: Long = abs(date1.time - date2.time)
+        val differenceDates = difference / (24 * 60 * 60 * 1000)
+        val dayDifference = differenceDates.toString()
+        return dayDifference.toInt()
     }
 }

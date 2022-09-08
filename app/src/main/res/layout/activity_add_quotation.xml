@@ -2,9 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/swipe_view_bg"
+    android:background="@drawable/ic_background"
     tools:context=".activity.AddQuotationActivity">
 
     <include
@@ -14,6 +15,7 @@
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,8 +35,8 @@
                 android:elevation="@dimen/_2ssp"
                 app:cardCornerRadius="@dimen/_4sdp"
                 app:cardUseCompatPadding="true"
-
                 app:layout_constraintEnd_toEndOf="parent"
+
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -61,18 +63,17 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/_3sdp"
-                            android:layout_marginTop="@dimen/_8sdp"
                             android:clickable="false"
                             android:focusable="false"
                             android:padding="@dimen/_5sdp"
                             app:cancelButtonColor="@color/black"
                             app:cancelButtontext="CLOSE"
-                            app:dialogTitle="Sample"
+                            app:dialogTitle="@string/select_company"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:nothingSelectedText="Select Company"
+                            app:nothingSelectedText="@string/select_company"
                             app:onlyLightTheme="true" />
 
                         <View
@@ -90,7 +91,7 @@
                         android:id="@+id/til1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/_12sdp"
+                        android:layout_marginBottom="@dimen/_4sdp"
                         android:hint="Estimation Date"
                         app:hintTextColor="@color/black"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -103,77 +104,16 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/colorWhite"
-                            android:fontFamily="@font/montserrat_regular"
+                            android:clickable="true"
+                            android:cursorVisible="false"
+                            android:focusable="false"
+                            android:fontFamily="@font/opensans_regular"
                             android:inputType="date"
                             android:maxLength="15"
                             android:singleLine="true"
                             android:textColor="@color/black"
                             android:textColorHint="@color/black" />
                     </com.google.android.material.textfield.TextInputLayout>
-
-                    <!--   <com.google.android.material.textfield.TextInputLayout
-                           android:id="@+id/til2"
-                           android:layout_width="0dp"
-                           android:layout_height="wrap_content"
-                           android:hint="GST No"
-                           app:hintTextColor="@color/black"
-                           app:layout_constraintEnd_toEndOf="@+id/linlayCompany"
-                           app:layout_constraintStart_toStartOf="@+id/linlayCompany"
-                           app:layout_constraintTop_toBottomOf="@+id/til1">
-
-                           <EditText
-                               android:id="@+id/edGSTNo"
-                               android:layout_width="match_parent"
-                               android:layout_height="wrap_content"
-                               android:backgroundTint="@color/colorWhite"
-                               android:fontFamily="@font/montserrat_regular"
-                               android:inputType="textCapCharacters"
-                               android:maxLength="15"
-                               android:singleLine="true"
-                               android:textColor="@color/black"
-                               android:textColorHint="@color/black" />
-                       </com.google.android.material.textfield.TextInputLayout>
-
-                       <com.tcc.app.customview.TextviewBold
-                           android:id="@+id/txtSitetype"
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content"
-                           android:layout_marginTop="@dimen/_10sdp"
-                           android:paddingTop="@dimen/_2sdp"
-                           android:text="@string/site_type"
-                           app:layout_constraintStart_toStartOf="parent"
-                           app:layout_constraintTop_toBottomOf="@+id/til2" />
-
-                       <RadioGroup
-                           android:id="@+id/rg"
-                           android:layout_width="0dp"
-                           android:layout_height="wrap_content"
-                           android:layout_marginBottom="@dimen/_8sdp"
-                           android:orientation="vertical"
-                           app:layout_constraintBottom_toBottomOf="parent"
-                           app:layout_constraintStart_toStartOf="parent"
-                           app:layout_constraintTop_toBottomOf="@+id/txtSitetype">
-
-                           <com.tcc.app.customview.RadioButtonReguler
-                               android:id="@+id/rbResidential"
-                               android:layout_width="wrap_content"
-                               android:layout_height="@dimen/_30sdp"
-                               android:text="@string/residential" />
-
-                           <com.tcc.app.customview.RadioButtonReguler
-                               android:id="@+id/rbCommercial"
-                               android:layout_width="wrap_content"
-                               android:layout_height="@dimen/_30sdp"
-                               android:text="@string/commercial" />
-
-                           <com.tcc.app.customview.RadioButtonReguler
-                               android:id="@+id/rbIndustrial"
-                               android:layout_width="wrap_content"
-                               android:layout_height="@dimen/_30sdp"
-                               android:text="@string/industrial" />
-
-                       </RadioGroup>
-   -->
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
@@ -182,7 +122,6 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/crdview2"
                 android:layout_width="match_parent"
-
                 android:layout_height="wrap_content"
                 android:elevation="@dimen/_2ssp"
                 app:cardCornerRadius="@dimen/_4sdp"
@@ -224,7 +163,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/colorWhite"
-                            android:fontFamily="@font/montserrat_regular"
+                            android:fontFamily="@font/opensans_regular"
                             android:inputType="textPostalAddress"
                             android:maxLength="150"
                             android:singleLine="true"
@@ -247,7 +186,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/colorWhite"
-                            android:fontFamily="@font/montserrat_regular"
+                            android:fontFamily="@font/opensans_regular"
                             android:inputType="textPostalAddress"
                             android:maxLength="150"
                             android:singleLine="true"
@@ -255,16 +194,19 @@
                             android:textColorHint="@color/black" />
                     </com.google.android.material.textfield.TextInputLayout>
 
+
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/linlayCity"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:background="@drawable/bg_spinner"
+                        android:clickable="true"
+                        android:focusable="false"
                         android:orientation="vertical"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/til4">
+                        app:layout_constraintTop_toBottomOf="@+id/linlayState">
 
 
                         <tech.hibk.searchablespinnerlibrary.SearchableSpinner
@@ -272,29 +214,52 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/_3sdp"
-                            android:layout_marginTop="@dimen/_8sdp"
                             android:clickable="false"
                             android:focusable="false"
+                            android:minHeight="@dimen/_30sdp"
                             android:padding="@dimen/_5sdp"
+                            android:visibility="invisible"
                             app:cancelButtonColor="@color/black"
                             app:cancelButtontext="CLOSE"
-                            app:dialogTitle="Sample"
+                            app:dialogTitle="@string/select_city"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:nothingSelectedText="Select City"
+                            app:nothingSelectedText="@string/select_city"
                             app:onlyLightTheme="true" />
 
                         <View
                             android:id="@+id/view3"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:visibility="invisible"
                             app:layout_constraintBottom_toBottomOf="@+id/spCity"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/spCity" />
+
+
+                        <com.tcc.app.customview.TextviewReguler
+                            android:id="@+id/tvCity"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:gravity="center_vertical"
+                            android:paddingStart="@dimen/_12sdp"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_12ssp"
+                            app:layout_constraintBottom_toBottomOf="@+id/spCity"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/spCity" />
+
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/linlayState"
@@ -302,10 +267,12 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:background="@drawable/bg_spinner"
+                        android:clickable="false"
+                        android:focusable="false"
                         android:orientation="vertical"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/linlayCity">
+                        app:layout_constraintTop_toBottomOf="@+id/til4">
 
 
                         <tech.hibk.searchablespinnerlibrary.SearchableSpinner
@@ -313,28 +280,47 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/_3sdp"
-                            android:layout_marginTop="@dimen/_8sdp"
                             android:clickable="false"
                             android:focusable="false"
                             android:padding="@dimen/_5sdp"
+                            android:visibility="invisible"
                             app:cancelButtonColor="@color/black"
                             app:cancelButtontext="CLOSE"
-                            app:dialogTitle="Sample"
+                            app:dialogTitle="@string/select_state"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:nothingSelectedText="Select State"
+                            app:nothingSelectedText="@string/select_state"
                             app:onlyLightTheme="true" />
 
                         <View
                             android:id="@+id/view4"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:visibility="invisible"
                             app:layout_constraintBottom_toBottomOf="@+id/spState"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/spState" />
+
+                        <com.tcc.app.customview.TextviewReguler
+                            android:id="@+id/tvState"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:gravity="center_vertical"
+                            android:paddingStart="@dimen/_12sdp"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_12ssp"
+                            app:layout_constraintBottom_toBottomOf="@+id/spState"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/spState" />
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -343,19 +329,20 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/_8sdp"
-                        android:hint="PinCode"
+
+                        android:hint="@string/pincode"
                         app:hintTextColor="@color/black"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="@+id/til3"
                         app:layout_constraintStart_toStartOf="@+id/til3"
-                        app:layout_constraintTop_toBottomOf="@+id/linlayState">
+                        app:layout_constraintTop_toBottomOf="@+id/linlayCity">
 
                         <EditText
                             android:id="@+id/edPincode"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/colorWhite"
-                            android:fontFamily="@font/montserrat_regular"
+                            android:fontFamily="@font/opensans_regular"
                             android:inputType="number"
                             android:maxLength="6"
                             android:singleLine="true"
@@ -369,9 +356,10 @@
 
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/crdview3"
+                android:id="@+id/crdview5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_8sdp"
                 android:elevation="@dimen/_2ssp"
                 app:cardCornerRadius="@dimen/_4sdp"
                 app:cardUseCompatPadding="true"
@@ -384,13 +372,106 @@
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="@dimen/_16ssp">
 
+                    <com.tcc.app.customview.TextviewBold
+                        android:id="@+id/txtServiceTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:layout_marginBottom="@dimen/_12sdp"
+                        android:text="Service"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <com.tcc.app.customview.TextviewReguler
+                        android:id="@+id/txtService"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginBottom="@dimen/_12sdp"
+                        android:background="@drawable/bg_spinner"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="@dimen/_12ssp"
+                        android:paddingVertical="@dimen/_10sdp"
+                        android:text="Selected Service"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_13sdp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txtServiceTitle" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/linlayService"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginBottom="@dimen/_12sdp"
+                        android:background="@drawable/bg_spinner"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txtServiceTitle">
+
+                        <tech.hibk.searchablespinnerlibrary.SearchableSpinner
+                            android:id="@+id/spService"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/_3sdp"
+
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:padding="@dimen/_5sdp"
+                            app:cancelButtonColor="@color/black"
+                            app:cancelButtontext="CLOSE"
+                            app:dialogTitle="@string/select_service"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:nothingSelectedText="@string/select_service"
+                            app:onlyLightTheme="true" />
+
+                        <View
+                            android:id="@+id/view5"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/spService"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/spService" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/crdview3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="@dimen/_2ssp"
+                app:cardCornerRadius="@dimen/_4sdp"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/crdview5">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/_16ssp">
+
 
                     <com.tcc.app.customview.TextviewBold
                         android:id="@+id/txtUserTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_12sdp"
-                        android:text="User"
+                        android:text="@string/item"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_14sdp"
                         app:layout_constraintStart_toStartOf="parent"
@@ -414,18 +495,17 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/_3sdp"
-                            android:layout_marginTop="@dimen/_8sdp"
                             android:clickable="false"
                             android:focusable="false"
                             android:padding="@dimen/_5sdp"
                             app:cancelButtonColor="@color/black"
                             app:cancelButtontext="CLOSE"
-                            app:dialogTitle="Sample"
+                            app:dialogTitle="@+id/select_item"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:nothingSelectedText="Select UserType"
+                            app:nothingSelectedText="@string/select_item"
                             app:onlyLightTheme="true" />
 
                         <View
@@ -455,8 +535,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/colorWhite"
-                            android:fontFamily="@font/montserrat_regular"
-                            android:inputType="date"
+                            android:cursorVisible="false"
+                            android:enabled="false"
+                            android:focusable="false"
+                            android:fontFamily="@font/opensans_regular"
+                            android:inputType="none"
                             android:maxLength="50"
                             android:singleLine="true"
                             android:textColor="@color/black"
@@ -479,7 +562,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/colorWhite"
-                            android:fontFamily="@font/montserrat_regular"
+                            android:fontFamily="@font/opensans_regular"
                             android:inputType="number"
                             android:maxLength="5"
                             android:singleLine="true"
@@ -488,7 +571,34 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/til8"
+                        android:id="@+id/til22"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_12sdp"
+                        android:hint="Days"
+                        android:visibility="gone"
+                        app:hintTextColor="@color/black"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/til7">
+
+                        <EditText
+                            android:id="@+id/edtDays"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorWhite"
+                            android:clickable="true"
+                            android:fontFamily="@font/opensans_regular"
+                            android:inputType="number"
+                            android:maxLength="10"
+                            android:singleLine="true"
+                            android:text="1"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til88"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:hint="Rate"
@@ -496,20 +606,41 @@
 
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/til7">
+                        app:layout_constraintTop_toBottomOf="@+id/til22">
 
                         <EditText
                             android:id="@+id/edRate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/colorWhite"
-                            android:fontFamily="@font/montserrat_regular"
-                            android:inputType="number"
+                            android:fontFamily="@font/opensans_regular"
+                            android:inputType="numberDecimal"
                             android:maxLength="10"
                             android:singleLine="true"
                             android:textColor="@color/black"
                             android:textColorHint="@color/black" />
                     </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.tcc.app.customview.TextviewReguler
+                        android:id="@+id/txtItemTotal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/item_total"
+                        android:textColor="@color/black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/btnAddUser" />
+
+
+                    <com.tcc.app.customview.TextviewReguler
+                        android:id="@+id/txtItemTotalAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:text="\u20b9 0"
+                        android:textColor="@color/black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txtItemTotal" />
 
 
                     <com.tcc.app.customview.ButtonReguler
@@ -519,13 +650,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:layout_marginBottom="@dimen/_8sdp"
-                        android:padding="@dimen/_5sdp"
+                        android:paddingHorizontal="@dimen/_10sdp"
+                        android:paddingVertical="@dimen/_5sdp"
                         android:text="@string/add_user"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="1.0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/til8" />
+                        app:layout_constraintTop_toBottomOf="@+id/til88" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
@@ -539,6 +671,225 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/crdview3" />
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/crdview6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="@dimen/_2ssp"
+                app:cardCornerRadius="@dimen/_4sdp"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lin_add_user">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/_16ssp">
+
+
+                    <com.tcc.app.customview.TextviewBold
+                        android:id="@+id/txtMaterialTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:text="Material"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/linlayMaterialType"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:background="@drawable/bg_spinner"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txtMaterialTitle">
+
+
+                        <tech.hibk.searchablespinnerlibrary.SearchableSpinner
+                            android:id="@+id/spMaterialType"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/_3sdp"
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:padding="@dimen/_5sdp"
+                            app:cancelButtonColor="@color/black"
+                            app:cancelButtontext="CLOSE"
+                            app:dialogTitle="@+id/spMaterialType"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:nothingSelectedText="@string/select_material"
+                            app:onlyLightTheme="true" />
+
+                        <View
+                            android:id="@+id/view7"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/spMaterialType"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/spMaterialType" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til99"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:hint="HSN/SAC"
+                        app:hintTextColor="@color/black"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/linlayMaterialType">
+
+                        <EditText
+                            android:id="@+id/edMaterialHSN"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorWhite"
+                            android:cursorVisible="false"
+                            android:enabled="false"
+                            android:focusable="false"
+                            android:fontFamily="@font/opensans_regular"
+                            android:inputType="none"
+                            android:maxLength="50"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til77"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:hint="QTY"
+                        app:hintTextColor="@color/black"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/til99">
+
+                        <EditText
+                            android:id="@+id/edMaterialQty"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorWhite"
+                            android:fontFamily="@font/opensans_regular"
+                            android:inputType="number"
+                            android:maxLength="50"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til222"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_12sdp"
+                        android:hint="Days"
+                        android:visibility="gone"
+                        app:hintTextColor="@color/black"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/til77">
+
+                        <EditText
+                            android:id="@+id/edtMaterialDays"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorWhite"
+                            android:clickable="true"
+                            android:fontFamily="@font/opensans_regular"
+                            android:inputType="number"
+                            android:maxLength="10"
+                            android:singleLine="true"
+                            android:text="1"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til8"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:hint="Rate"
+                        app:hintTextColor="@color/black"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/til222">
+
+                        <EditText
+                            android:id="@+id/edMaterialRate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorWhite"
+                            android:fontFamily="@font/opensans_regular"
+                            android:inputType="numberDecimal"
+                            android:maxLength="10"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.tcc.app.customview.TextviewReguler
+                        android:id="@+id/txtMaterialTotal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/item_total"
+                        android:textColor="@color/black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/btnAddMaterial" />
+
+
+                    <com.tcc.app.customview.TextviewReguler
+                        android:id="@+id/txtMaterialTotalAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:text="\u20b9 0"
+                        android:textColor="@color/black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txtMaterialTotal" />
+
+                    <com.tcc.app.customview.ButtonReguler
+                        android:id="@+id/btnAddMaterial"
+                        style="@style/CustomPressButton_Green"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginBottom="@dimen/_8sdp"
+                        android:paddingHorizontal="@dimen/_10sdp"
+                        android:paddingVertical="@dimen/_5sdp"
+                        android:text="@string/add_material"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/til8" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:id="@+id/lin_add_material"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/crdview6" />
+
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/crdview4"
@@ -549,7 +900,7 @@
                 app:cardUseCompatPadding="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/lin_add_user">
+                app:layout_constraintTop_toBottomOf="@id/lin_add_material">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -573,27 +924,29 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_8sdp"
-                        android:hint="Total Amount"
+                        android:hint="SubTotal Amount"
                         app:hintTextColor="@color/black"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/txtTotalTitle">
 
                         <EditText
-                            android:id="@+id/edTotalAmount"
+                            android:id="@+id/edSubTotalAmount"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/colorWhite"
-                            android:fontFamily="@font/montserrat_regular"
-                            android:inputType="number"
+                            android:focusable="false"
+                            android:fontFamily="@font/opensans_regular"
+                            android:inputType="numberDecimal"
                             android:maxLength="10"
                             android:singleLine="true"
+                            android:text="0"
                             android:textColor="@color/black"
                             android:textColorHint="@color/black" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/til10"
+                        android:id="@+id/tilCGST"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:hint="@string/cgst"
@@ -607,58 +960,182 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/colorWhite"
-                            android:fontFamily="@font/montserrat_regular"
-                            android:inputType="number"
+                            android:focusable="false"
+                            android:fontFamily="@font/opensans_regular"
+                            android:inputType="numberDecimal"
                             android:maxLength="10"
                             android:singleLine="true"
+                            android:text="0"
                             android:textColor="@color/black"
                             android:textColorHint="@color/black" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/til11"
+                        android:id="@+id/tilSGST"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:hint="@string/sgst"
                         app:hintTextColor="@color/black"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/til10">
+                        app:layout_constraintTop_toBottomOf="@+id/tilCGST">
 
                         <EditText
                             android:id="@+id/edSGST"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/colorWhite"
-                            android:fontFamily="@font/montserrat_regular"
-                            android:inputType="number"
+                            android:focusable="false"
+                            android:fontFamily="@font/opensans_regular"
+                            android:inputType="numberDecimal"
                             android:maxLength="10"
                             android:singleLine="true"
+                            android:text="0"
                             android:textColor="@color/black"
                             android:textColorHint="@color/black" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/til12"
+                        android:id="@+id/tilIGST"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/_8sdp"
                         android:hint="@string/igst"
                         app:hintTextColor="@color/black"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/til11">
+                        app:layout_constraintTop_toBottomOf="@+id/tilSGST">
 
                         <EditText
                             android:id="@+id/edIGST"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/colorWhite"
-                            android:fontFamily="@font/montserrat_regular"
-                            android:inputType="number"
+                            android:focusable="false"
+                            android:fontFamily="@font/opensans_regular"
+                            android:inputType="numberDecimal"
                             android:maxLength="10"
                             android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til13"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_8sdp"
+                        android:hint="Total Amount"
+                        app:hintTextColor="@color/black"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tilIGST">
+
+                        <EditText
+                            android:id="@+id/edTotalAmount"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorWhite"
+                            android:focusable="false"
+                            android:fontFamily="@font/opensans_regular"
+                            android:inputType="numberDecimal"
+                            android:maxLength="10"
+                            android:singleLine="true"
+                            android:text="0"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/crdview7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="@dimen/_2ssp"
+                app:cardCornerRadius="@dimen/_4sdp"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/crdview4">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/_16ssp">
+
+                    <com.tcc.app.customview.TextviewBold
+                        android:id="@+id/txtDesc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:text="@string/description"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/inNote"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:hint="@string/notes"
+                        app:hintTextColor="@color/black"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txtDesc">
+
+                        <EditText
+                            android:id="@+id/edtNote"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorWhite"
+                            android:fontFamily="@font/opensans_regular"
+                            android:inputType="textMultiLine"
+                            android:lines="5"
+                            android:maxLength="1000"
+                            android:maxLines="10"
+                            android:scrollbars="vertical"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/inTerms"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:hint="@string/terms"
+                        android:scrollbars="vertical"
+                        app:hintTextColor="@color/black"
+
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/inNote">
+
+                        <EditText
+                            android:id="@+id/edtTerms"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorWhite"
+                            android:editable="true"
+                            android:enabled="true"
+                            android:focusable="true"
+                            android:fontFamily="@font/opensans_regular"
+                            android:inputType="textMultiLine"
+                            android:isScrollContainer="true"
+                            android:lines="5"
+                            android:maxLength="1000"
+                            android:maxLines="10"
+                            android:minLines="6"
                             android:textColor="@color/black"
                             android:textColorHint="@color/black" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -674,12 +1151,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_18sdp"
-                android:layout_marginBottom="@dimen/_12sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
                 android:text="Submit"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/crdview4" />
+                app:layout_constraintTop_toBottomOf="@id/crdview7" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

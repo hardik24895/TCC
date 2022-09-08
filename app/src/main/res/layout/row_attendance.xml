@@ -6,7 +6,6 @@
     android:layout_marginHorizontal="@dimen/_5sdp"
     android:elevation="5dp"
     app:cardCornerRadius="8dp"
-
     app:cardUseCompatPadding="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,7 +18,7 @@
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginStart="@dimen/_5sdp"
-            android:src="@mipmap/ic_launcher"
+            android:src="@mipmap/new_icon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,9 +29,8 @@
             android:layout_marginStart="@dimen/_5sdp"
             android:ellipsize="end"
             android:singleLine="true"
-            android:text="Hardik Kanzariya"
             android:textSize="@dimen/_14ssp"
-            app:layout_constraintEnd_toStartOf="@+id/imageView3"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imgProfile"
             app:layout_constraintTop_toTopOf="@+id/imgProfile" />
 
@@ -60,19 +58,18 @@
             app:layout_constraintStart_toStartOf="@+id/txtName"
             app:layout_constraintTop_toBottomOf="@+id/txtName" />
 
-
         <com.tcc.app.customview.TextviewReguler
             android:id="@+id/txtPresent"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginBottom="@dimen/_8sdp"
             android:background="@drawable/button_present"
-            android:paddingHorizontal="@dimen/_10sdp"
+            android:gravity="center"
             android:paddingVertical="@dimen/_5sdp"
+            android:singleLine="true"
             android:text="@string/present"
             android:textColor="@drawable/selector_attendance_textview"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/txtHalfDay"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -80,16 +77,17 @@
 
         <com.tcc.app.customview.TextviewReguler
             android:id="@+id/txtHalfDay"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_8sdp"
             android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginBottom="@dimen/_8sdp"
             android:background="@drawable/button_half_day"
-            android:paddingHorizontal="@dimen/_10sdp"
+            android:gravity="center"
             android:paddingVertical="@dimen/_5sdp"
+            android:singleLine="true"
             android:text="@string/half_day"
             android:textColor="@drawable/selector_attendance_textview"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/txtAbsent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/txtPresent"
@@ -97,26 +95,83 @@
 
         <com.tcc.app.customview.TextviewReguler
             android:id="@+id/txtAbsent"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginBottom="@dimen/_8sdp"
             android:background="@drawable/button_absentt"
-            android:paddingHorizontal="@dimen/_10sdp"
+            android:gravity="center"
             android:paddingVertical="@dimen/_5sdp"
+            android:singleLine="true"
             android:text="@string/absent"
             android:textColor="@drawable/selector_attendance_textview"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/txtHalfDay"
             app:layout_constraintTop_toBottomOf="@+id/imgProfile" />
+
+
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtOvertimeHalfDay"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:background="@drawable/button_present"
+            android:gravity="center"
+            android:singleLine="true"
+            android:paddingVertical="@dimen/_5sdp"
+            android:text="@string/half_day_ot"
+            android:textColor="@drawable/selector_attendance_textview"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/txtOvertimeFullDay"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtPresent" />
+
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtOvertimeFullDay"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:background="@drawable/button_half_day"
+            android:gravity="center"
+            android:paddingVertical="@dimen/_5sdp"
+            android:singleLine="true"
+            android:text="@string/full_day_ot"
+            android:textColor="@drawable/selector_attendance_textview"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/txtNone"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/txtOvertimeHalfDay"
+            app:layout_constraintTop_toBottomOf="@+id/txtPresent" />
+
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtNone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:background="@drawable/button_none"
+            android:gravity="center"
+            android:singleLine="true"
+            android:paddingVertical="@dimen/_5sdp"
+            android:text="@string/none"
+            android:textColor="@drawable/selector_none_textview"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/txtOvertimeFullDay"
+            app:layout_constraintTop_toBottomOf="@+id/txtPresent" />
 
         <ImageView
             android:id="@+id/imgDown"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingHorizontal="@dimen/_5sdp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/txtName"
             app:srcCompat="@drawable/ic_drop_down_red" />

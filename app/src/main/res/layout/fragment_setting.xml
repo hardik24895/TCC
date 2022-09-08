@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/main"
     android:layout_height="match_parent"
+    android:background="@drawable/ic_background"
     tools:context=".fragment.SettingsFragment">
 
 
@@ -33,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp">
 
-                <com.tcc.app.customview.TextviewMedium
+                <com.tcc.app.customview.TextviewSemiBold
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
@@ -41,11 +43,11 @@
                     android:drawableLeft="@drawable/ic_push_notification"
                     android:drawablePadding="@dimen/scale_10dp"
                     android:text="Push notifications"
-                    android:textColor="@color/black"
+                    android:textColor="@color/txtgray"
                     android:textSize="@dimen/text_large" />
 
                 <Switch
-                    android:id="@+id/switchPushNoti"
+                    android:id="@+id/switchPushNotion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -65,7 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.tcc.app.customview.TextviewMedium
+                <com.tcc.app.customview.TextviewSemiBold
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -76,7 +78,7 @@
                     android:drawablePadding="@dimen/scale_10dp"
 
                     android:text="Notification list"
-                    android:textColor="@color/black"
+                    android:textColor="@color/txtgray"
                     android:textSize="@dimen/text_large" />
 
                 <ImageView
@@ -99,11 +101,89 @@
                 android:background="@color/light_grey" />
 
             <RelativeLayout
+                android:id="@+id/relayTickets"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.tcc.app.customview.TextviewSemiBold
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_margin="8dp"
+                    android:drawableLeft="@drawable/ic_ticket"
+                    android:drawablePadding="@dimen/scale_10dp"
+
+                    android:text="@string/ticket"
+                    android:textColor="@color/txtgray"
+                    android:textSize="@dimen/text_large" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/scale_10dp"
+                    android:layout_marginRight="@dimen/scale_10dp"
+                    app:srcCompat="@drawable/ic_forword" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/scale_1dp"
+                android:layout_marginStart="@dimen/scale_10dp"
+                android:layout_marginEnd="@dimen/scale_10dp"
+                android:background="@color/light_grey" />
+
+
+            <RelativeLayout
+                android:id="@+id/relayPenalty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.tcc.app.customview.TextviewSemiBold
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_margin="8dp"
+                    android:drawableLeft="@drawable/ic_penaltys"
+                    android:drawablePadding="@dimen/scale_10dp"
+
+                    android:text="@string/nav_panalti"
+                    android:textColor="@color/txtgray"
+                    android:textSize="@dimen/text_large" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/scale_10dp"
+                    android:layout_marginRight="@dimen/scale_10dp"
+                    app:srcCompat="@drawable/ic_forword" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/scale_1dp"
+                android:layout_marginStart="@dimen/scale_10dp"
+                android:layout_marginEnd="@dimen/scale_10dp"
+                android:background="@color/light_grey" />
+
+
+            <RelativeLayout
                 android:id="@+id/relayAboutus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.tcc.app.customview.TextviewMedium
+                <com.tcc.app.customview.TextviewSemiBold
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
@@ -113,7 +193,7 @@
                     android:drawableLeft="@drawable/ic_aboutus"
                     android:drawablePadding="@dimen/scale_10dp"
                     android:text="About us"
-                    android:textColor="@color/black"
+                    android:textColor="@color/txtgray"
                     android:textSize="@dimen/text_large" />
 
                 <ImageView
@@ -141,7 +221,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.tcc.app.customview.TextviewMedium
+                <com.tcc.app.customview.TextviewSemiBold
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -151,7 +231,7 @@
                     android:drawableLeft="@drawable/ic_terms"
                     android:drawablePadding="@dimen/scale_10dp"
                     android:text="Privacy policy"
-                    android:textColor="@color/black"
+                    android:textColor="@color/txtgray"
                     android:textSize="@dimen/text_large" />
 
                 <ImageView
@@ -178,7 +258,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.tcc.app.customview.TextviewMedium
+                <com.tcc.app.customview.TextviewSemiBold
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -189,7 +269,7 @@
                     android:drawablePadding="@dimen/scale_10dp"
 
                     android:text="Terms and condition"
-                    android:textColor="@color/black"
+                    android:textColor="@color/txtgray"
                     android:textSize="@dimen/text_large" />
 
                 <ImageView
@@ -216,7 +296,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.tcc.app.customview.TextviewMedium
+                <com.tcc.app.customview.TextviewSemiBold
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -227,7 +307,7 @@
                     android:drawablePadding="@dimen/scale_10dp"
 
                     android:text="Change Password"
-                    android:textColor="@color/black"
+                    android:textColor="@color/txtgray"
                     android:textSize="@dimen/text_large" />
 
                 <ImageView
@@ -255,7 +335,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.tcc.app.customview.TextviewMedium
+                <com.tcc.app.customview.TextviewSemiBold
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
@@ -264,7 +344,7 @@
                     android:drawableLeft="@drawable/ic_logout"
                     android:drawablePadding="@dimen/scale_10dp"
                     android:text="Logout"
-                    android:textColor="@color/black"
+                    android:textColor="@color/txtgray"
                     android:textSize="@dimen/text_large" />
 
                 <ImageView

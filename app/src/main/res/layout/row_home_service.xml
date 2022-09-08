@@ -20,7 +20,7 @@
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginStart="@dimen/_5sdp"
-            android:src="@mipmap/ic_launcher"
+            android:src="@mipmap/new_icon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,14 +41,14 @@
 
         <com.tcc.app.customview.TextviewSemiBold
             android:id="@+id/txtName"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_8sdp"
             android:drawableLeft="@drawable/ic_user_type"
             android:drawablePadding="@dimen/_8sdp"
-            android:text="Hardik Kanzariya"
             android:textColor="@color/black"
             android:textSize="@dimen/_14sdp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imgProfile"
             app:layout_constraintTop_toTopOf="parent" />
 

@@ -48,6 +48,7 @@ public abstract class BlurDialogFragment extends DialogFragment {
         }
     };
 
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -163,4 +164,6 @@ public abstract class BlurDialogFragment extends DialogFragment {
             });
         }
     }
+
+
 }

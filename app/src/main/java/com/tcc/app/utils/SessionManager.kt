@@ -3,9 +3,13 @@ package com.tcc.app.utils
 import android.app.NotificationManager
 import android.content.Context
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.tcc.app.R
+import com.tcc.app.modal.ConfigDataModel
 import com.tcc.app.modal.KeyRoleData
 import com.tcc.app.modal.LoginModal
+import com.tcc.app.modal.StateItem
+import java.lang.reflect.Type
 
 
 class SessionManager(val context: Context) {
@@ -33,6 +37,29 @@ class SessionManager(val context: Context) {
             isLoggedIn = true
         }
 
+    var configData: ConfigDataModel
+        get() {
+            val gson = Gson()
+            val json = getDataByKey(KEY_CONFIG_INFO, "")
+            return gson.fromJson(json, ConfigDataModel::class.java)
+        }
+        set(configData) {
+            val gson = Gson()
+            val json = gson.toJson(configData)
+            pref.edit().putString(KEY_CONFIG_INFO, json).apply()
+        }
+    var stetList: MutableList<StateItem>
+        get() {
+            val gson = Gson()
+            val json = getDataByKey(STATE_DATA, "")
+            val type: Type = object : TypeToken<MutableList<StateItem>>() {}.type
+            return gson.fromJson(json, type)
+        }
+        set(BannerData) {
+            val gson = Gson()
+            val json = gson.toJson(BannerData)
+            pref.edit().putString(STATE_DATA, json).apply()
+        }
     var roleData: KeyRoleData
         get() {
             val gson = Gson()
@@ -107,12 +134,18 @@ class SessionManager(val context: Context) {
         const val KEY_IS_LOGIN = "isLogin"
         const val KEY_IS_REGISTER = "isRegister"
         const val KEY_USER_INFO = "user"
+        const val KEY_CONFIG_INFO = "configData"
         const val KEY_ROLE = "key_role"
         const val KEY_ROLE_DATA = "key_role_data"
         const val KEY_EVENT_STATICS = "eventStatics"
         const val HOME_DATA = "homeData"
-        const val BANNER_DATA = "bannerData"
+        const val STATE_DATA = "stateData"
         const val EVENT_DETAIL_BANNER = "eventDetailBanner"
         const val EVENT_LIST = "eventList"
+        const val KEY_CITY_ID = "cityId"
+        const val KEY_CHECKIN_ID = "checkIn"
+        const val WELCOME_FLAG = "welcome"
+        const val IsFirst = "IsFirst"
+
     }
 }

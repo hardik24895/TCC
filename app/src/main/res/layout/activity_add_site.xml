@@ -1,303 +1,566 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.AddSiteActivity">
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/toolbar_with_back_arrow"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/root"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include">
+        android:layout_height="match_parent"
+        android:background="@drawable/ic_background"
+        tools:context=".activity.AddSiteActivity">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constrain"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_10sdp"
+        <include
+            android:id="@+id/include"
+            layout="@layout/toolbar_with_back_arrow"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inCompanyName"
-                android:layout_width="0dp"
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/include">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constrain"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/company_name"
-                app:hintTextColor="@color/black"
+                android:layout_margin="@dimen/_8sdp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintStart_toStartOf="parent">
 
-                <EditText
-                    android:id="@+id/edtCompanyName"
-                    android:layout_width="match_parent"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/crd_1"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorWhite"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:inputType="textCapWords"
-                    android:maxLength="50"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    app:cardCornerRadius="@dimen/_8sdp"
+                    app:cardUseCompatPadding="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inName"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:hint="@string/name"
-                app:hintTextColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/inCompanyName">
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_8sdp">
 
-                <EditText
-                    android:id="@+id/edtName"
-                    android:layout_width="match_parent"
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/linlayService"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:layout_marginBottom="@dimen/_12sdp"
+                            android:background="@drawable/bg_spinner"
+                            android:orientation="vertical"
+
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <tech.hibk.searchablespinnerlibrary.SearchableSpinner
+                                android:id="@+id/spService"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/_3sdp"
+                                android:clickable="false"
+                                android:focusable="false"
+                                android:padding="@dimen/_5sdp"
+                                app:cancelButtonColor="@color/black"
+                                app:cancelButtontext="CLOSE"
+                                app:dialogTitle="@string/select_service"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:nothingSelectedText="@string/select_service"
+                                app:onlyLightTheme="true" />
+
+                            <View
+                                android:id="@+id/view5"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                app:layout_constraintBottom_toBottomOf="@+id/spService"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="@+id/spService" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <com.tcc.app.customview.TextviewSemiBold
+                            android:id="@+id/txtExistSite"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:background="@drawable/bg_spinner"
+                            android:paddingHorizontal="@dimen/_8sdp"
+                            android:paddingVertical="@dimen/_4sdp"
+                            android:paddingTop="@dimen/_2sdp"
+                            android:text="@string/choose_existing_site"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/_12ssp"
+                            android:visibility="gone"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/linlayService" />
+
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/inName"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:hint="@string/site_name"
+                            app:hintTextColor="@color/black"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/txtExistSite">
+
+                            <EditText
+                                android:id="@+id/edtSiteName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/colorWhite"
+                                android:digits="qwertyuiopasdfghjklzxcvbnm QWERTYUIOPASDFGHJKLZXCVBNM  1234567890"
+                                android:fontFamily="@font/opensans_regular"
+                                android:inputType="textCapWords"
+                                android:maxLength="50"
+                                android:textColor="@color/black"
+                                android:textColorHint="@color/black" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/inCompanyName"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/company_name_indu_name"
+                            android:visibility="gone"
+                            app:hintTextColor="@color/black"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/inName">
+
+                            <EditText
+                                android:id="@+id/edtCompanyName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/colorWhite"
+                                android:fontFamily="@font/opensans_regular"
+                                android:inputType="textCapWords"
+                                android:maxLength="50"
+                                android:textColor="@color/black"
+                                android:textColorHint="@color/black" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/inStartdaate"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/expected_start_date"
+                            app:hintTextColor="@color/black"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/inCompanyName">
+
+                            <EditText
+                                android:id="@+id/edtSdate"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/colorWhite"
+                                android:editable="false"
+                                android:focusableInTouchMode="false"
+                                android:fontFamily="@font/opensans_regular"
+                                android:inputType="none"
+                                android:textColor="@color/black"
+                                android:textColorHint="@color/black" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/inendDate"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/expected_end_date"
+                            app:hintTextColor="@color/black"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/inStartdaate">
+
+                            <EditText
+                                android:id="@+id/edtEdate"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/colorWhite"
+                                android:editable="true"
+                                android:focusable="false"
+                                android:focusableInTouchMode="false"
+                                android:fontFamily="@font/opensans_regular"
+                                android:inputType="none"
+                                android:textColor="@color/black"
+                                android:textColorHint="@color/black" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/inpDate"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/perpose_date"
+                            app:hintTextColor="@color/black"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/inendDate">
+
+                            <EditText
+                                android:id="@+id/edtPdate"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/colorWhite"
+                                android:editable="false"
+                                android:focusableInTouchMode="false"
+                                android:fontFamily="@font/opensans_regular"
+                                android:inputType="none"
+                                android:textColor="@color/black"
+                                android:textColorHint="@color/black" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/inWorkingd"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/working_days"
+                            android:visibility="gone"
+                            app:hintTextColor="@color/black"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/inpDate">
+
+                            <EditText
+                                android:id="@+id/edtWorkingDays"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/colorWhite"
+                                android:fontFamily="@font/opensans_regular"
+                                android:inputType="number"
+                                android:textColor="@color/black"
+                                android:textColorHint="@color/black" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/inWorkingh"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/working_hours"
+                            android:visibility="gone"
+                            app:hintTextColor="@color/black"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/inWorkingd">
+
+                            <EditText
+                                android:id="@+id/edtWorkingHour"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/colorWhite"
+                                android:fontFamily="@font/opensans_regular"
+                                android:inputType="number"
+                                android:textColor="@color/black"
+                                android:textColorHint="@color/black" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/crd_2"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorWhite"
-                    android:digits="qwertyuiopasdfghjklzxcvbnm QWERTYUIOPASDFGHJKLZXCVBNM"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:inputType="textCapWords"
-                    android:maxLength="50"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    app:cardCornerRadius="@dimen/_8sdp"
+                    app:cardUseCompatPadding="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/crd_1">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inStartdaate"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:hint="@string/expected_start_date"
-                app:hintTextColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/inName">
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_8sdp">
 
-                <EditText
-                    android:id="@+id/edtSdate"
-                    android:layout_width="match_parent"
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/linlayState"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:background="@drawable/bg_spinner"
+                            android:orientation="vertical"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+
+                            <tech.hibk.searchablespinnerlibrary.SearchableSpinner
+                                android:id="@+id/spState"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/_3sdp"
+                                android:clickable="false"
+                                android:focusable="false"
+                                android:padding="@dimen/_5sdp"
+                                app:cancelButtonColor="@color/black"
+                                app:cancelButtontext="CLOSE"
+                                app:dialogTitle="@string/select_state"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:nothingSelectedText="@string/select_state"
+                                app:onlyLightTheme="true" />
+
+                            <View
+                                android:id="@+id/view"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                app:layout_constraintBottom_toBottomOf="@+id/spState"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="@+id/spState" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/linlayCity"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:background="@drawable/bg_spinner"
+                            android:orientation="vertical"
+                            app:layout_constraintEnd_toEndOf="@+id/inMobile"
+                            app:layout_constraintStart_toStartOf="@+id/inMobile"
+                            app:layout_constraintTop_toBottomOf="@+id/linlayState">
+
+
+                            <tech.hibk.searchablespinnerlibrary.SearchableSpinner
+                                android:id="@+id/spCity"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/_3sdp"
+                                android:clickable="false"
+                                android:focusable="false"
+                                android:padding="@dimen/_5sdp"
+                                app:cancelButtonColor="@color/black"
+                                app:cancelButtontext="CLOSE"
+                                app:dialogTitle="@string/select_city"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:nothingSelectedText="@string/select_city"
+                                app:onlyLightTheme="true" />
+
+                            <View
+                                android:id="@+id/view2"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                app:layout_constraintBottom_toBottomOf="@+id/spCity"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="@+id/spCity" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/inAddress"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/address_line1"
+                            app:hintTextColor="@color/black"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/linlayCity">
+
+                            <EditText
+                                android:id="@+id/edtAddress"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/colorWhite"
+                                android:fontFamily="@font/opensans_regular"
+                                android:inputType="textPostalAddress"
+                                android:maxLines="3"
+                                android:textColor="@color/black"
+                                android:textColorHint="@color/black" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/inAddress2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/address_line2"
+                            app:hintTextColor="@color/black"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/inAddress">
+
+                            <EditText
+                                android:id="@+id/edtAddress2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/colorWhite"
+                                android:fontFamily="@font/opensans_regular"
+                                android:inputType="textPostalAddress"
+                                android:maxLines="3"
+                                android:textColor="@color/black"
+                                android:textColorHint="@color/black" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/inPincode"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/pincode"
+                            app:hintTextColor="@color/black"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/inAddress2">
+
+                            <EditText
+                                android:id="@+id/edtPincode"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/colorWhite"
+                                android:fontFamily="@font/opensans_regular"
+                                android:inputType="number"
+                                android:maxLength="6"
+                                android:maxLines="1"
+                                android:singleLine="true"
+                                android:textColor="@color/black"
+                                android:textColorHint="@color/black" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/ingst"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+
+                            android:hint="@string/gst"
+                            app:hintTextColor="@color/black"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/inPincode">
+
+                            <EditText
+                                android:id="@+id/edtGST"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@color/colorWhite"
+                                android:fontFamily="@font/opensans_regular"
+                                android:inputType="textCapCharacters"
+                                android:maxLength="15"
+                                android:textAllCaps="true"
+                                android:textColor="@color/black"
+                                android:textColorHint="@color/black" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/crd_3"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorWhite"
-                    android:editable="false"
-                    android:focusableInTouchMode="false"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:inputType="none"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    app:cardCornerRadius="@dimen/_8sdp"
+                    app:cardUseCompatPadding="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/crd_2">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inendDate"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:hint="@string/expected_end_date"
-                app:hintTextColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/inStartdaate">
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_8sdp">
 
-                <EditText
-                    android:id="@+id/edtEdate"
-                    android:layout_width="match_parent"
+                        <com.tcc.app.customview.TextviewBold
+                            android:id="@+id/txtSitetype"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:paddingTop="@dimen/_2sdp"
+                            android:text="@string/site_type"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <RadioGroup
+                            android:id="@+id/rg"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/txtSitetype">
+
+                            <com.tcc.app.customview.RadioButtonReguler
+                                android:id="@+id/rbResidential"
+                                android:layout_width="wrap_content"
+                                app:buttonTint="@color/colorPrimary"
+                                android:layout_height="@dimen/_30sdp"
+                                android:text="@string/residential" />
+
+                            <com.tcc.app.customview.RadioButtonReguler
+                                android:id="@+id/rbCommercial"
+                                app:buttonTint="@color/colorPrimary"
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/_30sdp"
+                                android:text="@string/commercial" />
+
+                            <com.tcc.app.customview.RadioButtonReguler
+                                android:id="@+id/rbIndustrial"
+                                app:buttonTint="@color/colorPrimary"
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/_30sdp"
+                                android:text="@string/industrial" />
+
+                        </RadioGroup>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <com.tcc.app.customview.ButtonReguler
+                    android:id="@+id/btnSubmit"
+                    style="@style/CustomPressButton"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorWhite"
-                    android:editable="true"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:inputType="none"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_marginTop="@dimen/_18sdp"
+                    android:layout_marginBottom="@dimen/_18sdp"
+                    android:text="@string/submit"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btnAddQuatation"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/crd_3" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inpDate"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:hint="@string/perpose_date"
-                app:hintTextColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/inendDate">
-
-                <EditText
-                    android:id="@+id/edtPdate"
-                    android:layout_width="match_parent"
+                <com.tcc.app.customview.ButtonReguler
+                    android:id="@+id/btnAddQuatation"
+                    style="@style/CustomPressButton"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorWhite"
-                    android:editable="false"
-                    android:focusableInTouchMode="false"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:inputType="none"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_18sdp"
+                    android:layout_marginBottom="@dimen/_18sdp"
+                    android:text="@string/add_quation"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/btnSubmit"
+                    app:layout_constraintTop_toBottomOf="@+id/crd_3" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inWorkingd"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:hint="@string/working_days"
-                app:hintTextColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/inpDate">
 
-                <EditText
-                    android:id="@+id/edtWorkingDays"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorWhite"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:inputType="number"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
-            </com.google.android.material.textfield.TextInputLayout>
+    <include layout="@layout/bottom_dailog_attendance" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inWorkingh"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:hint="@string/working_hours"
-                app:hintTextColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/inWorkingd">
-
-                <EditText
-                    android:id="@+id/edtWorkingHour"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorWhite"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:inputType="number"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inAddress"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:hint="@string/address"
-                app:hintTextColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/inWorkingh">
-
-                <EditText
-                    android:id="@+id/edtAddress"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorWhite"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:inputType="textPostalAddress"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/ingst"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-
-                android:hint="@string/gst"
-                app:hintTextColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/inAddress">
-
-                <EditText
-                    android:id="@+id/edtGST"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorWhite"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:inputType="textCapCharacters"
-                    android:maxLength="15"
-                    android:textAllCaps="true"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.tcc.app.customview.TextviewBold
-                android:id="@+id/txtSitetype"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:paddingTop="@dimen/_2sdp"
-                android:text="@string/site_type"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ingst" />
-
-            <RadioGroup
-                android:id="@+id/rg"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtSitetype">
-
-                <com.tcc.app.customview.RadioButtonReguler
-                    android:id="@+id/rbResidential"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/_30sdp"
-                    android:text="@string/residential" />
-
-                <com.tcc.app.customview.RadioButtonReguler
-                    android:id="@+id/rbCommercial"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/_30sdp"
-                    android:text="@string/commercial" />
-
-                <com.tcc.app.customview.RadioButtonReguler
-                    android:id="@+id/rbIndustrial"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/_30sdp"
-                    android:text="@string/industrial" />
-
-            </RadioGroup>
-
-            <com.tcc.app.customview.ButtonReguler
-                android:id="@+id/btnSubmit"
-                style="@style/CustomPressButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_18sdp"
-                android:layout_marginBottom="@dimen/_18sdp"
-                android:text="@string/submit"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btnAddQuatation"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rg" />
-
-            <com.tcc.app.customview.ButtonReguler
-                android:id="@+id/btnAddQuatation"
-                style="@style/CustomPressButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_18sdp"
-                android:layout_marginBottom="@dimen/_18sdp"
-                android:text="@string/add_quation"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/btnSubmit"
-                app:layout_constraintTop_toBottomOf="@+id/rg" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

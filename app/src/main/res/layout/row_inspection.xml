@@ -17,21 +17,21 @@
             android:id="@+id/imgProfile"
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
+            app:civ_border_width="@dimen/_1sdp"
             android:layout_marginStart="@dimen/_5sdp"
-            android:src="@mipmap/ic_launcher"
+            android:src="@mipmap/new_icon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.tcc.app.customview.TextviewSemiBold
-            android:id="@+id/txtName"
+            android:id="@+id/txtCompanyName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_5sdp"
             android:ellipsize="end"
             android:singleLine="true"
-            android:text="Hardik Kanzariya"
             android:textSize="@dimen/_14ssp"
-            app:layout_constraintEnd_toStartOf="@+id/imageView2"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/imgProfile"
             app:layout_constraintTop_toTopOf="@+id/imgProfile" />
@@ -44,7 +44,7 @@
             android:text="A"
             android:textAllCaps="true"
             android:textColor="@color/colorWhite"
-            android:textSize="@dimen/text_extra_large"
+            android:textSize="@dimen/_14ssp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/imgProfile"
             app:layout_constraintEnd_toEndOf="@+id/imgProfile"
@@ -57,20 +57,30 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_2sdp"
             android:text="Admin"
-            app:layout_constraintStart_toStartOf="@+id/txtName"
-            app:layout_constraintTop_toBottomOf="@+id/txtName" />
+            app:layout_constraintStart_toStartOf="@+id/txtCompanyName"
+            app:layout_constraintTop_toBottomOf="@+id/txtCompanyName" />
+
+
+        <com.tcc.app.customview.TextviewReguler
+            android:id="@+id/txtEmpName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:drawableStart="@drawable/ic_user_type"
+            android:drawablePadding="@dimen/_10sdp"
+            app:layout_constraintStart_toStartOf="@+id/imgProfile"
+            app:layout_constraintTop_toBottomOf="@+id/imgProfile" />
 
 
         <com.tcc.app.customview.TextviewReguler
             android:id="@+id/txtSiteName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
             android:drawableStart="@drawable/ic_site"
             android:drawablePadding="@dimen/_10sdp"
-            android:text="Santorini Squire, Ahmedabad"
+            android:paddingTop="@dimen/_5sdp"
             app:layout_constraintStart_toStartOf="@+id/imgProfile"
-            app:layout_constraintTop_toBottomOf="@+id/imgProfile" />
+            app:layout_constraintTop_toBottomOf="@+id/txtEmpName" />
 
 
         <com.tcc.app.customview.TextviewReguler
@@ -80,7 +90,6 @@
             android:drawableStart="@drawable/ic_start_date"
             android:drawablePadding="@dimen/_10sdp"
             android:paddingTop="@dimen/_5sdp"
-            android:text="06-02-2021 16:03:00"
             app:layout_constraintStart_toStartOf="@+id/imgProfile"
             app:layout_constraintTop_toBottomOf="@+id/txtSiteName" />
 

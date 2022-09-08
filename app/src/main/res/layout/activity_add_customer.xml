@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/ic_background"
     android:layout_height="match_parent"
     tools:context=".activity.CustomerDetailActivity">
 
@@ -10,106 +11,133 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar_with_back_arrow" />
 
-
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <com.tcc.app.customview.BottomSheetViewPager
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_gravity="bottom"
+
+        android:elevation="8dp"
+        app:behavior_peekHeight="@dimen/_300sdp"
+        app:layout_behavior="@string/bottom_sheet_behavior"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_scrollFlags="scroll|enterAlways">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/main_view"
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/circleImageView2"
-                android:layout_width="@dimen/_56sdp"
-                android:layout_height="@dimen/_56sdp"
-                android:layout_marginStart="@dimen/_16ssp"
-                android:layout_marginTop="@dimen/_16ssp"
-                android:src="@drawable/ic_profile"
-                app:civ_border_color="@color/black"
-                app:civ_border_width="@dimen/_1ssp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_profile" />
-
-            <com.tcc.app.customview.TextviewSemiBold
-                android:id="@+id/textviewSemiBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:singleLine="true"
-                android:text="John Smith"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/_16ssp"
-                app:layout_constraintStart_toEndOf="@+id/circleImageView2"
-                app:layout_constraintTop_toTopOf="@+id/circleImageView2" />
+            android:layout_gravity="top"
+            app:tabGravity="center"
+            app:tabMode="scrollable"
+            app:tabTextAppearance="@style/CustomTextAppearanceTab" />
 
 
-            <com.tcc.app.customview.TextviewReguler
-                android:id="@+id/tvUserContact"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:drawableLeft="@drawable/ic_call_white"
-                android:drawablePadding="@dimen/_8sdp"
-                android:singleLine="true"
-                android:text="9999 999 999"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/_12ssp"
-                app:layout_constraintStart_toEndOf="@+id/circleImageView2"
-                app:layout_constraintTop_toBottomOf="@+id/textviewSemiBold" />
-
-            <com.tcc.app.customview.TextviewReguler
-                android:id="@+id/textviewReguler"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:layout_marginBottom="@dimen/_16ssp"
-                android:drawableLeft="@drawable/ic_mail_white"
-                android:drawablePadding="@dimen/_8sdp"
-                android:singleLine="true"
-                android:text="test@gmail.com"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/_12ssp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/circleImageView2"
-                app:layout_constraintTop_toBottomOf="@+id/tvUserContact" />
+    </com.tcc.app.customview.BottomSheetViewPager>
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+    <!--    <androidx.coordinatorlayout.widget.CoordinatorLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/toolbar"-->
+    <!--        app:layout_scrollFlags="scroll|enterAlways">-->
+
+    <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--            android:id="@+id/main_view"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:background="@color/colorPrimary">-->
+
+    <!--            <de.hdodenhof.circleimageview.CircleImageView-->
+    <!--                android:id="@+id/circleImageView2"-->
+    <!--                android:layout_width="@dimen/_56sdp"-->
+    <!--                android:layout_height="@dimen/_56sdp"-->
+    <!--                android:layout_marginStart="@dimen/_16ssp"-->
+    <!--                android:layout_marginTop="@dimen/_16ssp"-->
+    <!--                android:src="@drawable/ic_profile"-->
+    <!--                app:civ_border_color="@color/black"-->
+    <!--                app:civ_border_width="@dimen/_1ssp"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toTopOf="parent"-->
+    <!--                app:srcCompat="@drawable/ic_profile" />-->
+
+    <!--            <com.tcc.app.customview.TextviewSemiBold-->
+    <!--                android:id="@+id/textviewSemiBold"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginStart="@dimen/_8sdp"-->
+    <!--                android:singleLine="true"-->
+    <!--                android:text="John Smith"-->
+    <!--                android:textColor="@color/colorWhite"-->
+    <!--                android:textSize="@dimen/_16ssp"-->
+    <!--                app:layout_constraintStart_toEndOf="@+id/circleImageView2"-->
+    <!--                app:layout_constraintTop_toTopOf="@+id/circleImageView2" />-->
 
 
-        <com.tcc.app.customview.BottomSheetViewPager
-            android:id="@+id/view_pager"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="@android:color/white"
-            android:elevation="8dp"
-            app:behavior_peekHeight="@dimen/_300sdp"
-            app:layout_behavior="@string/bottom_sheet_behavior">
+    <!--            <com.tcc.app.customview.TextviewReguler-->
+    <!--                android:id="@+id/tvUserContact"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginStart="@dimen/_8sdp"-->
+    <!--                android:drawableLeft="@drawable/ic_call_white"-->
+    <!--                android:drawablePadding="@dimen/_8sdp"-->
+    <!--                android:singleLine="true"-->
+    <!--                android:text="9999 999 999"-->
+    <!--                android:textColor="@color/colorWhite"-->
+    <!--                android:textSize="@dimen/_12ssp"-->
+    <!--                app:layout_constraintStart_toEndOf="@+id/circleImageView2"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/textviewSemiBold" />-->
+
+    <!--            <com.tcc.app.customview.TextviewReguler-->
+    <!--                android:id="@+id/textviewReguler"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginStart="@dimen/_8sdp"-->
+    <!--                android:layout_marginBottom="@dimen/_16ssp"-->
+    <!--                android:drawableLeft="@drawable/ic_mail_white"-->
+    <!--                android:drawablePadding="@dimen/_8sdp"-->
+    <!--                android:singleLine="true"-->
+    <!--                android:text="test@gmail.com"-->
+    <!--                android:textColor="@color/colorWhite"-->
+    <!--                android:textSize="@dimen/_12ssp"-->
+    <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--                app:layout_constraintStart_toEndOf="@+id/circleImageView2"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/tvUserContact" />-->
 
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                app:tabGravity="center"
-                app:tabMode="scrollable"
-                app:tabTextAppearance="@style/CustomTextAppearanceTab" />
+    <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
 
 
-        </com.tcc.app.customview.BottomSheetViewPager>
+    <!--        <com.tcc.app.customview.BottomSheetViewPager-->
+    <!--            android:id="@+id/view_pager"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_gravity="bottom"-->
+    <!--            android:background="@android:color/white"-->
+    <!--            android:elevation="8dp"-->
+    <!--            app:behavior_peekHeight="@dimen/_300sdp"-->
+    <!--            app:layout_behavior="@string/bottom_sheet_behavior">-->
 
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <!--            <com.google.android.material.tabs.TabLayout-->
+    <!--                android:id="@+id/tabs"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_gravity="top"-->
+    <!--                app:tabGravity="center"-->
+    <!--                app:tabMode="scrollable"-->
+    <!--                app:tabTextAppearance="@style/CustomTextAppearanceTab" />-->
+
+
+    <!--        </com.tcc.app.customview.BottomSheetViewPager>-->
+
+
+    <!--    </androidx.coordinatorlayout.widget.CoordinatorLayout>-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

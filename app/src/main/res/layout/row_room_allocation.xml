@@ -23,8 +23,9 @@
             android:ellipsize="end"
             android:singleLine="true"
             android:text="A - 508"
-            android:textColor="@color/txtgray"
+            android:textColor="@color/black"
             android:textSize="@dimen/_14ssp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -40,6 +41,7 @@
             android:text="Sentorini Square, Ahmedabad"
             android:textColor="@color/txtgray"
             android:textSize="@dimen/_14ssp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txtRoomNo" />
 
@@ -58,7 +60,7 @@
 
 
         <com.tcc.app.customview.TextviewReguler
-            android:id="@+id/textView2"
+            android:id="@+id/txtEndDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_4sdp"

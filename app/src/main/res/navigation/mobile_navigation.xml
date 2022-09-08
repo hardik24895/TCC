@@ -12,20 +12,20 @@
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/nav_visitor"
-        android:name="com.tcc.app.fragment.VisitorFragment"
+        android:name="com.tcc.app.fragment.LeadFragment"
         android:label="@string/nav_visitor"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/reclerview_swipelayout" />
 
     <fragment
         android:id="@+id/nav_profile"
-        android:name="com.tcc.app.fragment.ProfileMainFragment"
+        android:name="com.tcc.app.fragment.ProfileMainActivity"
         android:label="@string/menu_profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/nav_employee"
         android:name="com.tcc.app.fragment.EmployeeFragment"
         android:label="@string/nav_employee"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/reclerview_swipelayout" />
 
     <fragment
         android:id="@+id/nav_invoice"
@@ -40,10 +40,17 @@
         tools:layout="@layout/fragment_customer" />
 
     <fragment
+        android:id="@+id/nav_quotation"
+        android:name="com.tcc.app.fragment.QuotationFragment"
+        android:label="@string/nav_quotations"
+        tools:layout="@layout/reclerview_swipelayout" />
+
+    <fragment
         android:id="@+id/nav_penalti"
-        android:name="com.tcc.app.fragment.PenaltyFragment"
+        android:name="com.tcc.app.activity.PenaltyActivity"
         android:label="@string/nav_penalti"
         tools:layout="@layout/fragment_setting" />
+
     <fragment
         android:id="@+id/nav_inspection"
         android:name="com.tcc.app.fragment.InspectionFragment"
@@ -55,8 +62,13 @@
         android:label="@string/nav_attendance"
         tools:layout="@layout/fragment_setting" />
     <fragment
+        android:id="@+id/nav_payment"
+        android:name="com.tcc.app.fragment.PaymentListFragment"
+        android:label="@string/nav_payment"
+        tools:layout="@layout/reclerview_swipelayout" />
+    <fragment
         android:id="@+id/nav_ticket"
-        android:name="com.tcc.app.fragment.TicketListFragment"
+        android:name="com.tcc.app.activity.TicketActivity"
         android:label="@string/ticket"
         tools:layout="@layout/fragment_ticket" />
     <fragment
@@ -64,5 +76,10 @@
         android:name="com.tcc.app.fragment.SettingsFragment"
         android:label="@string/nav_invoice"
         tools:layout="@layout/fragment_setting" />
+    <fragment
+        android:id="@+id/nav_site"
+        android:name="com.tcc.app.fragment.SiteListMainFragment"
+        android:label="@string/nav_site"
+        tools:layout="@layout/fragment_customer_site" />
 
 </navigation>

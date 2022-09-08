@@ -2,8 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/ic_background"
     tools:context=".activity.AddEmployeeActivity">
 
     <include
@@ -15,8 +17,10 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar">
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintVertical_bias="1.0">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -46,435 +50,604 @@
                 app:srcCompat="@drawable/ic_add_btn" />
 
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til1"
-                android:layout_width="0dp"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/crd_1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_16sdp"
+                android:layout_marginHorizontal="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_24ssp"
-                android:hint="First Name"
-                app:hintTextColor="@color/black"
+                app:cardCornerRadius="@dimen/_8sdp"
+                app:cardUseCompatPadding="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/circleImageView2">
+                app:layout_constraintTop_toBottomOf="@+id/ivUpload">
 
-                <EditText
-                    android:id="@+id/edtFirstName"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorWhite"
-                    android:digits="qwertyuiopasdfghjklzxcvbnm QWERTYUIOPASDFGHJKLZXCVBNM"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:inputType="textCapWords"
-                    android:maxLength="50"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:padding="@dimen/_8sdp">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til2"
-                android:layout_width="0dp"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+
+                        android:hint="@string/first_name"
+                        app:hintTextColor="@color/black"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <EditText
+                            android:id="@+id/edtFirstName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorWhite"
+                            android:digits="qwertyuiopasdfghjklzxcvbnm QWERTYUIOPASDFGHJKLZXCVBNM 1234567890"
+                            android:fontFamily="@font/opensans_regular"
+                            android:inputType="textCapWords"
+                            android:maxLength="50"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/last_name"
+
+                        app:layout_constraintEnd_toEndOf="@+id/til1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/til1">
+
+                        <EditText
+                            android:id="@+id/edtLastName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorWhite"
+                            android:digits="qwertyuiopasdfghjklzxcvbnm QWERTYUIOPASDFGHJKLZXCVBNM  1234567890"
+                            android:fontFamily="@font/opensans_regular"
+                            android:inputType="textCapWords"
+                            android:maxLength="50"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til14"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/email"
+                        app:layout_constraintEnd_toEndOf="@+id/til1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/til2">
+
+                        <EditText
+                            android:id="@+id/edtEmail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorWhite"
+                            android:fontFamily="@font/opensans_regular"
+                            android:inputType="textEmailAddress"
+                            android:maxLength="100"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/mobile_no"
+                        app:layout_constraintEnd_toEndOf="@+id/til1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/til14">
+
+                        <EditText
+                            android:id="@+id/edtMobile"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorWhite"
+                            android:fontFamily="@font/opensans_regular"
+                            android:inputType="number"
+                            android:maxLength="10"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til5"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/password"
+                        app:layout_constraintEnd_toEndOf="@+id/til1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/til3"
+                        app:passwordToggleEnabled="true">
+
+                        <EditText
+                            android:id="@+id/edtPassword"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorWhite"
+                            android:fontFamily="@font/opensans_regular"
+                            android:inputType="textPassword"
+                            android:maxLength="50"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til6"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/confirm_password"
+                        app:layout_constraintEnd_toEndOf="@+id/til1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/til5"
+                        app:passwordToggleEnabled="true">
+
+                        <EditText
+                            android:id="@+id/edtConfirmPassword"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorWhite"
+                            android:fontFamily="@font/opensans_regular"
+                            android:inputType="textPassword"
+                            android:maxLength="50"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/crd_2"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Last Name"
-
-                app:layout_constraintEnd_toEndOf="@+id/til1"
-                app:layout_constraintStart_toStartOf="@+id/til1"
-                app:layout_constraintTop_toBottomOf="@+id/til1">
-
-                <EditText
-                    android:id="@+id/edtLastName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorWhite"
-                    android:digits="qwertyuiopasdfghjklzxcvbnm QWERTYUIOPASDFGHJKLZXCVBNM"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:inputType="textCapWords"
-                    android:maxLength="50"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:hint="Mobile"
-                app:layout_constraintEnd_toEndOf="@+id/til1"
-                app:layout_constraintStart_toStartOf="@+id/til1"
-                app:layout_constraintTop_toBottomOf="@+id/til2">
-
-                <EditText
-                    android:id="@+id/edtMobile"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorWhite"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:inputType="number"
-                    android:maxLength="10"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til4"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:hint="Add Salary"
-                app:layout_constraintEnd_toEndOf="@+id/til1"
-                app:layout_constraintStart_toStartOf="@+id/til1"
-                app:layout_constraintTop_toBottomOf="@+id/til3">
-
-                <EditText
-                    android:id="@+id/edAddSalary"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorWhite"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:inputType="number"
-                    android:maxLength="10"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til5"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:hint="Password"
-                app:layout_constraintEnd_toEndOf="@+id/til1"
-                app:layout_constraintStart_toStartOf="@+id/til1"
-                app:layout_constraintTop_toBottomOf="@+id/til4"
-                app:passwordToggleEnabled="true">
-
-                <EditText
-                    android:id="@+id/edtPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorWhite"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:inputType="textPassword"
-                    android:maxLength="50"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til6"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:hint="Confirm Password"
-                app:layout_constraintEnd_toEndOf="@+id/til1"
-                app:layout_constraintStart_toStartOf="@+id/til1"
-                app:layout_constraintTop_toBottomOf="@+id/til5"
-                app:passwordToggleEnabled="true">
-
-                <EditText
-                    android:id="@+id/edtConfirmPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorWhite"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:inputType="textPassword"
-                    android:maxLength="50"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til7"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:hint="Joining Date"
-                app:layout_constraintEnd_toEndOf="@+id/til1"
-                app:layout_constraintStart_toStartOf="@+id/til1"
-                app:layout_constraintTop_toBottomOf="@+id/til6">
-
-                <EditText
-                    android:id="@+id/edtJoiningDate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorWhite"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:inputType="date"
-                    android:maxLength="50"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til8"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:hint="Working Hours"
-                app:layout_constraintEnd_toEndOf="@+id/til1"
-                app:layout_constraintStart_toStartOf="@+id/til1"
-                app:layout_constraintTop_toBottomOf="@+id/til7">
-
-                <EditText
-                    android:id="@+id/edtWorkingHours"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorWhite"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:inputType="number"
-                    android:maxLength="3"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til9"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:hint="Address"
-                app:layout_constraintEnd_toEndOf="@+id/til1"
-                app:layout_constraintStart_toStartOf="@+id/til1"
-                app:layout_constraintTop_toBottomOf="@+id/til8">
-
-                <EditText
-                    android:id="@+id/edtAddress"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorWhite"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:inputType="textPostalAddress"
-                    android:maxLength="150"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til10"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:hint="Bank Name"
-                app:layout_constraintEnd_toEndOf="@+id/til1"
-                app:layout_constraintStart_toStartOf="@+id/til1"
-                app:layout_constraintTop_toBottomOf="@+id/til9">
-
-                <EditText
-                    android:id="@+id/edtBankName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorWhite"
-                    android:digits="qwertyuiopasdfghjklzxcvbnm QWERTYUIOPASDFGHJKLZXCVBNM"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:inputType="text"
-                    android:maxLength="50"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til11"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:hint="Branch Name"
-                app:layout_constraintEnd_toEndOf="@+id/til1"
-                app:layout_constraintStart_toStartOf="@+id/til1"
-                app:layout_constraintTop_toBottomOf="@+id/til10">
-
-                <EditText
-                    android:id="@+id/edtBranchName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorWhite"
-                    android:digits="qwertyuiopasdfghjklzxcvbnm QWERTYUIOPASDFGHJKLZXCVBNM"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:inputType="text"
-                    android:maxLength="50"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til12"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:hint="Account Number"
-                app:layout_constraintEnd_toEndOf="@+id/til1"
-                app:layout_constraintStart_toStartOf="@+id/til1"
-                app:layout_constraintTop_toBottomOf="@+id/til11">
-
-                <EditText
-                    android:id="@+id/edtAccountNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorWhite"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:inputType="number"
-                    android:maxLength="50"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til13"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:hint="IFSC Code"
-                app:layout_constraintEnd_toEndOf="@+id/til1"
-                app:layout_constraintStart_toStartOf="@+id/til1"
-                app:layout_constraintTop_toBottomOf="@+id/til12">
-
-                <EditText
-                    android:id="@+id/edtIfsc"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorWhite"
-                    android:digits="qwertyuiopasdfghjklzxcvbnm QWERTYUIOPASDFGHJKLZXCVBNM 1234567890"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:inputType="textCapCharacters"
-                    android:maxLength="11"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/black" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/linlayUserType"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_12sdp"
-                android:background="@drawable/bg_spinner"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="@+id/til1"
-                app:layout_constraintStart_toStartOf="@+id/til1"
-                app:layout_constraintTop_toBottomOf="@id/til13">
-
-
-                <tech.hibk.searchablespinnerlibrary.SearchableSpinner
-                    android:id="@+id/spUserType"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_3sdp"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:clickable="false"
-                    android:focusable="false"
-                    android:padding="@dimen/_5sdp"
-                    app:cancelButtonColor="@color/black"
-                    app:cancelButtontext="CLOSE"
-                    app:dialogTitle="Sample"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:nothingSelectedText="Select UserType"
-                    app:onlyLightTheme="true" />
-
-                <View
-                    android:id="@+id/view1"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/spUserType"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/spUserType" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/linCity"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_12sdp"
-                android:background="@drawable/bg_spinner"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="@+id/til1"
-                app:layout_constraintStart_toStartOf="@+id/til1"
-                app:layout_constraintTop_toBottomOf="@id/linlayUserType">
-
-
-                <tech.hibk.searchablespinnerlibrary.SearchableSpinner
-                    android:id="@+id/spCity"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_3sdp"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:clickable="false"
-                    android:focusable="false"
-                    android:padding="@dimen/_5sdp"
-                    app:cancelButtonColor="@color/black"
-                    app:cancelButtontext="CLOSE"
-                    app:dialogTitle="Sample"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:nothingSelectedText="Select City"
-                    app:onlyLightTheme="true" />
-
-                <View
-                    android:id="@+id/view"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/spCity"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/spCity" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <com.tcc.app.customview.TextviewReguler
-                android:id="@+id/txtaddAdharTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:text="Add Adhar Image"
-                app:layout_constraintStart_toStartOf="@+id/til1"
-                app:layout_constraintTop_toBottomOf="@id/linCity" />
-
-            <ImageView
-                android:id="@+id/ivSelectImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_4sdp"
-                app:layout_constraintStart_toStartOf="@+id/til1"
-                app:layout_constraintTop_toBottomOf="@id/txtaddAdharTitle"
-                app:srcCompat="@drawable/ic_add_btn" />
+                app:cardCornerRadius="@dimen/_8sdp"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/crd_1">
 
-            <com.tcc.app.customview.TextviewReguler
-                android:id="@+id/txtAddOfferLatterImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:text="Add Offer Latter Image"
-                app:layout_constraintStart_toStartOf="@+id/til1"
-                app:layout_constraintTop_toBottomOf="@id/ivSelectImage" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_8sdp">
 
-            <ImageView
-                android:id="@+id/ivSelectOfferLetter"
-                android:layout_width="wrap_content"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til7"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:hint="Joining Date"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <EditText
+                            android:id="@+id/edtJoiningDate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorWhite"
+                            android:clickable="true"
+                            android:cursorVisible="false"
+                            android:focusable="false"
+                            android:fontFamily="@font/opensans_regular"
+                            android:inputType="date"
+                            android:maxLength="15"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til4"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:hint="Add Salary"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/til7">
+
+                        <EditText
+                            android:id="@+id/edAddSalary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorWhite"
+                            android:fontFamily="@font/opensans_regular"
+                            android:inputType="number"
+                            android:maxLength="10"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til8"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/working_hrs"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/til4">
+
+                        <EditText
+                            android:id="@+id/edtWorkingHours"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorWhite"
+                            android:fontFamily="@font/opensans_regular"
+                            android:inputType="number"
+                            android:maxLength="3"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til9"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:hint="Address"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/til8">
+
+                        <EditText
+                            android:id="@+id/edtAddress"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorWhite"
+                            android:fontFamily="@font/opensans_regular"
+                            android:inputType="textPostalAddress"
+                            android:maxLength="150"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/crd_3"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_4sdp"
-                app:layout_constraintStart_toStartOf="@+id/til1"
-                app:layout_constraintTop_toBottomOf="@id/txtAddOfferLatterImage"
-                app:srcCompat="@drawable/ic_add_btn" />
+                app:cardCornerRadius="@dimen/_8sdp"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/crd_2">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_8sdp">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til10"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:hint="Bank Name"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <EditText
+                            android:id="@+id/edtBankName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorWhite"
+                            android:digits="qwertyuiopasdfghjklzxcvbnm QWERTYUIOPASDFGHJKLZXCVBNM"
+                            android:fontFamily="@font/opensans_regular"
+                            android:inputType="text"
+                            android:maxLength="50"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til11"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:hint="Branch Name"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/til10">
+
+                        <EditText
+                            android:id="@+id/edtBranchName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorWhite"
+                            android:digits="qwertyuiopasdfghjklzxcvbnm QWERTYUIOPASDFGHJKLZXCVBNM"
+                            android:fontFamily="@font/opensans_regular"
+                            android:inputType="text"
+                            android:maxLength="50"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til12"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:hint="Account Number"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/til11">
+
+                        <EditText
+                            android:id="@+id/edtAccountNumber"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorWhite"
+                            android:fontFamily="@font/opensans_regular"
+                            android:inputType="number"
+                            android:maxLength="50"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til13"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:hint="IFSC Code"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/til12">
+
+                        <EditText
+                            android:id="@+id/edtIfsc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorWhite"
+                            android:digits="qwertyuiopasdfghjklzxcvbnm QWERTYUIOPASDFGHJKLZXCVBNM 1234567890"
+                            android:fontFamily="@font/opensans_regular"
+                            android:inputType="textCapCharacters"
+                            android:maxLength="11"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til15"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/gst_no"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/til13">
+
+                        <EditText
+                            android:id="@+id/edtGST"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorWhite"
+                            android:digits="qwertyuiopasdfghjklzxcvbnm QWERTYUIOPASDFGHJKLZXCVBNM 1234567890"
+                            android:fontFamily="@font/opensans_regular"
+                            android:inputType="textCapCharacters"
+                            android:maxLength="15"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/crd_4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                app:cardCornerRadius="@dimen/_8sdp"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/crd_3">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_8sdp">
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/linlayUserType"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:background="@drawable/bg_spinner"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+
+                        <tech.hibk.searchablespinnerlibrary.SearchableSpinner
+                            android:id="@+id/spUserType"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:padding="@dimen/_5sdp"
+                            app:cancelButtonColor="@color/black"
+                            app:cancelButtontext="CLOSE"
+                            app:dialogTitle="@string/staff_selection"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:nothingSelectedText="@string/staff_selection"
+                            app:onlyLightTheme="true" />
+
+                        <View
+                            android:id="@+id/viewUserType"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/spUserType"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/spUserType" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/linRole"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:background="@drawable/bg_spinner"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/linlayUserType">
+
+
+                        <tech.hibk.searchablespinnerlibrary.SearchableSpinner
+                            android:id="@+id/spRole"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:padding="@dimen/_5sdp"
+                            app:cancelButtonColor="@color/black"
+                            app:cancelButtontext="CLOSE"
+                            app:dialogTitle="@string/select_role"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:nothingSelectedText="@string/select_role"
+                            app:onlyLightTheme="true" />
+
+                        <View
+                            android:id="@+id/viewRole"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/spRole"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/spRole" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/linCity"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:background="@drawable/bg_spinner"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/linRole">
+
+
+                        <tech.hibk.searchablespinnerlibrary.SearchableSpinner
+                            android:id="@+id/spCity"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:padding="@dimen/_5sdp"
+                            app:cancelButtonColor="@color/black"
+                            app:cancelButtontext="CLOSE"
+                            app:dialogTitle="Sample"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:nothingSelectedText="Select City"
+                            app:onlyLightTheme="true" />
+
+                        <View
+                            android:id="@+id/viewCity"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/spCity"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/spCity" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <com.tcc.app.customview.TextviewReguler
+                        android:id="@+id/txtaddAdharTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:text="Add Adhar Image"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/linCity" />
+
+                    <ImageView
+                        android:id="@+id/ivSelectAdharImage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/txtaddAdharTitle"
+                        app:srcCompat="@drawable/ic_add_btn" />
+
+                    <com.tcc.app.customview.TextviewReguler
+                        android:id="@+id/txtAddOfferLatterImage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:text="Add Offer Latter Image"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/ivSelectAdharImage" />
+
+                    <ImageView
+                        android:id="@+id/ivSelectOfferLetter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/txtAddOfferLatterImage"
+                        app:srcCompat="@drawable/ic_add_btn" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
 
             <com.tcc.app.customview.ButtonReguler
-                android:id="@+id/btnLogin"
+                android:id="@+id/btnSubmit"
                 style="@style/CustomPressButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_24ssp"
                 android:layout_marginTop="@dimen/_18sdp"
                 android:layout_marginBottom="@dimen/_12sdp"
                 android:text="@string/submit"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/til1"
-                app:layout_constraintStart_toStartOf="@+id/til1"
-                app:layout_constraintTop_toBottomOf="@id/ivSelectOfferLetter" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/crd_4" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

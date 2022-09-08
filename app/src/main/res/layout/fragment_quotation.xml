@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/swipe_view_bg">
+    android:background="@drawable/ic_background">
 
     <com.tcc.app.customview.TextviewReguler
         android:id="@+id/txtAccepted"
@@ -17,26 +17,9 @@
         android:paddingVertical="@dimen/_5sdp"
         android:text="@string/accepted"
         android:textColor="@drawable/selector_attendance_textview"
-        app:layout_constraintEnd_toStartOf="@+id/txtRejected"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.tcc.app.customview.TextviewReguler
-        android:id="@+id/txtRejected"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:background="@drawable/button_absentt"
-        android:gravity="center"
-        android:paddingHorizontal="@dimen/_10sdp"
-        android:paddingVertical="@dimen/_5sdp"
-        android:text="@string/rejected"
-        android:textColor="@drawable/selector_attendance_textview"
         app:layout_constraintEnd_toStartOf="@+id/txtOther"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/txtAccepted"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.tcc.app.customview.TextviewReguler
@@ -45,17 +28,37 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginEnd="@dimen/_10sdp"
+
         android:background="@drawable/button_half_day"
         android:gravity="center"
         android:paddingHorizontal="@dimen/_10sdp"
         android:paddingVertical="@dimen/_5sdp"
-        android:text="@string/other"
+        android:text="@string/pending"
+        android:textColor="@drawable/selector_attendance_textview"
+       app:layout_constraintEnd_toEndOf="@+id/txtRejected"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/txtAccepted"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.tcc.app.customview.TextviewReguler
+        android:id="@+id/txtRejected"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:background="@drawable/button_absentt"
+        android:gravity="center"
+        android:paddingHorizontal="@dimen/_10sdp"
+        android:paddingVertical="@dimen/_5sdp"
+        android:text="@string/rejected"
         android:textColor="@drawable/selector_attendance_textview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/txtRejected"
+        app:layout_constraintStart_toEndOf="@+id/txtOther"
         app:layout_constraintTop_toTopOf="parent" />
+
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

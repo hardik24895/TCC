@@ -1,9 +1,13 @@
 package com.tcc.app.extention
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.ConnectivityManager
+import android.net.Uri
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
@@ -166,6 +170,104 @@ fun dismissAlertDialog() {
     dialog?.dismiss()
 }
 
-inline
-val AppCompatActivity.connectivityManager: ConnectivityManager
+fun getRandomMaterialColor(typeColor: String, context: Context): Int {
+    var returnColor = Color.GRAY
+    val arrayId = context.resources.getIdentifier(
+        "mdcolor_$typeColor",
+        "array",
+        context!!.packageName
+    )
+    if (arrayId != 0) {
+        val colors = context.resources.obtainTypedArray(arrayId)
+        val index = (Math.random() * colors.length()).toInt()
+        returnColor = colors.getColor(index, Color.GRAY)
+        colors.recycle()
+    }
+    return returnColor
+}
+
+
+
+fun sendEmail(context: Context, email: String) {
+    val emailIntent = Intent(
+        Intent.ACTION_SENDTO, Uri.fromParts(
+            "mailto", email, null
+        )
+    )
+    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject")
+    emailIntent.putExtra(Intent.EXTRA_TEXT, "Body")
+    context.startActivity(Intent.createChooser(emailIntent, "Send email..."))
+}
+
+fun callPhone(context: Context, phone: String) {
+    val intent = Intent(Intent.ACTION_DIAL)
+    intent.data = Uri.parse("tel:${phone}")
+    context.startActivity(intent)
+}
+
+fun openPDF(url: String?, context: Context) {
+
+    val browserIntent1 = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+    context.startActivity(browserIntent1)
+
+
+}
+
+fun isActivityForIntentAvailable(
+    context: Context,
+    intent: Intent?
+): Boolean {
+    val packageManager = context.packageManager
+    val list: List<*> =
+        packageManager.queryIntentActivities(intent!!, PackageManager.MATCH_DEFAULT_ONLY)
+    return list.size > 0
+}
+
+
+fun convertIntoTowDigit(value: Int): String {
+    var finalValue = value.toString()
+    if (value < 10) {
+        finalValue = "0" + value.toString()
+    }
+
+    return finalValue
+}
+
+fun checkUserRole(Role: String, context: Activity): Boolean {
+
+    if (Role.equals("1")) {
+        return true
+    } else {
+        dialog = AlertDialog.Builder(context)
+            .setMessage(context.getString(R.string.you_dont_have_a_rights))
+            .setCancelable(false)
+            .setPositiveButton(
+                context.getString(R.string.ok)
+            ) { dialog, which -> dialog.dismiss() }
+            .create()
+        dialog?.show()
+    }
+
+    return false
+}
+
+fun checkUserRole(Role: String, context: Context): Boolean {
+
+    if (Role.equals("1")) {
+        return true
+    } else {
+        dialog = AlertDialog.Builder(context)
+            .setMessage(context.getString(R.string.you_dont_have_a_rights))
+            .setCancelable(false)
+            .setPositiveButton(
+                context.getString(R.string.ok)
+            ) { dialog, which -> dialog.dismiss() }
+            .create()
+        dialog?.show()
+    }
+
+    return false
+}
+
+inline val AppCompatActivity.connectivityManager: ConnectivityManager
     get() = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "220828946682",
+    "firebase_url": "https://thecleaningcompany-32d80.firebaseio.com",
+    "project_id": "thecleaningcompany-32d80",
+    "storage_bucket": "thecleaningcompany-32d80.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:220828946682:android:324ae6b83e7ffdbcf0f943",
+        "android_client_info": {
+          "package_name": "com.tcc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "220828946682-e1p9mv7t4vb7h8778j7poci8hmgjsk2j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD74kzA32YYgbSSN4dpt1x1lEujl0pDdM0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "220828946682-e1p9mv7t4vb7h8778j7poci8hmgjsk2j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:220828946682:android:454747a97b50837df0f943",
+        "android_client_info": {
+          "package_name": "com.tcc.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "220828946682-e1p9mv7t4vb7h8778j7poci8hmgjsk2j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD74kzA32YYgbSSN4dpt1x1lEujl0pDdM0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "220828946682-e1p9mv7t4vb7h8778j7poci8hmgjsk2j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

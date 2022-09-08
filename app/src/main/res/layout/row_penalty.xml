@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginHorizontal="@dimen/_5sdp"
-    android:elevation="5dp"
     app:cardCornerRadius="8dp"
     app:cardUseCompatPadding="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:paddingEnd="@dimen/_5ssp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_5sdp">
+        android:layout_margin="@dimen/_8sdp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imgProfile"
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginStart="@dimen/_5sdp"
-            android:src="@mipmap/ic_launcher"
+            android:src="@mipmap/new_icon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,10 +30,9 @@
             android:layout_marginStart="@dimen/_5sdp"
             android:ellipsize="end"
             android:singleLine="true"
-            android:text="Hardik Kanzariya"
             android:textSize="@dimen/_14ssp"
             app:layout_constraintBottom_toBottomOf="@id/imgProfile"
-            app:layout_constraintEnd_toStartOf="@+id/imageView2"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/imgProfile"
             app:layout_constraintTop_toTopOf="@+id/imgProfile" />
@@ -55,26 +54,15 @@
 
 
         <com.tcc.app.customview.TextviewReguler
-            android:id="@+id/txtSiteName"
+            android:id="@+id/txtReason"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_location"
+            android:drawableStart="@drawable/ic_reason"
             android:drawablePadding="@dimen/_10sdp"
             android:paddingTop="@dimen/_10sdp"
-            android:text="508, Sentorini Square, Jodhpur Cross Road Ahmedabad"
-            app:layout_constraintStart_toStartOf="@+id/imgProfile"
-            app:layout_constraintTop_toBottomOf="@+id/imgProfile" />
-
-        <com.tcc.app.customview.TextviewReguler
-            android:id="@+id/txtStartDate"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_comment_white"
-            android:drawablePadding="@dimen/_10sdp"
-            android:paddingTop="@dimen/_5sdp"
             android:text="Late Comming, Misbehave"
             app:layout_constraintStart_toStartOf="@+id/imgProfile"
-            app:layout_constraintTop_toBottomOf="@+id/txtSiteName" />
+            app:layout_constraintTop_toBottomOf="@+id/imgProfile" />
 
         <com.tcc.app.customview.TextviewBold
             android:id="@+id/txtEmployeeTitle"
@@ -83,32 +71,15 @@
             android:paddingTop="@dimen/_5sdp"
             android:text="@string/employee_list"
             app:layout_constraintStart_toStartOf="@+id/imgProfile"
-            app:layout_constraintTop_toBottomOf="@+id/txtStartDate" />
-
-
-        <com.tcc.app.customview.TextviewReguler
-            android:id="@+id/txtEmployeenName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/_5sdp"
-            android:text="Hardik kanzariya"
-            app:layout_constraintStart_toStartOf="@+id/imgProfile"
-            app:layout_constraintTop_toBottomOf="@+id/txtEmployeeTitle" />
-
-        <com.tcc.app.customview.TextviewReguler
-            android:id="@+id/txtAmount"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/_5sdp"
-            android:text="\u20b9 100"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtEmployeeTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/txtReason" />
 
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recPanelty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginVertical="@dimen/_5sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtEmployeeTitle"

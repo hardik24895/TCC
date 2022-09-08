@@ -5,6 +5,7 @@ import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.os.Bundle
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -16,6 +17,8 @@ import androidx.fragment.app.Fragment
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.tcc.app.R
 import com.tcc.app.customview.TextviewBold
+import com.tcc.app.utils.Constant
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -45,6 +48,13 @@ inline fun <reified T : Activity> Fragment.goToActivity() {
     Animatoo.animateCard(activity)
 }
 
+inline fun <reified T : Activity> Fragment.goToActivityBundle(bundle: Bundle) {
+    val intent = Intent(activity, T::class.java)
+    intent.putExtra(Constant.DATA, bundle)
+    startActivity(intent)
+    Animatoo.animateCard(context)
+}
+
 fun AppCompatActivity.addFragments(fragments: List<Fragment>, containerId: Int) {
     fragments.forEach {
         val ft = supportFragmentManager.beginTransaction()
@@ -67,13 +77,14 @@ fun AppCompatActivity.replaceFragments(fragments: List<Fragment>, containerId: I
 }
 
 fun AppCompatActivity.replaceFragment(fragment: Fragment, containerId: Int) {
+
     val ft = supportFragmentManager.beginTransaction()
     ft.replace(containerId, fragment)
     ft.commitAllowingStateLoss()
 }
 
 fun Fragment.replaceFragment(fragment: Fragment, containerId: Int) {
-    val ft = fragmentManager?.beginTransaction()
+    val ft = childFragmentManager?.beginTransaction()
     ft?.replace(containerId, fragment)
     ft?.commitAllowingStateLoss()
 }
@@ -83,6 +94,7 @@ fun AppCompatActivity.addFragment(
     containerId: Int,
     addToStack: Boolean = true
 ) {
+
     val ft = supportFragmentManager.beginTransaction()
     ft.add(containerId, fragment)
     if (addToStack) ft.addToBackStack(fragment.javaClass.name)
@@ -90,7 +102,7 @@ fun AppCompatActivity.addFragment(
 }
 
 fun Fragment.addFragment(fragment: Fragment, containerId: Int, addToStack: Boolean = true) {
-    val ft = fragmentManager?.beginTransaction()
+    val ft = childFragmentManager?.beginTransaction()
     ft?.add(containerId, fragment)
     if (addToStack) ft?.addToBackStack(fragment.javaClass.name)
     ft?.commitAllowingStateLoss()
@@ -138,7 +150,12 @@ fun setHomeScreenTitle(requireActivity: Activity, title: String) {
     tvTitle.setText(title)
 }
 
-fun showDateTimePicker(requireActivity: Activity, edittext: EditText) {
+
+fun getCurrentDate(): String {
+
+    var date: String? = ""
+    var selectedMonth: String = ""
+    var selectedDay: String = ""
 
     val c = Calendar.getInstance()
     val year = c.get(Calendar.YEAR)
@@ -146,8 +163,48 @@ fun showDateTimePicker(requireActivity: Activity, edittext: EditText) {
     val day = c.get(Calendar.DAY_OF_MONTH)
 
 
+    if (day < 10) {
+        selectedDay = "0" + day
+    } else
+        selectedDay = day.toString()
+
+
+    if (month < 10) {
+        selectedMonth = "0" + (month + 1)
+    } else
+        selectedMonth = month.toString()
+
+    date = "" + selectedDay + "/" + selectedMonth + "/" + year
+
+    return date.toString()
+}
+
+
+fun getCurrentDateTime(): String {
+
+    val sdf = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
+    val currentDate = sdf.format(Date())
+
+    return currentDate.toString()
+}
+
+fun getCurentTime(): String {
+    val c = Calendar.getInstance()
+    val hour = c.get(Calendar.HOUR_OF_DAY)
+    val minute = c.get(Calendar.MINUTE)
+
+    return hour.toString() + ":" + minute.toString()
+}
+
+fun showDateTimePicker(requireActivity: Activity, edittext: EditText) {
+
+    val c = Calendar.getInstance()
+    val year = c.get(Calendar.YEAR)
+    val month = c.get(Calendar.MONTH)
+    val day = c.get(Calendar.DAY_OF_MONTH)
+
     val dpd = DatePickerDialog(
-        requireActivity,
+        requireActivity, R.style.DialogTheme,
         { view, year, monthOfYear, dayOfMonth ->
 
             var selectedMonth: String = ""
@@ -158,10 +215,10 @@ fun showDateTimePicker(requireActivity: Activity, edittext: EditText) {
                 selectedDay = dayOfMonth.toString()
 
 
-            if (month < 10) {
-                selectedMonth = "0" + (month + 1)
+            if (monthOfYear < 10) {
+                selectedMonth = "0" + (monthOfYear + 1)
             } else
-                selectedMonth = month.toString()
+                selectedMonth = monthOfYear.toString()
 
             edittext.setText("" + selectedDay + "/" + selectedMonth + "/" + year)
         },
@@ -170,8 +227,98 @@ fun showDateTimePicker(requireActivity: Activity, edittext: EditText) {
         day
     )
     dpd.show()
+    dpd.getButton(DatePickerDialog.BUTTON_NEGATIVE)
+        .setTextColor(requireActivity.getColorCompat(R.color.colorPrimary))
+    dpd.getButton(DatePickerDialog.BUTTON_POSITIVE)
+        .setTextColor(requireActivity.getColorCompat(R.color.colorPrimary))
+}
 
 
+fun showPastDateTimePicker(requireActivity: Activity, edittext: EditText) {
+
+    val c = Calendar.getInstance()
+    val year = c.get(Calendar.YEAR)
+    val month = c.get(Calendar.MONTH)
+    val day = c.get(Calendar.DAY_OF_MONTH)
+
+    val dpd = DatePickerDialog(
+        requireActivity, R.style.DialogTheme,
+        { view, year, monthOfYear, dayOfMonth ->
+
+            var selectedMonth: String = ""
+            var selectedDay: String = ""
+            if (dayOfMonth < 10) {
+                selectedDay = "0" + dayOfMonth
+            } else
+                selectedDay = dayOfMonth.toString()
+
+
+            if (monthOfYear < 10) {
+                selectedMonth = "0" + (monthOfYear + 1)
+            } else
+                selectedMonth = monthOfYear.toString()
+
+            edittext.setText("" + selectedDay + "/" + selectedMonth + "/" + year)
+        },
+        year,
+        month,
+        day
+    )
+    dpd.getDatePicker().setMaxDate(c.getTimeInMillis())
+    //  dpd.getDatePicker().setMinDate(c.getTimeInMillis())
+    dpd.show()
+    dpd.getButton(DatePickerDialog.BUTTON_NEGATIVE)
+        .setTextColor(requireActivity.getColorCompat(R.color.colorPrimary))
+    dpd.getButton(DatePickerDialog.BUTTON_POSITIVE)
+        .setTextColor(requireActivity.getColorCompat(R.color.colorPrimary))
+}
+
+
+fun showNextFromStartDateTimePicker(
+    requireActivity: Activity,
+    edittext: EditText,
+    startDate: String
+) {
+
+    val c = Calendar.getInstance()
+    val year = c.get(Calendar.YEAR)
+    val month = c.get(Calendar.MONTH)
+    val day = c.get(Calendar.DAY_OF_MONTH)
+
+    val dpd = DatePickerDialog(
+        requireActivity, R.style.DialogTheme,
+        { view, year, monthOfYear, dayOfMonth ->
+
+            var selectedMonth: String = ""
+            var selectedDay: String = ""
+            if (dayOfMonth < 10) {
+                selectedDay = "0" + dayOfMonth
+            } else
+                selectedDay = dayOfMonth.toString()
+
+
+            if (monthOfYear < 10) {
+                selectedMonth = "0" + (monthOfYear + 1)
+            } else
+                selectedMonth = monthOfYear.toString()
+
+            edittext.setText("" + selectedDay + "/" + selectedMonth + "/" + year)
+        },
+        year,
+        month,
+        day
+    )
+
+    val f = SimpleDateFormat("dd/MM/yyyy")
+    val d = f.parse(startDate)
+
+    dpd.getDatePicker().setMinDate(d.time)
+
+    dpd.show()
+    dpd.getButton(DatePickerDialog.BUTTON_NEGATIVE)
+        .setTextColor(requireActivity.getColorCompat(R.color.colorPrimary))
+    dpd.getButton(DatePickerDialog.BUTTON_POSITIVE)
+        .setTextColor(requireActivity.getColorCompat(R.color.colorPrimary))
 }
 
 fun Context.getColorCompat(@ColorRes colorId: Int) = ContextCompat.getColor(this, colorId)
